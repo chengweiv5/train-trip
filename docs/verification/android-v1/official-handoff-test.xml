@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="cn.traintrip.app.AppFlowTest" tests="1" failures="0" errors="0" skipped="0" time="13.59" timestamp="2026-09-18T16:15:07" hostname="localhost">
+  <properties>
+    <property name="device" value="train_trip_v1(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="realSearchToTrainAndRecheck" classname="cn.traintrip.app.AppFlowTest" time="12.817" />
+</testsuite>

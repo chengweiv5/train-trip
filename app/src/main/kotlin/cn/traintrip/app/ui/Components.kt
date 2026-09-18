@@ -1,0 +1,51 @@
+package cn.traintrip.app.ui
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import cn.traintrip.core.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
+@Composable fun PrimaryButton(text:String,onClick:()->Unit,enabled:Boolean=true,modifier:Modifier=Modifier) {
+    Button(onClick,modifier.fillMaxWidth().heightIn(min=56.dp),enabled=enabled,shape=RoundedCornerShape(16.dp),contentPadding=PaddingValues(16.dp)) { Text(text) }
+}
+@Composable fun SecondaryButton(text:String,onClick:()->Unit,modifier:Modifier=Modifier,enabled:Boolean=true) {
+    OutlinedButton(onClick,modifier.fillMaxWidth().heightIn(min=48.dp),enabled=enabled,shape=RoundedCornerShape(16.dp),border=BorderStroke(1.dp,Line),contentPadding=PaddingValues(14.dp)) { Text(text) }
+}
+@Composable fun ContentCard(modifier:Modifier=Modifier,selected:Boolean=false,onClick:(()->Unit)?=null,content:@Composable ColumnScope.()->Unit) {
+    Surface(modifier.then(if(onClick!=null) Modifier.clickable(onClick=onClick) else Modifier),shape=RoundedCornerShape(18.dp),color=Color.White,border=if(selected) BorderStroke(1.5.dp,Forest) else null) {
+        Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(12.dp),content=content)
+    }
+}
+@Composable fun SectionTitle(text:String,action:String?=null,onAction:()->Unit={}) {
+    Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) { Text(text,Modifier.weight(1f),style=MaterialTheme.typography.titleMedium);if(action!=null) TextButton(onAction) { Text(action) } }
+}
+@Composable fun Hint(text:String,warning:Boolean=false,modifier:Modifier=Modifier) {
+    Surface(modifier.fillMaxWidth(),color=if(warning) AmberBg else Sage,shape=RoundedCornerShape(14.dp)) { Text(text,Modifier.padding(14.dp),style=MaterialTheme.typography.bodyMedium,color=if(warning) Amber else Forest) }
+}
+@Composable fun Choice(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier) {
+    Surface(modifier.heightIn(min=48.dp).clickable(onClick=onClick),shape=RoundedCornerShape(12.dp),color=if(selected) Sage else Color.White,border=if(selected) BorderStroke(1.dp,Sage) else BorderStroke(1.dp,Line)) {
+        Box(Modifier.padding(horizontal=12.dp,vertical=12.dp),contentAlignment=Alignment.Center) { Text(text,color=if(selected) Forest else Muted,style=MaterialTheme.typography.bodyMedium,fontWeight=if(selected) FontWeight.SemiBold else FontWeight.Normal) }
+    }
+}
+@Composable fun BackHeader(text:String,onBack:()->Unit) {
+    Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
+        TextButton(onBack,Modifier.sizeIn(minWidth=48.dp,minHeight=48.dp)) { Text("‹ 返回") }
+        Spacer(Modifier.weight(1f));Text(text,style=MaterialTheme.typography.bodySmall,color=Muted)
+    }
+}
+fun dateLabel(d:LocalDate):String=d.format(DateTimeFormatter.ofPattern("M 月 d 日"))
+fun dateRange(f:SearchFilters):String=if(f.startDate==f.endDate) dateLabel(f.startDate) else "${dateLabel(f.startDate)} – ${dateLabel(f.endDate)}"
+fun timeText(m:Int):String="%02d:%02d".format(m/60,m%60)
+fun timeRange(f:SearchFilters):String=if(f.startMinute==0 && f.endMinute==1440) "全天出发" else "${timeText(f.startMinute)}–${timeText(f.endMinute)}"
+fun durationText(minutes:Int?):String=if(minutes==null) "时刻待定" else if(minutes<60) "$minutes 分钟" else "${minutes/60} 小时${if(minutes%60==0) "" else " ${minutes%60} 分"}"
+fun seatSummary(f:SearchFilters):String=if(f.seats.size==SeatType.entries.size) "不限，含无座" else f.seats.sortedBy { it.ordinal }.joinToString("、") { it.label }

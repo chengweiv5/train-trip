@@ -1,0 +1,3 @@
+09-19 00:13:38.952  4209  4223 I TrainTripLive: date=2026-09-20 options=297 available=297 at=2026-09-18T16:13:38.909305Z
+09-19 00:13:40.946  4209  4223 I TrainTripLive: city=石家庄 date=2026-09-20 options=214 available=212 at=2026-09-18T16:13:40.918785Z
+09-19 00:13:42.564  4209  4223 I TrainTripLive: city=秦皇岛 date=2026-09-20 options=16 available=16 at=2026-09-18T16:13:42.559325Z

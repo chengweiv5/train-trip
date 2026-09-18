@@ -1,0 +1,149 @@
+{
+  "checkedAt": "2026-09-18",
+  "source": "Pencil MCP Get resolveInstances=true resolveVariables=true",
+  "visibleNodes": 648,
+  "textNodes": 293,
+  "clippedNodes": 0,
+  "emptyTextOrNames": 0,
+  "unfinishedFrames": 0,
+  "siblingOverlaps": 0,
+  "overlapToleranceLogicalPixels": 0.5,
+  "referenceCount": 35,
+  "unresolvedReferences": 0,
+  "roots": [
+    {
+      "id": "bi8Au",
+      "name": "00 · Train Trip / 设计说明",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1388,
+        "height": 218
+      },
+      "depth": 0
+    },
+    {
+      "id": "p7g9o",
+      "name": "00 · 组件与样式",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 252,
+        "width": 1388,
+        "height": 121
+      },
+      "depth": 0
+    },
+    {
+      "id": "a9i4j",
+      "name": "01 · 出行条件",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 453,
+        "width": 412,
+        "height": 949
+      },
+      "depth": 0
+    },
+    {
+      "id": "mH2BD",
+      "name": "组件 · 有票城市",
+      "type": "frame",
+      "reusable": true,
+      "bounds": {
+        "x": 1468,
+        "y": 252,
+        "width": 372,
+        "height": 167
+      },
+      "depth": 0
+    },
+    {
+      "id": "z1NQD",
+      "name": "02 · 有票城市",
+      "type": "frame",
+      "bounds": {
+        "x": 476,
+        "y": 453,
+        "width": 412,
+        "height": 1087
+      },
+      "depth": 0
+    },
+    {
+      "id": "tPTGk",
+      "name": "组件 · 车次选项",
+      "type": "frame",
+      "reusable": true,
+      "bounds": {
+        "x": 1904,
+        "y": 252,
+        "width": 372,
+        "height": 238
+      },
+      "depth": 0
+    },
+    {
+      "id": "g7j1ms",
+      "name": "03 · 天津 / 车次详情",
+      "type": "frame",
+      "bounds": {
+        "x": 952,
+        "y": 453,
+        "width": 412,
+        "height": 1100
+      },
+      "depth": 0
+    },
+    {
+      "id": "FMp8K",
+      "name": "04 · 筛选弹层 / 时段、席别、车站",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1598,
+        "width": 1388,
+        "height": 799
+      },
+      "depth": 0
+    },
+    {
+      "id": "xyVsi",
+      "name": "05 · 日期、人数与车次席别",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 2451,
+        "width": 1384,
+        "height": 767
+      },
+      "depth": 0
+    },
+    {
+      "id": "zu5eP",
+      "name": "06 · 查询进度与异常状态",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 3250,
+        "width": 1384,
+        "height": 1535
+      },
+      "depth": 0
+    },
+    {
+      "id": "gNcl5",
+      "name": "07 · 交互与开发交接",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 4841,
+        "width": 1384,
+        "height": 624
+      },
+      "depth": 0
+    }
+  ]
+}

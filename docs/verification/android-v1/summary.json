@@ -1,0 +1,21 @@
+{
+  "version": "0.1.0",
+  "applicationId": "cn.traintrip.app",
+  "apk": "artifacts/train-trip-v1-debug.apk",
+  "sha256": "9545617247486c90282354080562f314c36ec666c4fe587a994d716a6dec7daa",
+  "bytes": 12005974,
+  "core_tests": 7,
+  "android_suite_tests": 5,
+  "final_handoff_tests": 1,
+  "lint_errors": 0,
+  "lint_warnings": 13,
+  "device": "temporary AOSP API 36 arm64 emulator",
+  "target_huawei_tested": false,
+  "target_huawei_installation_verified": true,
+  "target_huawei_launch_verified": true,
+  "target_huawei_functional_tests_complete": false,
+  "target_huawei_evidence": "huawei-install.json",
+  "nationwide_coverage_verified": false,
+  "runtime_ocr_pages": 5,
+  "runtime_ocr_text_observations": 145
+}

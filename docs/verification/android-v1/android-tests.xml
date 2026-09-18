@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="cn.traintrip.app.AppFlowTest" tests="5" failures="0" errors="0" skipped="0" time="23.923" timestamp="2026-09-18T16:10:42" hostname="localhost">
+  <properties>
+    <property name="device" value="train_trip_v1(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="timeAndScopeApply" classname="cn.traintrip.app.AppFlowTest" time="7.857" />
+  <testcase name="realSearchToTrainAndRecheck" classname="cn.traintrip.app.AppFlowTest" time="9.013" />
+  <testcase name="enlargedFontKeepsPrimaryActionReachable" classname="cn.traintrip.app.AppFlowTest" time="2.287" />
+  <testcase name="filtersApplyCancelAndPersist" classname="cn.traintrip.app.AppFlowTest" time="2.733" />
+  <testcase name="anonymousAndroidQueryParsesRealInventory" classname="cn.traintrip.app.LiveSourceTest" time="1.543" />
+</testsuite>

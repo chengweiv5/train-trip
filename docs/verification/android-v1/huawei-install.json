@@ -1,0 +1,29 @@
+{
+  "verified_at": "2026-09-19T07:31:50.950721+08:00",
+  "manufacturer": "HUAWEI",
+  "model": "ALN-AL00",
+  "system_build": "ALN-AL00 4.2.0.221(C00E215R10P2)",
+  "android_api": 31,
+  "package": "cn.traintrip.app",
+  "version_name": "0.1.0",
+  "version_code": 1,
+  "apk_sha256": "9545617247486c90282354080562f314c36ec666c4fe587a994d716a6dec7daa",
+  "installation": "Success",
+  "package_readback_installed": true,
+  "launch_status": "ok",
+  "launch_state": "COLD",
+  "launch_total_ms": 1002,
+  "resumed_activity": "cn.traintrip.app/.MainActivity",
+  "verified_scope": [
+    "APK installation",
+    "installed package version",
+    "cold launch",
+    "foreground Activity and live process"
+  ],
+  "not_tested_on_device": [
+    "ticket query",
+    "all UI interactions",
+    "12306 handoff",
+    "font scaling"
+  ]
+}
