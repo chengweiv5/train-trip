@@ -16,7 +16,7 @@
 - 实际 Tavily：四条泰安/苏州探测均成功，每条 1 credit；之后 App 同等请求链路执行泰安景点/美食两次 basic 搜索，返回 9 篇有效文档。累计 6 次搜索，后两次未持久记录 usage（预计 2 credits，以提供方账单为准）。
 - 实际 DeepSeek：本轮总计 5 次调用。前三次暴露完整路线和原文标题处理问题，第四次仍有单条格式偏差；最终逐条校验后调用成功，输出泰安 4 个景点、5 种美食、0 条路线、无配图。两篇采用来源均为泰安市文化和旅游局。
 - 真实输出、原始非敏感响应、测试日志存放 `.verification-private/v0.4.0/tavily/`，不入 Git。
-- 仓库和 APK 密钥扫描：431 个 tracked/untracked 非忽略文件及 APK 各 ZIP 条目，真实 DeepSeek/Tavily Key 命中 0；最终交付前再扫描。
+- 仓库和 APK 密钥扫描：432 个 tracked/untracked 非忽略文件及 APK 各 ZIP 条目，真实 DeepSeek/Tavily Key 命中 0；已在最终交付文件上复查。
 
 ## 尚未完成与限制
 
@@ -29,3 +29,9 @@
 个人自用 APK：`artifacts/train-trip-tavily-personal-debug.apk`，版本 0.4.0 / versionCode 8。功能分支本地提交；包含个人素材，不公开推送。
 
 代码前备份 `.verification-private/v0.4.0/tavily/source-before.tar`，开发前 HEAD 见同目录 `head-before.txt`。旧 APK `artifacts/train-trip-deepseek-personal-debug.apk` 可覆盖安装回滚；无需卸载/清数据，缓存和旧 KeyStore 保留。
+
+APK SHA-256：`6ac1919465897932cfd0840a3b00e22e5fb069ccd9c18ddf981315e083e18c2e`。
+
+## 通知状态
+
+punk-12 提醒被自动审批拒绝，未发送。已核对用户指定配置中的 chat id 并提交 AGENTS.md 授权依据，但再次拒绝，理由仍为具体群、消息及机器人身份缺少单独批准。需用户明确批准后才能重试，不宣称通知完成。
