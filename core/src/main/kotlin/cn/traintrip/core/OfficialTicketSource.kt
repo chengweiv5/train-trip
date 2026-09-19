@@ -30,7 +30,7 @@ class OfficialTicketSource : TicketSource {
         return SourceInfo(route,LocalDate.parse(dates.groupValues[1]),LocalDate.parse(dates.groupValues[2]),catalog,Instant.now()).also { info = it }
     }
     override suspend fun query(unit: QueryUnit): QueryResult {
-        val current = info ?: return QueryResult.Failure("查询会话尚未初始化",true)
+        val current = info ?: return QueryResult.Failure("查询会话尚未初始化")
         if(unit.date > current.saleEnd) return QueryResult.NotOnSale("${unit.date} 尚未开售；当前可查至 ${current.saleEnd}")
         if(unit.date < current.saleStart) return QueryResult.Failure("${unit.date} 已不在当前可查询范围")
         val url = ("https://kyfw.12306.cn/otn/"+current.queryPath).toHttpUrl().newBuilder()
@@ -39,7 +39,7 @@ class OfficialTicketSource : TicketSource {
         return try {
             val (at,body) = get(url.toString())
             TicketParser.parse(body,unit,current.catalog,at)
-        } catch(e: IOException) { QueryResult.Failure(e.message ?: "网络查询失败",true) }
+        } catch(e: IOException) { QueryResult.Failure(e.message ?: "网络查询失败") }
     }
     private suspend fun get(url: String): Pair<Instant,String> = suspendCancellableCoroutine { cont ->
         val request = Request.Builder().url(url).header("User-Agent","Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 Chrome/130.0.0.0 Mobile Safari/537.36")

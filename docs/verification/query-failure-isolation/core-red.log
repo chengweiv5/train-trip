@@ -1,0 +1,38 @@
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:compileKotlin UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :core:processResources UP-TO-DATE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :core:processTestResources UP-TO-DATE
+> Task :core:compileTestKotlin
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:testClasses UP-TO-DATE
+
+> Task :core:test FAILED
+
+CoreTest > searchFailureDoesNotBlockAndRetryKeepsSuccesses FAILED
+    java.lang.AssertionError at CoreTest.kt:48
+
+SearchEngineTest > repeatedFailuresAndNotOnSaleDoNotStopThePlan FAILED
+    java.lang.AssertionError at SearchEngineTest.kt:51
+
+SearchEngineTest > parserFailureDoesNotBlockLaterDates FAILED
+    java.lang.AssertionError at SearchEngineTest.kt:25
+
+SearchEngineTest > thrownQueryExceptionIsRecordedAndLaterQueryRuns FAILED
+    java.io.IOException at SearchEngineTest.kt:71
+
+16 tests completed, 4 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':core:test'.
+> There were failing tests. See the report at: file:///Users/bytedance/.codex/worktrees/202e/train-trip/core/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+6 actionable tasks: 2 executed, 4 up-to-date

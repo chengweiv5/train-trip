@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "versionCode": 5,
+  "coreTests": 16,
+  "coreFailures": 0,
+  "androidOfflineTests": 1,
+  "androidOfflineFailures": 0,
+  "lintErrors": 0,
+  "lintWarnings": 13,
+  "apkBytes": 12918532,
+  "apkSha256": "54cbc4aed9264a43d6d372dae2d8791ac877ea929ccf1ec3feb799fcb25e439c",
+  "realTicketQueriesDuringFix": 0,
+  "deviceVerified": true,
+  "backup": "/private/tmp/train-trip-failure-isolation-g4i0ttxi"
+}

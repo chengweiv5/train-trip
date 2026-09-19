@@ -45,15 +45,16 @@ class CoreTest {
         assertTrue(TicketParser.parse("<html>failure</html>",unit,catalog,now) is QueryResult.Failure)
         assertTrue(TicketParser.parse("{\"status\":true,\"data\":{}}",unit,catalog,now) is QueryResult.Failure)
     }
-    @Test fun searchFailureAndResumeStayPartial() = runBlocking {
+    @Test fun searchFailureDoesNotBlockAndRetryKeepsSuccesses() = runBlocking {
         val units=(0..2).map { unit.copy(date=day.plusDays(it.toLong())) }
         var count=0
         val source=object:TicketSource {
             override suspend fun initialize():SourceInfo = error("unused")
-            override suspend fun query(unit:QueryUnit):QueryResult { count++;return if(count==2) QueryResult.Failure("network",true) else QueryResult.Success(emptyList(),now) }
+            override suspend fun query(unit:QueryUnit):QueryResult { count++;return if(count==2) QueryResult.Failure("network") else QueryResult.Success(emptyList(),now) }
         }
         val end=SearchEngine(source,0).search(units).toList().last()
-        assertFalse(end.complete);assertEquals(1,end.remainingCount);assertEquals(1,end.failureCount)
+        assertFalse(end.complete);assertEquals(0,end.remainingCount);assertEquals(1,end.failureCount)
+        assertEquals(2,end.successCount);assertFalse(end.stopped);assertFalse(end.running)
         val resume=SearchEngine(source,0).search(units,end.outcomes.filterValues { it !is QueryResult.Failure }).toList().last()
         assertTrue(resume.complete);assertEquals(4,count)
     }

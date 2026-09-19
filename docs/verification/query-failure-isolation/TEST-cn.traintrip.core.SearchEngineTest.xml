@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cn.traintrip.core.SearchEngineTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-09-19T01:45:10.815Z" hostname="DJX34Q0R35" time="0.056">
+  <properties/>
+  <testcase name="defaultSpacingIsPreservedAfterFailure" classname="cn.traintrip.core.SearchEngineTest" time="0.025"/>
+  <testcase name="sourceCancellationPropagatesWithoutRecordingFailure" classname="cn.traintrip.core.SearchEngineTest" time="0.006"/>
+  <testcase name="repeatedFailuresAndNotOnSaleDoNotStopThePlan" classname="cn.traintrip.core.SearchEngineTest" time="0.005"/>
+  <testcase name="parserFailureDoesNotBlockLaterDates" classname="cn.traintrip.core.SearchEngineTest" time="0.006"/>
+  <testcase name="cancellationKeepsCompletedResultsAndSkipsLaterQueries" classname="cn.traintrip.core.SearchEngineTest" time="0.007"/>
+  <testcase name="thrownQueryExceptionIsRecordedAndLaterQueryRuns" classname="cn.traintrip.core.SearchEngineTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

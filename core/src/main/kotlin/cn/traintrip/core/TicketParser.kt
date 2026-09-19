@@ -15,9 +15,9 @@ object TicketParser {
     fun parse(body: String, unit: QueryUnit, catalog: StationCatalog, at: Instant): QueryResult {
         return try {
             val root = JsonParser.parseString(body).asJsonObject
-            if(root.get("status")?.asBoolean != true) return QueryResult.Failure(root.get("messages")?.toString()?.take(180) ?: "12306 未返回成功结果",true)
-            val data = root.getAsJsonObject("data") ?: return QueryResult.Failure("查询数据缺失，不能确定是否有票",true)
-            val rows = data.getAsJsonArray("result") ?: return QueryResult.Failure("余票协议已变化，请到 12306 查询",true)
+            if(root.get("status")?.asBoolean != true) return QueryResult.Failure(root.get("messages")?.toString()?.take(180) ?: "12306 未返回成功结果")
+            val data = root.getAsJsonObject("data") ?: return QueryResult.Failure("查询数据缺失，不能确定是否有票")
+            val rows = data.getAsJsonArray("result") ?: return QueryResult.Failure("余票协议已变化，请到 12306 查询")
             val trips = rows.map { element ->
                 val f = element.asString.split('|')
                 require(f.size >= 39) { "余票字段数量变化" }
@@ -39,7 +39,7 @@ object TicketParser {
                 Trip(unit.date,f[2],f[3],from,to,depart,arrive,duration,sale,f[1],seats,at,f[37] == "1",f.getOrNull(48)?.toIntOrNull()?.coerceAtLeast(0) ?: 0)
             }
             QueryResult.Success(trips,at)
-        } catch(e: Exception) { QueryResult.Failure("余票数据无法解析：${e.message?.take(100) ?: "格式异常"}",true) }
+        } catch(e: Exception) { QueryResult.Failure("余票数据无法解析：${e.message?.take(100) ?: "格式异常"}") }
     }
     private fun time(s: String): LocalTime? = runCatching { if(!s.matches(Regex("(?:[01]\\d|2[0-3]):[0-5]\\d"))) null else LocalTime.parse(s) }.getOrNull()
     private fun duration(s: String): Int? = if(s.matches(Regex("\\d{1,2}:[0-5]\\d")) && s != "99:59") s.substringBefore(':').toInt()*60+s.substringAfter(':').toInt() else null

@@ -95,7 +95,7 @@ fun aggregate(trips: List<Trip>, filters: SearchFilters, uncertain: Boolean = fa
 data class SourceInfo(val queryPath: String, val saleStart: LocalDate, val saleEnd: LocalDate, val catalog: StationCatalog, val fetchedAt: Instant)
 sealed interface QueryResult {
     data class Success(val trips: List<Trip>, val receivedAt: Instant): QueryResult
-    data class Failure(val message: String, val stopSearch: Boolean = false): QueryResult
+    data class Failure(val message: String): QueryResult
     data class NotOnSale(val message: String): QueryResult
 }
 data class SearchProgress(val plan: List<QueryUnit>, val outcomes: Map<String, QueryResult> = emptyMap(), val running: Boolean = false, val stopped: Boolean = false) {
