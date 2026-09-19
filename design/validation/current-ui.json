@@ -1,0 +1,283 @@
+{
+  "nativeSaveStatus": "saved-and-reopened",
+  "baseline": "d457523",
+  "files": {
+    "train-trip-v1.pen": {
+      "roots": 20,
+      "nodes": 866,
+      "visibleNodes": 865,
+      "unexpectedClipping": [],
+      "intentionalScrollClipping": [],
+      "placeholders": [],
+      "overlaps": [],
+      "refErrors": [],
+      "changedRoots": [
+        {
+          "id": "a9i4j",
+          "name": "01 · 出行条件"
+        },
+        {
+          "id": "z1NQD",
+          "name": "02 · 有票城市"
+        },
+        {
+          "id": "g7j1ms",
+          "name": "历史 · 天津车次详情 / 当前版见 v0.4.0"
+        },
+        {
+          "id": "FMp8K",
+          "name": "04 · 筛选弹层 / 时段、席别、车站"
+        },
+        {
+          "id": "xyVsi",
+          "name": "05 · 日期、人数与车次席别"
+        },
+        {
+          "id": "zu5eP",
+          "name": "06 · 查询进度与异常状态"
+        },
+        {
+          "id": "gNcl5",
+          "name": "07 · 交互与开发交接"
+        },
+        {
+          "id": "syZ4p",
+          "name": "08 · 天津 / 目的地灵感"
+        },
+        {
+          "id": "J9IQLh",
+          "name": "10 · 有票城市 / 目的地灵感"
+        },
+        {
+          "id": "ATqc3",
+          "name": "出发时段 · 凌晨选中 / 320dp 单行大字体"
+        }
+      ],
+      "unchangedRootIds": [
+        "bi8Au",
+        "h0pju",
+        "p7g9o",
+        "mH2BD",
+        "tPTGk",
+        "QKZt6",
+        "NE7Tn",
+        "Mav9U",
+        "e3qHZk",
+        "pVPBz"
+      ]
+    },
+    "train-trip-destination-ui.pen": {
+      "roots": 29,
+      "nodes": 1470,
+      "visibleNodes": 1357,
+      "unexpectedClipping": [],
+      "intentionalScrollClipping": [],
+      "placeholders": [],
+      "overlaps": [],
+      "refErrors": [],
+      "changedRoots": [
+        {
+          "id": "a9i4j",
+          "name": "01 · 出行条件"
+        },
+        {
+          "id": "z1NQD",
+          "name": "02 · 有票城市"
+        },
+        {
+          "id": "g7j1ms",
+          "name": "历史 · 天津车次详情 / 当前版见 v0.4.0"
+        },
+        {
+          "id": "FMp8K",
+          "name": "04 · 筛选弹层 / 时段、席别、车站"
+        },
+        {
+          "id": "xyVsi",
+          "name": "05 · 日期、人数与车次席别"
+        },
+        {
+          "id": "zu5eP",
+          "name": "06 · 查询进度与异常状态"
+        },
+        {
+          "id": "gNcl5",
+          "name": "07 · 交互与开发交接"
+        },
+        {
+          "id": "F3gk6j",
+          "name": "08 · 目的地 / 按省份选择"
+        },
+        {
+          "id": "paLNh",
+          "name": "09 · 目的地 / 搜索省份"
+        },
+        {
+          "id": "PITMk",
+          "name": "10 · 目的地 / 直辖市"
+        },
+        {
+          "id": "Fcn7s",
+          "name": "11 · 目的地 / 搜索城市"
+        },
+        {
+          "id": "bmngm",
+          "name": "12 · 目的地 / 已选范围"
+        },
+        {
+          "id": "C4cZp",
+          "name": "13 · 有票城市 / 默认展开首省"
+        },
+        {
+          "id": "xuRuP",
+          "name": "15 · 入口、详情与边界状态"
+        },
+        {
+          "id": "gZFDp",
+          "name": "目的地 UI · 已确认与开发交接"
+        },
+        {
+          "id": "nZuam",
+          "name": "14 · 有票城市 / 收起河北、展开山东"
+        },
+        {
+          "id": "xl7od",
+          "name": "出发时段 · 凌晨选中 / 320dp 单行大字体"
+        }
+      ],
+      "unchangedRootIds": [
+        "bi8Au",
+        "h0pju",
+        "p7g9o",
+        "mH2BD",
+        "tPTGk",
+        "QKZt6",
+        "NE7Tn",
+        "Gna0y",
+        "Q9zcp0",
+        "tbkcG",
+        "qY9rj",
+        "H3fNDZ"
+      ]
+    },
+    "train-trip-v0.4.0.pen": {
+      "roots": 7,
+      "nodes": 355,
+      "visibleNodes": 329,
+      "unexpectedClipping": [],
+      "intentionalScrollClipping": [
+        {
+          "id": "Kl0O0",
+          "p": "Ol9DS",
+          "n": "日期 · 10月30日",
+          "t": "frame",
+          "b": {
+            "x": 194,
+            "y": 0,
+            "width": 93,
+            "height": 48
+          },
+          "problem": "partially clipped",
+          "enabled": true
+        },
+        {
+          "id": "x56tLt",
+          "p": "Ol9DS",
+          "n": "日期 · 10月31日",
+          "t": "frame",
+          "b": {
+            "x": 293,
+            "y": 0,
+            "width": 93,
+            "height": 48
+          },
+          "problem": "fully clipped",
+          "enabled": true
+        }
+      ],
+      "placeholders": [],
+      "overlaps": [],
+      "refErrors": [],
+      "changedRoots": [
+        {
+          "id": "bi8Au",
+          "name": "00 · v0.4.0 车次页 / 设计说明"
+        },
+        {
+          "id": "bArbH",
+          "name": "02 · 已选择 / 一个主操作 · 388dp"
+        },
+        {
+          "id": "zvir8",
+          "name": "01 · 未选择 / 直接打开 App · 388dp"
+        },
+        {
+          "id": "VhZVb",
+          "name": "03 · 320dp / 1.3 倍字体"
+        },
+        {
+          "id": "ePGKM",
+          "name": "04 · 刷新与跳转反馈"
+        }
+      ],
+      "unchangedRootIds": [
+        "gnM7c",
+        "WNMsd"
+      ]
+    }
+  },
+  "nativeFiles": {
+    "train-trip-destination-ui.pen": {
+      "sha256": "41a2d03dd8c3503f8901032d3fb0222f96f6f17c7853e2c55debdd02ce672b7f",
+      "bytes": 588291,
+      "nativeSaved": true,
+      "reopened": true
+    },
+    "train-trip-v1.pen": {
+      "sha256": "fb0a251669a211350f197eb243fffd1085411b1d75b85643e2a311bbdf96d841",
+      "bytes": 320439,
+      "nativeSaved": true,
+      "reopened": true
+    },
+    "train-trip-v0.4.0.pen": {
+      "sha256": "e2e8cb41e52ae1962935c0730c5e9b5156d1c452544f6c6f4b73ca8561a278c5",
+      "bytes": 151468,
+      "nativeSaved": true,
+      "reopened": true
+    }
+  },
+  "readback": {
+    "v1FullTreeMatches": true,
+    "destinationFullTreeMatches": true,
+    "detailTextDifferences": 0,
+    "detailBoundsDifferences": 0,
+    "detailRestoredIdMap": {
+      "W9bkQ": "w1k4Tc",
+      "ZVTDE": "mxOBl",
+      "N1jxfF": "ymldu",
+      "GWlBR": "jvg7j",
+      "iE5Ni": "Y3VwwM",
+      "OIuBo": "VBPTC",
+      "lg4ir": "u2vTT",
+      "j1l91": "NqFvf",
+      "g0PwCh": "qBbHG",
+      "tTPJw": "KCJEo",
+      "iM3dD": "A77YDa",
+      "yBl1m": "XViqY",
+      "l0J0bF": "otcSJ",
+      "UVOdn": "JzemV",
+      "ZjOz0": "Ol9DS",
+      "xS6GK": "Hfvls",
+      "WHqYt": "W0mif",
+      "Za9LV": "XPDxB",
+      "dKWzD": "t1SXwI",
+      "xvCIQ": "Kl0O0",
+      "X155uR": "JPT3A",
+      "TReT2": "x56tLt",
+      "Y7mH0n": "z617SB",
+      "vCNg1": "KZuHJ",
+      "u1PYS": "ZErFI",
+      "aZWdH": "yl6bt"
+    }
+  }
+}

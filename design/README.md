@@ -1,5 +1,16 @@
 # Train Trip V1 UI 设计
 
+## 当前界面设计同步（2026-09-19，已完成）
+
+三份 Pencil 源文件已补齐当前布局与文案，完成原生保存、重新打开回读、结构和渲染检查。首版和目的地版完整图层与验收快照一致；车次版恢复后保留所有原文、根画板和组件引用，全部节点尺寸与验收版一致。下列快照与参考图对应已保存文件。
+
+- 首页五个出发时段固定单行、等宽，间距 6dp、横向内边距 4dp，点击高度至少 48dp；320dp / 1.3 倍字体保留完整标签。
+- 车次页普通示例改为 388dp；“全部日期 + 10月29日 + 10月30日 + 10月31日”占 318dp，可用宽度 348dp。更多日期或大字体保持单行横滑。
+- 车次卡片内边距横向 12dp / 纵向 10dp、行间距 6dp、列表间距 10dp，普通示例卡高 199dp。出发日期并入车次行，查询时间与更多席别同行；大字体查询时间分两行。整卡标记、只读余票和始终可用的 12306 App 按钮保留。
+- 删除当前界面的旧范围提示、内部字段说明和重复引导；保留实际失败、待查询、未开售及重试信息。历史车次稿明确标注由 v0.4.0 替代。
+
+[恢复快照](recovery/current-ui/README.md) · [参考图](reference/current-ui/) · [结构检查](validation/current-ui.json) · [OCR](validation/current-ui-ocr.json) · [本轮验证与保存状态](../docs/verification/2026-09-19-current-ui-design-sync.md)。目的地四分页与最新主线保持一致，历史目的地长页不作为当前开发依据。
+
 ## 目的地四分页（2026-09-19）
 
 用户已确认景点 / 美食 / 玩法 / 贴士分页样稿，现已实现于 Android。景点和美食共用白色独立卡片，顶部紧凑摘要、主题切换与固定车次操作；窄屏或大字体时摘要进入滚动区域。可编辑样稿片段见 [approved-preview.html](reference/destination-pages/approved-preview.html)，完整约定见 [设计规格](../docs/superpowers/specs/2026-09-19-destination-pages-design.md)，运行验证见 [验收](../docs/verification/2026-09-19-destination-pages.md)。历史 Pencil 目的地长页保留为旧稿。
@@ -16,7 +27,7 @@ UI 设计已在 v0.4.0 App 中实现；运行验证见 [实现验收](../docs/ve
 
 已同步 [目的地版](train-trip-destination-ui.pen) 与 [首版稿](train-trip-v1.pen) 的“几点出发”：全天、凌晨、早上、下午、晚上。凌晨对应 00:00–06:00，开始包含、结束不包含；点击立即应用并保存，具体范围在按钮下方显示。
 
-标准宽度的按钮最小宽 64dp、高 48dp、间距 8dp。窄屏或大字体按可用宽度换行；新增 320dp、1.3 倍字体的“凌晨选中”示例，目的地版节点 `xl7od`、首版节点 `ATqc3`。开发交接 `gNcl5` 已补齐五个时段及换行规则。
+本节记录最初补齐凌晨的已保存版本；其中最小宽 64dp、8dp 间距与窄屏换行已被本页顶部的单行规则取代。320dp、1.3 倍字体示例仍使用目的地版节点 `xl7od`、首版节点 `ATqc3`，开发交接节点为 `gNcl5`。本轮单行画布已保存并回读。
 
 两份源文件均已在 Pencil 保存并回读；本次变更节点无裁切、同级重叠或未完成占位。参考图和 OCR 已复核，见 [凌晨选中示例](reference/early-morning/destination/xl7od.jpeg)、[最新首页](reference/early-morning/destination/a9i4j.jpeg) 与 [验证记录](validation/early-morning.json)。
 
@@ -27,7 +38,7 @@ UI 设计已在 v0.4.0 App 中实现；运行验证见 [实现验收](../docs/ve
 
 [查看三屏预览](reference/destination-ui/review-overview.jpeg) · [同省展开/收起细节](reference/destination-ui/results-clarity-review.jpeg) · [完整结果页](reference/destination-ui/results-accordion-review.jpeg) · [完整设计说明](destination-ui-proposal.md)。结果页以连续省份容器包住城市卡片，明确显示“展开 / 收起”，收起时预览城市名称。默认展开第一个省份，其余收起，各省独立开合。整体 UI 已确认，并在 Android 0.2.0 中实现、验证及覆盖安装至 Mate 60 Pro；详见 [开发与真机验证](../docs/verification/2026-09-19-destination-provinces.md)。
 
-可编辑稿已保存为 [train-trip-destination-ui.pen](train-trip-destination-ui.pen)，[最新图层恢复快照](destination-ui-clarity-recovery.json)和预览均已落盘。原首版设计文件保留。
+省份分组版本已保存为 [train-trip-destination-ui.pen](train-trip-destination-ui.pen)，[当时的图层恢复快照](destination-ui-clarity-recovery.json)和预览保留为历史记录。本轮最新快照见顶部同步记录。原首版设计文件保留。
 
 2026-09-18 完成首版可编辑 UI 设计。源文件为 [train-trip-v1.pen](train-trip-v1.pen)，使用 Pencil 打开与编辑。
 
@@ -81,7 +92,7 @@ UI 设计已在 v0.4.0 App 中实现；运行验证见 [实现验收](../docs/ve
 | `tt-warning` | `#87531F` | 警示文字 |
 | `tt-warning-bg` | `#FBF0DE` | 警示背景 |
 
-## 交互约定
+## 首版历史交互约定（当前实现以顶部同步说明为准）
 
 1. 出发地默认北京，合并同城车站；首版只查成人、直达、去程。默认 1 人，席别和时长不限，包括无座。
 2. 日期或筛选弹层点“完成”应用；关闭弹层保留原值。日期两端包含，时段按所选每一天的北京时间生效。

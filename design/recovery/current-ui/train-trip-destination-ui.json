@@ -1,5 +1,47 @@
 {
   "version": "2.18",
+  "variables": {
+    "tt-bg": {
+      "type": "color",
+      "value": "#F5F3EE"
+    },
+    "tt-surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "tt-ink": {
+      "type": "color",
+      "value": "#20392C"
+    },
+    "tt-muted": {
+      "type": "color",
+      "value": "#617065"
+    },
+    "tt-primary": {
+      "type": "color",
+      "value": "#2D5E3A"
+    },
+    "tt-tint": {
+      "type": "color",
+      "value": "#E6EFDF"
+    },
+    "tt-line": {
+      "type": "color",
+      "value": "#D8DED3"
+    },
+    "tt-warning": {
+      "type": "color",
+      "value": "#87531F"
+    },
+    "tt-warning-bg": {
+      "type": "color",
+      "value": "#FBF0DE"
+    },
+    "tt-font": {
+      "type": "string",
+      "value": "Noto Sans SC"
+    }
+  },
   "children": [
     {
       "type": "frame",
@@ -16323,48 +16365,5 @@
         }
       ]
     }
-  ],
-  "variables": {
-    "tt-bg": {
-      "type": "color",
-      "value": "#F5F3EE"
-    },
-    "tt-surface": {
-      "type": "color",
-      "value": "#FFFFFF"
-    },
-    "tt-ink": {
-      "type": "color",
-      "value": "#20392C"
-    },
-    "tt-muted": {
-      "type": "color",
-      "value": "#617065"
-    },
-    "tt-primary": {
-      "type": "color",
-      "value": "#2D5E3A"
-    },
-    "tt-tint": {
-      "type": "color",
-      "value": "#E6EFDF"
-    },
-    "tt-line": {
-      "type": "color",
-      "value": "#D8DED3"
-    },
-    "tt-warning": {
-      "type": "color",
-      "value": "#87531F"
-    },
-    "tt-warning-bg": {
-      "type": "color",
-      "value": "#FBF0DE"
-    },
-    "tt-font": {
-      "type": "string",
-      "value": "Noto Sans SC"
-    }
-  },
-  "fileToken": "d35b4834-17f3-4769-b1c6-4dcb63a4d443"
+  ]
 }
