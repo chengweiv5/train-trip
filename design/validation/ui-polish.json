@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-19",
+  "nodes": 662,
+  "text_nodes": 300,
+  "clipped_nodes": [],
+  "placeholder_nodes": [],
+  "overlapping_root_frames": [],
+  "changed_roots": ["xyVsi", "tPTGk", "g7j1ms", "zu5eP", "gNcl5", "QKZt6"],
+  "editable_readback": true,
+  "saved_to_disk": true,
+  "ocr_pages": 4,
+  "ocr_text_observations": 69,
+  "ocr_evidence": "../../docs/verification/ui-polish/pencil-ocr.json"
+}

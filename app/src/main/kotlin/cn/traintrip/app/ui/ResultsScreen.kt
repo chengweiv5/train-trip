@@ -29,14 +29,14 @@ import cn.traintrip.core.*
             }
         }
         item { TextButton({showScope=true},contentPadding=PaddingValues(0.dp)) { Text("查看本次 ${f.destinationCityIds.size} 个城市范围 · 可能未覆盖全部目的地") } }
-        if(s.loading) item { Hint("正在连接 12306，读取开售日期与车站信息…");LinearProgressIndicator(Modifier.fillMaxWidth());TextButton(onStop) { Text("停止查询") } }
+        if(s.loading) item { Hint("正在连接 12306，读取开售日期与车站信息…");SearchProgressBar(0f,Modifier.padding(top=10.dp));TextButton(onStop) { Text("停止查询") } }
         s.error?.let { error->item { Hint("这次没能查到余票\n$error",true);SecondaryButton("重试查询",onRefresh) } }
-        if(progress!=null) {
+        if(progress!=null && !s.loading) {
             item {
                 val label=when {progress.running->"正在查询";progress.complete->"当前所选范围查询完成";progress.stopped->"查询已停止 · 保留部分结果";else->"部分结果"}
                 Hint("$label\n成功 ${progress.successCount} / ${progress.plan.size} 项 · 失败 ${progress.failureCount} · 未开售 ${progress.unopenedCount} · 待查 ${progress.remainingCount}",warning=progress.failureCount>0)
                 if(progress.running) {
-                    LinearProgressIndicator(progress={if(progress.plan.isEmpty()) 0f else progress.outcomes.size.toFloat()/progress.plan.size},modifier=Modifier.fillMaxWidth().padding(top=10.dp))
+                    SearchProgressBar(if(progress.plan.isEmpty()) 0f else progress.outcomes.size.toFloat()/progress.plan.size,Modifier.padding(top=10.dp))
                     TextButton(onStop) { Text("停止查询，保留结果") }
                 } else {
                     Row(horizontalArrangement=Arrangement.spacedBy(12.dp)) {

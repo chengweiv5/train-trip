@@ -1,0 +1,16 @@
+{
+  "version": "0.1.2",
+  "version_code": 3,
+  "path": "artifacts/train-trip-v1.2-debug.apk",
+  "size_bytes": 11613181,
+  "sha256": "2ef824dca47f32cfbb16bc9588abb9bf7a82aa5d05b5f89c316de9b189d97972",
+  "signature_verified": true,
+  "build_successful": true,
+  "lint_errors": 0,
+  "lint_warnings": 14,
+  "tests_run": 5,
+  "test_failures": 0,
+  "tests_seconds": 26.032,
+  "test_device": "temporary Android API 36 emulator",
+  "network_queries_performed": false
+}

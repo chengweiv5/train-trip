@@ -1579,7 +1579,7 @@
           "id": "CTNQl",
           "name": "发到站时刻",
           "width": "fill_container",
-          "gap": 8,
+          "gap": 12,
           "alignItems": "center",
           "children": [
             {
@@ -1600,7 +1600,7 @@
                   "content": "06:00",
                   "lineHeight": 1.45,
                   "fontFamily": "$tt-font",
-                  "fontSize": 28,
+                  "fontSize": 26,
                   "fontWeight": "600"
                 },
                 {
@@ -1621,9 +1621,9 @@
               "type": "frame",
               "id": "e7uYt",
               "name": "旅程历时",
-              "width": 106,
+              "width": 120,
               "layout": "vertical",
-              "gap": 7,
+              "gap": 5,
               "alignItems": "center",
               "children": [
                 {
@@ -1631,7 +1631,11 @@
                   "id": "UzhQs",
                   "name": "历时",
                   "fill": "$tt-muted",
-                  "content": "30 分钟",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "1小时30分",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
                   "fontFamily": "$tt-font",
                   "fontSize": 12,
                   "fontWeight": "normal"
@@ -1649,7 +1653,11 @@
                   "id": "IaQF8",
                   "name": "到达日期提示",
                   "fill": "$tt-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
                   "content": "当日到达",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
                   "fontFamily": "$tt-font",
                   "fontSize": 12,
                   "fontWeight": "normal"
@@ -1672,11 +1680,11 @@
                   "fill": "$tt-ink",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "06:30",
+                  "content": "07:30",
                   "lineHeight": 1.45,
                   "textAlign": "right",
                   "fontFamily": "$tt-font",
-                  "fontSize": 28,
+                  "fontSize": 26,
                   "fontWeight": "600"
                 },
                 {
@@ -2073,6 +2081,12 @@
                     "u3rTv": {
                       "icon": "circle-check",
                       "fill": "$tt-primary"
+                    },
+                    "UzhQs": {
+                      "content": "30分钟"
+                    },
+                    "y1ohBW": {
+                      "content": "06:30"
                     }
                   }
                 },
@@ -2090,7 +2104,7 @@
                       "content": "06:14"
                     },
                     "UzhQs": {
-                      "content": "37 分钟"
+                      "content": "37分钟"
                     },
                     "y1ohBW": {
                       "content": "06:51"
@@ -2256,10 +2270,10 @@
               "id": "HceGu",
               "name": "出发时段",
               "width": "fill_container",
-              "fill": "$tt-surface",
+              "fill": "$tt-bg",
               "cornerRadius": 24,
               "layout": "vertical",
-              "gap": 20,
+              "gap": 14,
               "padding": 20,
               "children": [
                 {
@@ -2290,7 +2304,7 @@
                   "fill": "$tt-ink",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "出发时段",
+                  "content": "选择出发时段",
                   "lineHeight": 1.5,
                   "fontFamily": "$tt-font",
                   "fontSize": 24,
@@ -2303,10 +2317,22 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "以北京出发时间为准",
+                  "content": "北京时间 · 所选日期每天适用",
                   "lineHeight": 1.5,
                   "fontFamily": "$tt-font",
                   "fontSize": 14
+                },
+                {
+                  "type": "text",
+                  "id": "TZ0MD",
+                  "name": "已选时段实时摘要",
+                  "fill": "$tt-primary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "22:00 – 06:30",
+                  "fontFamily": "$tt-font",
+                  "fontSize": 22,
+                  "fontWeight": "600"
                 },
                 {
                   "type": "frame",
@@ -2314,248 +2340,490 @@
                   "name": "时段范围",
                   "width": "fill_container",
                   "gap": 12,
-                  "alignItems": "center",
                   "children": [
                     {
                       "type": "frame",
-                      "id": "UmnBS",
-                      "name": "开始",
+                      "id": "rKNXw",
+                      "name": "开始时间滚轮",
                       "width": "fill_container",
-                      "fill": "$tt-bg",
+                      "fill": "$tt-surface",
                       "cornerRadius": 14,
                       "layout": "vertical",
-                      "gap": 4,
-                      "padding": 16,
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "l4D1D",
-                          "name": "开始标签",
-                          "fill": "$tt-muted",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "开始",
-                          "lineHeight": 1.5,
-                          "fontFamily": "$tt-font",
-                          "fontSize": 12
-                        },
-                        {
-                          "type": "text",
-                          "id": "Rv5nb",
-                          "name": "开始时间",
-                          "fill": "$tt-ink",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "18:00",
-                          "lineHeight": 1.5,
-                          "fontFamily": "$tt-font",
-                          "fontSize": 28,
-                          "fontWeight": "600"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "xZzzr",
-                      "name": "结束",
-                      "width": "fill_container",
-                      "fill": "$tt-bg",
-                      "cornerRadius": 14,
-                      "layout": "vertical",
-                      "gap": 4,
-                      "padding": 16,
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "Mi01T",
-                          "name": "结束标签",
-                          "fill": "$tt-muted",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "结束",
-                          "lineHeight": 1.5,
-                          "fontFamily": "$tt-font",
-                          "fontSize": 12
-                        },
-                        {
-                          "type": "text",
-                          "id": "o37rCG",
-                          "name": "结束时间",
-                          "fill": "$tt-ink",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "24:00",
-                          "lineHeight": 1.5,
-                          "fontFamily": "$tt-font",
-                          "fontSize": 28,
-                          "fontWeight": "600"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "CQAV8",
-                  "name": "时段选项",
-                  "width": "fill_container",
-                  "layout": "vertical",
-                  "gap": 8,
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "h9hgDa",
-                      "name": "全天",
-                      "width": "fill_container",
-                      "height": 48,
-                      "fill": "$tt-bg",
-                      "cornerRadius": 10,
                       "gap": 8,
-                      "padding": [
-                        0,
-                        12
-                      ],
+                      "padding": 12,
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "text",
-                          "id": "h8TpdR",
-                          "name": "全天名称",
-                          "fill": "$tt-ink",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "全天",
-                          "lineHeight": 1.5,
-                          "fontFamily": "$tt-font",
-                          "fontSize": 14
-                        },
-                        {
-                          "type": "text",
-                          "id": "T7aHg",
-                          "name": "全天范围",
-                          "fill": "$tt-muted",
-                          "content": "00:00–24:00",
-                          "fontFamily": "Inter",
-                          "fontSize": 13,
-                          "fontWeight": "normal"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "fkR97",
-                      "name": "早上",
-                      "width": "fill_container",
-                      "height": 48,
-                      "fill": "$tt-bg",
-                      "cornerRadius": 10,
-                      "gap": 8,
-                      "padding": [
-                        0,
-                        12
-                      ],
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "S2khB",
-                          "name": "早上名称",
-                          "fill": "$tt-ink",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "早上",
-                          "lineHeight": 1.5,
-                          "fontFamily": "$tt-font",
-                          "fontSize": 14
-                        },
-                        {
-                          "type": "text",
-                          "id": "g54Lj",
-                          "name": "早上范围",
-                          "fill": "$tt-muted",
-                          "content": "06:00–12:00",
-                          "fontFamily": "Inter",
-                          "fontSize": 13,
-                          "fontWeight": "normal"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "uItkD",
-                      "name": "下午",
-                      "width": "fill_container",
-                      "height": 48,
-                      "fill": "$tt-bg",
-                      "cornerRadius": 10,
-                      "gap": 8,
-                      "padding": [
-                        0,
-                        12
-                      ],
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "Jp8G9",
-                          "name": "下午名称",
-                          "fill": "$tt-ink",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "下午",
-                          "lineHeight": 1.5,
-                          "fontFamily": "$tt-font",
-                          "fontSize": 14
-                        },
-                        {
-                          "type": "text",
-                          "id": "n8VPD",
-                          "name": "下午范围",
-                          "fill": "$tt-muted",
-                          "content": "12:00–18:00",
-                          "fontFamily": "Inter",
-                          "fontSize": 13,
-                          "fontWeight": "normal"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "YiDXC",
-                      "name": "晚上",
-                      "width": "fill_container",
-                      "height": 48,
-                      "fill": "$tt-tint",
-                      "cornerRadius": 10,
-                      "gap": 8,
-                      "padding": [
-                        0,
-                        12
-                      ],
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "P8IeB4",
-                          "name": "晚上名称",
+                          "id": "Zd2r2",
+                          "name": "开始时间标签",
                           "fill": "$tt-primary",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "晚上",
-                          "lineHeight": 1.5,
+                          "content": "开始",
                           "fontFamily": "$tt-font",
-                          "fontSize": 14,
+                          "fontSize": 16,
                           "fontWeight": "600"
                         },
                         {
+                          "type": "frame",
+                          "id": "uZB2L",
+                          "name": "开始小时分钟双列",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "x7hDp",
+                              "name": "开始小时滚轮",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "gEmxO",
+                                  "name": "开始小时说明",
+                                  "fill": "$tt-muted",
+                                  "content": "小时",
+                                  "fontFamily": "$tt-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "cPI0C",
+                                  "name": "开始小时候选值0",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "BPDvG",
+                                      "name": "开始小时21",
+                                      "fill": "#A5B4A8",
+                                      "content": "21",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "cYDBC",
+                                  "name": "开始小时选中值",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "stroke": "$tt-line",
+                                  "strokeWidth": {
+                                    "top": 1,
+                                    "bottom": 1
+                                  },
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "zzL4S",
+                                      "name": "开始小时22",
+                                      "fill": "$tt-primary",
+                                      "content": "22",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 24,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "W044Bq",
+                                  "name": "开始小时候选值2",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "CuL9A",
+                                      "name": "开始小时23",
+                                      "fill": "#A5B4A8",
+                                      "content": "23",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Qoslf",
+                              "name": "时分分隔",
+                              "height": 155,
+                              "layout": "vertical",
+                              "padding": [
+                                21,
+                                0,
+                                0,
+                                0
+                              ],
+                              "justifyContent": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "WDdcO",
+                                  "name": "时分冒号",
+                                  "fill": "$tt-muted",
+                                  "content": ":",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 22,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "G4LHD",
+                              "name": "开始分钟滚轮",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "YMQQd",
+                                  "name": "开始分钟说明",
+                                  "fill": "$tt-muted",
+                                  "content": "分钟",
+                                  "fontFamily": "$tt-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "ELpzd",
+                                  "name": "开始分钟候选值0",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "zFREZ",
+                                      "name": "开始分钟59",
+                                      "fill": "#A5B4A8",
+                                      "content": "59",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "l1yHPq",
+                                  "name": "开始分钟选中值",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "stroke": "$tt-line",
+                                  "strokeWidth": {
+                                    "top": 1,
+                                    "bottom": 1
+                                  },
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "RUbkR",
+                                      "name": "开始分钟00",
+                                      "fill": "$tt-primary",
+                                      "content": "00",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 24,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "P3iqzs",
+                                  "name": "开始分钟候选值2",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "pJjkN",
+                                      "name": "开始分钟01",
+                                      "fill": "#A5B4A8",
+                                      "content": "01",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "B1qFo3",
+                      "name": "结束时间滚轮",
+                      "width": "fill_container",
+                      "fill": "$tt-surface",
+                      "cornerRadius": 14,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": 12,
+                      "alignItems": "center",
+                      "children": [
+                        {
                           "type": "text",
-                          "id": "isZ7I",
-                          "name": "晚上范围",
-                          "fill": "$tt-muted",
-                          "content": "18:00–24:00",
-                          "fontFamily": "Inter",
-                          "fontSize": 13,
-                          "fontWeight": "normal"
+                          "id": "BQjiP",
+                          "name": "结束时间标签",
+                          "fill": "$tt-primary",
+                          "content": "结束",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ITPJ0",
+                          "name": "结束小时分钟双列",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "N2N8J",
+                              "name": "结束小时滚轮",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "WN5Z6",
+                                  "name": "结束小时说明",
+                                  "fill": "$tt-muted",
+                                  "content": "小时",
+                                  "fontFamily": "$tt-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "miq0D",
+                                  "name": "结束小时候选值0",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "s2YTa",
+                                      "name": "结束小时05",
+                                      "fill": "#A5B4A8",
+                                      "content": "05",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "x95YHh",
+                                  "name": "结束小时选中值",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "stroke": "$tt-line",
+                                  "strokeWidth": {
+                                    "top": 1,
+                                    "bottom": 1
+                                  },
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "xcxrd",
+                                      "name": "结束小时06",
+                                      "fill": "$tt-primary",
+                                      "content": "06",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 24,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "gX6UA",
+                                  "name": "结束小时候选值2",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "FdXFP",
+                                      "name": "结束小时07",
+                                      "fill": "#A5B4A8",
+                                      "content": "07",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "qIrAR",
+                              "name": "时分分隔",
+                              "height": 155,
+                              "layout": "vertical",
+                              "padding": [
+                                21,
+                                0,
+                                0,
+                                0
+                              ],
+                              "justifyContent": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Y99QGY",
+                                  "name": "时分冒号",
+                                  "fill": "$tt-muted",
+                                  "content": ":",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 22,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "r8K9n2",
+                              "name": "结束分钟滚轮",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "tpuvi",
+                                  "name": "结束分钟说明",
+                                  "fill": "$tt-muted",
+                                  "content": "分钟",
+                                  "fontFamily": "$tt-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "jzavE",
+                                  "name": "结束分钟候选值0",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "uXhR1",
+                                      "name": "结束分钟29",
+                                      "fill": "#A5B4A8",
+                                      "content": "29",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "fRkrs",
+                                  "name": "结束分钟选中值",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "stroke": "$tt-line",
+                                  "strokeWidth": {
+                                    "top": 1,
+                                    "bottom": 1
+                                  },
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "p4gZQL",
+                                      "name": "结束分钟30",
+                                      "fill": "$tt-primary",
+                                      "content": "30",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 24,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "MhAXh",
+                                  "name": "结束分钟候选值2",
+                                  "width": "fill_container",
+                                  "height": 42,
+                                  "fill": "$tt-surface",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "tX3yG",
+                                      "name": "结束分钟31",
+                                      "fill": "#A5B4A8",
+                                      "content": "31",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 18,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -2568,22 +2836,58 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "结束时间早于开始时间时，按跨午夜时段筛选。",
+                  "content": "跨午夜：包含 22:00 之后和 06:30 之前的出发车次。",
                   "lineHeight": 1.5,
                   "fontFamily": "$tt-font",
                   "fontSize": 12
                 },
                 {
-                  "id": "SKQQB",
+                  "id": "zOKUY",
                   "type": "ref",
-                  "ref": "uhjIL",
-                  "name": "完成时段筛选",
+                  "ref": "tTU4G",
+                  "name": "恢复全天时段",
                   "width": "fill_container",
+                  "fill": "$tt-bg",
+                  "strokeWidth": 0,
                   "descendants": {
-                    "ETyrp": {
-                      "content": "完成"
+                    "W6c09": {
+                      "content": "恢复全天 00:00–24:00",
+                      "fill": "$tt-primary"
                     }
                   }
+                },
+                {
+                  "type": "frame",
+                  "id": "r3r0I",
+                  "name": "时间选择操作",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "id": "l3Ni8",
+                      "type": "ref",
+                      "ref": "tTU4G",
+                      "name": "取消时段修改",
+                      "width": "fill_container",
+                      "descendants": {
+                        "W6c09": {
+                          "content": "取消"
+                        }
+                      }
+                    },
+                    {
+                      "id": "SKQQB",
+                      "type": "ref",
+                      "ref": "uhjIL",
+                      "name": "完成时段筛选",
+                      "width": "fill_container",
+                      "descendants": {
+                        "ETyrp": {
+                          "content": "完成"
+                        }
+                      }
+                    }
+                  ]
                 }
               ]
             },
@@ -3361,7 +3665,7 @@
               "fill": "$tt-surface",
               "cornerRadius": 24,
               "layout": "vertical",
-              "gap": 20,
+              "gap": 14,
               "padding": 20,
               "children": [
                 {
@@ -3442,7 +3746,7 @@
                   "fill": "$tt-ink",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "2026 年 10 月",
+                  "content": "2026 年 10 月 · 上下滑动切换月份",
                   "lineHeight": 1.5,
                   "fontFamily": "$tt-font",
                   "fontSize": 17,
@@ -3668,7 +3972,12 @@
                           "width": "fill_container",
                           "height": 48,
                           "fill": "$tt-primary",
-                          "cornerRadius": 8,
+                          "cornerRadius": [
+                            24,
+                            0,
+                            0,
+                            24
+                          ],
                           "layout": "vertical",
                           "justifyContent": "center",
                           "alignItems": "center",
@@ -3691,8 +4000,7 @@
                           "name": "日期2",
                           "width": "fill_container",
                           "height": 48,
-                          "fill": "$tt-primary",
-                          "cornerRadius": 8,
+                          "fill": "$tt-tint",
                           "layout": "vertical",
                           "justifyContent": "center",
                           "alignItems": "center",
@@ -3701,7 +4009,7 @@
                               "type": "text",
                               "id": "BRJCv",
                               "name": "2日",
-                              "fill": "#FFFFFF",
+                              "fill": "$tt-primary",
                               "content": "2",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -3715,8 +4023,13 @@
                           "name": "日期3",
                           "width": "fill_container",
                           "height": 48,
-                          "fill": "$tt-surface",
-                          "cornerRadius": 8,
+                          "fill": "$tt-primary",
+                          "cornerRadius": [
+                            0,
+                            24,
+                            24,
+                            0
+                          ],
                           "layout": "vertical",
                           "justifyContent": "center",
                           "alignItems": "center",
@@ -3725,10 +4038,11 @@
                               "type": "text",
                               "id": "TDWyb",
                               "name": "3日",
-                              "fill": "#8A918B",
+                              "fill": "#FFFFFF",
                               "content": "3",
                               "fontFamily": "Inter",
-                              "fontSize": 15
+                              "fontSize": 15,
+                              "fontWeight": "600"
                             }
                           ]
                         },
@@ -3748,7 +4062,7 @@
                               "type": "text",
                               "id": "wc7Hk",
                               "name": "4日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "4",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3780,7 +4094,7 @@
                               "type": "text",
                               "id": "s34Cbs",
                               "name": "5日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "5",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3803,7 +4117,7 @@
                               "type": "text",
                               "id": "DeKWJ",
                               "name": "6日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "6",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3826,7 +4140,7 @@
                               "type": "text",
                               "id": "vvktJ",
                               "name": "7日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "7",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3849,7 +4163,7 @@
                               "type": "text",
                               "id": "pOD5y",
                               "name": "8日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "8",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3872,7 +4186,7 @@
                               "type": "text",
                               "id": "KUUjW",
                               "name": "9日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "9",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3895,7 +4209,7 @@
                               "type": "text",
                               "id": "EYVRj",
                               "name": "10日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "10",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3918,7 +4232,7 @@
                               "type": "text",
                               "id": "J31Fq2",
                               "name": "11日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "11",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3950,7 +4264,7 @@
                               "type": "text",
                               "id": "sh76j",
                               "name": "12日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "12",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3973,7 +4287,7 @@
                               "type": "text",
                               "id": "Q4rpU",
                               "name": "13日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "13",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -3996,7 +4310,7 @@
                               "type": "text",
                               "id": "fY68L",
                               "name": "14日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "14",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -4019,7 +4333,7 @@
                               "type": "text",
                               "id": "qwzOL",
                               "name": "15日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "15",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -4042,7 +4356,7 @@
                               "type": "text",
                               "id": "z87W7y",
                               "name": "16日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "16",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -4065,7 +4379,7 @@
                               "type": "text",
                               "id": "y1xhce",
                               "name": "17日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "17",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -4088,7 +4402,7 @@
                               "type": "text",
                               "id": "zTtN0",
                               "name": "18日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "18",
                               "fontFamily": "Inter",
                               "fontSize": 15
@@ -4120,7 +4434,7 @@
                               "type": "text",
                               "id": "f7Coed",
                               "name": "19日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "19",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4144,7 +4458,7 @@
                               "type": "text",
                               "id": "OJYy8",
                               "name": "20日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "20",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4168,7 +4482,7 @@
                               "type": "text",
                               "id": "oCPbB",
                               "name": "21日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "21",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4192,7 +4506,7 @@
                               "type": "text",
                               "id": "QR3BY",
                               "name": "22日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "22",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4216,7 +4530,7 @@
                               "type": "text",
                               "id": "T02tQ",
                               "name": "23日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "23",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4240,7 +4554,7 @@
                               "type": "text",
                               "id": "N5rez",
                               "name": "24日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "24",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4264,7 +4578,7 @@
                               "type": "text",
                               "id": "V30BnO",
                               "name": "25日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "25",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4297,7 +4611,7 @@
                               "type": "text",
                               "id": "huj8S",
                               "name": "26日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "26",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4321,7 +4635,7 @@
                               "type": "text",
                               "id": "CJ3tM",
                               "name": "27日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "27",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4345,7 +4659,7 @@
                               "type": "text",
                               "id": "yNIZh",
                               "name": "28日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "28",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4369,7 +4683,7 @@
                               "type": "text",
                               "id": "c026bJ",
                               "name": "29日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "29",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4393,7 +4707,7 @@
                               "type": "text",
                               "id": "UYEKG",
                               "name": "30日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "30",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4417,7 +4731,7 @@
                               "type": "text",
                               "id": "sE2UR",
                               "name": "31日",
-                              "fill": "#8A918B",
+                              "fill": "$tt-ink",
                               "content": "31",
                               "fontFamily": "Inter",
                               "fontSize": 15,
@@ -4448,7 +4762,7 @@
                   "fill": "$tt-primary",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "10 月 1 日 — 10 月 2 日 · 共 2 天",
+                  "content": "10 月 1 日 – 10 月 3 日 · 共 3 天",
                   "lineHeight": 1.5,
                   "fontFamily": "$tt-font",
                   "fontSize": 14,
@@ -4461,22 +4775,43 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "灰色日期暂未开售。日期可选范围随实际放票更新。",
+                  "content": "先选开始，再选结束；点完成才应用。\n范围两端均包含，最多 31 天。未开售日期会在查询时提示。",
                   "lineHeight": 1.5,
                   "fontFamily": "$tt-font",
                   "fontSize": 12
                 },
                 {
-                  "id": "J62hK",
-                  "type": "ref",
-                  "ref": "uhjIL",
-                  "name": "确认日期范围",
+                  "type": "frame",
+                  "id": "HXuiK",
+                  "name": "日期底部操作",
                   "width": "fill_container",
-                  "descendants": {
-                    "ETyrp": {
-                      "content": "完成 · 2 天"
+                  "gap": 12,
+                  "children": [
+                    {
+                      "id": "o1uQo",
+                      "type": "ref",
+                      "ref": "tTU4G",
+                      "name": "取消日期修改",
+                      "width": "fill_container",
+                      "descendants": {
+                        "W6c09": {
+                          "content": "取消"
+                        }
+                      }
+                    },
+                    {
+                      "id": "J62hK",
+                      "type": "ref",
+                      "ref": "uhjIL",
+                      "name": "确认日期范围",
+                      "width": "fill_container",
+                      "descendants": {
+                        "ETyrp": {
+                          "content": "完成 · 3 天"
+                        }
+                      }
                     }
-                  }
+                  ]
                 }
               ]
             },
@@ -5117,7 +5452,7 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "已查 18 / 60 个候选城市\n已发现 5 个有票城市",
+                  "content": "已处理 18 / 60 个查询项 · 30%\n已发现 5 个有票城市",
                   "lineHeight": 1.55,
                   "fontFamily": "$tt-font",
                   "fontSize": 14
@@ -5126,18 +5461,18 @@
                   "type": "frame",
                   "id": "rxXQK",
                   "name": "进度条",
+                  "clip": true,
                   "width": "fill_container",
                   "height": 6,
-                  "fill": "$tt-bg",
+                  "fill": "$tt-line",
                   "cornerRadius": 3,
                   "children": [
                     {
                       "type": "rectangle",
-                      "cornerRadius": 3,
                       "id": "w49A9f",
                       "name": "已完成进度",
                       "fill": "$tt-primary",
-                      "width": 106,
+                      "width": 116.4,
                       "height": 6
                     }
                   ]
@@ -5173,7 +5508,7 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "停止后保留结果，标记为部分结果。",
+                  "content": "进度连续向右填充，无间隙、无端点圆点。\n停止后保留结果，继续补查未完成项。",
                   "lineHeight": 1.55,
                   "fontFamily": "$tt-font",
                   "fontSize": 12
@@ -6158,7 +6493,7 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "日期和筛选弹层点“完成”才应用，返回或下滑关闭不应用本次修改。提交前校验日期、至少一个车站和席别；保留上次已应用条件。",
+                  "content": "日期在同一个日历窗口点选开始和结束，跨月滚动，范围连续高亮。未选完整不能完成；点完成应用，取消或下滑关闭不保存。最多 31 天，禁选过去日期。",
                   "lineHeight": 1.6,
                   "fontFamily": "$tt-font",
                   "fontSize": 14,
@@ -6197,7 +6532,7 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "前台查询逐步展示已找到城市。停止后保留部分结果；继续查询只补未完成部分。多日期进度按候选城市全部日期成功后计完成。",
+                  "content": "初始化只显示空轨道和连接说明。有计划后，按已处理查询项 / 总项连续填充，6dp 轨道无间隙、无端点圆点。停止保留结果，继续补查未完成项；成功、失败、未开售分别计数。",
                   "lineHeight": 1.6,
                   "fontFamily": "$tt-font",
                   "fontSize": 14,
@@ -6371,7 +6706,7 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "412 逻辑宽度为设计基准，长列表滚动；详情购票操作固定于系统导航安全区上方。点击区至少 48dp，支持字体放大、返回手势和刘海避让。",
+                  "content": "412 逻辑宽度为基准，卡片中间为耗时、1dp 实线、到达日期。可用宽度 <300dp 或字体 >1.15 倍时，将耗时和到达说明移到时刻下方，长站名换行。点击区至少 48dp；安全区使用系统 Insets。",
                   "lineHeight": 1.6,
                   "fontFamily": "$tt-font",
                   "fontSize": 14,
@@ -6388,11 +6723,757 @@
           "fill": "$tt-muted",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "跨午夜时段：当天开始时刻以后或结束时刻以前；到达日保留 +1 / +2 天。打开 12306 不承诺自动预填；复制行程供手动检索。真机适配在华为 Mate 60 Pro · HarmonyOS 4.2.0 验收。",
+          "content": "自定义时段：同窗两组小时/分钟滚轮，一次完成；取消不应用。开始 00:00–23:59，结束可到 24:00（分钟固定 00），两端相同禁用完成。跨午夜：开始时刻以后或结束时刻以前。窄屏/大字体两组上下排列，底部操作固定。到达日保留 +1 / +2 天。12306 不承诺预填，可复制行程手动检索。",
           "lineHeight": 1.6,
           "fontFamily": "$tt-font",
           "fontSize": 13,
           "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "QKZt6",
+      "x": 1904,
+      "y": 527,
+      "name": "组件示例 · 大字体车次时间",
+      "width": 372,
+      "fill": "$tt-surface",
+      "cornerRadius": 18,
+      "layout": "vertical",
+      "gap": 12,
+      "padding": 18,
+      "children": [
+        {
+          "type": "text",
+          "id": "tSFaC",
+          "name": "大字体示例名称",
+          "fill": "$tt-ink",
+          "content": "G123 · 大字体 / 跨日示例",
+          "fontFamily": "$tt-font",
+          "fontSize": 17,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "M9HlEH",
+          "name": "两端时刻与站名",
+          "width": "fill_container",
+          "gap": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "jnlYH",
+              "name": "出发信息",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "raAW2",
+                  "name": "出发时刻",
+                  "fill": "$tt-ink",
+                  "content": "23:30",
+                  "fontFamily": "$tt-font",
+                  "fontSize": 34,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "pzxcF",
+                  "name": "出发站名",
+                  "fill": "$tt-muted",
+                  "content": "北京南",
+                  "fontFamily": "$tt-font",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xsgyc",
+              "name": "到达信息",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "K4zMj",
+                  "name": "到达时刻",
+                  "fill": "$tt-ink",
+                  "content": "01:05",
+                  "fontFamily": "$tt-font",
+                  "fontSize": 34,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "b9OxLj",
+                  "name": "到达站名",
+                  "fill": "$tt-muted",
+                  "content": "天津南",
+                  "fontFamily": "$tt-font",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "Z34ZJG",
+          "name": "旅程分隔线",
+          "fill": "$tt-line",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "text",
+          "id": "Cvotr",
+          "name": "完整耗时与到达日",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "1小时35分 · +1 天到达",
+          "lineHeight": 1.5,
+          "textAlign": "center",
+          "fontFamily": "$tt-font",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "NE7Tn",
+      "x": 1904,
+      "y": 765,
+      "name": "时段选择 · 大字体上下布局",
+      "width": 372,
+      "fill": "$tt-bg",
+      "cornerRadius": 24,
+      "layout": "vertical",
+      "gap": 14,
+      "padding": 20,
+      "children": [
+        {
+          "type": "frame",
+          "id": "J4vXj",
+          "name": "弹层拖动区域",
+          "width": "fill_container",
+          "height": 12,
+          "layout": "vertical",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "rectangle",
+              "cornerRadius": 2,
+              "id": "P4t5l",
+              "name": "拖动柄",
+              "fill": "$tt-line",
+              "width": 36,
+              "height": 4
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "MwssK",
+          "name": "弹层标题",
+          "fill": "$tt-ink",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "选择出发时段",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 28,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "G0QLY",
+          "name": "时段解释",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "北京时间 · 所选日期每天适用",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14
+        },
+        {
+          "type": "text",
+          "id": "rEUym",
+          "name": "已选时段实时摘要",
+          "fill": "$tt-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "22:00 – 06:30",
+          "fontFamily": "$tt-font",
+          "fontSize": 26,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "R41xKD",
+          "name": "时段范围",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 12,
+          "children": [
+            {
+              "type": "frame",
+              "id": "wRiQ0",
+              "name": "开始时间滚轮",
+              "width": "fill_container",
+              "fill": "$tt-surface",
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Jn05N",
+                  "name": "开始时间标签",
+                  "fill": "$tt-primary",
+                  "content": "开始",
+                  "fontFamily": "$tt-font",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "u9EUA1",
+                  "name": "开始小时分钟双列",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "aGQXP",
+                      "name": "开始小时滚轮",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "R26ut",
+                          "name": "开始小时说明",
+                          "fill": "$tt-muted",
+                          "content": "小时",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dsjMS",
+                          "name": "开始小时候选值0",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "SUj6W",
+                              "name": "开始小时21",
+                              "fill": "#A5B4A8",
+                              "content": "21",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "CMI8h",
+                          "name": "开始小时选中值",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "stroke": "$tt-line",
+                          "strokeWidth": {
+                            "top": 1,
+                            "bottom": 1
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "y8ZcTx",
+                              "name": "开始小时22",
+                              "fill": "$tt-primary",
+                              "content": "22",
+                              "fontFamily": "Inter",
+                              "fontSize": 24,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "J3dfL",
+                          "name": "开始小时候选值2",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "t0E2J",
+                              "name": "开始小时23",
+                              "fill": "#A5B4A8",
+                              "content": "23",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "bOgtJ",
+                      "name": "时分分隔",
+                      "height": 155,
+                      "layout": "vertical",
+                      "padding": [
+                        21,
+                        0,
+                        0,
+                        0
+                      ],
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XWogE",
+                          "name": "时分冒号",
+                          "fill": "$tt-muted",
+                          "content": ":",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "yrGpR",
+                      "name": "开始分钟滚轮",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "K4SQw",
+                          "name": "开始分钟说明",
+                          "fill": "$tt-muted",
+                          "content": "分钟",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Ov06M",
+                          "name": "开始分钟候选值0",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Ndl3A",
+                              "name": "开始分钟59",
+                              "fill": "#A5B4A8",
+                              "content": "59",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "HCsSZ",
+                          "name": "开始分钟选中值",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "stroke": "$tt-line",
+                          "strokeWidth": {
+                            "top": 1,
+                            "bottom": 1
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "lRzz7",
+                              "name": "开始分钟00",
+                              "fill": "$tt-primary",
+                              "content": "00",
+                              "fontFamily": "Inter",
+                              "fontSize": 24,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "KsU44",
+                          "name": "开始分钟候选值2",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "GzW7J",
+                              "name": "开始分钟01",
+                              "fill": "#A5B4A8",
+                              "content": "01",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "LYrzt",
+              "name": "结束时间滚轮",
+              "width": "fill_container",
+              "fill": "$tt-surface",
+              "cornerRadius": 14,
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "R3mLn",
+                  "name": "结束时间标签",
+                  "fill": "$tt-primary",
+                  "content": "结束",
+                  "fontFamily": "$tt-font",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "F5s8u",
+                  "name": "结束小时分钟双列",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "wMSev",
+                      "name": "结束小时滚轮",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QGaxU",
+                          "name": "结束小时说明",
+                          "fill": "$tt-muted",
+                          "content": "小时",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "NicV6",
+                          "name": "结束小时候选值0",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "GOAmG",
+                              "name": "结束小时05",
+                              "fill": "#A5B4A8",
+                              "content": "05",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Q2pSz6",
+                          "name": "结束小时选中值",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "stroke": "$tt-line",
+                          "strokeWidth": {
+                            "top": 1,
+                            "bottom": 1
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "XMHEC",
+                              "name": "结束小时06",
+                              "fill": "$tt-primary",
+                              "content": "06",
+                              "fontFamily": "Inter",
+                              "fontSize": 24,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "jVMyp",
+                          "name": "结束小时候选值2",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "bolkt",
+                              "name": "结束小时07",
+                              "fill": "#A5B4A8",
+                              "content": "07",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "O3mRa",
+                      "name": "时分分隔",
+                      "height": 155,
+                      "layout": "vertical",
+                      "padding": [
+                        21,
+                        0,
+                        0,
+                        0
+                      ],
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "A2NsKb",
+                          "name": "时分冒号",
+                          "fill": "$tt-muted",
+                          "content": ":",
+                          "fontFamily": "Inter",
+                          "fontSize": 22,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SXnjQ",
+                      "name": "结束分钟滚轮",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "AKGK5",
+                          "name": "结束分钟说明",
+                          "fill": "$tt-muted",
+                          "content": "分钟",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dAQEI",
+                          "name": "结束分钟候选值0",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "RsuEg",
+                              "name": "结束分钟29",
+                              "fill": "#A5B4A8",
+                              "content": "29",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ux5Bz",
+                          "name": "结束分钟选中值",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "stroke": "$tt-line",
+                          "strokeWidth": {
+                            "top": 1,
+                            "bottom": 1
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tkVcd",
+                              "name": "结束分钟30",
+                              "fill": "$tt-primary",
+                              "content": "30",
+                              "fontFamily": "Inter",
+                              "fontSize": 24,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "jJgF6",
+                          "name": "结束分钟候选值2",
+                          "width": "fill_container",
+                          "height": 42,
+                          "fill": "$tt-surface",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tEBwz",
+                              "name": "结束分钟31",
+                              "fill": "#A5B4A8",
+                              "content": "31",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "n70cN5",
+          "name": "跨午夜解释",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "跨午夜：包含 22:00 之后和 06:30 之前的出发车次。",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 12
+        },
+        {
+          "id": "Wdgre",
+          "type": "ref",
+          "ref": "tTU4G",
+          "name": "恢复全天时段",
+          "width": "fill_container",
+          "fill": "$tt-bg",
+          "strokeWidth": 0,
+          "descendants": {
+            "W6c09": {
+              "content": "恢复全天 00:00–24:00",
+              "fill": "$tt-primary"
+            }
+          }
+        },
+        {
+          "type": "frame",
+          "id": "teK0c",
+          "name": "时间选择操作",
+          "width": "fill_container",
+          "gap": 12,
+          "children": [
+            {
+              "id": "bMcpQ",
+              "type": "ref",
+              "ref": "tTU4G",
+              "name": "取消时段修改",
+              "width": "fill_container",
+              "descendants": {
+                "W6c09": {
+                  "content": "取消"
+                }
+              }
+            },
+            {
+              "id": "oIpiC",
+              "type": "ref",
+              "ref": "uhjIL",
+              "name": "完成时段筛选",
+              "width": "fill_container",
+              "descendants": {
+                "ETyrp": {
+                  "content": "完成"
+                }
+              }
+            }
+          ]
         }
       ]
     }

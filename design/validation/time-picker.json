@@ -1,0 +1,24 @@
+{
+  "verified_at": "2026-09-19T08:24:54.398881+08:00",
+  "file": "design/train-trip-v1.pen",
+  "saved": true,
+  "save_verification": "Pencil title Edited cleared; file metadata and MCP readback verified",
+  "size_bytes": 276391,
+  "mtime": "2026-09-19T08:22:00.501446+08:00",
+  "visible_nodes": 749,
+  "text_nodes": 338,
+  "clipped_nodes": [],
+  "placeholders": [],
+  "empty_names": [],
+  "empty_texts": [],
+  "top_level_overlaps": [],
+  "checked_nodes": [
+    "HceGu",
+    "NE7Tn",
+    "gNcl5"
+  ],
+  "visual_review": "Pencil normal and stacked panels, emulator normal and 1.3 font inspected; no clipping or overlap found",
+  "ocr_files": 4,
+  "ocr_text_blocks": 105,
+  "ocr_evidence": "docs/verification/time-picker/ocr.json"
+}

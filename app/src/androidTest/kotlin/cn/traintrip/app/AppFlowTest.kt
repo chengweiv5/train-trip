@@ -37,8 +37,8 @@ class AppFlowTest {
 
     @Test fun timeAndScopeApply() {
         compose.onNodeWithText("自定义").performScrollTo().performClick()
-        compose.onNodeWithText("开始 HH:mm").performTextReplacement("22:00")
-        compose.onNodeWithText("结束 HH:mm").performTextReplacement("06:00")
+        chooseWheel("开始小时",22)
+        chooseWheel("结束小时",6)
         compose.onNodeWithText("完成").performClick()
         compose.onNodeWithText("22:00–06:00 · 所选日期每天适用").assertExists()
         compose.onNodeWithText("查询目的地").performScrollTo().performClick()

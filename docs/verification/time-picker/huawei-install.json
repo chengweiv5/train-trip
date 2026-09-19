@@ -1,0 +1,12 @@
+{
+  "verified_at": "2026-09-19T08:24:13.014856+08:00",
+  "device": "HUAWEI ALN-AL00",
+  "version": "0.1.2",
+  "version_code": 3,
+  "installation": "Performing Streamed Install\nSuccess",
+  "launch": "Starting: Intent { cmp=cn.traintrip.app/.MainActivity }\nStatus: ok\nLaunchState: COLD\nActivity: cn.traintrip.app/.MainActivity\nTotalTime: 1557\nWaitTime: 1564\nComplete",
+  "foreground_verified": true,
+  "preferences_readable": true,
+  "preferences_unchanged": true,
+  "functional_ui_tests": "temporary emulator only"
+}

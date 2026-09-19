@@ -10,7 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cn.traintrip.core.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -49,3 +55,47 @@ fun timeText(m:Int):String="%02d:%02d".format(m/60,m%60)
 fun timeRange(f:SearchFilters):String=if(f.startMinute==0 && f.endMinute==1440) "全天出发" else "${timeText(f.startMinute)}–${timeText(f.endMinute)}"
 fun durationText(minutes:Int?):String=if(minutes==null) "时刻待定" else if(minutes<60) "$minutes 分钟" else "${minutes/60} 小时${if(minutes%60==0) "" else " ${minutes%60} 分"}"
 fun seatSummary(f:SearchFilters):String=if(f.seats.size==SeatType.entries.size) "不限，含无座" else f.seats.sortedBy { it.ordinal }.joinToString("、") { it.label }
+
+@Composable fun SearchProgressBar(progress:Float,modifier:Modifier=Modifier) {
+    LinearProgressIndicator(progress={progress.coerceIn(0f,1f)},modifier=modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)).testTag("query-progress"),
+        color=Forest,trackColor=Line,strokeCap=StrokeCap.Butt,gapSize=0.dp,drawStopIndicator={})
+}
+
+@Composable fun TripTiming(trip:Trip,modifier:Modifier=Modifier) {
+    val density=LocalDensity.current
+    BoxWithConstraints(modifier.fillMaxWidth()) {
+        val stacked=maxWidth<300.dp || density.fontScale>1.15f
+        Column(verticalArrangement=Arrangement.spacedBy(10.dp)) {
+            Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(12.dp),verticalAlignment=Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(trip.departure?.toString() ?: "--:--",fontSize=26.sp,fontWeight=FontWeight.SemiBold,maxLines=1)
+                    Text(trip.from.name,style=MaterialTheme.typography.bodySmall,color=Muted)
+                }
+                if(!stacked) JourneyInfo(trip,Modifier.weight(1.25f))
+                Column(Modifier.weight(1f),horizontalAlignment=Alignment.End) {
+                    Text(trip.arrival?.toString() ?: "--:--",fontSize=26.sp,fontWeight=FontWeight.SemiBold,maxLines=1)
+                    Text(trip.to.name,style=MaterialTheme.typography.bodySmall,color=Muted,textAlign=TextAlign.End)
+                }
+            }
+            if(stacked) {
+                HorizontalDivider(color=Line)
+                Text("${compactDuration(trip.durationMinutes)} · ${arrivalLabel(trip)}",Modifier.fillMaxWidth(),style=MaterialTheme.typography.bodySmall,color=Muted,textAlign=TextAlign.Center)
+            }
+        }
+    }
+}
+
+@Composable private fun JourneyInfo(trip:Trip,modifier:Modifier) {
+    Column(modifier,verticalArrangement=Arrangement.spacedBy(5.dp),horizontalAlignment=Alignment.CenterHorizontally) {
+        Text(compactDuration(trip.durationMinutes),Modifier.fillMaxWidth(),style=MaterialTheme.typography.bodySmall,color=Muted,textAlign=TextAlign.Center)
+        HorizontalDivider(color=Line)
+        Text(arrivalLabel(trip),Modifier.fillMaxWidth(),style=MaterialTheme.typography.bodySmall,color=Muted,textAlign=TextAlign.Center)
+    }
+}
+private fun compactDuration(minutes:Int?)=when {
+    minutes==null->"历时待定"
+    minutes<60->"${minutes}分钟"
+    minutes%60==0->"${minutes/60}小时"
+    else->"${minutes/60}小时${minutes%60}分"
+}
+private fun arrivalLabel(trip:Trip)=when(val offset=trip.arrivalDayOffset) { null->"到达日待定";0->"当日到达";else->"+$offset 天到达" }

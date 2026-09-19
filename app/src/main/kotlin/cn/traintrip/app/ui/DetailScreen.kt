@@ -8,9 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cn.traintrip.app.*
 import cn.traintrip.core.*
 import java.time.LocalDate
@@ -48,11 +46,7 @@ import java.time.LocalDate
             items(trips,key={it.key}) { t->
                 ContentCard(Modifier.fillMaxWidth(),selected=t.key==s.selectedTripKey) {
                     Row { Text(t.trainCode,Modifier.weight(1f),style=MaterialTheme.typography.titleMedium);Text("直达",style=MaterialTheme.typography.bodySmall,color=Muted) }
-                    Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-                        Column(Modifier.weight(1f)) { Text(t.departure.toString(),fontSize=26.sp,fontWeight=FontWeight.SemiBold);Text(t.from.name,style=MaterialTheme.typography.bodySmall,color=Muted) }
-                        Column(Modifier.weight(1f),horizontalAlignment=Alignment.CenterHorizontally) { Text(durationText(t.durationMinutes),style=MaterialTheme.typography.bodySmall,color=Muted);Text("────────",color=Line);Text(t.arrivalDayOffset?.takeIf { it>0 }?.let { "+$it 天" } ?: "当日到达",style=MaterialTheme.typography.bodySmall,color=Muted) }
-                        Column(Modifier.weight(1f),horizontalAlignment=Alignment.End) { Text(t.arrival.toString(),fontSize=26.sp,fontWeight=FontWeight.SemiBold);Text(t.to.name,style=MaterialTheme.typography.bodySmall,color=Muted) }
-                    }
+                    TripTiming(t)
                     FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                         f.seats.filter { t.seats[it]?.let { a->a.confirmedFor(f.people) || a.uncertainFor(f.people) }==true }.sortedBy { it.ordinal }.forEach { seat->
                             Choice("${seat.label} ${t.seats.getValue(seat).label(f.people)}",s.selectedTripKey==t.key && s.selectedSeat==seat,{onSelect(t,seat)})
