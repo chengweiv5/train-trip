@@ -38,9 +38,9 @@ import java.time.format.DateTimeFormatter
 @Composable fun Hint(text:String,warning:Boolean=false,modifier:Modifier=Modifier) {
     Surface(modifier.fillMaxWidth(),color=if(warning) AmberBg else Sage,shape=RoundedCornerShape(14.dp)) { Text(text,Modifier.padding(14.dp),style=MaterialTheme.typography.bodyMedium,color=if(warning) Amber else Forest) }
 }
-@Composable fun Choice(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier) {
+@Composable fun Choice(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier,contentPadding:PaddingValues=PaddingValues(12.dp),maxLines:Int=Int.MAX_VALUE) {
     Surface(modifier.heightIn(min=48.dp).clickable(onClick=onClick),shape=RoundedCornerShape(12.dp),color=if(selected) Sage else Color.White,border=if(selected) BorderStroke(1.dp,Sage) else BorderStroke(1.dp,Line)) {
-        Box(Modifier.padding(horizontal=12.dp,vertical=12.dp),contentAlignment=Alignment.Center) { Text(text,color=if(selected) Forest else Muted,style=MaterialTheme.typography.bodyMedium,fontWeight=if(selected) FontWeight.SemiBold else FontWeight.Normal) }
+        Box(Modifier.padding(contentPadding),contentAlignment=Alignment.Center) { Text(text,color=if(selected) Forest else Muted,style=MaterialTheme.typography.bodyMedium,fontWeight=if(selected) FontWeight.SemiBold else FontWeight.Normal,maxLines=maxLines) }
     }
 }
 @Composable fun BackHeader(text:String,onBack:()->Unit) {
