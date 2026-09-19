@@ -19,7 +19,7 @@
 
 ### 2. 导航与可编辑设计
 
-- [ ] Pen 内已完成四页设计并校验；Mac 锁屏，最终写回 .pen 待解锁。
+- [x] 四页设计已原生保存到 .pen；MCP 回读、布局检查、预览及 OCR 复核通过。
 - [x] SettingsScreen 提供 MENU/MODEL/SEARCH 三页；Key 草稿 remember，模型输入/状态/独立删除；IME padding+滚动；敏感页 FLAG_SECURE 恢复。
 - [x] TrainTripApp 覆盖原业务页面展示设置，进入取消生成，返回保持 saveable 原页面状态；FiltersScreen 入口移至右上角，移除底部入口和旧双 Key 弹窗。
 - [x] Android 测试：菜单导航、分项保存、取消草稿、系统返回、短屏大字、忙状态、原筛选保留。
@@ -28,5 +28,5 @@
 
 - [x] core:test / assembleDebug / assembleDebugAndroidTest / lintDebug 通过。
 - [x] 专用模拟器 Settings/DeepSeek/目的地相关用例通过；视觉检查非敏感菜单，敏感页通过语义树与 FLAG_SECURE 测试验证。
-- [ ] 设备未连接，真机覆盖安装待连接；模拟器验证已完成。
+- [x] Mate 60 Pro 已保留数据覆盖安装；菜单、两项配置、泰安真实生成及重启缓存恢复通过。
 - [x] 扫描代码/产物无真实密钥，更新验证文档、备份 APK、本地提交。通知沿用已存在的自动审批阻塞，不绕过。

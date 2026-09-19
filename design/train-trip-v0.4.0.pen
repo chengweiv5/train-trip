@@ -411,13 +411,12 @@
                 },
                 {
                   "type": "frame",
-                  "id": "w1k4Tc",
+                  "id": "W9bkQ",
                   "name": "日期 · 10月31日",
                   "metadata": {
                     "type": "interaction",
                     "action": "filter-date"
                   },
-                  "width": 76,
                   "height": 48,
                   "fill": "$tt-surface",
                   "cornerRadius": 12,
@@ -430,11 +429,9 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "mxOBl",
+                      "id": "ZVTDE",
                       "name": "日期文字 · 10月31日",
                       "fill": "$tt-muted",
-                      "textGrowth": "fixed-width",
-                      "width": 60,
                       "content": "10月31日",
                       "fontFamily": "$tt-font",
                       "fontSize": 14,
@@ -750,20 +747,20 @@
                     },
                     {
                       "type": "frame",
-                      "id": "ymldu",
+                      "id": "N1jxfF",
                       "name": "查询时间与更多席别",
-                      "width": 324,
+                      "width": "fill_container",
                       "height": 48,
                       "gap": 8,
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "text",
-                          "id": "jvg7j",
+                          "id": "GWlBR",
                           "name": "本车次查询时间",
                           "fill": "$tt-muted",
                           "textGrowth": "fixed-width",
-                          "width": 213,
+                          "width": "fill_container",
                           "content": "10-29 09:41:00 查询",
                           "fontFamily": "$tt-font",
                           "fontSize": 12,
@@ -1027,20 +1024,20 @@
                     },
                     {
                       "type": "frame",
-                      "id": "Y3VwwM",
+                      "id": "iE5Ni",
                       "name": "查询时间与更多席别",
-                      "width": 324,
+                      "width": "fill_container",
                       "height": 48,
                       "gap": 8,
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "text",
-                          "id": "VBPTC",
+                          "id": "OIuBo",
                           "name": "本车次查询时间",
                           "fill": "$tt-muted",
                           "textGrowth": "fixed-width",
-                          "width": 213,
+                          "width": "fill_container",
                           "content": "10-29 09:41:00 查询",
                           "fontFamily": "$tt-font",
                           "fontSize": 12,
@@ -1089,11 +1086,11 @@
             },
             {
               "type": "text",
-              "id": "u2vTT",
+              "id": "lg4ir",
               "name": "实时余票说明",
               "fill": "$tt-muted",
               "textGrowth": "fixed-width",
-              "width": 348,
+              "width": "fill_container",
               "content": "余票随时变化，以 12306 实时结果为准。",
               "fontFamily": "$tt-font",
               "fontSize": 12,
@@ -1531,13 +1528,12 @@
                 },
                 {
                   "type": "frame",
-                  "id": "NqFvf",
+                  "id": "j1l91",
                   "name": "日期 · 10月31日",
                   "metadata": {
                     "type": "interaction",
                     "action": "filter-date"
                   },
-                  "width": 76,
                   "height": 48,
                   "fill": "$tt-surface",
                   "cornerRadius": 12,
@@ -1550,11 +1546,9 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "qBbHG",
+                      "id": "g0PwCh",
                       "name": "日期文字 · 10月31日",
                       "fill": "$tt-muted",
-                      "textGrowth": "fixed-width",
-                      "width": 60,
                       "content": "10月31日",
                       "fontFamily": "$tt-font",
                       "fontSize": 14,
@@ -1870,20 +1864,20 @@
                     },
                     {
                       "type": "frame",
-                      "id": "KCJEo",
+                      "id": "tTPJw",
                       "name": "查询时间与更多席别",
-                      "width": 324,
+                      "width": "fill_container",
                       "height": 48,
                       "gap": 8,
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "text",
-                          "id": "A77YDa",
+                          "id": "iM3dD",
                           "name": "本车次查询时间",
                           "fill": "$tt-muted",
                           "textGrowth": "fixed-width",
-                          "width": 213,
+                          "width": "fill_container",
                           "content": "10-29 09:41:00 查询",
                           "fontFamily": "$tt-font",
                           "fontSize": 12,
@@ -2147,20 +2141,20 @@
                     },
                     {
                       "type": "frame",
-                      "id": "XViqY",
+                      "id": "yBl1m",
                       "name": "查询时间与更多席别",
-                      "width": 324,
+                      "width": "fill_container",
                       "height": 48,
                       "gap": 8,
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "text",
-                          "id": "otcSJ",
+                          "id": "l0J0bF",
                           "name": "本车次查询时间",
                           "fill": "$tt-muted",
                           "textGrowth": "fixed-width",
-                          "width": 213,
+                          "width": "fill_container",
                           "content": "10-29 09:41:00 查询",
                           "fontFamily": "$tt-font",
                           "fontSize": 12,
@@ -2209,11 +2203,11 @@
             },
             {
               "type": "text",
-              "id": "JzemV",
+              "id": "UVOdn",
               "name": "实时余票说明",
               "fill": "$tt-muted",
               "textGrowth": "fixed-width",
-              "width": 348,
+              "width": "fill_container",
               "content": "余票随时变化，以 12306 实时结果为准。",
               "fontFamily": "$tt-font",
               "fontSize": 12,
@@ -2521,7 +2515,7 @@
             },
             {
               "type": "frame",
-              "id": "Ol9DS",
+              "id": "ZjOz0",
               "name": "大字体日期 · 单行横滑",
               "clip": true,
               "width": 280,
@@ -2530,13 +2524,12 @@
               "children": [
                 {
                   "type": "frame",
-                  "id": "Hfvls",
+                  "id": "xS6GK",
                   "name": "日期 · 全部日期",
                   "metadata": {
                     "type": "interaction",
                     "action": "filter-date"
                   },
-                  "width": 89,
                   "height": 48,
                   "fill": "$tt-tint",
                   "cornerRadius": 12,
@@ -2549,11 +2542,9 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "W0mif",
+                      "id": "WHqYt",
                       "name": "日期文字 · 全部日期",
                       "fill": "$tt-primary",
-                      "textGrowth": "fixed-width",
-                      "width": 73,
                       "content": "全部日期",
                       "fontFamily": "$tt-font",
                       "fontSize": 18.2,
@@ -2563,13 +2554,12 @@
                 },
                 {
                   "type": "frame",
-                  "id": "XPDxB",
+                  "id": "Za9LV",
                   "name": "日期 · 10月29日",
                   "metadata": {
                     "type": "interaction",
                     "action": "filter-date"
                   },
-                  "width": 93,
                   "height": 48,
                   "fill": "$tt-surface",
                   "cornerRadius": 12,
@@ -2582,11 +2572,9 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "t1SXwI",
+                      "id": "dKWzD",
                       "name": "日期文字 · 10月29日",
                       "fill": "$tt-muted",
-                      "textGrowth": "fixed-width",
-                      "width": 77,
                       "content": "10月29日",
                       "fontFamily": "$tt-font",
                       "fontSize": 18.2,
@@ -2596,13 +2584,12 @@
                 },
                 {
                   "type": "frame",
-                  "id": "Kl0O0",
+                  "id": "xvCIQ",
                   "name": "日期 · 10月30日",
                   "metadata": {
                     "type": "interaction",
                     "action": "filter-date"
                   },
-                  "width": 93,
                   "height": 48,
                   "fill": "$tt-surface",
                   "cornerRadius": 12,
@@ -2615,11 +2602,9 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "JPT3A",
+                      "id": "X155uR",
                       "name": "日期文字 · 10月30日",
                       "fill": "$tt-muted",
-                      "textGrowth": "fixed-width",
-                      "width": 77,
                       "content": "10月30日",
                       "fontFamily": "$tt-font",
                       "fontSize": 18.2,
@@ -2629,13 +2614,12 @@
                 },
                 {
                   "type": "frame",
-                  "id": "x56tLt",
+                  "id": "TReT2",
                   "name": "日期 · 10月31日",
                   "metadata": {
                     "type": "interaction",
                     "action": "filter-date"
                   },
-                  "width": 93,
                   "height": 48,
                   "fill": "$tt-surface",
                   "cornerRadius": 12,
@@ -2648,11 +2632,9 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "z617SB",
+                      "id": "Y7mH0n",
                       "name": "日期文字 · 10月31日",
                       "fill": "$tt-muted",
-                      "textGrowth": "fixed-width",
-                      "width": 77,
                       "content": "10月31日",
                       "fontFamily": "$tt-font",
                       "fontSize": 18.2,
@@ -2992,20 +2974,20 @@
                     },
                     {
                       "type": "frame",
-                      "id": "KZuHJ",
+                      "id": "vCNg1",
                       "name": "查询时间与更多席别",
-                      "width": 256,
+                      "width": "fill_container",
                       "height": 48,
                       "gap": 8,
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "text",
-                          "id": "ZErFI",
+                          "id": "u1PYS",
                           "name": "本车次查询时间",
                           "fill": "$tt-muted",
                           "textGrowth": "fixed-width",
-                          "width": 120,
+                          "width": "fill_container",
                           "content": "10-29 查询\n09:41:00",
                           "fontFamily": "$tt-font",
                           "fontSize": 15.6,
@@ -3333,11 +3315,11 @@
             },
             {
               "type": "text",
-              "id": "yl6bt",
+              "id": "aZWdH",
               "name": "实时余票说明",
               "fill": "$tt-muted",
               "textGrowth": "fixed-width",
-              "width": 280,
+              "width": "fill_container",
               "content": "余票随时变化，以 12306 实时结果为准。",
               "fontFamily": "$tt-font",
               "fontSize": 15.6,
@@ -4056,6 +4038,796 @@
           "icon": "smartphone",
           "library": "lucide",
           "fill": "#FFFFFF"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "kL4Hp",
+      "x": 0,
+      "y": 2698,
+      "name": "05 · 设置菜单",
+      "clip": true,
+      "width": 388,
+      "height": 844,
+      "fill": "$tt-bg",
+      "layout": "vertical",
+      "gap": 20,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "jo8cQ",
+          "name": "返回入口",
+          "fill": "$tt-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "‹ 返回",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "fXhm6",
+          "name": "页面标题",
+          "fill": "$tt-ink",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "设置",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 28,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "mSfrA",
+          "name": "页面说明",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "管理目的地内容服务",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "Rtayd",
+          "name": "大模型菜单项",
+          "width": "fill_container",
+          "fill": "#00000000",
+          "stroke": "$tt-line",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            18,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "r8LdlV",
+              "name": "标题",
+              "fill": "$tt-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "大模型  ›",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "jSY7c",
+              "name": "当前服务",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "DeepSeek · deepseek-flash",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "b4QR1",
+              "name": "配置状态",
+              "fill": "$tt-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "已配置",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "yQXGt",
+          "name": "搜索引擎菜单项",
+          "width": "fill_container",
+          "fill": "#00000000",
+          "stroke": "$tt-line",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            18,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "jMfYp",
+              "name": "标题",
+              "fill": "$tt-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "搜索引擎  ›",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
+              "id": "ZRzsY",
+              "name": "当前服务",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Tavily · 基础搜索",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "YLf3p",
+              "name": "配置状态",
+              "fill": "$tt-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "已配置",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "a4gWqI",
+          "name": "隐私与缓存说明",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "密钥加密保存在本机。已缓存的城市内容可继续离线查看。",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Y1162",
+      "x": 452,
+      "y": 2698,
+      "name": "06 · 大模型设置",
+      "clip": true,
+      "width": 388,
+      "height": 844,
+      "fill": "$tt-bg",
+      "layout": "vertical",
+      "gap": 20,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "uNMNG",
+          "name": "返回入口",
+          "fill": "$tt-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "‹ 返回",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "kPOy2",
+          "name": "页面标题",
+          "fill": "$tt-ink",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "大模型",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 28,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "SOM0b",
+          "name": "服务说明",
+          "fill": "$tt-ink",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "DeepSeek\n整理目的地资料，生成中文介绍。",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 15,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "JNVyQ",
+          "name": "模型名称字段",
+          "width": "fill_container",
+          "fill": "#00000000",
+          "stroke": "#00000000",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "text",
+              "id": "UwtbF",
+              "name": "字段标签",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "模型名称",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "VqCVj",
+              "name": "输入框",
+              "width": "fill_container",
+              "fill": "$tt-surface",
+              "cornerRadius": 12,
+              "stroke": "$tt-line",
+              "strokeWidth": 1,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "TcflB",
+                  "name": "输入内容",
+                  "fill": "$tt-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "deepseek-flash",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$tt-font",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "LW2Uz",
+          "name": "API Key字段",
+          "width": "fill_container",
+          "fill": "#00000000",
+          "stroke": "#00000000",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "text",
+              "id": "Chn1E",
+              "name": "字段标签",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "API Key",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "nhxEr",
+              "name": "输入框",
+              "width": "fill_container",
+              "fill": "$tt-surface",
+              "cornerRadius": 12,
+              "stroke": "$tt-line",
+              "strokeWidth": 1,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "JOjHF",
+                  "name": "输入内容",
+                  "fill": "$tt-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "留空保留已保存的密钥",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$tt-font",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "t5y6J",
+          "name": "密钥状态",
+          "fill": "$tt-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "密钥已配置",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "k20iQV",
+          "name": "调用说明",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "保存只更新配置。下次整理使用所填模型，调用按服务商实际用量计费。",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "geLx1",
+          "name": "保存按钮",
+          "width": "fill_container",
+          "fill": "$tt-primary",
+          "cornerRadius": 16,
+          "stroke": "#00000000",
+          "padding": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "P6FVZ",
+              "name": "保存文字",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "保存",
+              "lineHeight": 1.5,
+              "textAlign": "center",
+              "fontFamily": "$tt-font",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "QNcUm",
+          "name": "移除密钥按钮",
+          "fill": "$tt-warning",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "移除 DeepSeek 密钥",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "cqFPn",
+      "x": 904,
+      "y": 2698,
+      "name": "07 · 搜索引擎设置",
+      "clip": true,
+      "width": 388,
+      "height": 844,
+      "fill": "$tt-bg",
+      "layout": "vertical",
+      "gap": 20,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "OAEV7",
+          "name": "返回入口",
+          "fill": "$tt-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "‹ 返回",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "oATzO",
+          "name": "页面标题",
+          "fill": "$tt-ink",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "搜索引擎",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 28,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "jwJlx",
+          "name": "服务说明",
+          "fill": "$tt-ink",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Tavily\n检索国内公开的景点与美食资料。",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 15,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "JkS2F",
+          "name": "搜索模式",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "基础搜索 · 每座新城市通常 2 次",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "D2Vtc",
+          "name": "Tavily输入",
+          "width": "fill_container",
+          "fill": "#00000000",
+          "stroke": "#00000000",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "text",
+              "id": "r1NRg",
+              "name": "Key标签",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "API Key",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "dfp2P",
+              "name": "输入框",
+              "width": "fill_container",
+              "fill": "$tt-surface",
+              "cornerRadius": 12,
+              "stroke": "$tt-line",
+              "strokeWidth": 1,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "PXVsr",
+                  "name": "输入内容",
+                  "fill": "$tt-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "留空保留已保存的密钥",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$tt-font",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "UlaBt",
+          "name": "密钥状态",
+          "fill": "$tt-primary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "密钥已配置",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "text",
+          "id": "PagXs",
+          "name": "用量说明",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "首次整理或手动更新会消耗搜索额度。已有缓存无需再次搜索。",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "wZFAX",
+          "name": "保存按钮",
+          "width": "fill_container",
+          "fill": "$tt-primary",
+          "cornerRadius": 16,
+          "stroke": "#00000000",
+          "padding": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "AwEcx",
+              "name": "保存文字",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "保存",
+              "lineHeight": 1.5,
+              "textAlign": "center",
+              "fontFamily": "$tt-font",
+              "fontSize": 16,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "GldSV",
+          "name": "移除密钥按钮",
+          "fill": "$tt-warning",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "移除 Tavily 密钥",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "w27DL",
+      "x": 1356,
+      "y": 2698,
+      "name": "08 · 首页设置入口",
+      "clip": true,
+      "width": 388,
+      "height": 844,
+      "fill": "$tt-bg",
+      "layout": "vertical",
+      "gap": 20,
+      "padding": 24,
+      "children": [
+        {
+          "type": "frame",
+          "id": "vP9c7",
+          "name": "首页顶栏",
+          "width": "fill_container",
+          "fill": "#00000000",
+          "stroke": "#00000000",
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "BEUGj",
+              "name": "品牌",
+              "fill": "$tt-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "▧ TRAIN TRIP",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "RhYqb",
+              "name": "设置入口",
+              "fill": "$tt-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "设置",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "K4Lnni",
+          "name": "标题",
+          "fill": "$tt-ink",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "有票，就出发。",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 28,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "VvyrX",
+          "name": "说明",
+          "fill": "$tt-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "先看看能去哪，再决定去哪。",
+          "lineHeight": 1.5,
+          "fontFamily": "$tt-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "LQNp6",
+          "name": "从哪里出发",
+          "width": "fill_container",
+          "fill": "$tt-surface",
+          "cornerRadius": 18,
+          "stroke": "#00000000",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": 18,
+          "children": [
+            {
+              "type": "text",
+              "id": "q239t9",
+              "name": "标签",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "从哪里出发",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "xrHxf",
+              "name": "值",
+              "fill": "$tt-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "北京  ›",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 20,
+              "fontWeight": "600"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "P8ZS9j",
+          "name": "什么时候出发",
+          "width": "fill_container",
+          "fill": "$tt-surface",
+          "cornerRadius": 18,
+          "stroke": "#00000000",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": 18,
+          "children": [
+            {
+              "type": "text",
+              "id": "ZX0Jj",
+              "name": "标签",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "什么时候出发",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "W9LTL5",
+              "name": "值",
+              "fill": "$tt-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "10 月 1 日 → 10 月 3 日",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 20,
+              "fontWeight": "600"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "AD9ZT",
+          "name": "几点出发",
+          "width": "fill_container",
+          "fill": "$tt-surface",
+          "cornerRadius": 18,
+          "stroke": "#00000000",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": 18,
+          "children": [
+            {
+              "type": "text",
+              "id": "Aut9K",
+              "name": "标签",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "几点出发",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "s1MjWh",
+              "name": "值",
+              "fill": "$tt-ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "全天",
+              "lineHeight": 1.5,
+              "fontFamily": "$tt-font",
+              "fontSize": 20,
+              "fontWeight": "600"
+            }
+          ]
         }
       ]
     }
