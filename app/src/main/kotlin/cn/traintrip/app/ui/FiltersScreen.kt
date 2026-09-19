@@ -20,7 +20,10 @@ import cn.traintrip.core.*
     val f=s.filters
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal=20.dp).padding(top=12.dp,bottom=24.dp),verticalArrangement=Arrangement.spacedBy(20.dp)) {
         Column(verticalArrangement=Arrangement.spacedBy(6.dp)) {
-            Text("▧  TRAIN TRIP",style=MaterialTheme.typography.labelSmall,color=Forest)
+            Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
+                Text("▧  TRAIN TRIP",Modifier.weight(1f),style=MaterialTheme.typography.labelSmall,color=Forest)
+                TextButton(onContentSettings,Modifier.heightIn(min=48.dp).testTag("content-settings")) { Text("设置") }
+            }
             Text("有票，就出发。",style=MaterialTheme.typography.headlineLarge)
             Text("先看看能去哪，再决定去哪。",style=MaterialTheme.typography.bodyMedium,color=Muted)
         }
@@ -58,7 +61,6 @@ import cn.traintrip.core.*
         s.error?.let { Hint(it,true) }
         PrimaryButton("找找有票的城市  →",onSearch)
         Text("只看直达去程 · 购票在 12306 完成",style=MaterialTheme.typography.bodySmall,color=Muted)
-        TextButton(onContentSettings, Modifier.testTag("content-settings")) { Text("目的地内容设置") }
     }
     sheet?.let { key ->
         if(key=="scope") DestinationSelector(s,{sheet=null},{onUpdate(it);sheet=null},destinationBrowser)

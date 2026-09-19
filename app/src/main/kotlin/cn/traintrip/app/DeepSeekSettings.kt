@@ -53,3 +53,18 @@ open class EncryptedGuideSettings(context: Context, preference: String, private 
 internal fun validateGuideKey(value: String, prefix: String, provider: String) {
     require(value.startsWith(prefix) && value.length in 20..200 && value.none { it.isWhitespace() }) { "请输入有效的 $provider API Key" }
 }
+
+interface GuideModelPreference {
+    fun read(): String
+    fun save(value: String)
+}
+class DeepSeekModelSettings(context: Context) : GuideModelPreference {
+    private val prefs = context.getSharedPreferences("destination-ai", Context.MODE_PRIVATE)
+    override fun read(): String = prefs.getString("model", null)?.takeIf {
+        runCatching { cn.traintrip.core.validateGuideModel(it) }.isSuccess
+    } ?: cn.traintrip.core.DeepSeekGuideGenerator.MODEL
+    override fun save(value: String) {
+        cn.traintrip.core.validateGuideModel(value)
+        check(prefs.edit().putString("model", value).commit()) { "模型保存失败" }
+    }
+}

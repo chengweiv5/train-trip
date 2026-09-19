@@ -51,6 +51,19 @@ class DeepSeekGuideTest {
             }
         }
     }
+    @Test fun configuredModelSnapshotIsUsedForRequestAndCache() = runBlocking {
+        MockWebServer().use { server ->
+            var model="custom-model"
+            server.enqueue(MockResponse().setBody(response()))
+            val generator=DeepSeekGuideGenerator(server.url("/chat/completions").toString(),OkHttpClient()) { model }
+            val guide=generator.generate(material,"test-key")
+            assertEquals(model,guide.model)
+            assertTrue(server.takeRequest().body.readUtf8().contains("\"model\":\"custom-model\""))
+            model="invalid model"
+            assertTrue(runCatching { generator.generate(material,"test-key") }.isFailure)
+            assertEquals(1,server.requestCount)
+        }
+    }
     @Test fun truncatedAndMalformedResponsesNeverProduceCacheableContent() = runBlocking {
         MockWebServer().use { server ->
             val generator = DeepSeekGuideGenerator(server.url("/chat/completions").toString(),OkHttpClient())

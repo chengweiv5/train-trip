@@ -10,16 +10,18 @@ import kotlinx.coroutines.flow.*
 data class DestinationState(
     val cityId: String? = null, val guide: DestinationGuide? = null, val loading: Boolean = false,
     val stage: String = "", val error: String? = null, val configured: Boolean = false,
-    val settingsError: String? = null, val tavilyConfigured: Boolean = false, val guides: Map<String, DestinationGuide> = DestinationGuides.all.associateBy { it.cityId }
+    val settingsError: String? = null, val modelName: String = DeepSeekGuideGenerator.MODEL,
+    val settingsBusy: Boolean = false, val settingsMessage: String? = null, val tavilyConfigured: Boolean = false, val guides: Map<String, DestinationGuide> = DestinationGuides.all.associateBy { it.cityId }
 )
 
 class DestinationViewModel @JvmOverloads constructor(app: Application,
     private val credentials: GuideCredentials = DeepSeekSettings(app),
     private val store: GuideStore = AndroidGuideStore(app),
-    source: GuideMaterialSource? = null, generator: GuideGenerator = DeepSeekGuideGenerator(),
-    private val searchCredentials: GuideCredentials = TavilySettings(app)
+    source: GuideMaterialSource? = null, generator: GuideGenerator? = null,
+    private val searchCredentials: GuideCredentials = TavilySettings(app),
+    private val modelPreference: GuideModelPreference = DeepSeekModelSettings(app)
 ) : AndroidViewModel(app) {
-    private val repository = GuideRepository(source ?: TavilyGuideSource { searchCredentials.read() }, generator, store)
+    private val repository = GuideRepository(source ?: TavilyGuideSource { searchCredentials.read() }, generator ?: DeepSeekGuideGenerator { modelPreference.read() }, store)
     private val mutable = MutableStateFlow(DestinationState())
     val state = mutable.asStateFlow()
     private var active: City? = null
@@ -86,41 +88,51 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
     private fun refreshConfiguration() {
         val deepSeek = runCatching { credentials.read() != null }
         val tavily = runCatching { searchCredentials.read() != null }
-        mutable.update { it.copy(configured = deepSeek.getOrDefault(false), tavilyConfigured = tavily.getOrDefault(false),
+        mutable.update { it.copy(configured = deepSeek.getOrDefault(false), tavilyConfigured = tavily.getOrDefault(false), modelName = modelPreference.read(),
             settingsError = if (deepSeek.isFailure || tavily.isFailure) "无法读取已保存的密钥，请重新配置" else it.settingsError) }
     }
     fun saveKey(value: String, complete: () -> Unit) = saveKeys(value, "", complete)
-    fun saveKeys(deepSeek: String, tavily: String, complete: () -> Unit) {
+    fun saveModelSettings(model: String, key: String, complete: () -> Unit) = saveConfiguration(key, "", model, complete)
+    fun saveSearchSettings(key: String, complete: () -> Unit) = saveConfiguration("", key, null, complete)
+    fun clearSettingsFeedback() { mutable.update { it.copy(settingsError = null, settingsMessage = null) } }
+    fun saveKeys(deepSeek: String, tavily: String, complete: () -> Unit) = saveConfiguration(deepSeek, tavily, null, complete)
+    private fun saveConfiguration(deepSeek: String, tavily: String, model: String?, complete: () -> Unit) {
+        if (mutable.value.settingsBusy) return
         cancel()
+        mutable.update { it.copy(settingsBusy = true, settingsError = null, settingsMessage = null) }
         viewModelScope.launch {
             try {
                 withContext(Dispatchers.IO) {
+                    if (model != null) validateGuideModel(model.trim())
                     if (deepSeek.isNotBlank()) validateGuideKey(deepSeek.trim(), "sk-", "DeepSeek")
                     if (tavily.isNotBlank()) validateGuideKey(tavily.trim(), "tvly-", "Tavily")
                     if (deepSeek.isNotBlank()) credentials.save(deepSeek.trim())
                     if (tavily.isNotBlank()) searchCredentials.save(tavily.trim())
+                    if (model != null) modelPreference.save(model.trim())
                 }
                 mutable.update { it.copy(settingsError = null) }
                 withContext(Dispatchers.IO) { refreshConfiguration() }
+                mutable.update { it.copy(settingsBusy = false, settingsMessage = "设置已保存") }
                 complete()
-                if (mutable.value.configured && mutable.value.tavilyConfigured && mutable.value.guide == null && active != null) retry()
             } catch (_: Exception) {
                 withContext(Dispatchers.IO) { refreshConfiguration() }
-                mutable.update { it.copy(settingsError = "配置未全部保存，请检查输入和各项状态后重试") }
+                mutable.update { it.copy(settingsBusy = false, settingsError = "配置未全部保存，请检查输入和各项状态后重试") }
             }
         }
     }
     fun removeKey(complete: () -> Unit) = remove(credentials, complete)
     fun removeTavilyKey(complete: () -> Unit) = remove(searchCredentials, complete)
     private fun remove(target: GuideCredentials, complete: () -> Unit) {
+        if (mutable.value.settingsBusy) return
         cancel()
+        mutable.update { it.copy(settingsBusy = true, settingsError = null, settingsMessage = null) }
         viewModelScope.launch {
             try {
                 withContext(Dispatchers.IO) { target.remove(); refreshConfiguration() }
-                mutable.update { it.copy(settingsError = null) }; complete()
+                mutable.update { it.copy(settingsBusy = false, settingsError = null, settingsMessage = "密钥已移除") }; complete()
             } catch (_: Exception) {
                 withContext(Dispatchers.IO) { refreshConfiguration() }
-                mutable.update { it.copy(settingsError = "移除配置失败，请重试") }
+                mutable.update { it.copy(settingsBusy = false, settingsError = "移除配置失败，请重试") }
             }
         }
     }

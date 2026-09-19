@@ -72,14 +72,18 @@ class DeepSeekDestinationTest {
         assertNotNull(store.read(city.id))
         assertEquals(2,calls)
     }
-    @Test fun missingKeyDoesNotCallSourceAndSavingStartsGeneration() {
+    @Test fun missingKeyDoesNotCallSourceAndSavingRequiresExplicitRetry() {
         var calls=0;val credentials=Credentials(null)
         val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide { calls++;return guide() } }
         val model=vm(credentials,Store(),generator)
         compose.runOnIdle { model.open(city) }
         compose.waitUntil(5000) { !model.state.value.loading && model.state.value.cityId!=null }
         assertEquals(0,calls)
-        compose.runOnIdle { model.saveKey("sk-test-only-1234567890") {} }
+        var saved=false
+        compose.runOnIdle { model.saveKey("sk-test-only-1234567890") { saved=true } }
+        compose.waitUntil(5000) { saved }
+        assertEquals(0,calls)
+        compose.runOnIdle { model.retry() }
         compose.waitUntil(5000) { model.state.value.guide!=null }
         assertEquals(1,calls)
     }
@@ -93,7 +97,11 @@ class DeepSeekDestinationTest {
         compose.runOnIdle { model.open(city) }
         compose.waitUntil(5000) { model.state.value.cityId!=null && !model.state.value.loading }
         assertEquals(0,calls);assertFalse(store.attempted(city.id))
-        compose.runOnIdle { model.saveKeys("","tvly-test-new-123456789") {} }
+        var saved=false
+        compose.runOnIdle { model.saveKeys("","tvly-test-new-123456789") { saved=true } }
+        compose.waitUntil(5000) { saved }
+        assertEquals(0,calls)
+        compose.runOnIdle { model.retry() }
         compose.waitUntil(5000) { model.state.value.guide!=null }
         assertEquals("sk-test-existing-123456789",deep.read());assertEquals(1,calls)
         var removed=false
@@ -101,13 +109,6 @@ class DeepSeekDestinationTest {
         compose.waitUntil(5000) { removed }
         assertTrue(model.state.value.configured);assertFalse(model.state.value.tavilyConfigured)
         assertNotNull(store.read(city.id));assertEquals("sk-test-existing-123456789",deep.read())
-    }
-    @Test fun settingsSeparatelyShowAndMaskBothInputs() {
-        var saved:Pair<String,String>?=null
-        compose.setContent { TrainTripTheme { DeepSeekSettingsDialog(DestinationState(configured=true),{d,t->saved=d to t},{},{},{}) } }
-        compose.onNodeWithTag("tavily-key").performScrollTo().performTextInput("tvly-test-ui-only")
-        compose.onNodeWithTag("save-deepseek").performClick()
-        assertEquals("" to "tvly-test-ui-only",saved)
     }
     @Test fun cancellationDoesNotPublishOrSaveLateResult() {
         val store=Store()

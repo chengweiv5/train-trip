@@ -49,6 +49,18 @@ class AppFlowTest {
         compose.onNodeWithText("1 个城市 · 1 个省级地区").assertExists()
     }
 
+    @Test fun settingsReturnKeepsFilterSelection() {
+        val vm=androidx.lifecycle.ViewModelProvider(compose.activity)[AppViewModel::class.java]
+        compose.runOnIdle { vm.updateFilters(vm.state.value.filters.copy(people=4)) }
+        compose.onNodeWithTag("content-settings").performScrollTo().performClick()
+        compose.onNodeWithTag("settings-model").assertIsDisplayed()
+        compose.onNodeWithTag("settings-search").performClick()
+        compose.onNodeWithTag("settings-back").performClick()
+        compose.onNodeWithTag("settings-back").performClick()
+        compose.onNodeWithText("乘车人数").performScrollTo()
+        compose.onNodeWithText("4 人").assertIsDisplayed()
+    }
+
     @Test fun realSearchToTrainAndManualRefresh() {
         val vm=androidx.lifecycle.ViewModelProvider(compose.activity)[AppViewModel::class.java]
         compose.runOnIdle {

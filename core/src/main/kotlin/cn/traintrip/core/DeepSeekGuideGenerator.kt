@@ -10,14 +10,15 @@ import java.io.IOException
 import java.time.Instant
 import java.util.concurrent.TimeUnit
 
-class DeepSeekGuideGenerator internal constructor(private val endpoint: String, private val client: OkHttpClient) : GuideGenerator {
-    constructor() : this("https://api.deepseek.com/chat/completions", OkHttpClient.Builder()
+class DeepSeekGuideGenerator internal constructor(private val endpoint: String, private val client: OkHttpClient, private val model: () -> String = { MODEL }) : GuideGenerator {
+    constructor(model: () -> String = { MODEL }) : this("https://api.deepseek.com/chat/completions", OkHttpClient.Builder()
         .followRedirects(false).followSslRedirects(false).retryOnConnectionFailure(false)
-        .connectTimeout(15, TimeUnit.SECONDS).readTimeout(90, TimeUnit.SECONDS).callTimeout(120, TimeUnit.SECONDS).build())
+        .connectTimeout(15, TimeUnit.SECONDS).readTimeout(90, TimeUnit.SECONDS).callTimeout(120, TimeUnit.SECONDS).build(), model)
 
     override suspend fun generate(material: GuideMaterial, apiKey: String): DestinationGuide {
         if (apiKey.isBlank() || apiKey.any { it.isWhitespace() }) throw IOException("请先配置有效的 DeepSeek API Key")
-        val payload = mapOf("model" to MODEL, "thinking" to mapOf("type" to "disabled"), "max_tokens" to 4200,
+        val selectedModel = model().also(::validateGuideModel)
+        val payload = mapOf("model" to selectedModel, "thinking" to mapOf("type" to "disabled"), "max_tokens" to 4200,
             "response_format" to mapOf("type" to "json_object"), "messages" to listOf(
                 mapOf("role" to "system", "content" to if (material.documents.isEmpty()) PROMPT else SearchGuideDecoder.prompt),
                 mapOf("role" to "user", "content" to Gson().toJson(material.copy(places = material.places.map { it.copy(imageUrl = null) }, documents = material.documents.map { it.copy(images = emptyList()) })))) )
@@ -34,8 +35,8 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
             val root = JsonParser.parseString(String(response.bytes, Charsets.UTF_8)).asJsonObject
             val choice = root.objects("choices").firstOrNull() ?: throw IOException("DeepSeek 未返回内容")
             if (choice.text("finish_reason") != "stop") throw IOException("生成内容未完成，请重试")
-            if (material.documents.isEmpty()) decode(choice.obj("message").text("content"), material)
-            else SearchGuideDecoder.decode(choice.obj("message").text("content"), material)
+            if (material.documents.isEmpty()) decode(choice.obj("message").text("content"), material, selectedModel)
+            else SearchGuideDecoder.decode(choice.obj("message").text("content"), material, selectedModel)
         } catch (e: IOException) { throw e } catch (_: Exception) { throw IOException("生成内容格式不完整，请重试") }
     }
 
@@ -55,7 +56,7 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
              "plans":[{"days":1,"title":"路线标题","schedule":[{"label":"当天","experienceIds":["资料景点id"],"description":"简短安排"}],"note":"参考建议，请结合实际交通与预约安排。"}]}
             标签 2-3 个，每个不超过 8 个字。文本短且具体，避免营销口号。plan days 仅 1 或 2，schedule 长度等于 days，路线只能引用你已选择的景点。
         """.trimIndent()
-        internal fun decode(content: String, material: GuideMaterial): DestinationGuide {
+        internal fun decode(content: String, material: GuideMaterial, model: String = MODEL): DestinationGuide {
             val j = JsonParser.parseString(content).asJsonObject
             fun requiredArray(key: String) = require(j.get(key)?.isJsonArray == true) { "missing $key" }
             listOf("tags", "experiences", "foods", "plans").forEach(::requiredArray)
@@ -83,7 +84,11 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
             }
             return DestinationGuides.validateGenerated(DestinationGuide(material.cityId, material.name, j.text("tagline"), j.strings("tags"),
                 j.text("suggestedDays"), j.text("pace"), j.text("season"), j.text("arrivalAdvice"), chosen, foods, plans,
-                material.sources, photo, Instant.now().toString(), MODEL), material.cityId)
+                material.sources, photo, Instant.now().toString(), model), material.cityId)
         }
     }
+}
+
+fun validateGuideModel(value: String) {
+    require(value.length in 1..100 && value.matches(Regex("[A-Za-z0-9][A-Za-z0-9._:/-]*"))) { "请输入有效的模型名称" }
 }

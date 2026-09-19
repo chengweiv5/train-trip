@@ -24,7 +24,7 @@ internal object SearchGuideDecoder {
         tags 为 2-3 个短标签。plan days 仅 1 或 2，schedule 长度等于 days。
     """.trimIndent()
 
-    fun decode(content: String, material: GuideMaterial): DestinationGuide {
+    fun decode(content: String, material: GuideMaterial, model: String = DeepSeekGuideGenerator.MODEL): DestinationGuide {
         val root = JsonParser.parseString(content).asJsonObject
         listOf("experiences","foods","plans").forEach { key ->
             require(root[key]?.isJsonArray == true && root[key].asJsonArray.all { it.isJsonObject })
@@ -96,7 +96,7 @@ internal object SearchGuideDecoder {
             }
         }
         val selectedMaterial = material.copy(places=places,foods=foods,sources=material.sources.filter { source -> places.any { it.url==source.url } || foods.any { it.url==source.url } },documents=emptyList())
-        val guide = DeepSeekGuideGenerator.decode(root.toString(),selectedMaterial)
+        val guide = DeepSeekGuideGenerator.decode(root.toString(),selectedMaterial,model)
         val photo = places.firstNotNullOfOrNull { place ->
             material.documents.filter { it.kind == "places" && it.url == place.url }.flatMap { it.images }.firstOrNull {
                 it.description.length in 5..300 && it.description.contains(place.name) && GuideNetwork.isPhotoUrl(it.url) &&
