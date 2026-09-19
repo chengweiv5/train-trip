@@ -1,0 +1,19 @@
+{
+  "version": "0.2.2",
+  "versionCode": 6,
+  "coreTests": 22,
+  "coreFailures": 0,
+  "androidOfflineTests": 2,
+  "androidOfflineFailures": 0,
+  "replayedRows": 310,
+  "replayedNotYetSaleRows": 291,
+  "replayedNotYetSaleSeats": 1173,
+  "replayedUnknownSeats": 0,
+  "lintErrors": 0,
+  "lintWarnings": 13,
+  "apkBytes": 12918532,
+  "apkSha256": "157bd0c5e204af7b2feb4ffa6160c8dd5f11cf5f34bd8c1c02b556254653f2e0",
+  "realTicketQueriesDuringFix": 0,
+  "deviceVerified": true,
+  "backup": "/private/tmp/train-trip-not-yet-sale-84m_2vys"
+}

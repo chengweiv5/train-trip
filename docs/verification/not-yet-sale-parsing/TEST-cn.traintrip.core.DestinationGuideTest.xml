@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cn.traintrip.core.DestinationGuideTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-09-19T01:53:34.565Z" hostname="DJX34Q0R35" time="0.083">
+  <properties/>
+  <testcase name="itinerariesReferenceOnlyDescribedExperiencesAndRemainIndependentOfDates" classname="cn.traintrip.core.DestinationGuideTest" time="0.046"/>
+  <testcase name="incompleteOrCorruptContentFallsBackWithoutBreakingTicketSearch" classname="cn.traintrip.core.DestinationGuideTest" time="0.006"/>
+  <testcase name="fiveGuidesMatchStationIdentitiesAndPackageRealPhotos" classname="cn.traintrip.core.DestinationGuideTest" time="0.031"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

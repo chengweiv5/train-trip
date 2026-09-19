@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cn.traintrip.core.NotYetSaleTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-09-19T01:53:34.048Z" hostname="DJX34Q0R35" time="0.374">
+  <properties/>
+  <testcase name="capturedOfficialResponseRetainsAllRowsWithoutUnknownSeats" classname="cn.traintrip.core.NotYetSaleTest" time="0.276"/>
+  <testcase name="mixedResponseKeepsOpenSeatsAndExcludesAllUnopenedTripsFromResults" classname="cn.traintrip.core.NotYetSaleTest" time="0.029"/>
+  <testcase name="starWithoutUnopenedContextStillFails" classname="cn.traintrip.core.NotYetSaleTest" time="0.017"/>
+  <testcase name="otherUnknownValuesAndStructuralErrorsStillFailBeforeSale" classname="cn.traintrip.core.NotYetSaleTest" time="0.022"/>
+  <testcase name="everySeatFieldAcceptsStarOnlyForUnopenedTrain" classname="cn.traintrip.core.NotYetSaleTest" time="0.009"/>
+  <testcase name="c2551StarPreservesNotYetSaleAndOpeningTime" classname="cn.traintrip.core.NotYetSaleTest" time="0.015"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

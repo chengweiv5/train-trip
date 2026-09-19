@@ -1,0 +1,15 @@
+{
+  "serial": "FMR0224725012307",
+  "version": "0.2.2",
+  "versionCode": 6,
+  "install": "Success",
+  "launch": "Status: ok",
+  "apk_sha256": "157bd0c5e204af7b2feb4ffa6160c8dd5f11cf5f34bd8c1c02b556254653f2e0",
+  "installed_apk_matches": true,
+  "same_signing_certificate": true,
+  "preferences_unchanged": true,
+  "preferences_sha256": "78b70e5a4b1bbc3ae55125465b254cbd21170883e125bf2dcf4d10aca0b9e6b3",
+  "resumed": [
+    "mResumedActivity: ActivityRecord{b966d58 u0 cn.traintrip.app/.MainActivity t42153}"
+  ]
+}

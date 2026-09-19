@@ -25,7 +25,7 @@ class SearchEngineTest {
     @Test fun parserFailureDoesNotBlockLaterDates() = runTest {
         val fields = MutableList(39) { "" }.apply {
             this[1] = "12点45分起售"; this[2] = "train"; this[3] = "C2551"
-            this[6] = "VNP"; this[7] = "TJP"; this[11] = "IS_TIME_NOT_BUY"; this[30] = "*"
+            this[6] = "VNP"; this[7] = "TJP"; this[11] = "IS_TIME_NOT_BUY"; this[30] = "未知状态"
         }
         val body = "{\"status\":true,\"data\":{\"result\":[\"${fields.joinToString("|")}\"]}}"
         val failure = TicketParser.parse(body, units[0], catalog, at) as QueryResult.Failure

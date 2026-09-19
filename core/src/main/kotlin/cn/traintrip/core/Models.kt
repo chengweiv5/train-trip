@@ -10,7 +10,7 @@ enum class SeatType(val label: String, val field: Int) {
     HARD_SEAT("硬座",29), SOFT_SEAT("软座",24), HARD_SLEEPER("硬卧",28), SOFT_SLEEPER("软卧",23),
     PREMIUM_SLEEPER("高级软卧",21), MOVING_SLEEPER("动卧",33), STANDING("无座",26), OTHER("其他席别",22), YB("包厢硬卧",27)
 }
-enum class AvailabilityKind { COUNT, AVAILABLE, NONE, WAITLIST, NOT_OFFERED, UNKNOWN }
+enum class AvailabilityKind { COUNT, AVAILABLE, NONE, WAITLIST, NOT_OFFERED, NOT_YET, UNKNOWN }
 data class SeatAvailability(val raw: String, val kind: AvailabilityKind, val count: Int? = null) {
     fun confirmedFor(people: Int) = (kind == AvailabilityKind.COUNT && (count ?: 0) >= people) || (kind == AvailabilityKind.AVAILABLE && people == 1)
     fun uncertainFor(people: Int) = kind == AvailabilityKind.AVAILABLE && people > 1
@@ -20,6 +20,7 @@ data class SeatAvailability(val raw: String, val kind: AvailabilityKind, val cou
         AvailabilityKind.NONE -> "无票"
         AvailabilityKind.WAITLIST -> "候补"
         AvailabilityKind.NOT_OFFERED -> "本车次不提供"
+        AvailabilityKind.NOT_YET -> "尚未起售"
         AvailabilityKind.UNKNOWN -> "状态待确认：$raw"
     }
 }

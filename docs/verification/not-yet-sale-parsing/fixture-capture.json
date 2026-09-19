@@ -1,0 +1,14 @@
+{
+  "capturedAt": "2026-09-19T01:38:25.413129+00:00",
+  "query": "2026-10-03/BJP/TJP",
+  "route": "leftTicket/queryG",
+  "saleRange": [
+    "2026-09-19",
+    "2026-10-03"
+  ],
+  "rows": 310,
+  "scripts": [
+    "/otn/resources/merged/queryLeftTicket_js.js?scriptVersion=1.95052",
+    "/otn/resources/merged/queryLeftTicket_end_js.js?scriptVersion=1.95052"
+  ]
+}

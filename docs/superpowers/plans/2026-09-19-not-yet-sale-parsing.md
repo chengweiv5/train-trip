@@ -25,8 +25,8 @@
 
 **Interfaces:** 保留 `TicketParser.availability(String)` 与 `parse` 签名；AvailabilityKind 添加 NOT_YET，label 返回“尚未起售”。
 
-- [ ] 添加原始 310 条脱敏 fixture 测试、单条 C2551 最小复现、混合已售/未售过滤、其他发售状态及未知值拒绝、全部席别占位处理。固定查询时刻，运行 `:core:test --offline`，确认原症状失败。
-- [ ] 实现以下条件映射，保留原始字段：
+- [x] 添加原始 310 条脱敏 fixture 测试、单条 C2551 最小复现、混合已售/未售过滤、其他发售状态及未知值拒绝、全部席别占位处理。固定查询时刻，运行 `:core:test --offline`，确认原症状失败。
+- [x] 实现以下条件映射，保留原始字段：
 
 ```kotlin
 val raw = f[it.field]
@@ -35,8 +35,8 @@ if (sale == SaleState.NOT_YET && raw == "*")
 else availability(raw)
 ```
 
-- [ ] 将上一轮解析失败测试的 `*` 改为真正未知的 `未知状态`，继续验证错误隔离。
-- [ ] 回放原始 fixture，断言 310 条完整保留、291 条未售、6 条已售、C2551 起售文案保持、UNKNOWN 数量为 0；验证只有 OPEN 车次参与现票/待核验汇总。
+- [x] 将上一轮解析失败测试的 `*` 改为真正未知的 `未知状态`，继续验证错误隔离。
+- [x] 回放原始 fixture，断言 310 条完整保留、291 条未售、6 条已售、C2551 起售文案保持、UNKNOWN 数量为 0；验证只有 OPEN 车次参与现票/待核验汇总。
 
 ### Task 2: Android 与真机交付
 
@@ -47,7 +47,7 @@ else availability(raw)
 
 **Interfaces:** 注入 TicketSource.query 使用真实 TicketParser 处理离线混合记录，AppViewModel 和页面使用正式路径。
 
-- [ ] 模拟器验证一个未售星号车次和一个已售有票车次同项成功；只显示后者，不显示失败原因按钮；同跑 SearchFailureTest 验证失败隔离未退化。
-- [ ] versionCode=6，versionName=0.2.2；执行 `:core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --offline`。
-- [ ] 保存当前设备 APK、偏好，核对签名；`adb install -r` 覆盖安装，验证版本、启动、已安装 APK 哈希和原偏好完全一致。
-- [ ] 记录测试结果、回滚位置和已验证边界，提交到功能分支；通过 punk-12 发送并回读完成通知。
+- [x] 模拟器验证一个未售星号车次和一个已售有票车次同项成功；只显示后者，不显示失败原因按钮；同跑 SearchFailureTest 验证失败隔离未退化。
+- [x] versionCode=6，versionName=0.2.2；执行 `:core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --offline`。
+- [x] 保存当前设备 APK、偏好，核对签名；`adb install -r` 覆盖安装，验证版本、启动、已安装 APK 哈希和原偏好完全一致。
+- [x] 记录测试结果、回滚位置和已验证边界，提交到功能分支；通过 punk-12 发送并回读完成通知。

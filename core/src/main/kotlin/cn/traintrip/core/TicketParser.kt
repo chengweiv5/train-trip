@@ -34,7 +34,11 @@ object TicketParser {
                 }
                 val depart = time(f[8]); val arrive = time(f[9]); val duration = duration(f[10])
                 require(sale != SaleState.OPEN || (depart != null && arrive != null && duration != null && (depart.toSecondOfDay()/60+duration)%1440 == arrive.toSecondOfDay()/60)) { "车次时刻格式变化" }
-                val seats=SeatType.entries.associateWith { availability(f[it.field]) }
+                val seats=SeatType.entries.associateWith {
+                    val raw = f[it.field]
+                    if (sale == SaleState.NOT_YET && raw == "*") SeatAvailability(raw, AvailabilityKind.NOT_YET)
+                    else availability(raw)
+                }
                 require(seats.values.none { it.kind==AvailabilityKind.UNKNOWN }) { "出现未识别的席别状态，不能确定余票" }
                 Trip(unit.date,f[2],f[3],from,to,depart,arrive,duration,sale,f[1],seats,at,f[37] == "1",f.getOrNull(48)?.toIntOrNull()?.coerceAtLeast(0) ?: 0)
             }
