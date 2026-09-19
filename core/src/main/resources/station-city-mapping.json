@@ -1,0 +1,2555 @@
+{
+  "legacyCities": [
+    {
+      "legacyId": "0003",
+      "legacyName": "加格达奇",
+      "cityId": "232700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0007",
+      "legacyName": "齐齐哈尔",
+      "cityId": "230200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0009",
+      "legacyName": "黑河",
+      "cityId": "231100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0015",
+      "legacyName": "绥化",
+      "cityId": "231200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0016",
+      "legacyName": "伊春",
+      "cityId": "230700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0018",
+      "legacyName": "鹤岗",
+      "cityId": "230400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0020",
+      "legacyName": "双鸭山",
+      "cityId": "230500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0023",
+      "legacyName": "七台河",
+      "cityId": "230900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0026",
+      "legacyName": "鸡西",
+      "cityId": "230300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0028",
+      "legacyName": "桦南",
+      "cityId": "230800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0030",
+      "legacyName": "林口",
+      "cityId": "231000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0034",
+      "legacyName": "哈尔滨",
+      "cityId": "230100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0037",
+      "legacyName": "大庆",
+      "cityId": "230600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0044",
+      "legacyName": "牡丹江",
+      "cityId": "231000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0052",
+      "legacyName": "佳木斯",
+      "cityId": "230800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0102",
+      "legacyName": "白城",
+      "cityId": "220800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0110",
+      "legacyName": "长春",
+      "cityId": "220100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0112",
+      "legacyName": "四平",
+      "cityId": "220300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0117",
+      "legacyName": "吉林",
+      "cityId": "220200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0122",
+      "legacyName": "辽源",
+      "cityId": "220400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0135",
+      "legacyName": "通化",
+      "cityId": "220500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0136",
+      "legacyName": "白山",
+      "cityId": "220600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0138",
+      "legacyName": "松原",
+      "cityId": "220700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0164",
+      "legacyName": "巴音郭楞蒙古自治州",
+      "cityId": "652800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0204",
+      "legacyName": "铁岭",
+      "cityId": "211200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0205",
+      "legacyName": "沈阳",
+      "cityId": "210100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0206",
+      "legacyName": "抚顺",
+      "cityId": "210400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0208",
+      "legacyName": "本溪",
+      "cityId": "210500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0210",
+      "legacyName": "丹东",
+      "cityId": "210600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0212",
+      "legacyName": "辽阳",
+      "cityId": "211000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0213",
+      "legacyName": "鞍山",
+      "cityId": "210300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0216",
+      "legacyName": "营口",
+      "cityId": "210800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0220",
+      "legacyName": "大连",
+      "cityId": "210200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0222",
+      "legacyName": "盘锦",
+      "cityId": "211100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0226",
+      "legacyName": "阜新",
+      "cityId": "210900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0228",
+      "legacyName": "锦州",
+      "cityId": "210700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0233",
+      "legacyName": "朝阳",
+      "cityId": "211300",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "0237",
+      "legacyName": "葫芦岛",
+      "cityId": "211400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0301",
+      "legacyName": "秦皇岛",
+      "cityId": "130300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0304",
+      "legacyName": "唐山",
+      "cityId": "130200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0309",
+      "legacyName": "承德",
+      "cityId": "130800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0315",
+      "legacyName": "张家口",
+      "cityId": "130700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0326",
+      "legacyName": "保定",
+      "cityId": "130600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0334",
+      "legacyName": "沧州",
+      "cityId": "130900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0339",
+      "legacyName": "衡水",
+      "cityId": "131100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0346",
+      "legacyName": "邢台",
+      "cityId": "130500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0349",
+      "legacyName": "邯郸",
+      "cityId": "130400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0357",
+      "legacyName": "北京",
+      "cityId": "110000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "0358",
+      "legacyName": "廊坊",
+      "cityId": "131000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0359",
+      "legacyName": "天津",
+      "cityId": "120000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "0365",
+      "legacyName": "石家庄",
+      "cityId": "130100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0401",
+      "legacyName": "大同",
+      "cityId": "140200",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "0402",
+      "legacyName": "朔州",
+      "cityId": "140600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0403",
+      "legacyName": "忻州",
+      "cityId": "140900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0404",
+      "legacyName": "阳泉",
+      "cityId": "140300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0405",
+      "legacyName": "太原",
+      "cityId": "140100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0411",
+      "legacyName": "临汾",
+      "cityId": "141000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0413",
+      "legacyName": "运城",
+      "cityId": "140800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0414",
+      "legacyName": "长治",
+      "cityId": "140400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0415",
+      "legacyName": "晋城",
+      "cityId": "140500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0507",
+      "legacyName": "通辽",
+      "cityId": "150500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0508",
+      "legacyName": "赤峰",
+      "cityId": "150400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0509",
+      "legacyName": "二连浩特",
+      "cityId": "152500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0511",
+      "legacyName": "呼和浩特",
+      "cityId": "150100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0512",
+      "legacyName": "包头",
+      "cityId": "150200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0515",
+      "legacyName": "乌海",
+      "cityId": "150300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0517",
+      "legacyName": "鄂尔多斯",
+      "cityId": "150600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0601",
+      "legacyName": "德州",
+      "cityId": "371400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0602",
+      "legacyName": "济南",
+      "cityId": "370100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0603",
+      "legacyName": "聊城",
+      "cityId": "371500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0605",
+      "legacyName": "淄博",
+      "cityId": "370300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0607",
+      "legacyName": "潍坊",
+      "cityId": "370700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0611",
+      "legacyName": "烟台",
+      "cityId": "370600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0612",
+      "legacyName": "威海",
+      "cityId": "371000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0614",
+      "legacyName": "青岛",
+      "cityId": "370200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0615",
+      "legacyName": "莱芜",
+      "cityId": "370100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0616",
+      "legacyName": "泰安",
+      "cityId": "370900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0620",
+      "legacyName": "济宁",
+      "cityId": "370800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0621",
+      "legacyName": "菏泽",
+      "cityId": "371700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0622",
+      "legacyName": "临沂",
+      "cityId": "371300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0623",
+      "legacyName": "日照",
+      "cityId": "371100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0628",
+      "legacyName": "枣庄",
+      "cityId": "370400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0690",
+      "legacyName": "滨州",
+      "cityId": "371600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0697",
+      "legacyName": "东营",
+      "cityId": "370500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0701",
+      "legacyName": "徐州",
+      "cityId": "320300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0704",
+      "legacyName": "连云港",
+      "cityId": "320700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0705",
+      "legacyName": "南京",
+      "cityId": "320100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0706",
+      "legacyName": "镇江",
+      "cityId": "321100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0708",
+      "legacyName": "常州",
+      "cityId": "320400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0709",
+      "legacyName": "无锡",
+      "cityId": "320200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0710",
+      "legacyName": "苏州",
+      "cityId": "320500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0712",
+      "legacyName": "上海",
+      "cityId": "310000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "0713",
+      "legacyName": "扬州",
+      "cityId": "321000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0727",
+      "legacyName": "南通",
+      "cityId": "320600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0736",
+      "legacyName": "仪征",
+      "cityId": "321000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0739",
+      "legacyName": "盐城",
+      "cityId": "320900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0752",
+      "legacyName": "淮安",
+      "cityId": "320800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0767",
+      "legacyName": "泰州",
+      "cityId": "321200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0773",
+      "legacyName": "宿迁",
+      "cityId": "321300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0801",
+      "legacyName": "淮北",
+      "cityId": "340600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0802",
+      "legacyName": "亳州",
+      "cityId": "341600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0804",
+      "legacyName": "阜阳",
+      "cityId": "341200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0805",
+      "legacyName": "淮南",
+      "cityId": "340400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0806",
+      "legacyName": "宿州",
+      "cityId": "341300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0807",
+      "legacyName": "蚌埠",
+      "cityId": "340300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0808",
+      "legacyName": "滁州",
+      "cityId": "341100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0809",
+      "legacyName": "合肥",
+      "cityId": "340100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0810",
+      "legacyName": "马鞍山",
+      "cityId": "340500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0812",
+      "legacyName": "芜湖",
+      "cityId": "340200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0813",
+      "legacyName": "铜陵",
+      "cityId": "340700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0814",
+      "legacyName": "宣城",
+      "cityId": "341800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0815",
+      "legacyName": "黄山",
+      "cityId": "341000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0816",
+      "legacyName": "安庆",
+      "cityId": "340800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0819",
+      "legacyName": "六安",
+      "cityId": "341500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0864",
+      "legacyName": "凤阳",
+      "cityId": "341100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0878",
+      "legacyName": "池州",
+      "cityId": "341700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0901",
+      "legacyName": "湖州",
+      "cityId": "330500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0902",
+      "legacyName": "嘉兴",
+      "cityId": "330400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0904",
+      "legacyName": "杭州",
+      "cityId": "330100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0906",
+      "legacyName": "绍兴",
+      "cityId": "330600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0910",
+      "legacyName": "宁波",
+      "cityId": "330200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0913",
+      "legacyName": "金华",
+      "cityId": "330700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0914",
+      "legacyName": "建德",
+      "cityId": "330100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0916",
+      "legacyName": "衢州",
+      "cityId": "330800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0919",
+      "legacyName": "丽水",
+      "cityId": "331100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0920",
+      "legacyName": "温州",
+      "cityId": "330300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0946",
+      "legacyName": "台州",
+      "cityId": "331000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0950",
+      "legacyName": "温岭",
+      "cityId": "331000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "0951",
+      "legacyName": "玉环",
+      "cityId": "331000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1002",
+      "legacyName": "南平",
+      "cityId": "350700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1004",
+      "legacyName": "福州",
+      "cityId": "350100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1005",
+      "legacyName": "三明",
+      "cityId": "350400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1008",
+      "legacyName": "龙岩",
+      "cityId": "350800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1009",
+      "legacyName": "漳州",
+      "cityId": "350600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1010",
+      "legacyName": "厦门",
+      "cityId": "350200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1014",
+      "legacyName": "泉州",
+      "cityId": "350500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1023",
+      "legacyName": "宁德",
+      "cityId": "350900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1032",
+      "legacyName": "莆田",
+      "cityId": "350300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1036",
+      "legacyName": "安溪",
+      "cityId": "350500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1051",
+      "legacyName": "上杭",
+      "cityId": "350800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1053",
+      "legacyName": "长汀",
+      "cityId": "350800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1061",
+      "legacyName": "建宁",
+      "cityId": "350400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1069",
+      "legacyName": "沙县",
+      "cityId": "350400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1101",
+      "legacyName": "九江",
+      "cityId": "360400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1104",
+      "legacyName": "南昌",
+      "cityId": "360100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1105",
+      "legacyName": "鹰潭",
+      "cityId": "360600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1106",
+      "legacyName": "上饶",
+      "cityId": "361100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1107",
+      "legacyName": "景德镇",
+      "cityId": "360200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1111",
+      "legacyName": "新余",
+      "cityId": "360500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1112",
+      "legacyName": "宜春",
+      "cityId": "360900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1113",
+      "legacyName": "萍乡",
+      "cityId": "360300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1114",
+      "legacyName": "吉安",
+      "cityId": "360800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1116",
+      "legacyName": "赣州",
+      "cityId": "360700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1117",
+      "legacyName": "临川",
+      "cityId": "361000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1121",
+      "legacyName": "抚州",
+      "cityId": "361000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1143",
+      "legacyName": "资溪",
+      "cityId": "361000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1147",
+      "legacyName": "崇仁",
+      "cityId": "361000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1169",
+      "legacyName": "于都",
+      "cityId": "360700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1189",
+      "legacyName": "芦溪",
+      "cityId": "360300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1193",
+      "legacyName": "来舟",
+      "cityId": "350700",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1201",
+      "legacyName": "安阳",
+      "cityId": "410500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1202",
+      "legacyName": "鹤壁",
+      "cityId": "410600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1204",
+      "legacyName": "新乡",
+      "cityId": "410700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1205",
+      "legacyName": "焦作",
+      "cityId": "410800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1206",
+      "legacyName": "济源",
+      "cityId": "419001",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1207",
+      "legacyName": "三门峡",
+      "cityId": "411200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1209",
+      "legacyName": "洛阳",
+      "cityId": "410300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1211",
+      "legacyName": "开封",
+      "cityId": "410200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1212",
+      "legacyName": "商丘",
+      "cityId": "411400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1214",
+      "legacyName": "许昌",
+      "cityId": "411000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1215",
+      "legacyName": "平顶山",
+      "cityId": "410400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1216",
+      "legacyName": "南阳",
+      "cityId": "411300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1218",
+      "legacyName": "漯河",
+      "cityId": "411100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1219",
+      "legacyName": "驻马店",
+      "cityId": "411700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1220",
+      "legacyName": "信阳",
+      "cityId": "411500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1221",
+      "legacyName": "周口",
+      "cityId": "411600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1222",
+      "legacyName": "郑州",
+      "cityId": "410100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1294",
+      "legacyName": "濮阳",
+      "cityId": "410900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1301",
+      "legacyName": "十堰",
+      "cityId": "420300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1304",
+      "legacyName": "襄阳",
+      "cityId": "420600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1305",
+      "legacyName": "荆门",
+      "cityId": "420800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1306",
+      "legacyName": "当阳",
+      "cityId": "420500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1307",
+      "legacyName": "宜昌",
+      "cityId": "420500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1310",
+      "legacyName": "随州",
+      "cityId": "421300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1313",
+      "legacyName": "孝感",
+      "cityId": "420900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1314",
+      "legacyName": "武汉",
+      "cityId": "420100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1315",
+      "legacyName": "鄂州",
+      "cityId": "420700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1316",
+      "legacyName": "黄石",
+      "cityId": "420200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1317",
+      "legacyName": "咸宁",
+      "cityId": "421200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1320",
+      "legacyName": "武穴",
+      "cityId": "421100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1330",
+      "legacyName": "宜城",
+      "cityId": "420600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1333",
+      "legacyName": "汉川",
+      "cityId": "420900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1340",
+      "legacyName": "蕲春",
+      "cityId": "421100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1341",
+      "legacyName": "浠水",
+      "cityId": "421100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1361",
+      "legacyName": "恩施",
+      "cityId": "422800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1369",
+      "legacyName": "神农架",
+      "cityId": "429021",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1374",
+      "legacyName": "京山",
+      "cityId": "420800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1375",
+      "legacyName": "钟祥",
+      "cityId": "420800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1377",
+      "legacyName": "潜江",
+      "cityId": "429005",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1378",
+      "legacyName": "天门",
+      "cityId": "429006",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1379",
+      "legacyName": "仙桃",
+      "cityId": "429004",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1388",
+      "legacyName": "荆州",
+      "cityId": "421000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1402",
+      "legacyName": "吉首",
+      "cityId": "433100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1403",
+      "legacyName": "怀化",
+      "cityId": "431200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1404",
+      "legacyName": "岳阳",
+      "cityId": "430600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1407",
+      "legacyName": "长沙",
+      "cityId": "430100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1408",
+      "legacyName": "株洲",
+      "cityId": "430200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1410",
+      "legacyName": "湘潭",
+      "cityId": "430300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1412",
+      "legacyName": "娄底",
+      "cityId": "431300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1415",
+      "legacyName": "邵阳",
+      "cityId": "430500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1416",
+      "legacyName": "衡阳",
+      "cityId": "430400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1419",
+      "legacyName": "郴州",
+      "cityId": "431000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1421",
+      "legacyName": "张家界",
+      "cityId": "430800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1422",
+      "legacyName": "常德",
+      "cityId": "430700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1423",
+      "legacyName": "益阳",
+      "cityId": "430900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1426",
+      "legacyName": "永州",
+      "cityId": "431100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1467",
+      "legacyName": "邵东",
+      "cityId": "430500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1501",
+      "legacyName": "韶关",
+      "cityId": "440200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1502",
+      "legacyName": "广州",
+      "cityId": "440100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1503",
+      "legacyName": "清远",
+      "cityId": "441800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1504",
+      "legacyName": "东莞",
+      "cityId": "441900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1505",
+      "legacyName": "深圳",
+      "cityId": "440300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1506",
+      "legacyName": "佛山",
+      "cityId": "440600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1507",
+      "legacyName": "肇庆",
+      "cityId": "441200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1508",
+      "legacyName": "云浮",
+      "cityId": "445300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1509",
+      "legacyName": "茂名",
+      "cityId": "440900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1510",
+      "legacyName": "湛江",
+      "cityId": "440800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1511",
+      "legacyName": "河源",
+      "cityId": "441600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1512",
+      "legacyName": "惠州",
+      "cityId": "441300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1513",
+      "legacyName": "梅州",
+      "cityId": "441400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1514",
+      "legacyName": "揭阳",
+      "cityId": "445200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1515",
+      "legacyName": "潮州",
+      "cityId": "445100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1516",
+      "legacyName": "汕头",
+      "cityId": "440500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1525",
+      "legacyName": "汕尾",
+      "cityId": "441500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1529",
+      "legacyName": "阳江",
+      "cityId": "441700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1541",
+      "legacyName": "江门",
+      "cityId": "440700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1567",
+      "legacyName": "珠海",
+      "cityId": "440400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1581",
+      "legacyName": "中山",
+      "cityId": "442000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1601",
+      "legacyName": "河池",
+      "cityId": "451200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1602",
+      "legacyName": "柳州",
+      "cityId": "450200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1603",
+      "legacyName": "桂林",
+      "cityId": "450300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1605",
+      "legacyName": "贵港",
+      "cityId": "450800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1606",
+      "legacyName": "玉林",
+      "cityId": "450900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1607",
+      "legacyName": "南宁",
+      "cityId": "450100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1608",
+      "legacyName": "钦州",
+      "cityId": "450700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1610",
+      "legacyName": "百色",
+      "cityId": "451000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1611",
+      "legacyName": "北海",
+      "cityId": "450500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1612",
+      "legacyName": "防城港",
+      "cityId": "450600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1615",
+      "legacyName": "崇左",
+      "cityId": "451400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1628",
+      "legacyName": "来宾",
+      "cityId": "451300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1646",
+      "legacyName": "兴安",
+      "cityId": "152200",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1655",
+      "legacyName": "梧州",
+      "cityId": "450400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1701",
+      "legacyName": "广元",
+      "cityId": "510800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1703",
+      "legacyName": "绵阳",
+      "cityId": "510700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1704",
+      "legacyName": "德阳",
+      "cityId": "510600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1707",
+      "legacyName": "成都",
+      "cityId": "510100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1708",
+      "legacyName": "乐山",
+      "cityId": "511100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1710",
+      "legacyName": "西昌",
+      "cityId": "513400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1711",
+      "legacyName": "攀枝花",
+      "cityId": "510400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1712",
+      "legacyName": "内江",
+      "cityId": "511000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1713",
+      "legacyName": "自贡",
+      "cityId": "510300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1714",
+      "legacyName": "宜宾",
+      "cityId": "511500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1715",
+      "legacyName": "达州",
+      "cityId": "511700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1717",
+      "legacyName": "重庆",
+      "cityId": "500000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1718",
+      "legacyName": "永川",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1719",
+      "legacyName": "遂宁",
+      "cityId": "510900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1720",
+      "legacyName": "南充",
+      "cityId": "511300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1759",
+      "legacyName": "广安",
+      "cityId": "511600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1779",
+      "legacyName": "酉阳",
+      "cityId": "500000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1780",
+      "legacyName": "秀山",
+      "cityId": "500000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1782",
+      "legacyName": "彭水",
+      "cityId": "500000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1787",
+      "legacyName": "泸州",
+      "cityId": "510500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1801",
+      "legacyName": "凯里",
+      "cityId": "522600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1802",
+      "legacyName": "都匀",
+      "cityId": "522700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1803",
+      "legacyName": "贵阳",
+      "cityId": "520100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1805",
+      "legacyName": "安顺",
+      "cityId": "520400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1806",
+      "legacyName": "六盘水",
+      "cityId": "520200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1807",
+      "legacyName": "遵义",
+      "cityId": "520300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1808",
+      "legacyName": "兴义",
+      "cityId": "522300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1843",
+      "legacyName": "铜仁",
+      "cityId": "520600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1848",
+      "legacyName": "毕节",
+      "cityId": "520500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1901",
+      "legacyName": "曲靖",
+      "cityId": "530300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1902",
+      "legacyName": "昆明",
+      "cityId": "530100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1904",
+      "legacyName": "玉溪",
+      "cityId": "530400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1905",
+      "legacyName": "楚雄",
+      "cityId": "532300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1906",
+      "legacyName": "大理",
+      "cityId": "532900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1908",
+      "legacyName": "昭通",
+      "cityId": "530600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1909",
+      "legacyName": "景洪",
+      "cityId": "532800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1912",
+      "legacyName": "勐腊",
+      "cityId": "532800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1943",
+      "legacyName": "南涧",
+      "cityId": "532900",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1946",
+      "legacyName": "漾濞",
+      "cityId": "532900",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1947",
+      "legacyName": "永平",
+      "cityId": "532900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1949",
+      "legacyName": "个旧",
+      "cityId": "532500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1955",
+      "legacyName": "蒙自",
+      "cityId": "532500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1969",
+      "legacyName": "保山",
+      "cityId": "530500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1979",
+      "legacyName": "文山",
+      "cityId": "532600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "1983",
+      "legacyName": "峨山",
+      "cityId": "530400",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "1989",
+      "legacyName": "元江",
+      "cityId": "530400",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "2001",
+      "legacyName": "华阴",
+      "cityId": "610500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2002",
+      "legacyName": "渭南",
+      "cityId": "610500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2003",
+      "legacyName": "西安",
+      "cityId": "610100",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "2004",
+      "legacyName": "咸阳",
+      "cityId": "610400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2005",
+      "legacyName": "宝鸡",
+      "cityId": "610300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2006",
+      "legacyName": "安康",
+      "cityId": "610900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2007",
+      "legacyName": "汉中",
+      "cityId": "610700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2008",
+      "legacyName": "铜川",
+      "cityId": "610200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2010",
+      "legacyName": "延安",
+      "cityId": "610600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2015",
+      "legacyName": "榆林",
+      "cityId": "610800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2016",
+      "legacyName": "商洛",
+      "cityId": "611000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2050",
+      "legacyName": "富平",
+      "cityId": "610500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2053",
+      "legacyName": "蒲城",
+      "cityId": "610500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2101",
+      "legacyName": "天水",
+      "cityId": "620500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2102",
+      "legacyName": "兰州",
+      "cityId": "620100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2103",
+      "legacyName": "白银",
+      "cityId": "620400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2104",
+      "legacyName": "武威",
+      "cityId": "620600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2105",
+      "legacyName": "金昌",
+      "cityId": "620300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2106",
+      "legacyName": "张掖",
+      "cityId": "620700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2107",
+      "legacyName": "酒泉",
+      "cityId": "620900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2108",
+      "legacyName": "嘉峪关",
+      "cityId": "620200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2109",
+      "legacyName": "玉门",
+      "cityId": "620900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2111",
+      "legacyName": "平凉",
+      "cityId": "620800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2124",
+      "legacyName": "定西",
+      "cityId": "621100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2141",
+      "legacyName": "庆阳",
+      "cityId": "621000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2201",
+      "legacyName": "西宁",
+      "cityId": "630100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2202",
+      "legacyName": "德令哈",
+      "cityId": "632800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2203",
+      "legacyName": "格尔木",
+      "cityId": "632800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2206",
+      "legacyName": "海东",
+      "cityId": "630200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2234",
+      "legacyName": "茫崖",
+      "cityId": "632800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2248",
+      "legacyName": "海北州",
+      "cityId": "632200",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "2301",
+      "legacyName": "石嘴山",
+      "cityId": "640200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2302",
+      "legacyName": "银川",
+      "cityId": "640100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2303",
+      "legacyName": "青铜峡",
+      "cityId": "640300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2304",
+      "legacyName": "中卫",
+      "cityId": "640500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2311",
+      "legacyName": "灵武",
+      "cityId": "640100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2313",
+      "legacyName": "吴忠",
+      "cityId": "640300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2315",
+      "legacyName": "固原",
+      "cityId": "640400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2401",
+      "legacyName": "哈密",
+      "cityId": "650500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2402",
+      "legacyName": "吐鲁番",
+      "cityId": "650400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2403",
+      "legacyName": "乌鲁木齐",
+      "cityId": "650100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2404",
+      "legacyName": "昌吉",
+      "cityId": "652300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2405",
+      "legacyName": "石河子",
+      "cityId": "659001",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2407",
+      "legacyName": "博乐",
+      "cityId": "652700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2408",
+      "legacyName": "库尔勒",
+      "cityId": "652800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2409",
+      "legacyName": "阿克苏",
+      "cityId": "652900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2410",
+      "legacyName": "喀什",
+      "cityId": "653100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2411",
+      "legacyName": "阿图什",
+      "cityId": "653000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2413",
+      "legacyName": "塔城",
+      "cityId": "654200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2419",
+      "legacyName": "和田",
+      "cityId": "653200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2424",
+      "legacyName": "阿勒泰",
+      "cityId": "654300",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2436",
+      "legacyName": "克拉玛依",
+      "cityId": "650200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2482",
+      "legacyName": "伊宁",
+      "cityId": "654000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2501",
+      "legacyName": "海口",
+      "cityId": "460100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2502",
+      "legacyName": "澄迈",
+      "cityId": "469023",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2504",
+      "legacyName": "文昌",
+      "cityId": "469005",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2506",
+      "legacyName": "琼海",
+      "cityId": "469002",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2507",
+      "legacyName": "万宁",
+      "cityId": "469006",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2509",
+      "legacyName": "三亚",
+      "cityId": "460200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2511",
+      "legacyName": "乐东",
+      "cityId": "469027",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "2513",
+      "legacyName": "陵水",
+      "cityId": "469028",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "2515",
+      "legacyName": "儋州",
+      "cityId": "460400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2518",
+      "legacyName": "东方",
+      "cityId": "469007",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2519",
+      "legacyName": "昌江",
+      "cityId": "469026",
+      "method": "reviewed override: Hainan Changjiang, not Jingdezhen Changjiang district"
+    },
+    {
+      "legacyId": "2520",
+      "legacyName": "临高",
+      "cityId": "469024",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2719",
+      "legacyName": "扎囊",
+      "cityId": "540500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2723",
+      "legacyName": "贡嘎",
+      "cityId": "540500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2751",
+      "legacyName": "拉萨",
+      "cityId": "540100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2752",
+      "legacyName": "日喀则",
+      "cityId": "540200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2753",
+      "legacyName": "山南",
+      "cityId": "540500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2754",
+      "legacyName": "林芝",
+      "cityId": "540400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "2756",
+      "legacyName": "那曲",
+      "cityId": "540600",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3102",
+      "legacyName": "万州",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3107",
+      "legacyName": "涪陵",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3108",
+      "legacyName": "石柱",
+      "cityId": "500000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "3109",
+      "legacyName": "丰都",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3110",
+      "legacyName": "南川",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3113",
+      "legacyName": "奉节",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3114",
+      "legacyName": "云阳",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3116",
+      "legacyName": "梁平",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3118",
+      "legacyName": "大足",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3122",
+      "legacyName": "潼南",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3123",
+      "legacyName": "合川",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3124",
+      "legacyName": "江津",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3127",
+      "legacyName": "长寿",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3128",
+      "legacyName": "綦江",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3129",
+      "legacyName": "黔江",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3130",
+      "legacyName": "武隆",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3131",
+      "legacyName": "垫江",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3132",
+      "legacyName": "巫山",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "3201",
+      "legacyName": "香港",
+      "cityId": "810000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "5409",
+      "legacyName": "晋中",
+      "cityId": "140700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "6107",
+      "legacyName": "江边村",
+      "cityId": "361000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "6108",
+      "legacyName": "麦园",
+      "cityId": "350800",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "6618",
+      "legacyName": "贺州",
+      "cityId": "451100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "6702",
+      "legacyName": "资阳",
+      "cityId": "512000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "6711",
+      "legacyName": "眉山",
+      "cityId": "511400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "6740",
+      "legacyName": "雅安",
+      "cityId": "511800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "6756",
+      "legacyName": "荣昌",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "6905",
+      "legacyName": "墨江",
+      "cityId": "530800",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "6906",
+      "legacyName": "普洱",
+      "cityId": "530800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "6913",
+      "legacyName": "临沧",
+      "cityId": "530900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "6927",
+      "legacyName": "丽江",
+      "cityId": "530700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "6930",
+      "legacyName": "香格里拉",
+      "cityId": "533400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "7081",
+      "legacyName": "马桥河",
+      "cityId": "231000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "9010",
+      "legacyName": "吕梁",
+      "cityId": "141100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9011",
+      "legacyName": "乌兰察布",
+      "cityId": "150900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9014",
+      "legacyName": "巴中",
+      "cityId": "511900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9024",
+      "legacyName": "石柱县",
+      "cityId": "500000",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "9026",
+      "legacyName": "黄冈",
+      "cityId": "421100",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9034",
+      "legacyName": "巴彦淖尔",
+      "cityId": "150800",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9040",
+      "legacyName": "璧山",
+      "cityId": "500000",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9041",
+      "legacyName": "海西州",
+      "cityId": "632800",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "9057",
+      "legacyName": "陇南",
+      "cityId": "621200",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9089",
+      "legacyName": "铁门关",
+      "cityId": "659006",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9096",
+      "legacyName": "呼伦贝尔",
+      "cityId": "150700",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9097",
+      "legacyName": "延边",
+      "cityId": "222400",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "9098",
+      "legacyName": "锡林郭勒",
+      "cityId": "152500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9099",
+      "legacyName": "阿拉善",
+      "cityId": "152900",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9101",
+      "legacyName": "桑日",
+      "cityId": "540500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9102",
+      "legacyName": "加查",
+      "cityId": "540500",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9103",
+      "legacyName": "朗县",
+      "cityId": "540400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9104",
+      "legacyName": "岗嘎",
+      "cityId": "540400",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "9105",
+      "legacyName": "米林",
+      "cityId": "540400",
+      "method": "administrative name or child match"
+    },
+    {
+      "legacyId": "9107",
+      "legacyName": "宁洱",
+      "cityId": "530800",
+      "method": "reviewed override"
+    },
+    {
+      "legacyId": "9210",
+      "legacyName": "阿坝藏族羌族自治州",
+      "cityId": "513200",
+      "method": "administrative name or child match"
+    }
+  ],
+  "stationOverrides": {
+    "AOR": "659002",
+    "TMR": "659003",
+    "BXR": "659005",
+    "OHR": "659007",
+    "ESR": "659009"
+  }
+}

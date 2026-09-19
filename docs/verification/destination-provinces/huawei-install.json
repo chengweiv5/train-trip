@@ -1,0 +1,24 @@
+{
+  "device": "FMR0224725012307",
+  "model": "ALN-AL00",
+  "sdk": "31",
+  "before": {
+    "versionCode": "4",
+    "versionName": "0.2.0"
+  },
+  "backup": "/private/tmp/train-trip-v2-phone-backup-lj7hj91g",
+  "prefsSha256": "8b7da1d3632e1a5528ed39bfd12ec4723cd7897960f48fcde0b3c79936a2aedc",
+  "newApkSha256": "e5985ec63c74bb5cee14afc45977edcaf2cf12448f9400b49886bb782d327fc2",
+  "signatureMatches": true,
+  "after": {
+    "versionCode": "4",
+    "versionName": "0.2.0"
+  },
+  "installedApkMatches": true,
+  "preferencesPreserved": true,
+  "launch": "Starting: Intent { cmp=cn.traintrip.app/.MainActivity }\nStatus: ok\nLaunchState: COLD\nActivity: cn.traintrip.app/.MainActivity\nTotalTime: 986\nWaitTime: 989\nComplete",
+  "pid": "23391",
+  "resumedActivity": [
+    "mResumedActivity: ActivityRecord{4294d24 u0 cn.traintrip.app/.MainActivity t42150}"
+  ]
+}

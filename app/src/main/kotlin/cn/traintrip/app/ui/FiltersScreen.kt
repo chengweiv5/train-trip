@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
@@ -14,6 +15,7 @@ import cn.traintrip.core.*
 
 @Composable fun FiltersScreen(s:UiState,onUpdate:(SearchFilters)->Unit,onSearch:()->Unit) {
     var sheet by remember { mutableStateOf<String?>(null) }
+    val destinationBrowser=rememberSaveable(saver=DestinationBrowserState.Saver) { DestinationBrowserState() }
     val f=s.filters
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal=20.dp).padding(top=12.dp,bottom=24.dp),verticalArrangement=Arrangement.spacedBy(20.dp)) {
         Column(verticalArrangement=Arrangement.spacedBy(6.dp)) {
@@ -50,14 +52,17 @@ import cn.traintrip.core.*
             FilterRow("席别",if(f.seats.size==SeatType.entries.size) "不限，含无座" else "已选 ${f.seats.size} 类") { sheet="seats" }
             FilterRow("乘车人数","${f.people} 人") { sheet="people" }
             FilterRow("最长车程",f.maxMinutes?.let { durationText(it) } ?: "不限") { sheet="duration" }
-            FilterRow("查询目的地","${f.destinationCityIds.size} 个城市") { sheet="scope" }
+            FilterRow("查询目的地","${f.destinationCityIds.size} 个城市 · ${f.destinationCityIds.mapNotNull { s.catalog.byCity[it]?.province?.id }.distinct().size} 个省级地区") { sheet="scope" }
         }
         Text("首版按所选城市查询；可能未覆盖全部目的地。可在“查询目的地”中查看和调整范围。",style=MaterialTheme.typography.bodySmall,color=Muted)
         s.error?.let { Hint(it,true) }
         PrimaryButton("找找有票的城市  →",onSearch)
         Text("只看直达去程 · 购票在 12306 完成",style=MaterialTheme.typography.bodySmall,color=Muted)
     }
-    sheet?.let { key -> FilterSheet(key,s,onDismiss={sheet=null},onApply={onUpdate(it);sheet=null}) }
+    sheet?.let { key ->
+        if(key=="scope") DestinationSelector(s,{sheet=null},{onUpdate(it);sheet=null},destinationBrowser)
+        else FilterSheet(key,s,onDismiss={sheet=null},onApply={onUpdate(it);sheet=null})
+    }
 }
 @Composable private fun FilterRow(title:String,value:String,onClick:()->Unit) {
     TextButton(onClick,Modifier.fillMaxWidth().heightIn(min=56.dp),contentPadding=PaddingValues(0.dp)) {

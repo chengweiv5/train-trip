@@ -43,10 +43,10 @@ class AppFlowTest {
         compose.onNodeWithText("22:00–06:00 · 所选日期每天适用").assertExists()
         compose.onNodeWithText("查询目的地").performScrollTo().performClick()
         compose.onNodeWithText("清空选择").performClick()
-        compose.onNodeWithText("搜索目的地城市").performTextInput("天津")
+        compose.onNodeWithText("搜索省份或城市").performTextInput("天津")
         compose.onNode(hasText("天津") and !hasSetTextAction()).performClick()
         compose.onNodeWithText("完成").performClick()
-        compose.onNodeWithText("1 个城市").assertExists()
+        compose.onNodeWithText("1 个城市 · 1 个省级地区").assertExists()
     }
 
     @Test fun realSearchToTrainAndRecheck() {

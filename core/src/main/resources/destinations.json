@@ -1,0 +1,4948 @@
+{
+  "provinces": [
+    {
+      "id": "11",
+      "name": "北京市",
+      "shortName": "北京",
+      "pinyin": "beijing",
+      "fullPinyin": "beijingshi"
+    },
+    {
+      "id": "12",
+      "name": "天津市",
+      "shortName": "天津",
+      "pinyin": "tianjin",
+      "fullPinyin": "tianjinshi"
+    },
+    {
+      "id": "13",
+      "name": "河北省",
+      "shortName": "河北",
+      "pinyin": "hebei",
+      "fullPinyin": "hebeisheng"
+    },
+    {
+      "id": "14",
+      "name": "山西省",
+      "shortName": "山西",
+      "pinyin": "shanxi",
+      "fullPinyin": "shanxisheng"
+    },
+    {
+      "id": "15",
+      "name": "内蒙古自治区",
+      "shortName": "内蒙古",
+      "pinyin": "neimenggu",
+      "fullPinyin": "neimengguzizhiqu"
+    },
+    {
+      "id": "21",
+      "name": "辽宁省",
+      "shortName": "辽宁",
+      "pinyin": "liaoning",
+      "fullPinyin": "liaoningsheng"
+    },
+    {
+      "id": "22",
+      "name": "吉林省",
+      "shortName": "吉林",
+      "pinyin": "jilin",
+      "fullPinyin": "jilinsheng"
+    },
+    {
+      "id": "23",
+      "name": "黑龙江省",
+      "shortName": "黑龙江",
+      "pinyin": "heilongjiang",
+      "fullPinyin": "heilongjiangsheng"
+    },
+    {
+      "id": "31",
+      "name": "上海市",
+      "shortName": "上海",
+      "pinyin": "shanghai",
+      "fullPinyin": "shanghaishi"
+    },
+    {
+      "id": "32",
+      "name": "江苏省",
+      "shortName": "江苏",
+      "pinyin": "jiangsu",
+      "fullPinyin": "jiangsusheng"
+    },
+    {
+      "id": "33",
+      "name": "浙江省",
+      "shortName": "浙江",
+      "pinyin": "zhejiang",
+      "fullPinyin": "zhejiangsheng"
+    },
+    {
+      "id": "34",
+      "name": "安徽省",
+      "shortName": "安徽",
+      "pinyin": "anhui",
+      "fullPinyin": "anhuisheng"
+    },
+    {
+      "id": "35",
+      "name": "福建省",
+      "shortName": "福建",
+      "pinyin": "fujian",
+      "fullPinyin": "fujiansheng"
+    },
+    {
+      "id": "36",
+      "name": "江西省",
+      "shortName": "江西",
+      "pinyin": "jiangxi",
+      "fullPinyin": "jiangxisheng"
+    },
+    {
+      "id": "37",
+      "name": "山东省",
+      "shortName": "山东",
+      "pinyin": "shandong",
+      "fullPinyin": "shandongsheng"
+    },
+    {
+      "id": "41",
+      "name": "河南省",
+      "shortName": "河南",
+      "pinyin": "henan",
+      "fullPinyin": "henansheng"
+    },
+    {
+      "id": "42",
+      "name": "湖北省",
+      "shortName": "湖北",
+      "pinyin": "hubei",
+      "fullPinyin": "hubeisheng"
+    },
+    {
+      "id": "43",
+      "name": "湖南省",
+      "shortName": "湖南",
+      "pinyin": "hunan",
+      "fullPinyin": "hunansheng"
+    },
+    {
+      "id": "44",
+      "name": "广东省",
+      "shortName": "广东",
+      "pinyin": "guangdong",
+      "fullPinyin": "guangdongsheng"
+    },
+    {
+      "id": "45",
+      "name": "广西壮族自治区",
+      "shortName": "广西",
+      "pinyin": "guangxi",
+      "fullPinyin": "guangxizhuangzuzizhiqu"
+    },
+    {
+      "id": "46",
+      "name": "海南省",
+      "shortName": "海南",
+      "pinyin": "hainan",
+      "fullPinyin": "hainansheng"
+    },
+    {
+      "id": "50",
+      "name": "重庆市",
+      "shortName": "重庆",
+      "pinyin": "chongqing",
+      "fullPinyin": "chongqingshi"
+    },
+    {
+      "id": "51",
+      "name": "四川省",
+      "shortName": "四川",
+      "pinyin": "sichuan",
+      "fullPinyin": "sichuansheng"
+    },
+    {
+      "id": "52",
+      "name": "贵州省",
+      "shortName": "贵州",
+      "pinyin": "guizhou",
+      "fullPinyin": "guizhousheng"
+    },
+    {
+      "id": "53",
+      "name": "云南省",
+      "shortName": "云南",
+      "pinyin": "yunnan",
+      "fullPinyin": "yunnansheng"
+    },
+    {
+      "id": "54",
+      "name": "西藏自治区",
+      "shortName": "西藏",
+      "pinyin": "xicang",
+      "fullPinyin": "xicangzizhiqu"
+    },
+    {
+      "id": "61",
+      "name": "陕西省",
+      "shortName": "陕西",
+      "pinyin": "shanxi",
+      "fullPinyin": "shanxisheng"
+    },
+    {
+      "id": "62",
+      "name": "甘肃省",
+      "shortName": "甘肃",
+      "pinyin": "gansu",
+      "fullPinyin": "gansusheng"
+    },
+    {
+      "id": "63",
+      "name": "青海省",
+      "shortName": "青海",
+      "pinyin": "qinghai",
+      "fullPinyin": "qinghaisheng"
+    },
+    {
+      "id": "64",
+      "name": "宁夏回族自治区",
+      "shortName": "宁夏",
+      "pinyin": "ningxia",
+      "fullPinyin": "ningxiahuizuzizhiqu"
+    },
+    {
+      "id": "65",
+      "name": "新疆维吾尔自治区",
+      "shortName": "新疆",
+      "pinyin": "xinjiang",
+      "fullPinyin": "xinjiangweiwuerzizhiqu"
+    },
+    {
+      "id": "81",
+      "name": "香港特别行政区",
+      "shortName": "香港",
+      "pinyin": "xianggang",
+      "fullPinyin": "xianggangtebiexingzhengqu"
+    },
+    {
+      "id": "82",
+      "name": "澳门特别行政区",
+      "shortName": "澳门",
+      "pinyin": "aomen",
+      "fullPinyin": "aomentebiexingzhengqu"
+    },
+    {
+      "id": "71",
+      "name": "台湾省",
+      "shortName": "台湾",
+      "pinyin": "taiwan",
+      "fullPinyin": "taiwansheng"
+    }
+  ],
+  "cities": [
+    {
+      "id": "110000",
+      "name": "北京",
+      "provinceId": "11",
+      "aliases": [
+        "beijing",
+        "beijingshi",
+        "北京",
+        "北京市"
+      ],
+      "pinyin": "beijing"
+    },
+    {
+      "id": "120000",
+      "name": "天津",
+      "provinceId": "12",
+      "aliases": [
+        "tianjin",
+        "tianjinshi",
+        "天津",
+        "天津市"
+      ],
+      "pinyin": "tianjin"
+    },
+    {
+      "id": "130100",
+      "name": "石家庄",
+      "provinceId": "13",
+      "aliases": [
+        "shijiazhuang",
+        "shijiazhuangshi",
+        "石家庄",
+        "石家庄市"
+      ],
+      "pinyin": "shijiazhuang"
+    },
+    {
+      "id": "130200",
+      "name": "唐山",
+      "provinceId": "13",
+      "aliases": [
+        "tangshan",
+        "tangshanshi",
+        "唐山",
+        "唐山市"
+      ],
+      "pinyin": "tangshan"
+    },
+    {
+      "id": "130300",
+      "name": "秦皇岛",
+      "provinceId": "13",
+      "aliases": [
+        "qinhuangdao",
+        "qinhuangdaoshi",
+        "秦皇岛",
+        "秦皇岛市"
+      ],
+      "pinyin": "qinhuangdao"
+    },
+    {
+      "id": "130400",
+      "name": "邯郸",
+      "provinceId": "13",
+      "aliases": [
+        "handan",
+        "handanshi",
+        "邯郸",
+        "邯郸市"
+      ],
+      "pinyin": "handan"
+    },
+    {
+      "id": "130500",
+      "name": "邢台",
+      "provinceId": "13",
+      "aliases": [
+        "xingtai",
+        "xingtaishi",
+        "邢台",
+        "邢台市"
+      ],
+      "pinyin": "xingtai"
+    },
+    {
+      "id": "130600",
+      "name": "保定",
+      "provinceId": "13",
+      "aliases": [
+        "baoding",
+        "baodingshi",
+        "保定",
+        "保定市"
+      ],
+      "pinyin": "baoding"
+    },
+    {
+      "id": "130700",
+      "name": "张家口",
+      "provinceId": "13",
+      "aliases": [
+        "zhangjiakou",
+        "zhangjiakoushi",
+        "张家口",
+        "张家口市"
+      ],
+      "pinyin": "zhangjiakou"
+    },
+    {
+      "id": "130800",
+      "name": "承德",
+      "provinceId": "13",
+      "aliases": [
+        "chengde",
+        "chengdeshi",
+        "承德",
+        "承德市"
+      ],
+      "pinyin": "chengde"
+    },
+    {
+      "id": "130900",
+      "name": "沧州",
+      "provinceId": "13",
+      "aliases": [
+        "cangzhou",
+        "cangzhoushi",
+        "沧州",
+        "沧州市"
+      ],
+      "pinyin": "cangzhou"
+    },
+    {
+      "id": "131000",
+      "name": "廊坊",
+      "provinceId": "13",
+      "aliases": [
+        "langfang",
+        "langfangshi",
+        "廊坊",
+        "廊坊市"
+      ],
+      "pinyin": "langfang"
+    },
+    {
+      "id": "131100",
+      "name": "衡水",
+      "provinceId": "13",
+      "aliases": [
+        "hengshui",
+        "hengshuishi",
+        "衡水",
+        "衡水市"
+      ],
+      "pinyin": "hengshui"
+    },
+    {
+      "id": "140100",
+      "name": "太原",
+      "provinceId": "14",
+      "aliases": [
+        "taiyuan",
+        "taiyuanshi",
+        "太原",
+        "太原市"
+      ],
+      "pinyin": "taiyuan"
+    },
+    {
+      "id": "140200",
+      "name": "大同",
+      "provinceId": "14",
+      "aliases": [
+        "datong",
+        "datongshi",
+        "大同",
+        "大同市"
+      ],
+      "pinyin": "datong"
+    },
+    {
+      "id": "140300",
+      "name": "阳泉",
+      "provinceId": "14",
+      "aliases": [
+        "yangquan",
+        "yangquanshi",
+        "阳泉",
+        "阳泉市"
+      ],
+      "pinyin": "yangquan"
+    },
+    {
+      "id": "140400",
+      "name": "长治",
+      "provinceId": "14",
+      "aliases": [
+        "changzhi",
+        "zhangzhishi",
+        "长治",
+        "长治市"
+      ],
+      "pinyin": "changzhi"
+    },
+    {
+      "id": "140500",
+      "name": "晋城",
+      "provinceId": "14",
+      "aliases": [
+        "jincheng",
+        "jinchengshi",
+        "晋城",
+        "晋城市"
+      ],
+      "pinyin": "jincheng"
+    },
+    {
+      "id": "140600",
+      "name": "朔州",
+      "provinceId": "14",
+      "aliases": [
+        "shuozhou",
+        "shuozhoushi",
+        "朔州",
+        "朔州市"
+      ],
+      "pinyin": "shuozhou"
+    },
+    {
+      "id": "140700",
+      "name": "晋中",
+      "provinceId": "14",
+      "aliases": [
+        "jinzhong",
+        "jinzhongshi",
+        "晋中",
+        "晋中市"
+      ],
+      "pinyin": "jinzhong"
+    },
+    {
+      "id": "140800",
+      "name": "运城",
+      "provinceId": "14",
+      "aliases": [
+        "yuncheng",
+        "yunchengshi",
+        "运城",
+        "运城市"
+      ],
+      "pinyin": "yuncheng"
+    },
+    {
+      "id": "140900",
+      "name": "忻州",
+      "provinceId": "14",
+      "aliases": [
+        "xinzhou",
+        "xinzhoushi",
+        "忻州",
+        "忻州市"
+      ],
+      "pinyin": "xinzhou"
+    },
+    {
+      "id": "141000",
+      "name": "临汾",
+      "provinceId": "14",
+      "aliases": [
+        "linfen",
+        "linfenshi",
+        "临汾",
+        "临汾市"
+      ],
+      "pinyin": "linfen"
+    },
+    {
+      "id": "141100",
+      "name": "吕梁",
+      "provinceId": "14",
+      "aliases": [
+        "luliang",
+        "luliangshi",
+        "lvliang",
+        "lvliangshi",
+        "吕梁",
+        "吕梁市"
+      ],
+      "pinyin": "lvliang"
+    },
+    {
+      "id": "150100",
+      "name": "呼和浩特",
+      "provinceId": "15",
+      "aliases": [
+        "huhehaote",
+        "huhehaoteshi",
+        "呼和浩特",
+        "呼和浩特市"
+      ],
+      "pinyin": "huhehaote"
+    },
+    {
+      "id": "150200",
+      "name": "包头",
+      "provinceId": "15",
+      "aliases": [
+        "baotou",
+        "baotoushi",
+        "包头",
+        "包头市"
+      ],
+      "pinyin": "baotou"
+    },
+    {
+      "id": "150300",
+      "name": "乌海",
+      "provinceId": "15",
+      "aliases": [
+        "wuhai",
+        "wuhaishi",
+        "乌海",
+        "乌海市"
+      ],
+      "pinyin": "wuhai"
+    },
+    {
+      "id": "150400",
+      "name": "赤峰",
+      "provinceId": "15",
+      "aliases": [
+        "chifeng",
+        "chifengshi",
+        "赤峰",
+        "赤峰市"
+      ],
+      "pinyin": "chifeng"
+    },
+    {
+      "id": "150500",
+      "name": "通辽",
+      "provinceId": "15",
+      "aliases": [
+        "tongliao",
+        "tongliaoshi",
+        "通辽",
+        "通辽市"
+      ],
+      "pinyin": "tongliao"
+    },
+    {
+      "id": "150600",
+      "name": "鄂尔多斯",
+      "provinceId": "15",
+      "aliases": [
+        "eerduosi",
+        "eerduosishi",
+        "鄂尔多斯",
+        "鄂尔多斯市"
+      ],
+      "pinyin": "eerduosi"
+    },
+    {
+      "id": "150700",
+      "name": "呼伦贝尔",
+      "provinceId": "15",
+      "aliases": [
+        "hulunbeier",
+        "hulunbeiershi",
+        "呼伦贝尔",
+        "呼伦贝尔市"
+      ],
+      "pinyin": "hulunbeier"
+    },
+    {
+      "id": "150800",
+      "name": "巴彦淖尔",
+      "provinceId": "15",
+      "aliases": [
+        "bayannaoer",
+        "bayannaoershi",
+        "巴彦淖尔",
+        "巴彦淖尔市"
+      ],
+      "pinyin": "bayannaoer"
+    },
+    {
+      "id": "150900",
+      "name": "乌兰察布",
+      "provinceId": "15",
+      "aliases": [
+        "wulanchabu",
+        "wulanchabushi",
+        "乌兰察布",
+        "乌兰察布市"
+      ],
+      "pinyin": "wulanchabu"
+    },
+    {
+      "id": "152200",
+      "name": "兴安盟",
+      "provinceId": "15",
+      "aliases": [
+        "xingan",
+        "xinganmeng",
+        "兴安",
+        "兴安盟"
+      ],
+      "pinyin": "xinganmeng"
+    },
+    {
+      "id": "152500",
+      "name": "锡林郭勒盟",
+      "provinceId": "15",
+      "aliases": [
+        "erlianhaote",
+        "xilinguolei",
+        "xilinguoleimeng",
+        "二连浩特",
+        "锡林郭勒",
+        "锡林郭勒盟"
+      ],
+      "pinyin": "xilinguoleimeng"
+    },
+    {
+      "id": "152900",
+      "name": "阿拉善盟",
+      "provinceId": "15",
+      "aliases": [
+        "alashan",
+        "alashanmeng",
+        "阿拉善",
+        "阿拉善盟"
+      ],
+      "pinyin": "alashanmeng"
+    },
+    {
+      "id": "210100",
+      "name": "沈阳",
+      "provinceId": "21",
+      "aliases": [
+        "shenyang",
+        "shenyangshi",
+        "沈阳",
+        "沈阳市"
+      ],
+      "pinyin": "shenyang"
+    },
+    {
+      "id": "210200",
+      "name": "大连",
+      "provinceId": "21",
+      "aliases": [
+        "dalian",
+        "dalianshi",
+        "大连",
+        "大连市"
+      ],
+      "pinyin": "dalian"
+    },
+    {
+      "id": "210300",
+      "name": "鞍山",
+      "provinceId": "21",
+      "aliases": [
+        "anshan",
+        "anshanshi",
+        "鞍山",
+        "鞍山市"
+      ],
+      "pinyin": "anshan"
+    },
+    {
+      "id": "210400",
+      "name": "抚顺",
+      "provinceId": "21",
+      "aliases": [
+        "fushun",
+        "fushunshi",
+        "抚顺",
+        "抚顺市"
+      ],
+      "pinyin": "fushun"
+    },
+    {
+      "id": "210500",
+      "name": "本溪",
+      "provinceId": "21",
+      "aliases": [
+        "benxi",
+        "benxishi",
+        "本溪",
+        "本溪市"
+      ],
+      "pinyin": "benxi"
+    },
+    {
+      "id": "210600",
+      "name": "丹东",
+      "provinceId": "21",
+      "aliases": [
+        "dandong",
+        "dandongshi",
+        "丹东",
+        "丹东市"
+      ],
+      "pinyin": "dandong"
+    },
+    {
+      "id": "210700",
+      "name": "锦州",
+      "provinceId": "21",
+      "aliases": [
+        "jinzhou",
+        "jinzhoushi",
+        "锦州",
+        "锦州市"
+      ],
+      "pinyin": "jinzhou"
+    },
+    {
+      "id": "210800",
+      "name": "营口",
+      "provinceId": "21",
+      "aliases": [
+        "yingkou",
+        "yingkoushi",
+        "营口",
+        "营口市"
+      ],
+      "pinyin": "yingkou"
+    },
+    {
+      "id": "210900",
+      "name": "阜新",
+      "provinceId": "21",
+      "aliases": [
+        "fuxin",
+        "fuxinshi",
+        "阜新",
+        "阜新市"
+      ],
+      "pinyin": "fuxin"
+    },
+    {
+      "id": "211000",
+      "name": "辽阳",
+      "provinceId": "21",
+      "aliases": [
+        "liaoyang",
+        "liaoyangshi",
+        "辽阳",
+        "辽阳市"
+      ],
+      "pinyin": "liaoyang"
+    },
+    {
+      "id": "211100",
+      "name": "盘锦",
+      "provinceId": "21",
+      "aliases": [
+        "panjin",
+        "panjinshi",
+        "盘锦",
+        "盘锦市"
+      ],
+      "pinyin": "panjin"
+    },
+    {
+      "id": "211200",
+      "name": "铁岭",
+      "provinceId": "21",
+      "aliases": [
+        "tieling",
+        "tielingshi",
+        "铁岭",
+        "铁岭市"
+      ],
+      "pinyin": "tieling"
+    },
+    {
+      "id": "211300",
+      "name": "朝阳",
+      "provinceId": "21",
+      "aliases": [
+        "chaoyang",
+        "chaoyangshi",
+        "朝阳",
+        "朝阳市"
+      ],
+      "pinyin": "chaoyang"
+    },
+    {
+      "id": "211400",
+      "name": "葫芦岛",
+      "provinceId": "21",
+      "aliases": [
+        "huludao",
+        "huludaoshi",
+        "葫芦岛",
+        "葫芦岛市"
+      ],
+      "pinyin": "huludao"
+    },
+    {
+      "id": "220100",
+      "name": "长春",
+      "provinceId": "22",
+      "aliases": [
+        "changchun",
+        "zhangchunshi",
+        "长春",
+        "长春市"
+      ],
+      "pinyin": "changchun"
+    },
+    {
+      "id": "220200",
+      "name": "吉林",
+      "provinceId": "22",
+      "aliases": [
+        "jilin",
+        "jilinshi",
+        "吉林",
+        "吉林市"
+      ],
+      "pinyin": "jilin"
+    },
+    {
+      "id": "220300",
+      "name": "四平",
+      "provinceId": "22",
+      "aliases": [
+        "siping",
+        "sipingshi",
+        "四平",
+        "四平市"
+      ],
+      "pinyin": "siping"
+    },
+    {
+      "id": "220400",
+      "name": "辽源",
+      "provinceId": "22",
+      "aliases": [
+        "liaoyuan",
+        "liaoyuanshi",
+        "辽源",
+        "辽源市"
+      ],
+      "pinyin": "liaoyuan"
+    },
+    {
+      "id": "220500",
+      "name": "通化",
+      "provinceId": "22",
+      "aliases": [
+        "tonghua",
+        "tonghuashi",
+        "通化",
+        "通化市"
+      ],
+      "pinyin": "tonghua"
+    },
+    {
+      "id": "220600",
+      "name": "白山",
+      "provinceId": "22",
+      "aliases": [
+        "baishan",
+        "baishanshi",
+        "白山",
+        "白山市"
+      ],
+      "pinyin": "baishan"
+    },
+    {
+      "id": "220700",
+      "name": "松原",
+      "provinceId": "22",
+      "aliases": [
+        "songyuan",
+        "songyuanshi",
+        "松原",
+        "松原市"
+      ],
+      "pinyin": "songyuan"
+    },
+    {
+      "id": "220800",
+      "name": "白城",
+      "provinceId": "22",
+      "aliases": [
+        "baicheng",
+        "baichengshi",
+        "白城",
+        "白城市"
+      ],
+      "pinyin": "baicheng"
+    },
+    {
+      "id": "222400",
+      "name": "延边朝鲜族自治州",
+      "provinceId": "22",
+      "aliases": [
+        "yanbian",
+        "yanbianchaoxianzuzizhizhou",
+        "延边",
+        "延边朝鲜族自治州"
+      ],
+      "pinyin": "yanbianchaoxianzuzizhizhou"
+    },
+    {
+      "id": "230100",
+      "name": "哈尔滨",
+      "provinceId": "23",
+      "aliases": [
+        "haerbin",
+        "haerbinshi",
+        "哈尔滨",
+        "哈尔滨市"
+      ],
+      "pinyin": "haerbin"
+    },
+    {
+      "id": "230200",
+      "name": "齐齐哈尔",
+      "provinceId": "23",
+      "aliases": [
+        "qiqihaer",
+        "qiqihaershi",
+        "齐齐哈尔",
+        "齐齐哈尔市"
+      ],
+      "pinyin": "qiqihaer"
+    },
+    {
+      "id": "230300",
+      "name": "鸡西",
+      "provinceId": "23",
+      "aliases": [
+        "jixi",
+        "jixishi",
+        "鸡西",
+        "鸡西市"
+      ],
+      "pinyin": "jixi"
+    },
+    {
+      "id": "230400",
+      "name": "鹤岗",
+      "provinceId": "23",
+      "aliases": [
+        "hegang",
+        "hegangshi",
+        "鹤岗",
+        "鹤岗市"
+      ],
+      "pinyin": "hegang"
+    },
+    {
+      "id": "230500",
+      "name": "双鸭山",
+      "provinceId": "23",
+      "aliases": [
+        "shuangyashan",
+        "shuangyashanshi",
+        "双鸭山",
+        "双鸭山市"
+      ],
+      "pinyin": "shuangyashan"
+    },
+    {
+      "id": "230600",
+      "name": "大庆",
+      "provinceId": "23",
+      "aliases": [
+        "daqing",
+        "daqingshi",
+        "大庆",
+        "大庆市"
+      ],
+      "pinyin": "daqing"
+    },
+    {
+      "id": "230700",
+      "name": "伊春",
+      "provinceId": "23",
+      "aliases": [
+        "yichun",
+        "yichunshi",
+        "伊春",
+        "伊春市"
+      ],
+      "pinyin": "yichun"
+    },
+    {
+      "id": "230800",
+      "name": "佳木斯",
+      "provinceId": "23",
+      "aliases": [
+        "huanan",
+        "jiamusi",
+        "jiamusishi",
+        "佳木斯",
+        "佳木斯市",
+        "桦南"
+      ],
+      "pinyin": "jiamusi"
+    },
+    {
+      "id": "230900",
+      "name": "七台河",
+      "provinceId": "23",
+      "aliases": [
+        "qitaihe",
+        "qitaiheshi",
+        "七台河",
+        "七台河市"
+      ],
+      "pinyin": "qitaihe"
+    },
+    {
+      "id": "231000",
+      "name": "牡丹江",
+      "provinceId": "23",
+      "aliases": [
+        "linkou",
+        "maqiaohe",
+        "mudanjiang",
+        "mudanjiangshi",
+        "林口",
+        "牡丹江",
+        "牡丹江市",
+        "马桥河"
+      ],
+      "pinyin": "mudanjiang"
+    },
+    {
+      "id": "231100",
+      "name": "黑河",
+      "provinceId": "23",
+      "aliases": [
+        "heihe",
+        "heiheshi",
+        "黑河",
+        "黑河市"
+      ],
+      "pinyin": "heihe"
+    },
+    {
+      "id": "231200",
+      "name": "绥化",
+      "provinceId": "23",
+      "aliases": [
+        "suihua",
+        "suihuashi",
+        "绥化",
+        "绥化市"
+      ],
+      "pinyin": "suihua"
+    },
+    {
+      "id": "232700",
+      "name": "大兴安岭地区",
+      "provinceId": "23",
+      "aliases": [
+        "daxinganlingdequ",
+        "jiagedaqi",
+        "加格达奇",
+        "大兴安岭地区"
+      ],
+      "pinyin": "daxinganlingdequ"
+    },
+    {
+      "id": "310000",
+      "name": "上海",
+      "provinceId": "31",
+      "aliases": [
+        "shanghai",
+        "shanghaishi",
+        "上海",
+        "上海市"
+      ],
+      "pinyin": "shanghai"
+    },
+    {
+      "id": "320100",
+      "name": "南京",
+      "provinceId": "32",
+      "aliases": [
+        "nanjing",
+        "nanjingshi",
+        "南京",
+        "南京市"
+      ],
+      "pinyin": "nanjing"
+    },
+    {
+      "id": "320200",
+      "name": "无锡",
+      "provinceId": "32",
+      "aliases": [
+        "wuxi",
+        "wuxishi",
+        "无锡",
+        "无锡市"
+      ],
+      "pinyin": "wuxi"
+    },
+    {
+      "id": "320300",
+      "name": "徐州",
+      "provinceId": "32",
+      "aliases": [
+        "xuzhou",
+        "xuzhoushi",
+        "徐州",
+        "徐州市"
+      ],
+      "pinyin": "xuzhou"
+    },
+    {
+      "id": "320400",
+      "name": "常州",
+      "provinceId": "32",
+      "aliases": [
+        "changzhou",
+        "changzhoushi",
+        "常州",
+        "常州市"
+      ],
+      "pinyin": "changzhou"
+    },
+    {
+      "id": "320500",
+      "name": "苏州",
+      "provinceId": "32",
+      "aliases": [
+        "suzhou",
+        "suzhoushi",
+        "苏州",
+        "苏州市"
+      ],
+      "pinyin": "suzhou"
+    },
+    {
+      "id": "320600",
+      "name": "南通",
+      "provinceId": "32",
+      "aliases": [
+        "nantong",
+        "nantongshi",
+        "南通",
+        "南通市"
+      ],
+      "pinyin": "nantong"
+    },
+    {
+      "id": "320700",
+      "name": "连云港",
+      "provinceId": "32",
+      "aliases": [
+        "lianyungang",
+        "lianyungangshi",
+        "连云港",
+        "连云港市"
+      ],
+      "pinyin": "lianyungang"
+    },
+    {
+      "id": "320800",
+      "name": "淮安",
+      "provinceId": "32",
+      "aliases": [
+        "huaian",
+        "huaianshi",
+        "淮安",
+        "淮安市"
+      ],
+      "pinyin": "huaian"
+    },
+    {
+      "id": "320900",
+      "name": "盐城",
+      "provinceId": "32",
+      "aliases": [
+        "yancheng",
+        "yanchengshi",
+        "盐城",
+        "盐城市"
+      ],
+      "pinyin": "yancheng"
+    },
+    {
+      "id": "321000",
+      "name": "扬州",
+      "provinceId": "32",
+      "aliases": [
+        "yangzhou",
+        "yangzhoushi",
+        "yizheng",
+        "仪征",
+        "扬州",
+        "扬州市"
+      ],
+      "pinyin": "yangzhou"
+    },
+    {
+      "id": "321100",
+      "name": "镇江",
+      "provinceId": "32",
+      "aliases": [
+        "zhenjiang",
+        "zhenjiangshi",
+        "镇江",
+        "镇江市"
+      ],
+      "pinyin": "zhenjiang"
+    },
+    {
+      "id": "321200",
+      "name": "泰州",
+      "provinceId": "32",
+      "aliases": [
+        "taizhou",
+        "taizhoushi",
+        "泰州",
+        "泰州市"
+      ],
+      "pinyin": "taizhou"
+    },
+    {
+      "id": "321300",
+      "name": "宿迁",
+      "provinceId": "32",
+      "aliases": [
+        "suqian",
+        "suqianshi",
+        "宿迁",
+        "宿迁市"
+      ],
+      "pinyin": "suqian"
+    },
+    {
+      "id": "330100",
+      "name": "杭州",
+      "provinceId": "33",
+      "aliases": [
+        "hangzhou",
+        "hangzhoushi",
+        "jiande",
+        "建德",
+        "杭州",
+        "杭州市"
+      ],
+      "pinyin": "hangzhou"
+    },
+    {
+      "id": "330200",
+      "name": "宁波",
+      "provinceId": "33",
+      "aliases": [
+        "ningbo",
+        "ningboshi",
+        "宁波",
+        "宁波市"
+      ],
+      "pinyin": "ningbo"
+    },
+    {
+      "id": "330300",
+      "name": "温州",
+      "provinceId": "33",
+      "aliases": [
+        "wenzhou",
+        "wenzhoushi",
+        "温州",
+        "温州市"
+      ],
+      "pinyin": "wenzhou"
+    },
+    {
+      "id": "330400",
+      "name": "嘉兴",
+      "provinceId": "33",
+      "aliases": [
+        "jiaxing",
+        "jiaxingshi",
+        "嘉兴",
+        "嘉兴市"
+      ],
+      "pinyin": "jiaxing"
+    },
+    {
+      "id": "330500",
+      "name": "湖州",
+      "provinceId": "33",
+      "aliases": [
+        "huzhou",
+        "huzhoushi",
+        "湖州",
+        "湖州市"
+      ],
+      "pinyin": "huzhou"
+    },
+    {
+      "id": "330600",
+      "name": "绍兴",
+      "provinceId": "33",
+      "aliases": [
+        "shaoxing",
+        "shaoxingshi",
+        "绍兴",
+        "绍兴市"
+      ],
+      "pinyin": "shaoxing"
+    },
+    {
+      "id": "330700",
+      "name": "金华",
+      "provinceId": "33",
+      "aliases": [
+        "jinhua",
+        "jinhuashi",
+        "金华",
+        "金华市"
+      ],
+      "pinyin": "jinhua"
+    },
+    {
+      "id": "330800",
+      "name": "衢州",
+      "provinceId": "33",
+      "aliases": [
+        "quzhou",
+        "quzhoushi",
+        "衢州",
+        "衢州市"
+      ],
+      "pinyin": "quzhou"
+    },
+    {
+      "id": "330900",
+      "name": "舟山",
+      "provinceId": "33",
+      "aliases": [
+        "zhoushanshi",
+        "舟山市"
+      ],
+      "pinyin": "zhoushan"
+    },
+    {
+      "id": "331000",
+      "name": "台州",
+      "provinceId": "33",
+      "aliases": [
+        "taizhou",
+        "taizhoushi",
+        "wenling",
+        "yuhuan",
+        "台州",
+        "台州市",
+        "温岭",
+        "玉环"
+      ],
+      "pinyin": "taizhou"
+    },
+    {
+      "id": "331100",
+      "name": "丽水",
+      "provinceId": "33",
+      "aliases": [
+        "lishui",
+        "lishuishi",
+        "丽水",
+        "丽水市"
+      ],
+      "pinyin": "lishui"
+    },
+    {
+      "id": "340100",
+      "name": "合肥",
+      "provinceId": "34",
+      "aliases": [
+        "hefei",
+        "hefeishi",
+        "合肥",
+        "合肥市"
+      ],
+      "pinyin": "hefei"
+    },
+    {
+      "id": "340200",
+      "name": "芜湖",
+      "provinceId": "34",
+      "aliases": [
+        "wuhu",
+        "wuhushi",
+        "芜湖",
+        "芜湖市"
+      ],
+      "pinyin": "wuhu"
+    },
+    {
+      "id": "340300",
+      "name": "蚌埠",
+      "provinceId": "34",
+      "aliases": [
+        "bangbu",
+        "bangbushi",
+        "bengbu",
+        "bengbushi",
+        "蚌埠",
+        "蚌埠市"
+      ],
+      "pinyin": "bengbu"
+    },
+    {
+      "id": "340400",
+      "name": "淮南",
+      "provinceId": "34",
+      "aliases": [
+        "huainan",
+        "huainanshi",
+        "淮南",
+        "淮南市"
+      ],
+      "pinyin": "huainan"
+    },
+    {
+      "id": "340500",
+      "name": "马鞍山",
+      "provinceId": "34",
+      "aliases": [
+        "maanshan",
+        "maanshanshi",
+        "马鞍山",
+        "马鞍山市"
+      ],
+      "pinyin": "maanshan"
+    },
+    {
+      "id": "340600",
+      "name": "淮北",
+      "provinceId": "34",
+      "aliases": [
+        "huaibei",
+        "huaibeishi",
+        "淮北",
+        "淮北市"
+      ],
+      "pinyin": "huaibei"
+    },
+    {
+      "id": "340700",
+      "name": "铜陵",
+      "provinceId": "34",
+      "aliases": [
+        "tongling",
+        "tonglingshi",
+        "铜陵",
+        "铜陵市"
+      ],
+      "pinyin": "tongling"
+    },
+    {
+      "id": "340800",
+      "name": "安庆",
+      "provinceId": "34",
+      "aliases": [
+        "anqing",
+        "anqingshi",
+        "安庆",
+        "安庆市"
+      ],
+      "pinyin": "anqing"
+    },
+    {
+      "id": "341000",
+      "name": "黄山",
+      "provinceId": "34",
+      "aliases": [
+        "huangshan",
+        "huangshanshi",
+        "黄山",
+        "黄山市"
+      ],
+      "pinyin": "huangshan"
+    },
+    {
+      "id": "341100",
+      "name": "滁州",
+      "provinceId": "34",
+      "aliases": [
+        "chuzhou",
+        "chuzhoushi",
+        "fengyang",
+        "凤阳",
+        "滁州",
+        "滁州市"
+      ],
+      "pinyin": "chuzhou"
+    },
+    {
+      "id": "341200",
+      "name": "阜阳",
+      "provinceId": "34",
+      "aliases": [
+        "fuyang",
+        "fuyangshi",
+        "阜阳",
+        "阜阳市"
+      ],
+      "pinyin": "fuyang"
+    },
+    {
+      "id": "341300",
+      "name": "宿州",
+      "provinceId": "34",
+      "aliases": [
+        "suzhou",
+        "suzhoushi",
+        "宿州",
+        "宿州市"
+      ],
+      "pinyin": "suzhou"
+    },
+    {
+      "id": "341500",
+      "name": "六安",
+      "provinceId": "34",
+      "aliases": [
+        "liuanshi",
+        "luan",
+        "六安",
+        "六安市"
+      ],
+      "pinyin": "luan"
+    },
+    {
+      "id": "341600",
+      "name": "亳州",
+      "provinceId": "34",
+      "aliases": [
+        "bozhou",
+        "bozhoushi",
+        "亳州",
+        "亳州市"
+      ],
+      "pinyin": "bozhou"
+    },
+    {
+      "id": "341700",
+      "name": "池州",
+      "provinceId": "34",
+      "aliases": [
+        "chizhou",
+        "chizhoushi",
+        "池州",
+        "池州市"
+      ],
+      "pinyin": "chizhou"
+    },
+    {
+      "id": "341800",
+      "name": "宣城",
+      "provinceId": "34",
+      "aliases": [
+        "xuancheng",
+        "xuanchengshi",
+        "宣城",
+        "宣城市"
+      ],
+      "pinyin": "xuancheng"
+    },
+    {
+      "id": "350100",
+      "name": "福州",
+      "provinceId": "35",
+      "aliases": [
+        "fuzhou",
+        "fuzhoushi",
+        "福州",
+        "福州市"
+      ],
+      "pinyin": "fuzhou"
+    },
+    {
+      "id": "350200",
+      "name": "厦门",
+      "provinceId": "35",
+      "aliases": [
+        "shamen",
+        "shamenshi",
+        "xiamen",
+        "xiamenshi",
+        "厦门",
+        "厦门市"
+      ],
+      "pinyin": "xiamen"
+    },
+    {
+      "id": "350300",
+      "name": "莆田",
+      "provinceId": "35",
+      "aliases": [
+        "putian",
+        "putianshi",
+        "莆田",
+        "莆田市"
+      ],
+      "pinyin": "putian"
+    },
+    {
+      "id": "350400",
+      "name": "三明",
+      "provinceId": "35",
+      "aliases": [
+        "jianning",
+        "sanming",
+        "sanmingshi",
+        "shaxian",
+        "三明",
+        "三明市",
+        "建宁",
+        "沙县"
+      ],
+      "pinyin": "sanming"
+    },
+    {
+      "id": "350500",
+      "name": "泉州",
+      "provinceId": "35",
+      "aliases": [
+        "anxi",
+        "quanzhou",
+        "quanzhoushi",
+        "安溪",
+        "泉州",
+        "泉州市"
+      ],
+      "pinyin": "quanzhou"
+    },
+    {
+      "id": "350600",
+      "name": "漳州",
+      "provinceId": "35",
+      "aliases": [
+        "zhangzhou",
+        "zhangzhoushi",
+        "漳州",
+        "漳州市"
+      ],
+      "pinyin": "zhangzhou"
+    },
+    {
+      "id": "350700",
+      "name": "南平",
+      "provinceId": "35",
+      "aliases": [
+        "laizhou",
+        "nanping",
+        "nanpingshi",
+        "南平",
+        "南平市",
+        "来舟"
+      ],
+      "pinyin": "nanping"
+    },
+    {
+      "id": "350800",
+      "name": "龙岩",
+      "provinceId": "35",
+      "aliases": [
+        "longyan",
+        "longyanshi",
+        "maiyuan",
+        "shanghang",
+        "zhangting",
+        "上杭",
+        "长汀",
+        "麦园",
+        "龙岩",
+        "龙岩市"
+      ],
+      "pinyin": "longyan"
+    },
+    {
+      "id": "350900",
+      "name": "宁德",
+      "provinceId": "35",
+      "aliases": [
+        "ningde",
+        "ningdeshi",
+        "宁德",
+        "宁德市"
+      ],
+      "pinyin": "ningde"
+    },
+    {
+      "id": "360100",
+      "name": "南昌",
+      "provinceId": "36",
+      "aliases": [
+        "nanchang",
+        "nanchangshi",
+        "南昌",
+        "南昌市"
+      ],
+      "pinyin": "nanchang"
+    },
+    {
+      "id": "360200",
+      "name": "景德镇",
+      "provinceId": "36",
+      "aliases": [
+        "jingdezhen",
+        "jingdezhenshi",
+        "景德镇",
+        "景德镇市"
+      ],
+      "pinyin": "jingdezhen"
+    },
+    {
+      "id": "360300",
+      "name": "萍乡",
+      "provinceId": "36",
+      "aliases": [
+        "luxi",
+        "pingxiang",
+        "pingxiangshi",
+        "芦溪",
+        "萍乡",
+        "萍乡市"
+      ],
+      "pinyin": "pingxiang"
+    },
+    {
+      "id": "360400",
+      "name": "九江",
+      "provinceId": "36",
+      "aliases": [
+        "jiujiang",
+        "jiujiangshi",
+        "九江",
+        "九江市"
+      ],
+      "pinyin": "jiujiang"
+    },
+    {
+      "id": "360500",
+      "name": "新余",
+      "provinceId": "36",
+      "aliases": [
+        "xinyu",
+        "xinyushi",
+        "新余",
+        "新余市"
+      ],
+      "pinyin": "xinyu"
+    },
+    {
+      "id": "360600",
+      "name": "鹰潭",
+      "provinceId": "36",
+      "aliases": [
+        "yingtan",
+        "yingtanshi",
+        "鹰潭",
+        "鹰潭市"
+      ],
+      "pinyin": "yingtan"
+    },
+    {
+      "id": "360700",
+      "name": "赣州",
+      "provinceId": "36",
+      "aliases": [
+        "ganzhou",
+        "ganzhoushi",
+        "yudou",
+        "于都",
+        "赣州",
+        "赣州市"
+      ],
+      "pinyin": "ganzhou"
+    },
+    {
+      "id": "360800",
+      "name": "吉安",
+      "provinceId": "36",
+      "aliases": [
+        "jian",
+        "jianshi",
+        "吉安",
+        "吉安市"
+      ],
+      "pinyin": "jian"
+    },
+    {
+      "id": "360900",
+      "name": "宜春",
+      "provinceId": "36",
+      "aliases": [
+        "yichun",
+        "yichunshi",
+        "宜春",
+        "宜春市"
+      ],
+      "pinyin": "yichun"
+    },
+    {
+      "id": "361000",
+      "name": "抚州",
+      "provinceId": "36",
+      "aliases": [
+        "chongren",
+        "fuzhou",
+        "fuzhoushi",
+        "jiangbiancun",
+        "linchuan",
+        "zixi",
+        "临川",
+        "崇仁",
+        "抚州",
+        "抚州市",
+        "江边村",
+        "资溪"
+      ],
+      "pinyin": "fuzhou"
+    },
+    {
+      "id": "361100",
+      "name": "上饶",
+      "provinceId": "36",
+      "aliases": [
+        "shangrao",
+        "shangraoshi",
+        "上饶",
+        "上饶市"
+      ],
+      "pinyin": "shangrao"
+    },
+    {
+      "id": "370100",
+      "name": "济南",
+      "provinceId": "37",
+      "aliases": [
+        "jinan",
+        "jinanshi",
+        "laiwu",
+        "济南",
+        "济南市",
+        "莱芜"
+      ],
+      "pinyin": "jinan"
+    },
+    {
+      "id": "370200",
+      "name": "青岛",
+      "provinceId": "37",
+      "aliases": [
+        "qingdao",
+        "qingdaoshi",
+        "青岛",
+        "青岛市"
+      ],
+      "pinyin": "qingdao"
+    },
+    {
+      "id": "370300",
+      "name": "淄博",
+      "provinceId": "37",
+      "aliases": [
+        "zibo",
+        "ziboshi",
+        "淄博",
+        "淄博市"
+      ],
+      "pinyin": "zibo"
+    },
+    {
+      "id": "370400",
+      "name": "枣庄",
+      "provinceId": "37",
+      "aliases": [
+        "zaozhuang",
+        "zaozhuangshi",
+        "枣庄",
+        "枣庄市"
+      ],
+      "pinyin": "zaozhuang"
+    },
+    {
+      "id": "370500",
+      "name": "东营",
+      "provinceId": "37",
+      "aliases": [
+        "dongying",
+        "dongyingshi",
+        "东营",
+        "东营市"
+      ],
+      "pinyin": "dongying"
+    },
+    {
+      "id": "370600",
+      "name": "烟台",
+      "provinceId": "37",
+      "aliases": [
+        "yantai",
+        "yantaishi",
+        "烟台",
+        "烟台市"
+      ],
+      "pinyin": "yantai"
+    },
+    {
+      "id": "370700",
+      "name": "潍坊",
+      "provinceId": "37",
+      "aliases": [
+        "weifang",
+        "weifangshi",
+        "潍坊",
+        "潍坊市"
+      ],
+      "pinyin": "weifang"
+    },
+    {
+      "id": "370800",
+      "name": "济宁",
+      "provinceId": "37",
+      "aliases": [
+        "jining",
+        "jiningshi",
+        "济宁",
+        "济宁市"
+      ],
+      "pinyin": "jining"
+    },
+    {
+      "id": "370900",
+      "name": "泰安",
+      "provinceId": "37",
+      "aliases": [
+        "taian",
+        "taianshi",
+        "泰安",
+        "泰安市"
+      ],
+      "pinyin": "taian"
+    },
+    {
+      "id": "371000",
+      "name": "威海",
+      "provinceId": "37",
+      "aliases": [
+        "weihai",
+        "weihaishi",
+        "威海",
+        "威海市"
+      ],
+      "pinyin": "weihai"
+    },
+    {
+      "id": "371100",
+      "name": "日照",
+      "provinceId": "37",
+      "aliases": [
+        "rizhao",
+        "rizhaoshi",
+        "日照",
+        "日照市"
+      ],
+      "pinyin": "rizhao"
+    },
+    {
+      "id": "371300",
+      "name": "临沂",
+      "provinceId": "37",
+      "aliases": [
+        "linyi",
+        "linyishi",
+        "临沂",
+        "临沂市"
+      ],
+      "pinyin": "linyi"
+    },
+    {
+      "id": "371400",
+      "name": "德州",
+      "provinceId": "37",
+      "aliases": [
+        "dezhou",
+        "dezhoushi",
+        "德州",
+        "德州市"
+      ],
+      "pinyin": "dezhou"
+    },
+    {
+      "id": "371500",
+      "name": "聊城",
+      "provinceId": "37",
+      "aliases": [
+        "liaocheng",
+        "liaochengshi",
+        "聊城",
+        "聊城市"
+      ],
+      "pinyin": "liaocheng"
+    },
+    {
+      "id": "371600",
+      "name": "滨州",
+      "provinceId": "37",
+      "aliases": [
+        "binzhou",
+        "binzhoushi",
+        "滨州",
+        "滨州市"
+      ],
+      "pinyin": "binzhou"
+    },
+    {
+      "id": "371700",
+      "name": "菏泽",
+      "provinceId": "37",
+      "aliases": [
+        "heze",
+        "hezeshi",
+        "菏泽",
+        "菏泽市"
+      ],
+      "pinyin": "heze"
+    },
+    {
+      "id": "410100",
+      "name": "郑州",
+      "provinceId": "41",
+      "aliases": [
+        "zhengzhou",
+        "zhengzhoushi",
+        "郑州",
+        "郑州市"
+      ],
+      "pinyin": "zhengzhou"
+    },
+    {
+      "id": "410200",
+      "name": "开封",
+      "provinceId": "41",
+      "aliases": [
+        "kaifeng",
+        "kaifengshi",
+        "开封",
+        "开封市"
+      ],
+      "pinyin": "kaifeng"
+    },
+    {
+      "id": "410300",
+      "name": "洛阳",
+      "provinceId": "41",
+      "aliases": [
+        "luoyang",
+        "luoyangshi",
+        "洛阳",
+        "洛阳市"
+      ],
+      "pinyin": "luoyang"
+    },
+    {
+      "id": "410400",
+      "name": "平顶山",
+      "provinceId": "41",
+      "aliases": [
+        "pingdingshan",
+        "pingdingshanshi",
+        "平顶山",
+        "平顶山市"
+      ],
+      "pinyin": "pingdingshan"
+    },
+    {
+      "id": "410500",
+      "name": "安阳",
+      "provinceId": "41",
+      "aliases": [
+        "anyang",
+        "anyangshi",
+        "安阳",
+        "安阳市"
+      ],
+      "pinyin": "anyang"
+    },
+    {
+      "id": "410600",
+      "name": "鹤壁",
+      "provinceId": "41",
+      "aliases": [
+        "hebi",
+        "hebishi",
+        "鹤壁",
+        "鹤壁市"
+      ],
+      "pinyin": "hebi"
+    },
+    {
+      "id": "410700",
+      "name": "新乡",
+      "provinceId": "41",
+      "aliases": [
+        "xinxiang",
+        "xinxiangshi",
+        "新乡",
+        "新乡市"
+      ],
+      "pinyin": "xinxiang"
+    },
+    {
+      "id": "410800",
+      "name": "焦作",
+      "provinceId": "41",
+      "aliases": [
+        "jiaozuo",
+        "jiaozuoshi",
+        "焦作",
+        "焦作市"
+      ],
+      "pinyin": "jiaozuo"
+    },
+    {
+      "id": "410900",
+      "name": "濮阳",
+      "provinceId": "41",
+      "aliases": [
+        "puyang",
+        "puyangshi",
+        "濮阳",
+        "濮阳市"
+      ],
+      "pinyin": "puyang"
+    },
+    {
+      "id": "411000",
+      "name": "许昌",
+      "provinceId": "41",
+      "aliases": [
+        "xuchang",
+        "xuchangshi",
+        "许昌",
+        "许昌市"
+      ],
+      "pinyin": "xuchang"
+    },
+    {
+      "id": "411100",
+      "name": "漯河",
+      "provinceId": "41",
+      "aliases": [
+        "luohe",
+        "luoheshi",
+        "漯河",
+        "漯河市"
+      ],
+      "pinyin": "luohe"
+    },
+    {
+      "id": "411200",
+      "name": "三门峡",
+      "provinceId": "41",
+      "aliases": [
+        "sanmenxia",
+        "sanmenxiashi",
+        "三门峡",
+        "三门峡市"
+      ],
+      "pinyin": "sanmenxia"
+    },
+    {
+      "id": "411300",
+      "name": "南阳",
+      "provinceId": "41",
+      "aliases": [
+        "nanyang",
+        "nanyangshi",
+        "南阳",
+        "南阳市"
+      ],
+      "pinyin": "nanyang"
+    },
+    {
+      "id": "411400",
+      "name": "商丘",
+      "provinceId": "41",
+      "aliases": [
+        "shangqiu",
+        "shangqiushi",
+        "商丘",
+        "商丘市"
+      ],
+      "pinyin": "shangqiu"
+    },
+    {
+      "id": "411500",
+      "name": "信阳",
+      "provinceId": "41",
+      "aliases": [
+        "xinyang",
+        "xinyangshi",
+        "信阳",
+        "信阳市"
+      ],
+      "pinyin": "xinyang"
+    },
+    {
+      "id": "411600",
+      "name": "周口",
+      "provinceId": "41",
+      "aliases": [
+        "zhoukou",
+        "zhoukoushi",
+        "周口",
+        "周口市"
+      ],
+      "pinyin": "zhoukou"
+    },
+    {
+      "id": "411700",
+      "name": "驻马店",
+      "provinceId": "41",
+      "aliases": [
+        "zhumadian",
+        "zhumadianshi",
+        "驻马店",
+        "驻马店市"
+      ],
+      "pinyin": "zhumadian"
+    },
+    {
+      "id": "419001",
+      "name": "济源",
+      "provinceId": "41",
+      "aliases": [
+        "jiyuan",
+        "jiyuanshi",
+        "济源",
+        "济源市"
+      ],
+      "pinyin": "jiyuan"
+    },
+    {
+      "id": "420100",
+      "name": "武汉",
+      "provinceId": "42",
+      "aliases": [
+        "wuhan",
+        "wuhanshi",
+        "武汉",
+        "武汉市"
+      ],
+      "pinyin": "wuhan"
+    },
+    {
+      "id": "420200",
+      "name": "黄石",
+      "provinceId": "42",
+      "aliases": [
+        "huangshi",
+        "huangshishi",
+        "黄石",
+        "黄石市"
+      ],
+      "pinyin": "huangshi"
+    },
+    {
+      "id": "420300",
+      "name": "十堰",
+      "provinceId": "42",
+      "aliases": [
+        "shiyan",
+        "shiyanshi",
+        "十堰",
+        "十堰市"
+      ],
+      "pinyin": "shiyan"
+    },
+    {
+      "id": "420500",
+      "name": "宜昌",
+      "provinceId": "42",
+      "aliases": [
+        "dangyang",
+        "yichang",
+        "yichangshi",
+        "宜昌",
+        "宜昌市",
+        "当阳"
+      ],
+      "pinyin": "yichang"
+    },
+    {
+      "id": "420600",
+      "name": "襄阳",
+      "provinceId": "42",
+      "aliases": [
+        "xiangyang",
+        "xiangyangshi",
+        "yicheng",
+        "宜城",
+        "襄阳",
+        "襄阳市"
+      ],
+      "pinyin": "xiangyang"
+    },
+    {
+      "id": "420700",
+      "name": "鄂州",
+      "provinceId": "42",
+      "aliases": [
+        "ezhou",
+        "ezhoushi",
+        "鄂州",
+        "鄂州市"
+      ],
+      "pinyin": "ezhou"
+    },
+    {
+      "id": "420800",
+      "name": "荆门",
+      "provinceId": "42",
+      "aliases": [
+        "jingmen",
+        "jingmenshi",
+        "jingshan",
+        "zhongxiang",
+        "京山",
+        "荆门",
+        "荆门市",
+        "钟祥"
+      ],
+      "pinyin": "jingmen"
+    },
+    {
+      "id": "420900",
+      "name": "孝感",
+      "provinceId": "42",
+      "aliases": [
+        "hanchuan",
+        "xiaogan",
+        "xiaoganshi",
+        "孝感",
+        "孝感市",
+        "汉川"
+      ],
+      "pinyin": "xiaogan"
+    },
+    {
+      "id": "421000",
+      "name": "荆州",
+      "provinceId": "42",
+      "aliases": [
+        "jingzhou",
+        "jingzhoushi",
+        "荆州",
+        "荆州市"
+      ],
+      "pinyin": "jingzhou"
+    },
+    {
+      "id": "421100",
+      "name": "黄冈",
+      "provinceId": "42",
+      "aliases": [
+        "huanggang",
+        "huanggangshi",
+        "qichun",
+        "wuxue",
+        "xishui",
+        "武穴",
+        "浠水",
+        "蕲春",
+        "黄冈",
+        "黄冈市"
+      ],
+      "pinyin": "huanggang"
+    },
+    {
+      "id": "421200",
+      "name": "咸宁",
+      "provinceId": "42",
+      "aliases": [
+        "xianning",
+        "xianningshi",
+        "咸宁",
+        "咸宁市"
+      ],
+      "pinyin": "xianning"
+    },
+    {
+      "id": "421300",
+      "name": "随州",
+      "provinceId": "42",
+      "aliases": [
+        "suizhou",
+        "suizhoushi",
+        "随州",
+        "随州市"
+      ],
+      "pinyin": "suizhou"
+    },
+    {
+      "id": "422800",
+      "name": "恩施土家族苗族自治州",
+      "provinceId": "42",
+      "aliases": [
+        "enshi",
+        "enshitujiazumiaozuzizhizhou",
+        "恩施",
+        "恩施土家族苗族自治州"
+      ],
+      "pinyin": "enshitujiazumiaozuzizhizhou"
+    },
+    {
+      "id": "429004",
+      "name": "仙桃",
+      "provinceId": "42",
+      "aliases": [
+        "xiantao",
+        "xiantaoshi",
+        "仙桃",
+        "仙桃市"
+      ],
+      "pinyin": "xiantao"
+    },
+    {
+      "id": "429005",
+      "name": "潜江",
+      "provinceId": "42",
+      "aliases": [
+        "qianjiang",
+        "qianjiangshi",
+        "潜江",
+        "潜江市"
+      ],
+      "pinyin": "qianjiang"
+    },
+    {
+      "id": "429006",
+      "name": "天门",
+      "provinceId": "42",
+      "aliases": [
+        "tianmen",
+        "tianmenshi",
+        "天门",
+        "天门市"
+      ],
+      "pinyin": "tianmen"
+    },
+    {
+      "id": "429021",
+      "name": "神农架林区",
+      "provinceId": "42",
+      "aliases": [
+        "shennongjia",
+        "shennongjialinqu",
+        "神农架",
+        "神农架林区"
+      ],
+      "pinyin": "shennongjialinqu"
+    },
+    {
+      "id": "430100",
+      "name": "长沙",
+      "provinceId": "43",
+      "aliases": [
+        "changsha",
+        "zhangshashi",
+        "长沙",
+        "长沙市"
+      ],
+      "pinyin": "changsha"
+    },
+    {
+      "id": "430200",
+      "name": "株洲",
+      "provinceId": "43",
+      "aliases": [
+        "zhuzhou",
+        "zhuzhoushi",
+        "株洲",
+        "株洲市"
+      ],
+      "pinyin": "zhuzhou"
+    },
+    {
+      "id": "430300",
+      "name": "湘潭",
+      "provinceId": "43",
+      "aliases": [
+        "xiangtan",
+        "xiangtanshi",
+        "湘潭",
+        "湘潭市"
+      ],
+      "pinyin": "xiangtan"
+    },
+    {
+      "id": "430400",
+      "name": "衡阳",
+      "provinceId": "43",
+      "aliases": [
+        "hengyang",
+        "hengyangshi",
+        "衡阳",
+        "衡阳市"
+      ],
+      "pinyin": "hengyang"
+    },
+    {
+      "id": "430500",
+      "name": "邵阳",
+      "provinceId": "43",
+      "aliases": [
+        "shaodong",
+        "shaoyang",
+        "shaoyangshi",
+        "邵东",
+        "邵阳",
+        "邵阳市"
+      ],
+      "pinyin": "shaoyang"
+    },
+    {
+      "id": "430600",
+      "name": "岳阳",
+      "provinceId": "43",
+      "aliases": [
+        "yueyang",
+        "yueyangshi",
+        "岳阳",
+        "岳阳市"
+      ],
+      "pinyin": "yueyang"
+    },
+    {
+      "id": "430700",
+      "name": "常德",
+      "provinceId": "43",
+      "aliases": [
+        "changde",
+        "changdeshi",
+        "常德",
+        "常德市"
+      ],
+      "pinyin": "changde"
+    },
+    {
+      "id": "430800",
+      "name": "张家界",
+      "provinceId": "43",
+      "aliases": [
+        "zhangjiajie",
+        "zhangjiajieshi",
+        "张家界",
+        "张家界市"
+      ],
+      "pinyin": "zhangjiajie"
+    },
+    {
+      "id": "430900",
+      "name": "益阳",
+      "provinceId": "43",
+      "aliases": [
+        "yiyang",
+        "yiyangshi",
+        "益阳",
+        "益阳市"
+      ],
+      "pinyin": "yiyang"
+    },
+    {
+      "id": "431000",
+      "name": "郴州",
+      "provinceId": "43",
+      "aliases": [
+        "chenzhou",
+        "chenzhoushi",
+        "郴州",
+        "郴州市"
+      ],
+      "pinyin": "chenzhou"
+    },
+    {
+      "id": "431100",
+      "name": "永州",
+      "provinceId": "43",
+      "aliases": [
+        "yongzhou",
+        "yongzhoushi",
+        "永州",
+        "永州市"
+      ],
+      "pinyin": "yongzhou"
+    },
+    {
+      "id": "431200",
+      "name": "怀化",
+      "provinceId": "43",
+      "aliases": [
+        "huaihua",
+        "huaihuashi",
+        "怀化",
+        "怀化市"
+      ],
+      "pinyin": "huaihua"
+    },
+    {
+      "id": "431300",
+      "name": "娄底",
+      "provinceId": "43",
+      "aliases": [
+        "loudi",
+        "loudishi",
+        "娄底",
+        "娄底市"
+      ],
+      "pinyin": "loudi"
+    },
+    {
+      "id": "433100",
+      "name": "湘西土家族苗族自治州",
+      "provinceId": "43",
+      "aliases": [
+        "jishou",
+        "xiangxitujiazumiaozuzizhizhou",
+        "吉首",
+        "湘西土家族苗族自治州"
+      ],
+      "pinyin": "xiangxitujiazumiaozuzizhizhou"
+    },
+    {
+      "id": "440100",
+      "name": "广州",
+      "provinceId": "44",
+      "aliases": [
+        "guangzhou",
+        "guangzhoushi",
+        "广州",
+        "广州市"
+      ],
+      "pinyin": "guangzhou"
+    },
+    {
+      "id": "440200",
+      "name": "韶关",
+      "provinceId": "44",
+      "aliases": [
+        "shaoguan",
+        "shaoguanshi",
+        "韶关",
+        "韶关市"
+      ],
+      "pinyin": "shaoguan"
+    },
+    {
+      "id": "440300",
+      "name": "深圳",
+      "provinceId": "44",
+      "aliases": [
+        "shenzhen",
+        "shenzhenshi",
+        "深圳",
+        "深圳市"
+      ],
+      "pinyin": "shenzhen"
+    },
+    {
+      "id": "440400",
+      "name": "珠海",
+      "provinceId": "44",
+      "aliases": [
+        "zhuhai",
+        "zhuhaishi",
+        "珠海",
+        "珠海市"
+      ],
+      "pinyin": "zhuhai"
+    },
+    {
+      "id": "440500",
+      "name": "汕头",
+      "provinceId": "44",
+      "aliases": [
+        "shantou",
+        "shantoushi",
+        "汕头",
+        "汕头市"
+      ],
+      "pinyin": "shantou"
+    },
+    {
+      "id": "440600",
+      "name": "佛山",
+      "provinceId": "44",
+      "aliases": [
+        "foshan",
+        "foshanshi",
+        "fushan",
+        "fushanshi",
+        "佛山",
+        "佛山市"
+      ],
+      "pinyin": "foshan"
+    },
+    {
+      "id": "440700",
+      "name": "江门",
+      "provinceId": "44",
+      "aliases": [
+        "jiangmen",
+        "jiangmenshi",
+        "江门",
+        "江门市"
+      ],
+      "pinyin": "jiangmen"
+    },
+    {
+      "id": "440800",
+      "name": "湛江",
+      "provinceId": "44",
+      "aliases": [
+        "zhanjiang",
+        "zhanjiangshi",
+        "湛江",
+        "湛江市"
+      ],
+      "pinyin": "zhanjiang"
+    },
+    {
+      "id": "440900",
+      "name": "茂名",
+      "provinceId": "44",
+      "aliases": [
+        "maoming",
+        "maomingshi",
+        "茂名",
+        "茂名市"
+      ],
+      "pinyin": "maoming"
+    },
+    {
+      "id": "441200",
+      "name": "肇庆",
+      "provinceId": "44",
+      "aliases": [
+        "zhaoqing",
+        "zhaoqingshi",
+        "肇庆",
+        "肇庆市"
+      ],
+      "pinyin": "zhaoqing"
+    },
+    {
+      "id": "441300",
+      "name": "惠州",
+      "provinceId": "44",
+      "aliases": [
+        "huizhou",
+        "huizhoushi",
+        "惠州",
+        "惠州市"
+      ],
+      "pinyin": "huizhou"
+    },
+    {
+      "id": "441400",
+      "name": "梅州",
+      "provinceId": "44",
+      "aliases": [
+        "meizhou",
+        "meizhoushi",
+        "梅州",
+        "梅州市"
+      ],
+      "pinyin": "meizhou"
+    },
+    {
+      "id": "441500",
+      "name": "汕尾",
+      "provinceId": "44",
+      "aliases": [
+        "shanwei",
+        "shanweishi",
+        "汕尾",
+        "汕尾市"
+      ],
+      "pinyin": "shanwei"
+    },
+    {
+      "id": "441600",
+      "name": "河源",
+      "provinceId": "44",
+      "aliases": [
+        "heyuan",
+        "heyuanshi",
+        "河源",
+        "河源市"
+      ],
+      "pinyin": "heyuan"
+    },
+    {
+      "id": "441700",
+      "name": "阳江",
+      "provinceId": "44",
+      "aliases": [
+        "yangjiang",
+        "yangjiangshi",
+        "阳江",
+        "阳江市"
+      ],
+      "pinyin": "yangjiang"
+    },
+    {
+      "id": "441800",
+      "name": "清远",
+      "provinceId": "44",
+      "aliases": [
+        "qingyuan",
+        "qingyuanshi",
+        "清远",
+        "清远市"
+      ],
+      "pinyin": "qingyuan"
+    },
+    {
+      "id": "441900",
+      "name": "东莞",
+      "provinceId": "44",
+      "aliases": [
+        "dongguan",
+        "dongguanshi",
+        "东莞",
+        "东莞市"
+      ],
+      "pinyin": "dongguan"
+    },
+    {
+      "id": "442000",
+      "name": "中山",
+      "provinceId": "44",
+      "aliases": [
+        "zhongshan",
+        "zhongshanshi",
+        "中山",
+        "中山市"
+      ],
+      "pinyin": "zhongshan"
+    },
+    {
+      "id": "445100",
+      "name": "潮州",
+      "provinceId": "44",
+      "aliases": [
+        "chaozhou",
+        "chaozhoushi",
+        "潮州",
+        "潮州市"
+      ],
+      "pinyin": "chaozhou"
+    },
+    {
+      "id": "445200",
+      "name": "揭阳",
+      "provinceId": "44",
+      "aliases": [
+        "jieyang",
+        "jieyangshi",
+        "揭阳",
+        "揭阳市"
+      ],
+      "pinyin": "jieyang"
+    },
+    {
+      "id": "445300",
+      "name": "云浮",
+      "provinceId": "44",
+      "aliases": [
+        "yunfu",
+        "yunfushi",
+        "云浮",
+        "云浮市"
+      ],
+      "pinyin": "yunfu"
+    },
+    {
+      "id": "450100",
+      "name": "南宁",
+      "provinceId": "45",
+      "aliases": [
+        "nanning",
+        "nanningshi",
+        "南宁",
+        "南宁市"
+      ],
+      "pinyin": "nanning"
+    },
+    {
+      "id": "450200",
+      "name": "柳州",
+      "provinceId": "45",
+      "aliases": [
+        "liuzhou",
+        "liuzhoushi",
+        "柳州",
+        "柳州市"
+      ],
+      "pinyin": "liuzhou"
+    },
+    {
+      "id": "450300",
+      "name": "桂林",
+      "provinceId": "45",
+      "aliases": [
+        "guilin",
+        "guilinshi",
+        "桂林",
+        "桂林市"
+      ],
+      "pinyin": "guilin"
+    },
+    {
+      "id": "450400",
+      "name": "梧州",
+      "provinceId": "45",
+      "aliases": [
+        "wuzhou",
+        "wuzhoushi",
+        "梧州",
+        "梧州市"
+      ],
+      "pinyin": "wuzhou"
+    },
+    {
+      "id": "450500",
+      "name": "北海",
+      "provinceId": "45",
+      "aliases": [
+        "beihai",
+        "beihaishi",
+        "北海",
+        "北海市"
+      ],
+      "pinyin": "beihai"
+    },
+    {
+      "id": "450600",
+      "name": "防城港",
+      "provinceId": "45",
+      "aliases": [
+        "fangchenggang",
+        "fangchenggangshi",
+        "防城港",
+        "防城港市"
+      ],
+      "pinyin": "fangchenggang"
+    },
+    {
+      "id": "450700",
+      "name": "钦州",
+      "provinceId": "45",
+      "aliases": [
+        "qinzhou",
+        "qinzhoushi",
+        "钦州",
+        "钦州市"
+      ],
+      "pinyin": "qinzhou"
+    },
+    {
+      "id": "450800",
+      "name": "贵港",
+      "provinceId": "45",
+      "aliases": [
+        "guigang",
+        "guigangshi",
+        "贵港",
+        "贵港市"
+      ],
+      "pinyin": "guigang"
+    },
+    {
+      "id": "450900",
+      "name": "玉林",
+      "provinceId": "45",
+      "aliases": [
+        "yulin",
+        "yulinshi",
+        "玉林",
+        "玉林市"
+      ],
+      "pinyin": "yulin"
+    },
+    {
+      "id": "451000",
+      "name": "百色",
+      "provinceId": "45",
+      "aliases": [
+        "baise",
+        "baiseshi",
+        "百色",
+        "百色市"
+      ],
+      "pinyin": "baise"
+    },
+    {
+      "id": "451100",
+      "name": "贺州",
+      "provinceId": "45",
+      "aliases": [
+        "hezhou",
+        "hezhoushi",
+        "贺州",
+        "贺州市"
+      ],
+      "pinyin": "hezhou"
+    },
+    {
+      "id": "451200",
+      "name": "河池",
+      "provinceId": "45",
+      "aliases": [
+        "hechi",
+        "hechishi",
+        "河池",
+        "河池市"
+      ],
+      "pinyin": "hechi"
+    },
+    {
+      "id": "451300",
+      "name": "来宾",
+      "provinceId": "45",
+      "aliases": [
+        "laibin",
+        "laibinshi",
+        "来宾",
+        "来宾市"
+      ],
+      "pinyin": "laibin"
+    },
+    {
+      "id": "451400",
+      "name": "崇左",
+      "provinceId": "45",
+      "aliases": [
+        "chongzuo",
+        "chongzuoshi",
+        "崇左",
+        "崇左市"
+      ],
+      "pinyin": "chongzuo"
+    },
+    {
+      "id": "460100",
+      "name": "海口",
+      "provinceId": "46",
+      "aliases": [
+        "haikou",
+        "haikoushi",
+        "海口",
+        "海口市"
+      ],
+      "pinyin": "haikou"
+    },
+    {
+      "id": "460200",
+      "name": "三亚",
+      "provinceId": "46",
+      "aliases": [
+        "sanya",
+        "sanyashi",
+        "三亚",
+        "三亚市"
+      ],
+      "pinyin": "sanya"
+    },
+    {
+      "id": "460300",
+      "name": "三沙",
+      "provinceId": "46",
+      "aliases": [
+        "sanshashi",
+        "三沙市"
+      ],
+      "pinyin": "sansha"
+    },
+    {
+      "id": "460400",
+      "name": "儋州",
+      "provinceId": "46",
+      "aliases": [
+        "danzhou",
+        "danzhoushi",
+        "儋州",
+        "儋州市"
+      ],
+      "pinyin": "danzhou"
+    },
+    {
+      "id": "469001",
+      "name": "五指山",
+      "provinceId": "46",
+      "aliases": [
+        "wuzhishanshi",
+        "五指山市"
+      ],
+      "pinyin": "wuzhishan"
+    },
+    {
+      "id": "469002",
+      "name": "琼海",
+      "provinceId": "46",
+      "aliases": [
+        "qionghai",
+        "qionghaishi",
+        "琼海",
+        "琼海市"
+      ],
+      "pinyin": "qionghai"
+    },
+    {
+      "id": "469005",
+      "name": "文昌",
+      "provinceId": "46",
+      "aliases": [
+        "wenchang",
+        "wenchangshi",
+        "文昌",
+        "文昌市"
+      ],
+      "pinyin": "wenchang"
+    },
+    {
+      "id": "469006",
+      "name": "万宁",
+      "provinceId": "46",
+      "aliases": [
+        "wanning",
+        "wanningshi",
+        "万宁",
+        "万宁市"
+      ],
+      "pinyin": "wanning"
+    },
+    {
+      "id": "469007",
+      "name": "东方",
+      "provinceId": "46",
+      "aliases": [
+        "dongfang",
+        "dongfangshi",
+        "东方",
+        "东方市"
+      ],
+      "pinyin": "dongfang"
+    },
+    {
+      "id": "469021",
+      "name": "定安县",
+      "provinceId": "46",
+      "aliases": [
+        "dinganxian",
+        "定安县"
+      ],
+      "pinyin": "dinganxian"
+    },
+    {
+      "id": "469022",
+      "name": "屯昌县",
+      "provinceId": "46",
+      "aliases": [
+        "tunchangxian",
+        "屯昌县"
+      ],
+      "pinyin": "tunchangxian"
+    },
+    {
+      "id": "469023",
+      "name": "澄迈县",
+      "provinceId": "46",
+      "aliases": [
+        "chengmai",
+        "chengmaixian",
+        "澄迈",
+        "澄迈县"
+      ],
+      "pinyin": "chengmaixian"
+    },
+    {
+      "id": "469024",
+      "name": "临高县",
+      "provinceId": "46",
+      "aliases": [
+        "lingao",
+        "lingaoxian",
+        "临高",
+        "临高县"
+      ],
+      "pinyin": "lingaoxian"
+    },
+    {
+      "id": "469025",
+      "name": "白沙黎族自治县",
+      "provinceId": "46",
+      "aliases": [
+        "baishalizuzizhixian",
+        "白沙黎族自治县"
+      ],
+      "pinyin": "baishalizuzizhixian"
+    },
+    {
+      "id": "469026",
+      "name": "昌江黎族自治县",
+      "provinceId": "46",
+      "aliases": [
+        "changjiang",
+        "changjianglizuzizhixian",
+        "昌江",
+        "昌江黎族自治县"
+      ],
+      "pinyin": "changjianglizuzizhixian"
+    },
+    {
+      "id": "469027",
+      "name": "乐东黎族自治县",
+      "provinceId": "46",
+      "aliases": [
+        "ledong",
+        "ledonglizuzizhixian",
+        "乐东",
+        "乐东黎族自治县"
+      ],
+      "pinyin": "ledonglizuzizhixian"
+    },
+    {
+      "id": "469028",
+      "name": "陵水黎族自治县",
+      "provinceId": "46",
+      "aliases": [
+        "lingshui",
+        "lingshuilizuzizhixian",
+        "陵水",
+        "陵水黎族自治县"
+      ],
+      "pinyin": "lingshuilizuzizhixian"
+    },
+    {
+      "id": "469029",
+      "name": "保亭黎族苗族自治县",
+      "provinceId": "46",
+      "aliases": [
+        "baotinglizumiaozuzizhixian",
+        "保亭黎族苗族自治县"
+      ],
+      "pinyin": "baotinglizumiaozuzizhixian"
+    },
+    {
+      "id": "469030",
+      "name": "琼中黎族苗族自治县",
+      "provinceId": "46",
+      "aliases": [
+        "qiongzhonglizumiaozuzizhixian",
+        "琼中黎族苗族自治县"
+      ],
+      "pinyin": "qiongzhonglizumiaozuzizhixian"
+    },
+    {
+      "id": "500000",
+      "name": "重庆",
+      "provinceId": "50",
+      "aliases": [
+        "bishan",
+        "chongqing",
+        "chongqingshi",
+        "dazu",
+        "dianjiang",
+        "fengdou",
+        "fengjie",
+        "fuling",
+        "hechuan",
+        "jiangjin",
+        "liangping",
+        "nanchuan",
+        "pengshui",
+        "qianjiang",
+        "qijiang",
+        "rongchang",
+        "shizhu",
+        "shizhuxian",
+        "tongnan",
+        "wanzhou",
+        "wulong",
+        "wushan",
+        "xiushan",
+        "yongchuan",
+        "youyang",
+        "yunyang",
+        "zhangshou",
+        "万州",
+        "丰都",
+        "云阳",
+        "南川",
+        "合川",
+        "垫江",
+        "大足",
+        "奉节",
+        "巫山",
+        "彭水",
+        "梁平",
+        "武隆",
+        "永川",
+        "江津",
+        "涪陵",
+        "潼南",
+        "璧山",
+        "石柱",
+        "石柱县",
+        "秀山",
+        "綦江",
+        "荣昌",
+        "酉阳",
+        "重庆",
+        "重庆市",
+        "长寿",
+        "黔江"
+      ],
+      "pinyin": "chongqing"
+    },
+    {
+      "id": "510100",
+      "name": "成都",
+      "provinceId": "51",
+      "aliases": [
+        "chengdou",
+        "chengdoushi",
+        "chengdu",
+        "chengdushi",
+        "成都",
+        "成都市"
+      ],
+      "pinyin": "chengdu"
+    },
+    {
+      "id": "510300",
+      "name": "自贡",
+      "provinceId": "51",
+      "aliases": [
+        "zigong",
+        "zigongshi",
+        "自贡",
+        "自贡市"
+      ],
+      "pinyin": "zigong"
+    },
+    {
+      "id": "510400",
+      "name": "攀枝花",
+      "provinceId": "51",
+      "aliases": [
+        "panzhihua",
+        "panzhihuashi",
+        "攀枝花",
+        "攀枝花市"
+      ],
+      "pinyin": "panzhihua"
+    },
+    {
+      "id": "510500",
+      "name": "泸州",
+      "provinceId": "51",
+      "aliases": [
+        "luzhou",
+        "luzhoushi",
+        "泸州",
+        "泸州市"
+      ],
+      "pinyin": "luzhou"
+    },
+    {
+      "id": "510600",
+      "name": "德阳",
+      "provinceId": "51",
+      "aliases": [
+        "deyang",
+        "deyangshi",
+        "德阳",
+        "德阳市"
+      ],
+      "pinyin": "deyang"
+    },
+    {
+      "id": "510700",
+      "name": "绵阳",
+      "provinceId": "51",
+      "aliases": [
+        "mianyang",
+        "mianyangshi",
+        "绵阳",
+        "绵阳市"
+      ],
+      "pinyin": "mianyang"
+    },
+    {
+      "id": "510800",
+      "name": "广元",
+      "provinceId": "51",
+      "aliases": [
+        "guangyuan",
+        "guangyuanshi",
+        "广元",
+        "广元市"
+      ],
+      "pinyin": "guangyuan"
+    },
+    {
+      "id": "510900",
+      "name": "遂宁",
+      "provinceId": "51",
+      "aliases": [
+        "suining",
+        "suiningshi",
+        "遂宁",
+        "遂宁市"
+      ],
+      "pinyin": "suining"
+    },
+    {
+      "id": "511000",
+      "name": "内江",
+      "provinceId": "51",
+      "aliases": [
+        "neijiang",
+        "neijiangshi",
+        "内江",
+        "内江市"
+      ],
+      "pinyin": "neijiang"
+    },
+    {
+      "id": "511100",
+      "name": "乐山",
+      "provinceId": "51",
+      "aliases": [
+        "leshan",
+        "leshanshi",
+        "乐山",
+        "乐山市"
+      ],
+      "pinyin": "leshan"
+    },
+    {
+      "id": "511300",
+      "name": "南充",
+      "provinceId": "51",
+      "aliases": [
+        "nanchong",
+        "nanchongshi",
+        "南充",
+        "南充市"
+      ],
+      "pinyin": "nanchong"
+    },
+    {
+      "id": "511400",
+      "name": "眉山",
+      "provinceId": "51",
+      "aliases": [
+        "meishan",
+        "meishanshi",
+        "眉山",
+        "眉山市"
+      ],
+      "pinyin": "meishan"
+    },
+    {
+      "id": "511500",
+      "name": "宜宾",
+      "provinceId": "51",
+      "aliases": [
+        "yibin",
+        "yibinshi",
+        "宜宾",
+        "宜宾市"
+      ],
+      "pinyin": "yibin"
+    },
+    {
+      "id": "511600",
+      "name": "广安",
+      "provinceId": "51",
+      "aliases": [
+        "guangan",
+        "guanganshi",
+        "广安",
+        "广安市"
+      ],
+      "pinyin": "guangan"
+    },
+    {
+      "id": "511700",
+      "name": "达州",
+      "provinceId": "51",
+      "aliases": [
+        "dazhou",
+        "dazhoushi",
+        "达州",
+        "达州市"
+      ],
+      "pinyin": "dazhou"
+    },
+    {
+      "id": "511800",
+      "name": "雅安",
+      "provinceId": "51",
+      "aliases": [
+        "yaan",
+        "yaanshi",
+        "雅安",
+        "雅安市"
+      ],
+      "pinyin": "yaan"
+    },
+    {
+      "id": "511900",
+      "name": "巴中",
+      "provinceId": "51",
+      "aliases": [
+        "bazhong",
+        "bazhongshi",
+        "巴中",
+        "巴中市"
+      ],
+      "pinyin": "bazhong"
+    },
+    {
+      "id": "512000",
+      "name": "资阳",
+      "provinceId": "51",
+      "aliases": [
+        "ziyang",
+        "ziyangshi",
+        "资阳",
+        "资阳市"
+      ],
+      "pinyin": "ziyang"
+    },
+    {
+      "id": "513200",
+      "name": "阿坝藏族羌族自治州",
+      "provinceId": "51",
+      "aliases": [
+        "abacangzuqiangzuzizhizhou",
+        "阿坝藏族羌族自治州"
+      ],
+      "pinyin": "abacangzuqiangzuzizhizhou"
+    },
+    {
+      "id": "513300",
+      "name": "甘孜藏族自治州",
+      "provinceId": "51",
+      "aliases": [
+        "ganzicangzuzizhizhou",
+        "甘孜藏族自治州"
+      ],
+      "pinyin": "ganzicangzuzizhizhou"
+    },
+    {
+      "id": "513400",
+      "name": "凉山彝族自治州",
+      "provinceId": "51",
+      "aliases": [
+        "liangshanyizuzizhizhou",
+        "xichang",
+        "凉山彝族自治州",
+        "西昌"
+      ],
+      "pinyin": "liangshanyizuzizhizhou"
+    },
+    {
+      "id": "520100",
+      "name": "贵阳",
+      "provinceId": "52",
+      "aliases": [
+        "guiyang",
+        "guiyangshi",
+        "贵阳",
+        "贵阳市"
+      ],
+      "pinyin": "guiyang"
+    },
+    {
+      "id": "520200",
+      "name": "六盘水",
+      "provinceId": "52",
+      "aliases": [
+        "liupanshui",
+        "liupanshuishi",
+        "六盘水",
+        "六盘水市"
+      ],
+      "pinyin": "liupanshui"
+    },
+    {
+      "id": "520300",
+      "name": "遵义",
+      "provinceId": "52",
+      "aliases": [
+        "zunyi",
+        "zunyishi",
+        "遵义",
+        "遵义市"
+      ],
+      "pinyin": "zunyi"
+    },
+    {
+      "id": "520400",
+      "name": "安顺",
+      "provinceId": "52",
+      "aliases": [
+        "anshun",
+        "anshunshi",
+        "安顺",
+        "安顺市"
+      ],
+      "pinyin": "anshun"
+    },
+    {
+      "id": "520500",
+      "name": "毕节",
+      "provinceId": "52",
+      "aliases": [
+        "bijie",
+        "bijieshi",
+        "毕节",
+        "毕节市"
+      ],
+      "pinyin": "bijie"
+    },
+    {
+      "id": "520600",
+      "name": "铜仁",
+      "provinceId": "52",
+      "aliases": [
+        "tongren",
+        "tongrenshi",
+        "铜仁",
+        "铜仁市"
+      ],
+      "pinyin": "tongren"
+    },
+    {
+      "id": "522300",
+      "name": "黔西南布依族苗族自治州",
+      "provinceId": "52",
+      "aliases": [
+        "qianxinanbuyizumiaozuzizhizhou",
+        "xingyi",
+        "兴义",
+        "黔西南布依族苗族自治州"
+      ],
+      "pinyin": "qianxinanbuyizumiaozuzizhizhou"
+    },
+    {
+      "id": "522600",
+      "name": "黔东南苗族侗族自治州",
+      "provinceId": "52",
+      "aliases": [
+        "kaili",
+        "qiandongnanmiaozudongzuzizhizhou",
+        "凯里",
+        "黔东南苗族侗族自治州"
+      ],
+      "pinyin": "qiandongnanmiaozudongzuzizhizhou"
+    },
+    {
+      "id": "522700",
+      "name": "黔南布依族苗族自治州",
+      "provinceId": "52",
+      "aliases": [
+        "douyun",
+        "qiannanbuyizumiaozuzizhizhou",
+        "都匀",
+        "黔南布依族苗族自治州"
+      ],
+      "pinyin": "qiannanbuyizumiaozuzizhizhou"
+    },
+    {
+      "id": "530100",
+      "name": "昆明",
+      "provinceId": "53",
+      "aliases": [
+        "kunming",
+        "kunmingshi",
+        "昆明",
+        "昆明市"
+      ],
+      "pinyin": "kunming"
+    },
+    {
+      "id": "530300",
+      "name": "曲靖",
+      "provinceId": "53",
+      "aliases": [
+        "qujing",
+        "qujingshi",
+        "曲靖",
+        "曲靖市"
+      ],
+      "pinyin": "qujing"
+    },
+    {
+      "id": "530400",
+      "name": "玉溪",
+      "provinceId": "53",
+      "aliases": [
+        "eshan",
+        "yuanjiang",
+        "yuxi",
+        "yuxishi",
+        "元江",
+        "峨山",
+        "玉溪",
+        "玉溪市"
+      ],
+      "pinyin": "yuxi"
+    },
+    {
+      "id": "530500",
+      "name": "保山",
+      "provinceId": "53",
+      "aliases": [
+        "baoshan",
+        "baoshanshi",
+        "保山",
+        "保山市"
+      ],
+      "pinyin": "baoshan"
+    },
+    {
+      "id": "530600",
+      "name": "昭通",
+      "provinceId": "53",
+      "aliases": [
+        "zhaotong",
+        "zhaotongshi",
+        "昭通",
+        "昭通市"
+      ],
+      "pinyin": "zhaotong"
+    },
+    {
+      "id": "530700",
+      "name": "丽江",
+      "provinceId": "53",
+      "aliases": [
+        "lijiang",
+        "lijiangshi",
+        "丽江",
+        "丽江市"
+      ],
+      "pinyin": "lijiang"
+    },
+    {
+      "id": "530800",
+      "name": "普洱",
+      "provinceId": "53",
+      "aliases": [
+        "mojiang",
+        "ninger",
+        "puer",
+        "puershi",
+        "墨江",
+        "宁洱",
+        "普洱",
+        "普洱市"
+      ],
+      "pinyin": "puer"
+    },
+    {
+      "id": "530900",
+      "name": "临沧",
+      "provinceId": "53",
+      "aliases": [
+        "lincang",
+        "lincangshi",
+        "临沧",
+        "临沧市"
+      ],
+      "pinyin": "lincang"
+    },
+    {
+      "id": "532300",
+      "name": "楚雄彝族自治州",
+      "provinceId": "53",
+      "aliases": [
+        "chuxiong",
+        "chuxiongyizuzizhizhou",
+        "楚雄",
+        "楚雄彝族自治州"
+      ],
+      "pinyin": "chuxiongyizuzizhizhou"
+    },
+    {
+      "id": "532500",
+      "name": "红河哈尼族彝族自治州",
+      "provinceId": "53",
+      "aliases": [
+        "gejiu",
+        "honghehanizuyizuzizhizhou",
+        "mengzi",
+        "个旧",
+        "红河哈尼族彝族自治州",
+        "蒙自"
+      ],
+      "pinyin": "honghehanizuyizuzizhizhou"
+    },
+    {
+      "id": "532600",
+      "name": "文山壮族苗族自治州",
+      "provinceId": "53",
+      "aliases": [
+        "wenshan",
+        "wenshanzhuangzumiaozuzizhizhou",
+        "文山",
+        "文山壮族苗族自治州"
+      ],
+      "pinyin": "wenshanzhuangzumiaozuzizhizhou"
+    },
+    {
+      "id": "532800",
+      "name": "西双版纳傣族自治州",
+      "provinceId": "53",
+      "aliases": [
+        "jinghong",
+        "mengla",
+        "xishuangbannadaizuzizhizhou",
+        "勐腊",
+        "景洪",
+        "西双版纳傣族自治州"
+      ],
+      "pinyin": "xishuangbannadaizuzizhizhou"
+    },
+    {
+      "id": "532900",
+      "name": "大理白族自治州",
+      "provinceId": "53",
+      "aliases": [
+        "dali",
+        "dalibaizuzizhizhou",
+        "nanjian",
+        "yangbi",
+        "yongping",
+        "南涧",
+        "大理",
+        "大理白族自治州",
+        "永平",
+        "漾濞"
+      ],
+      "pinyin": "dalibaizuzizhizhou"
+    },
+    {
+      "id": "533100",
+      "name": "德宏傣族景颇族自治州",
+      "provinceId": "53",
+      "aliases": [
+        "dehongdaizujingpozuzizhizhou",
+        "德宏傣族景颇族自治州"
+      ],
+      "pinyin": "dehongdaizujingpozuzizhizhou"
+    },
+    {
+      "id": "533300",
+      "name": "怒江傈僳族自治州",
+      "provinceId": "53",
+      "aliases": [
+        "nujianglisuzuzizhizhou",
+        "怒江傈僳族自治州"
+      ],
+      "pinyin": "nujianglisuzuzizhizhou"
+    },
+    {
+      "id": "533400",
+      "name": "迪庆藏族自治州",
+      "provinceId": "53",
+      "aliases": [
+        "diqingcangzuzizhizhou",
+        "xianggelila",
+        "迪庆藏族自治州",
+        "香格里拉"
+      ],
+      "pinyin": "diqingcangzuzizhizhou"
+    },
+    {
+      "id": "540100",
+      "name": "拉萨",
+      "provinceId": "54",
+      "aliases": [
+        "lasa",
+        "lasashi",
+        "拉萨",
+        "拉萨市"
+      ],
+      "pinyin": "lasa"
+    },
+    {
+      "id": "540200",
+      "name": "日喀则",
+      "provinceId": "54",
+      "aliases": [
+        "rikaze",
+        "rikazeshi",
+        "日喀则",
+        "日喀则市"
+      ],
+      "pinyin": "rikaze"
+    },
+    {
+      "id": "540300",
+      "name": "昌都",
+      "provinceId": "54",
+      "aliases": [
+        "changdoushi",
+        "昌都市"
+      ],
+      "pinyin": "changdou"
+    },
+    {
+      "id": "540400",
+      "name": "林芝",
+      "provinceId": "54",
+      "aliases": [
+        "gangga",
+        "langxian",
+        "linzhi",
+        "linzhishi",
+        "milin",
+        "岗嘎",
+        "朗县",
+        "林芝",
+        "林芝市",
+        "米林"
+      ],
+      "pinyin": "linzhi"
+    },
+    {
+      "id": "540500",
+      "name": "山南",
+      "provinceId": "54",
+      "aliases": [
+        "gongga",
+        "jiacha",
+        "sangri",
+        "shannan",
+        "shannanshi",
+        "zhanang",
+        "加查",
+        "山南",
+        "山南市",
+        "扎囊",
+        "桑日",
+        "贡嘎"
+      ],
+      "pinyin": "shannan"
+    },
+    {
+      "id": "540600",
+      "name": "那曲",
+      "provinceId": "54",
+      "aliases": [
+        "naqu",
+        "naqushi",
+        "那曲",
+        "那曲市"
+      ],
+      "pinyin": "naqu"
+    },
+    {
+      "id": "542500",
+      "name": "阿里地区",
+      "provinceId": "54",
+      "aliases": [
+        "alidequ",
+        "阿里地区"
+      ],
+      "pinyin": "alidequ"
+    },
+    {
+      "id": "610100",
+      "name": "西安",
+      "provinceId": "61",
+      "aliases": [
+        "xian",
+        "xianshi",
+        "西安",
+        "西安市"
+      ],
+      "pinyin": "xian"
+    },
+    {
+      "id": "610200",
+      "name": "铜川",
+      "provinceId": "61",
+      "aliases": [
+        "tongchuan",
+        "tongchuanshi",
+        "铜川",
+        "铜川市"
+      ],
+      "pinyin": "tongchuan"
+    },
+    {
+      "id": "610300",
+      "name": "宝鸡",
+      "provinceId": "61",
+      "aliases": [
+        "baoji",
+        "baojishi",
+        "宝鸡",
+        "宝鸡市"
+      ],
+      "pinyin": "baoji"
+    },
+    {
+      "id": "610400",
+      "name": "咸阳",
+      "provinceId": "61",
+      "aliases": [
+        "xianyang",
+        "xianyangshi",
+        "咸阳",
+        "咸阳市"
+      ],
+      "pinyin": "xianyang"
+    },
+    {
+      "id": "610500",
+      "name": "渭南",
+      "provinceId": "61",
+      "aliases": [
+        "fuping",
+        "huayin",
+        "pucheng",
+        "weinan",
+        "weinanshi",
+        "华阴",
+        "富平",
+        "渭南",
+        "渭南市",
+        "蒲城"
+      ],
+      "pinyin": "weinan"
+    },
+    {
+      "id": "610600",
+      "name": "延安",
+      "provinceId": "61",
+      "aliases": [
+        "yanan",
+        "yananshi",
+        "延安",
+        "延安市"
+      ],
+      "pinyin": "yanan"
+    },
+    {
+      "id": "610700",
+      "name": "汉中",
+      "provinceId": "61",
+      "aliases": [
+        "hanzhong",
+        "hanzhongshi",
+        "汉中",
+        "汉中市"
+      ],
+      "pinyin": "hanzhong"
+    },
+    {
+      "id": "610800",
+      "name": "榆林",
+      "provinceId": "61",
+      "aliases": [
+        "yulin",
+        "yulinshi",
+        "榆林",
+        "榆林市"
+      ],
+      "pinyin": "yulin"
+    },
+    {
+      "id": "610900",
+      "name": "安康",
+      "provinceId": "61",
+      "aliases": [
+        "ankang",
+        "ankangshi",
+        "安康",
+        "安康市"
+      ],
+      "pinyin": "ankang"
+    },
+    {
+      "id": "611000",
+      "name": "商洛",
+      "provinceId": "61",
+      "aliases": [
+        "shangluo",
+        "shangluoshi",
+        "商洛",
+        "商洛市"
+      ],
+      "pinyin": "shangluo"
+    },
+    {
+      "id": "620100",
+      "name": "兰州",
+      "provinceId": "62",
+      "aliases": [
+        "lanzhou",
+        "lanzhoushi",
+        "兰州",
+        "兰州市"
+      ],
+      "pinyin": "lanzhou"
+    },
+    {
+      "id": "620200",
+      "name": "嘉峪关",
+      "provinceId": "62",
+      "aliases": [
+        "jiayuguan",
+        "jiayuguanshi",
+        "嘉峪关",
+        "嘉峪关市"
+      ],
+      "pinyin": "jiayuguan"
+    },
+    {
+      "id": "620300",
+      "name": "金昌",
+      "provinceId": "62",
+      "aliases": [
+        "jinchang",
+        "jinchangshi",
+        "金昌",
+        "金昌市"
+      ],
+      "pinyin": "jinchang"
+    },
+    {
+      "id": "620400",
+      "name": "白银",
+      "provinceId": "62",
+      "aliases": [
+        "baiyin",
+        "baiyinshi",
+        "白银",
+        "白银市"
+      ],
+      "pinyin": "baiyin"
+    },
+    {
+      "id": "620500",
+      "name": "天水",
+      "provinceId": "62",
+      "aliases": [
+        "tianshui",
+        "tianshuishi",
+        "天水",
+        "天水市"
+      ],
+      "pinyin": "tianshui"
+    },
+    {
+      "id": "620600",
+      "name": "武威",
+      "provinceId": "62",
+      "aliases": [
+        "wuwei",
+        "wuweishi",
+        "武威",
+        "武威市"
+      ],
+      "pinyin": "wuwei"
+    },
+    {
+      "id": "620700",
+      "name": "张掖",
+      "provinceId": "62",
+      "aliases": [
+        "zhangye",
+        "zhangyeshi",
+        "张掖",
+        "张掖市"
+      ],
+      "pinyin": "zhangye"
+    },
+    {
+      "id": "620800",
+      "name": "平凉",
+      "provinceId": "62",
+      "aliases": [
+        "pingliang",
+        "pingliangshi",
+        "平凉",
+        "平凉市"
+      ],
+      "pinyin": "pingliang"
+    },
+    {
+      "id": "620900",
+      "name": "酒泉",
+      "provinceId": "62",
+      "aliases": [
+        "jiuquan",
+        "jiuquanshi",
+        "yumen",
+        "玉门",
+        "酒泉",
+        "酒泉市"
+      ],
+      "pinyin": "jiuquan"
+    },
+    {
+      "id": "621000",
+      "name": "庆阳",
+      "provinceId": "62",
+      "aliases": [
+        "qingyang",
+        "qingyangshi",
+        "庆阳",
+        "庆阳市"
+      ],
+      "pinyin": "qingyang"
+    },
+    {
+      "id": "621100",
+      "name": "定西",
+      "provinceId": "62",
+      "aliases": [
+        "dingxi",
+        "dingxishi",
+        "定西",
+        "定西市"
+      ],
+      "pinyin": "dingxi"
+    },
+    {
+      "id": "621200",
+      "name": "陇南",
+      "provinceId": "62",
+      "aliases": [
+        "longnan",
+        "longnanshi",
+        "陇南",
+        "陇南市"
+      ],
+      "pinyin": "longnan"
+    },
+    {
+      "id": "622900",
+      "name": "临夏回族自治州",
+      "provinceId": "62",
+      "aliases": [
+        "linxiahuizuzizhizhou",
+        "临夏回族自治州"
+      ],
+      "pinyin": "linxiahuizuzizhizhou"
+    },
+    {
+      "id": "623000",
+      "name": "甘南藏族自治州",
+      "provinceId": "62",
+      "aliases": [
+        "gannancangzuzizhizhou",
+        "甘南藏族自治州"
+      ],
+      "pinyin": "gannancangzuzizhizhou"
+    },
+    {
+      "id": "630100",
+      "name": "西宁",
+      "provinceId": "63",
+      "aliases": [
+        "xining",
+        "xiningshi",
+        "西宁",
+        "西宁市"
+      ],
+      "pinyin": "xining"
+    },
+    {
+      "id": "630200",
+      "name": "海东",
+      "provinceId": "63",
+      "aliases": [
+        "haidong",
+        "haidongshi",
+        "海东",
+        "海东市"
+      ],
+      "pinyin": "haidong"
+    },
+    {
+      "id": "632200",
+      "name": "海北藏族自治州",
+      "provinceId": "63",
+      "aliases": [
+        "haibeicangzuzizhizhou",
+        "haibeizhou",
+        "海北州",
+        "海北藏族自治州"
+      ],
+      "pinyin": "haibeicangzuzizhizhou"
+    },
+    {
+      "id": "632300",
+      "name": "黄南藏族自治州",
+      "provinceId": "63",
+      "aliases": [
+        "huangnancangzuzizhizhou",
+        "黄南藏族自治州"
+      ],
+      "pinyin": "huangnancangzuzizhizhou"
+    },
+    {
+      "id": "632500",
+      "name": "海南藏族自治州",
+      "provinceId": "63",
+      "aliases": [
+        "hainancangzuzizhizhou",
+        "海南藏族自治州"
+      ],
+      "pinyin": "hainancangzuzizhizhou"
+    },
+    {
+      "id": "632600",
+      "name": "果洛藏族自治州",
+      "provinceId": "63",
+      "aliases": [
+        "guoluocangzuzizhizhou",
+        "果洛藏族自治州"
+      ],
+      "pinyin": "guoluocangzuzizhizhou"
+    },
+    {
+      "id": "632700",
+      "name": "玉树藏族自治州",
+      "provinceId": "63",
+      "aliases": [
+        "yushucangzuzizhizhou",
+        "玉树藏族自治州"
+      ],
+      "pinyin": "yushucangzuzizhizhou"
+    },
+    {
+      "id": "632800",
+      "name": "海西蒙古族藏族自治州",
+      "provinceId": "63",
+      "aliases": [
+        "delingha",
+        "geermu",
+        "haiximengguzucangzuzizhizhou",
+        "haixizhou",
+        "mangya",
+        "德令哈",
+        "格尔木",
+        "海西州",
+        "海西蒙古族藏族自治州",
+        "茫崖"
+      ],
+      "pinyin": "haiximengguzucangzuzizhizhou"
+    },
+    {
+      "id": "640100",
+      "name": "银川",
+      "provinceId": "64",
+      "aliases": [
+        "lingwu",
+        "yinchuan",
+        "yinchuanshi",
+        "灵武",
+        "银川",
+        "银川市"
+      ],
+      "pinyin": "yinchuan"
+    },
+    {
+      "id": "640200",
+      "name": "石嘴山",
+      "provinceId": "64",
+      "aliases": [
+        "shizuishan",
+        "shizuishanshi",
+        "石嘴山",
+        "石嘴山市"
+      ],
+      "pinyin": "shizuishan"
+    },
+    {
+      "id": "640300",
+      "name": "吴忠",
+      "provinceId": "64",
+      "aliases": [
+        "qingtongxia",
+        "wuzhong",
+        "wuzhongshi",
+        "吴忠",
+        "吴忠市",
+        "青铜峡"
+      ],
+      "pinyin": "wuzhong"
+    },
+    {
+      "id": "640400",
+      "name": "固原",
+      "provinceId": "64",
+      "aliases": [
+        "guyuan",
+        "guyuanshi",
+        "固原",
+        "固原市"
+      ],
+      "pinyin": "guyuan"
+    },
+    {
+      "id": "640500",
+      "name": "中卫",
+      "provinceId": "64",
+      "aliases": [
+        "zhongwei",
+        "zhongweishi",
+        "中卫",
+        "中卫市"
+      ],
+      "pinyin": "zhongwei"
+    },
+    {
+      "id": "650100",
+      "name": "乌鲁木齐",
+      "provinceId": "65",
+      "aliases": [
+        "wulumuqi",
+        "wulumuqishi",
+        "乌鲁木齐",
+        "乌鲁木齐市"
+      ],
+      "pinyin": "wulumuqi"
+    },
+    {
+      "id": "650200",
+      "name": "克拉玛依",
+      "provinceId": "65",
+      "aliases": [
+        "kelamayi",
+        "kelamayishi",
+        "克拉玛依",
+        "克拉玛依市"
+      ],
+      "pinyin": "kelamayi"
+    },
+    {
+      "id": "650400",
+      "name": "吐鲁番",
+      "provinceId": "65",
+      "aliases": [
+        "tulufan",
+        "tulufanshi",
+        "吐鲁番",
+        "吐鲁番市"
+      ],
+      "pinyin": "tulufan"
+    },
+    {
+      "id": "650500",
+      "name": "哈密",
+      "provinceId": "65",
+      "aliases": [
+        "hami",
+        "hamishi",
+        "哈密",
+        "哈密市"
+      ],
+      "pinyin": "hami"
+    },
+    {
+      "id": "652300",
+      "name": "昌吉回族自治州",
+      "provinceId": "65",
+      "aliases": [
+        "changji",
+        "changjihuizuzizhizhou",
+        "昌吉",
+        "昌吉回族自治州"
+      ],
+      "pinyin": "changjihuizuzizhizhou"
+    },
+    {
+      "id": "652700",
+      "name": "博尔塔拉蒙古自治州",
+      "provinceId": "65",
+      "aliases": [
+        "boertalamengguzizhizhou",
+        "bole",
+        "博乐",
+        "博尔塔拉蒙古自治州"
+      ],
+      "pinyin": "boertalamengguzizhizhou"
+    },
+    {
+      "id": "652800",
+      "name": "巴音郭楞蒙古自治州",
+      "provinceId": "65",
+      "aliases": [
+        "bayinguolengmengguzizhizhou",
+        "kuerlei",
+        "巴音郭楞蒙古自治州",
+        "库尔勒"
+      ],
+      "pinyin": "bayinguolengmengguzizhizhou"
+    },
+    {
+      "id": "652900",
+      "name": "阿克苏地区",
+      "provinceId": "65",
+      "aliases": [
+        "akesu",
+        "akesudequ",
+        "阿克苏",
+        "阿克苏地区"
+      ],
+      "pinyin": "akesudequ"
+    },
+    {
+      "id": "653000",
+      "name": "克孜勒苏柯尔克孜自治州",
+      "provinceId": "65",
+      "aliases": [
+        "atushen",
+        "kezileisukeerkezizizhizhou",
+        "克孜勒苏柯尔克孜自治州",
+        "阿图什"
+      ],
+      "pinyin": "kezileisukeerkezizizhizhou"
+    },
+    {
+      "id": "653100",
+      "name": "喀什地区",
+      "provinceId": "65",
+      "aliases": [
+        "kashen",
+        "kashendequ",
+        "喀什",
+        "喀什地区"
+      ],
+      "pinyin": "kashendequ"
+    },
+    {
+      "id": "653200",
+      "name": "和田地区",
+      "provinceId": "65",
+      "aliases": [
+        "hetian",
+        "hetiandequ",
+        "和田",
+        "和田地区"
+      ],
+      "pinyin": "hetiandequ"
+    },
+    {
+      "id": "654000",
+      "name": "伊犁哈萨克自治州",
+      "provinceId": "65",
+      "aliases": [
+        "yilihasakezizhizhou",
+        "yining",
+        "伊宁",
+        "伊犁哈萨克自治州"
+      ],
+      "pinyin": "yilihasakezizhizhou"
+    },
+    {
+      "id": "654200",
+      "name": "塔城地区",
+      "provinceId": "65",
+      "aliases": [
+        "tacheng",
+        "tachengdequ",
+        "塔城",
+        "塔城地区"
+      ],
+      "pinyin": "tachengdequ"
+    },
+    {
+      "id": "654300",
+      "name": "阿勒泰地区",
+      "provinceId": "65",
+      "aliases": [
+        "aleitai",
+        "aleitaidequ",
+        "阿勒泰",
+        "阿勒泰地区"
+      ],
+      "pinyin": "aleitaidequ"
+    },
+    {
+      "id": "659001",
+      "name": "石河子",
+      "provinceId": "65",
+      "aliases": [
+        "shihezi",
+        "shihezishi",
+        "石河子",
+        "石河子市"
+      ],
+      "pinyin": "shihezi"
+    },
+    {
+      "id": "659002",
+      "name": "阿拉尔",
+      "provinceId": "65",
+      "aliases": [
+        "alaershi",
+        "阿拉尔市"
+      ],
+      "pinyin": "alaer"
+    },
+    {
+      "id": "659003",
+      "name": "图木舒克",
+      "provinceId": "65",
+      "aliases": [
+        "tumushukeshi",
+        "图木舒克市"
+      ],
+      "pinyin": "tumushuke"
+    },
+    {
+      "id": "659004",
+      "name": "五家渠",
+      "provinceId": "65",
+      "aliases": [
+        "wujiaqushi",
+        "五家渠市"
+      ],
+      "pinyin": "wujiaqu"
+    },
+    {
+      "id": "659005",
+      "name": "北屯",
+      "provinceId": "65",
+      "aliases": [
+        "beitunshi",
+        "北屯市"
+      ],
+      "pinyin": "beitun"
+    },
+    {
+      "id": "659006",
+      "name": "铁门关",
+      "provinceId": "65",
+      "aliases": [
+        "tiemenguan",
+        "tiemenguanshi",
+        "铁门关",
+        "铁门关市"
+      ],
+      "pinyin": "tiemenguan"
+    },
+    {
+      "id": "659007",
+      "name": "双河",
+      "provinceId": "65",
+      "aliases": [
+        "shuangheshi",
+        "双河市"
+      ],
+      "pinyin": "shuanghe"
+    },
+    {
+      "id": "659008",
+      "name": "可克达拉",
+      "provinceId": "65",
+      "aliases": [
+        "kekedalashi",
+        "可克达拉市"
+      ],
+      "pinyin": "kekedala"
+    },
+    {
+      "id": "659009",
+      "name": "昆玉",
+      "provinceId": "65",
+      "aliases": [
+        "kunyushi",
+        "昆玉市"
+      ],
+      "pinyin": "kunyu"
+    },
+    {
+      "id": "659010",
+      "name": "胡杨河",
+      "provinceId": "65",
+      "aliases": [
+        "huyangheshi",
+        "胡杨河市"
+      ],
+      "pinyin": "huyanghe"
+    },
+    {
+      "id": "659011",
+      "name": "新星",
+      "provinceId": "65",
+      "aliases": [
+        "xinxingshi",
+        "新星市"
+      ],
+      "pinyin": "xinxing"
+    },
+    {
+      "id": "659012",
+      "name": "白杨",
+      "provinceId": "65",
+      "aliases": [
+        "baiyangshi",
+        "白杨市"
+      ],
+      "pinyin": "baiyang"
+    },
+    {
+      "id": "810000",
+      "name": "香港",
+      "provinceId": "81",
+      "aliases": [
+        "xianggang",
+        "xianggangtebiexingzhengqu",
+        "香港",
+        "香港特别行政区"
+      ],
+      "pinyin": "xianggang"
+    },
+    {
+      "id": "820000",
+      "name": "澳门",
+      "provinceId": "82",
+      "aliases": [
+        "aomentebiexingzhengqu",
+        "澳门特别行政区"
+      ],
+      "pinyin": "aomen"
+    },
+    {
+      "id": "710100",
+      "name": "台北市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "taibeishi"
+    },
+    {
+      "id": "710200",
+      "name": "新北市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "xinbeishi"
+    },
+    {
+      "id": "710300",
+      "name": "桃园市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "taoyuanshi"
+    },
+    {
+      "id": "710400",
+      "name": "台中市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "taizhongshi"
+    },
+    {
+      "id": "710500",
+      "name": "台南市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "tainanshi"
+    },
+    {
+      "id": "710600",
+      "name": "高雄市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "gaoxiongshi"
+    },
+    {
+      "id": "710700",
+      "name": "基隆市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "jilongshi"
+    },
+    {
+      "id": "710800",
+      "name": "新竹市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "xinzhushi"
+    },
+    {
+      "id": "710900",
+      "name": "嘉义市",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "jiayishi"
+    },
+    {
+      "id": "711000",
+      "name": "新竹县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "xinzhuxian"
+    },
+    {
+      "id": "711100",
+      "name": "苗栗县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "miaolixian"
+    },
+    {
+      "id": "711200",
+      "name": "彰化县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "zhanghuaxian"
+    },
+    {
+      "id": "711300",
+      "name": "南投县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "nantouxian"
+    },
+    {
+      "id": "711400",
+      "name": "云林县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "yunlinxian"
+    },
+    {
+      "id": "711500",
+      "name": "嘉义县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "jiayixian"
+    },
+    {
+      "id": "711600",
+      "name": "屏东县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "pingdongxian"
+    },
+    {
+      "id": "711700",
+      "name": "宜兰县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "yilanxian"
+    },
+    {
+      "id": "711800",
+      "name": "花莲县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "hualianxian"
+    },
+    {
+      "id": "711900",
+      "name": "台东县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "taidongxian"
+    },
+    {
+      "id": "712000",
+      "name": "澎湖县",
+      "provinceId": "71",
+      "aliases": [],
+      "pinyin": "penghuxian"
+    }
+  ]
+}

@@ -24,7 +24,7 @@ object TicketParser {
                 require(f[2].isNotBlank() && f[3].isNotBlank()) { "缺少列车标识" }
                 val from = requireNotNull(catalog.byCode[f[6]]) { "无法识别出发站 ${f[6]}" }
                 val to = requireNotNull(catalog.byCode[f[7]]) { "无法识别到达站 ${f[7]}" }
-                require(from.cityId==unit.origin.cityId && to.cityId==unit.destination.cityId) { "返回车站不属于本次查询城市" }
+                require((from.cityId==unit.origin.cityId || from.railwayCityId==unit.origin.railwayCityId) && (to.cityId==unit.destination.cityId || to.railwayCityId==unit.destination.railwayCityId)) { "返回车站不属于本次查询城市" }
                 require(f[11] in setOf("Y","N","IS_TIME_NOT_BUY")) { "未知发售状态" }
                 val sale = when {
                     f[11] == "Y" -> SaleState.OPEN

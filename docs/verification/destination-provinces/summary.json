@@ -1,0 +1,38 @@
+{
+  "coreTests": [
+    {
+      "name": "cn.traintrip.core.DestinationCatalogTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-09-19T01:38:52.270Z",
+      "hostname": "DJX34Q0R35",
+      "time": "0.079"
+    },
+    {
+      "name": "cn.traintrip.core.CoreTest",
+      "tests": "7",
+      "skipped": "0",
+      "failures": "0",
+      "errors": "0",
+      "timestamp": "2026-09-19T01:38:51.884Z",
+      "hostname": "DJX34Q0R35",
+      "time": "0.384"
+    }
+  ],
+  "api31Tests": 21,
+  "api36Tests": 7,
+  "lintErrors": 0,
+  "lintWarnings": 12,
+  "ocrImages": 6,
+  "ocrTextBlocks": 138,
+  "directoryProvinces": 34,
+  "directoryCities": 391,
+  "legacyMappings": 424,
+  "directoryVersion": "2023-06-30",
+  "desktopJvmLiveSmoke": "blocked by local JDK certificate trust chain",
+  "androidLiveQuery": "passed",
+  "apkSha256": "e5985ec63c74bb5cee14afc45977edcaf2cf12448f9400b49886bb782d327fc2",
+  "apkBytes": 11963059
+}
