@@ -33,7 +33,7 @@
 - 仅重启 Train Trip 后再次打开泰安，摘要和景点直接展示。缓存 SHA-256、生成时间和 attempt 修改时间完全不变，没有再次整理；未关闭手机网络做飞行模式测试。
 - 真机证据：`.verification-private/v0.4.0/settings/phone/verification.json`、`taian-generated.json`。
 
-此前 punk-12 通知被自动审批两次拒绝，理由为具体接收群、消息和机器人身份缺少单独批准。本轮未绕过或重复发送，通知保持阻塞。
+用户明确批准后，2026-09-19 20:13 已由 punk-12 for Codex 向指定配置群发送完成状态。回读确认机器人身份、接收群和正文正确，消息 ID：om_x100b65d389e9f4a4c00c73c9b8f2f34。此前自动审批阻塞已解除。
 
 ## 交付与回滚
 

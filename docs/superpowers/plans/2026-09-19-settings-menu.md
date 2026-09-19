@@ -29,4 +29,4 @@
 - [x] core:test / assembleDebug / assembleDebugAndroidTest / lintDebug 通过。
 - [x] 专用模拟器 Settings/DeepSeek/目的地相关用例通过；视觉检查非敏感菜单，敏感页通过语义树与 FLAG_SECURE 测试验证。
 - [x] Mate 60 Pro 已保留数据覆盖安装；菜单、两项配置、泰安真实生成及重启缓存恢复通过。
-- [x] 扫描代码/产物无真实密钥，更新验证文档、备份 APK、本地提交。通知沿用已存在的自动审批阻塞，不绕过。
+- [x] 扫描代码/产物无真实密钥，更新验证文档、备份 APK、本地提交。用户明确批准后，punk-12 完成通知已发送并回读确认。
