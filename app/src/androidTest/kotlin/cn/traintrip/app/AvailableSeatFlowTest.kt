@@ -47,7 +47,9 @@ class AvailableSeatFlowTest {
         compose.onNodeWithTag("city-card-$tianjin").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("1 趟有票").assertExists()
         compose.onNodeWithTag("trains-$tianjin").performScrollTo().performClick()
-        compose.onNodeWithText("二等座 有票").performScrollTo().performClick()
+        val trip=vm.state.value.progress!!.trips.single()
+        compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("trip-${trip.key}"))
+        compose.onNodeWithTag("trip-${trip.key}").performClick()
         compose.onNodeWithText("刷新余票").performScrollTo().performClick()
         compose.waitUntil(10000) { vm.state.value.cityRefresh?.running == false }
         compose.runOnIdle { assertEquals("manual refresh queries selected city", 2, calls.get()) }
@@ -70,11 +72,10 @@ class AvailableSeatFlowTest {
 
     private fun assertRefreshRejected(raw: String) {
         val vm = searchAndSelect(raw)
-        compose.onNodeWithText("所选席别当前不满足人数，请重新选择一个席别").assertExists()
+        compose.onNodeWithText("所选车次已不符合当前条件，请重新选择").assertExists()
         compose.runOnIdle {
             val state = vm.state.value
             assertNull(state.selectedTripKey)
-            assertNull(state.selectedSeat)
             assertTrue(aggregate(state.progress!!.trips, state.applied!!).isEmpty())
             vm.dismissNotice()
             vm.showResults()

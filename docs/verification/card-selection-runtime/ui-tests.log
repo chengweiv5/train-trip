@@ -1,0 +1,321 @@
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+cn.traintrip.app.DetailFlowTest:
+INSTRUMENTATION_STATUS: test=compactLargeFontKeepsSummaryAndLastCardReachable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=compactLargeFontKeepsSummaryAndLastCardReachable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=partialRefreshRetainsOldTimestampAndRetriesOnlyFailure
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=partialRefreshRetainsOldTimestampAndRetriesOnlyFailure
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=duplicateRefreshIsPreventedAndCancellationPreservesData
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=duplicateRefreshIsPreventedAndCancellationPreservesData
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=cardContentAndPaddingSelectWhileDetailsRemainIndependent
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=cardContentAndPaddingSelectWhileDetailsRemainIndependent
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=successfulRefreshClearsDisappearedSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=successfulRefreshClearsDisappearedSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=unselectedCanLaunchAndFailureDoesNotClaimSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=unselectedCanLaunchAndFailureDoesNotClaimSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=appTapNeverQueriesOrCopiesAndFailureRetainsSelection
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=appTapNeverQueriesOrCopiesAndFailureRetainsSelection
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=refreshRetainsTrainWhenAnotherAllowedSeatStillMatches
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=refreshRetainsTrainWhenAnotherAllowedSeatStillMatches
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=filtersClearHiddenSelectionWhileSortAndRestorationKeepIt
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailFlowTest
+INSTRUMENTATION_STATUS: current=9
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but found '3' nodes that satisfy: ((Text + InputText + EditableText contains '天津南' (ignoreCase: false)) && (OnClick is defined))
+Nodes found:
+1) Node #3263 at (l=55.0, t=1106.0, r=1018.0, b=1618.0)px, Tag: 'trip-2026-09-20/G3/BJP/TIP'
+Focused = 'false'
+IsContainer = 'true'
+Role = 'RadioButton'
+Selected = 'false'
+Text = '[G3, 2026-09-20 · 直达, 10:00, 北京, 57分钟, 当日到达, 11:00, 天津南, 二等座 有票, 一等座 8 张, 09-19 13:42:54 查询]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 10 siblings
+2) Node #3028 at (l=55.0, t=1646.0, r=1018.0, b=2158.0)px, Tag: 'trip-2026-09-21/G3/BJP/TIP'
+Focused = 'false'
+IsContainer = 'true'
+Role = 'RadioButton'
+Selected = 'false'
+Text = '[G3, 2026-09-21 · 直达, 10:00, 北京, 57分钟, 当日到达, 11:00, 天津南, 二等座 有票, 一等座 8 张, 09-19 13:42:54 查询]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 10 siblings
+3) Node #3306 at (l=66.0, t=481.0, r=255.0, b=591.0)px
+Focused = 'false'
+Role = 'Button'
+Text = '[天津南]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 4 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at cn.traintrip.app.DetailFlowTest.filtersClearHiddenSelectionWhileSortAndRestorationKeepIt(DetailFlowTest.kt:239)
+
+INSTRUMENTATION_STATUS: stream=
+Error in filtersClearHiddenSelectionWhileSortAndRestorationKeepIt(cn.traintrip.app.DetailFlowTest):
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but found '3' nodes that satisfy: ((Text + InputText + EditableText contains '天津南' (ignoreCase: false)) && (OnClick is defined))
+Nodes found:
+1) Node #3263 at (l=55.0, t=1106.0, r=1018.0, b=1618.0)px, Tag: 'trip-2026-09-20/G3/BJP/TIP'
+Focused = 'false'
+IsContainer = 'true'
+Role = 'RadioButton'
+Selected = 'false'
+Text = '[G3, 2026-09-20 · 直达, 10:00, 北京, 57分钟, 当日到达, 11:00, 天津南, 二等座 有票, 一等座 8 张, 09-19 13:42:54 查询]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 10 siblings
+2) Node #3028 at (l=55.0, t=1646.0, r=1018.0, b=2158.0)px, Tag: 'trip-2026-09-21/G3/BJP/TIP'
+Focused = 'false'
+IsContainer = 'true'
+Role = 'RadioButton'
+Selected = 'false'
+Text = '[G3, 2026-09-21 · 直达, 10:00, 北京, 57分钟, 当日到达, 11:00, 天津南, 二等座 有票, 一等座 8 张, 09-19 13:42:54 查询]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 10 siblings
+3) Node #3306 at (l=66.0, t=481.0, r=255.0, b=591.0)px
+Focused = 'false'
+Role = 'Button'
+Text = '[天津南]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 4 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at cn.traintrip.app.DetailFlowTest.filtersClearHiddenSelectionWhileSortAndRestorationKeepIt(DetailFlowTest.kt:239)
+
+INSTRUMENTATION_STATUS: test=filtersClearHiddenSelectionWhileSortAndRestorationKeepIt
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailLayoutTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+cn.traintrip.app.DetailLayoutTest:
+INSTRUMENTATION_STATUS: test=largeFontCanReachLastDateAndSeatDetails
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailLayoutTest
+INSTRUMENTATION_STATUS: current=10
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=largeFontCanReachLastDateAndSeatDetails
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailLayoutTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=threeDatesFitAndCardUsesLessVerticalSpace
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.DetailLayoutTest
+INSTRUMENTATION_STATUS: current=11
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=threeDatesFitAndCardUsesLessVerticalSpace
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.AvailableSeatFlowTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+cn.traintrip.app.AvailableSeatFlowTest:
+INSTRUMENTATION_STATUS: test=refreshRejectsExplicitCountBelowPartySize
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.AvailableSeatFlowTest
+INSTRUMENTATION_STATUS: current=12
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=refreshRejectsExplicitCountBelowPartySize
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.AvailableSeatFlowTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=availableCountsForTwoPeopleAndRefreshesNormally
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.AvailableSeatFlowTest
+INSTRUMENTATION_STATUS: current=13
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=availableCountsForTwoPeopleAndRefreshesNormally
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.AvailableSeatFlowTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=refreshRejectsTicketsThatBecameUnavailable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=cn.traintrip.app.AvailableSeatFlowTest
+INSTRUMENTATION_STATUS: current=14
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=14
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=refreshRejectsTicketsThatBecameUnavailable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 84.864
+There was 1 failure:
+1) filtersClearHiddenSelectionWhileSortAndRestorationKeepIt(cn.traintrip.app.DetailFlowTest)
+java.lang.AssertionError: Failed to inject touch input.
+Reason: Expected exactly '1' node but found '3' nodes that satisfy: ((Text + InputText + EditableText contains '天津南' (ignoreCase: false)) && (OnClick is defined))
+Nodes found:
+1) Node #3263 at (l=55.0, t=1106.0, r=1018.0, b=1618.0)px, Tag: 'trip-2026-09-20/G3/BJP/TIP'
+Focused = 'false'
+IsContainer = 'true'
+Role = 'RadioButton'
+Selected = 'false'
+Text = '[G3, 2026-09-20 · 直达, 10:00, 北京, 57分钟, 当日到达, 11:00, 天津南, 二等座 有票, 一等座 8 张, 09-19 13:42:54 查询]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 10 siblings
+2) Node #3028 at (l=55.0, t=1646.0, r=1018.0, b=2158.0)px, Tag: 'trip-2026-09-21/G3/BJP/TIP'
+Focused = 'false'
+IsContainer = 'true'
+Role = 'RadioButton'
+Selected = 'false'
+Text = '[G3, 2026-09-21 · 直达, 10:00, 北京, 57分钟, 当日到达, 11:00, 天津南, 二等座 有票, 一等座 8 张, 09-19 13:42:54 查询]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 1 child, 10 siblings
+3) Node #3306 at (l=66.0, t=481.0, r=255.0, b=591.0)px
+Focused = 'false'
+Role = 'Button'
+Text = '[天津南]'
+Actions = [ClearTextSubstitution, GetTextLayoutResult, OnClick, RequestFocus, SetTextSubstitution, ShowTextSubstitution]
+MergeDescendants = 'true'
+Has 4 siblings
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performTouchInput(Actions.kt:402)
+	at androidx.compose.ui.test.AndroidActions.performClickImpl(Actions.android.kt:23)
+	at androidx.compose.ui.test.ActionsKt.performClick(Actions.kt:60)
+	at cn.traintrip.app.DetailFlowTest.filtersClearHiddenSelectionWhileSortAndRestorationKeepIt(DetailFlowTest.kt:239)
+
+FAILURES!!!
+Tests run: 14,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

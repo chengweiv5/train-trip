@@ -44,8 +44,8 @@ class DetailLayoutTest {
             val base=LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(base.density,if(large) 1.3f else 1f)) {
                 TrainTripTheme { Box(Modifier.width(if(large) 320.dp else (1260f/3.25f).dp).fillMaxHeight()) {
-                    DetailScreen(state,{}, { t,s->state=state.copy(selectedTripKey=t.key,selectedSeat=s) },{},{},
-                        {state=state.copy(selectedTripKey=null,selectedSeat=null)},{})
+                    DetailScreen(state,{}, { t->state=state.copy(selectedTripKey=t.key) },{},{},
+                        {state=state.copy(selectedTripKey=null)},{})
                 } }
             }
         }
@@ -53,7 +53,7 @@ class DetailLayoutTest {
     private fun firstCard()=compose.onNodeWithTag("trip-${date}/G1/${from.code}/${to.code}")
     private fun selectFirst() {
         compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("trip-${date}/G1/${from.code}/${to.code}"))
-        compose.onNode(hasText("二等座 有票") and hasAnyAncestor(hasTestTag("trip-${date}/G1/${from.code}/${to.code}"))).performScrollTo().performClick()
+        firstCard().performClick().assertIsSelected()
     }
     @Test fun threeDatesFitAndCardUsesLessVerticalSpace() {
         start(3)
@@ -89,14 +89,14 @@ class DetailLayoutTest {
         assertTextFits()
         compose.onNodeWithText("全部日期").performScrollTo().performClick()
         selectFirst()
-        compose.onNode(hasText("1小时35分 · +1 天到达") and hasAnyAncestor(hasTestTag("trip-${date}/G1/${from.code}/${to.code}"))).assertExists()
-        val seatNode=compose.onNode(hasText("二等座 有票") and hasAnyAncestor(hasTestTag("trip-${date}/G1/${from.code}/${to.code}")))
+        compose.onNode(hasText("1小时35分 · +1 天到达") and hasAnyAncestor(hasTestTag("trip-${date}/G1/${from.code}/${to.code}")),useUnmergedTree=true).assertExists()
+        val seatNode=compose.onNode(hasText("二等座 有票") and hasAnyAncestor(hasTestTag("trip-${date}/G1/${from.code}/${to.code}")),useUnmergedTree=true)
         seatNode.performScrollTo().assertIsDisplayed()
-        val seat=seatNode.fetchSemanticsNode().boundsInRoot
-        assertTrue("Seat target smaller than 48dp",seat.height>=48*compose.activity.resources.displayMetrics.density-1)
+        seatNode.assertHasNoClickAction()
+        assertTrue("Card target smaller than 48dp",firstCard().fetchSemanticsNode().boundsInRoot.height>=48*compose.activity.resources.displayMetrics.density-1)
         assertTextFits()
         capture("large-selected")
-        val more=compose.onNode(hasText("更多席别与余票 ›") and hasAnyAncestor(hasTestTag("trip-${date}/G1/${from.code}/${to.code}")))
+        val more=compose.onNode(hasText("更多席别与余票 ›") and hasAnyAncestor(hasTestTag("trip-${date}/G1/${from.code}/${to.code}")),useUnmergedTree=true)
         more.performScrollTo().assertIsDisplayed()
         assertTextFits()
         capture("large-card-footer")
@@ -119,7 +119,7 @@ class DetailLayoutTest {
         }
     }
     private fun capture(name:String) {
-        val dir=compose.activity.getExternalFilesDir("detail-compact")!!;dir.mkdirs()
+        val dir=compose.activity.getExternalFilesDir("card-selection-layout")!!;dir.mkdirs()
         File(dir,"$name.jpg").outputStream().use { compose.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.JPEG,88,it) }
     }
 }

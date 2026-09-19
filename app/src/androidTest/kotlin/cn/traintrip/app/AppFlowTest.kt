@@ -70,7 +70,7 @@ class AppFlowTest {
         compose.runOnIdle {
             val s=vm.state.value;val f=s.applied!!
             val trip=s.progress!!.trips.first { it.confirmed(f) }
-            vm.select(trip,f.seats.first { trip.seats[it]?.confirmedFor(f.people)==true })
+            vm.select(trip)
         }
         compose.onNodeWithText("刷新余票").performScrollTo().performClick()
         compose.waitUntil(60000) { vm.state.value.cityRefresh?.running == false }

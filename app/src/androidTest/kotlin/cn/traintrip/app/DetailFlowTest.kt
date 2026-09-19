@@ -49,7 +49,7 @@ class DetailFlowTest {
             return QueryResult.Success((1..3).map { index -> Trip(unit.date,"G$index","G$index",unit.origin,
                 if(index==3 && unit.destination.cityName=="天津") catalog.byCode.getValue("TIP") else unit.destination,
                 LocalTime.of(7+index,0),LocalTime.of(8+index,0),60-index,SaleState.OPEN,"",
-                mapOf(SeatType.SECOND to SeatAvailability("有",AvailabilityKind.AVAILABLE),SeatType.FIRST to SeatAvailability("8",AvailabilityKind.COUNT,8)),at) },at)
+                mapOf(SeatType.SECOND to (if(mode=="second-unavailable") SeatAvailability("无",AvailabilityKind.NONE) else SeatAvailability("有",AvailabilityKind.AVAILABLE)),SeatType.FIRST to SeatAvailability("8",AvailabilityKind.COUNT,8)),at) },at)
         }
     }
     private fun start(twoDates:Boolean=false,large:Boolean=false,restoration:StateRestorationTester?=null):Pair<AppViewModel,Source> {
@@ -73,7 +73,7 @@ class DetailFlowTest {
     private fun selectFirst(vm:AppViewModel) {
         val trip=vm.state.value.progress!!.trips.first()
         compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("trip-${trip.key}"))
-        compose.onNode(hasText("二等座 有票") and hasAnyAncestor(hasTestTag("trip-${trip.key}"))).performScrollTo().performClick().assertIsSelected()
+        compose.onNodeWithTag("trip-${trip.key}").performClick().assertIsSelected()
     }
     private fun refresh(vm:AppViewModel) {
         compose.onNodeWithTag("refresh-tickets").performScrollTo().performClick()
@@ -81,7 +81,7 @@ class DetailFlowTest {
     }
     @Test fun appTapNeverQueriesOrCopiesAndFailureRetainsSelection() {
         val (vm,source)=start()
-        compose.onNodeWithTag("open-12306").assertIsNotEnabled()
+        compose.onNodeWithTag("open-12306").assertIsEnabled()
         capture("01-unselected")
         selectFirst(vm)
         val clipboard=compose.activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -106,6 +106,73 @@ class DetailFlowTest {
             assertEquals("unchanged",clipboard.primaryClip!!.getItemAt(0).text.toString())
             vm.pauseForegroundWork()
         }
+    }
+    @Test fun unselectedCanLaunchAndFailureDoesNotClaimSelection() {
+        val (vm,source)=start()
+        compose.onNodeWithTag("selected-summary").assertDoesNotExist()
+        for(result in AppLaunchResult.entries) {
+            compose.runOnIdle { launchResult=result }
+            compose.onNodeWithTag("open-12306").assertIsEnabled().performClick()
+            compose.runOnIdle {
+                assertNull(vm.state.value.selectedTripKey)
+                assertEquals(1,source.calls.size)
+                assertFalse(vm.state.value.notice.orEmpty().contains("已选车次"))
+            }
+            if(result!=AppLaunchResult.OPENED) compose.onNodeWithTag("detail-notice").assertIsDisplayed()
+        }
+        compose.runOnIdle { assertEquals(3,launches) }
+        capture("09-unselected-failed")
+    }
+    @Test fun cardContentAndPaddingSelectWhileDetailsRemainIndependent() {
+        val (vm,_)=start()
+        val trip=vm.state.value.progress!!.trips.first()
+        val cardTag="trip-${trip.key}"
+        fun showCard() { compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag(cardTag)) }
+        for(text in listOf(trip.trainCode,trip.departure.toString(),trip.from.name,"二等座 有票")) {
+            compose.runOnIdle { vm.clearSelection() }
+            showCard()
+            val content=compose.onNode(hasText(text) and hasAnyAncestor(hasTestTag(cardTag)),useUnmergedTree=true)
+            content.performScrollTo().performTouchInput { click() }
+            compose.onNodeWithTag(cardTag).assertIsSelected()
+            compose.runOnIdle { assertEquals(trip.key,vm.state.value.selectedTripKey) }
+        }
+        compose.onNode(hasText("二等座 有票") and hasAnyAncestor(hasTestTag(cardTag)),useUnmergedTree=true)
+            .assertHasNoClickAction().assert(SemanticsMatcher.keyNotDefined(androidx.compose.ui.semantics.SemanticsProperties.Selected))
+        compose.runOnIdle { vm.clearSelection() };showCard()
+        compose.onNodeWithTag(cardTag).performTouchInput { click(androidx.compose.ui.geometry.Offset(center.x,4.dp.toPx())) }
+        compose.onNodeWithTag(cardTag).assertIsSelected().performClick().assertIsSelected()
+        val other=vm.state.value.progress!!.trips[1]
+        val otherTag="trip-${other.key}"
+        compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag(otherTag))
+        compose.onNodeWithTag("seat-details-${other.key}").performScrollTo().performClick()
+        compose.onNodeWithText("${other.trainCode} · 席别余票").assertIsDisplayed()
+        compose.runOnIdle { assertEquals(trip.key,vm.state.value.selectedTripKey) }
+        compose.onNodeWithText("知道了").performClick()
+        compose.onNodeWithTag(otherTag).performClick().assertIsSelected()
+        compose.runOnIdle { assertEquals(other.key,vm.state.value.selectedTripKey);vm.clearSelection() }
+        compose.onNodeWithTag("seat-details-${other.key}").performScrollTo().performClick()
+        compose.onNodeWithText("${other.trainCode} · 席别余票").assertIsDisplayed()
+        compose.runOnIdle { assertNull(vm.state.value.selectedTripKey) }
+        compose.onNodeWithText("知道了").performClick()
+        compose.onNodeWithTag(otherTag).assertIsNotSelected()
+    }
+    @Test fun refreshRetainsTrainWhenAnotherAllowedSeatStillMatches() {
+        val (vm,source)=start()
+        selectFirst(vm)
+        val selected=vm.state.value.selectedTripKey
+        compose.runOnIdle { source.mode="second-unavailable" }
+        refresh(vm)
+        compose.runOnIdle {
+            assertEquals(selected,vm.state.value.selectedTripKey)
+            assertNull(vm.state.value.notice)
+            assertTrue(vm.state.value.progress!!.trips.all { it.seats[SeatType.SECOND]?.confirmedFor(2)==false })
+        }
+        compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("trip-$selected"))
+        compose.onNodeWithTag("trip-$selected").assertIsSelected()
+        compose.onNode(hasText("G1",substring=true) and hasAnyAncestor(hasTestTag("selected-summary")),useUnmergedTree=true).assertExists()
+        compose.onNode(hasText("09:00",substring=true) and hasAnyAncestor(hasTestTag("selected-summary")),useUnmergedTree=true).assertExists()
+        compose.onNode(hasText("二等座",substring=true) and hasAnyAncestor(hasTestTag("selected-summary")),useUnmergedTree=true).assertDoesNotExist()
+        capture("10-other-seat-retained")
     }
     @Test fun partialRefreshRetainsOldTimestampAndRetriesOnlyFailure() {
         val (vm,source)=start(twoDates=true)
@@ -148,8 +215,8 @@ class DetailFlowTest {
         selectFirst(vm)
         compose.runOnIdle { source.mode="empty" }
         refresh(vm)
-        compose.onNodeWithTag("open-12306").assertIsNotEnabled()
-        compose.onNodeWithText("所选席别当前不满足人数，请重新选择一个席别").assertIsDisplayed()
+        compose.onNodeWithTag("open-12306").assertIsEnabled()
+        compose.onNodeWithText("所选车次已不符合当前条件，请重新选择").assertIsDisplayed()
         compose.runOnIdle { assertNull(vm.state.value.selectedTripKey);assertTrue(vm.state.value.progress!!.trips.isEmpty()) }
         capture("06-invalid-selection")
     }
@@ -163,15 +230,15 @@ class DetailFlowTest {
         compose.onNodeWithText("车程最短 ↑").assertExists()
         compose.runOnIdle { assertEquals(key,vm.state.value.selectedTripKey) }
         compose.onNodeWithTag("detail-date-${date.plusDays(1)}").performScrollTo().performClick()
-        compose.onNodeWithTag("open-12306").assertIsNotEnabled()
+        compose.onNodeWithTag("open-12306").assertIsEnabled()
         compose.runOnIdle { assertNull(vm.state.value.selectedTripKey) }
         compose.onNodeWithText("全部日期").performScrollTo().performClick()
         selectFirst(vm)
         compose.onNodeWithTag("detail-list").performScrollToNode(hasText("到达站筛选"))
         compose.onNodeWithText("到达站筛选").performClick()
-        compose.onNode(hasText(catalog.byCode.getValue("TIP").name) and hasClickAction()).performClick()
+        compose.onNode(hasText(catalog.byCode.getValue("TIP").name) and hasAnyAncestor(isDialog())).performClick()
         compose.runOnIdle { assertNull(vm.state.value.selectedTripKey) }
-        compose.onNodeWithTag("open-12306").assertIsNotEnabled()
+        compose.onNodeWithTag("open-12306").assertIsEnabled()
     }
     @Test fun compactLargeFontKeepsSummaryAndLastCardReachable() {
         val restoration=StateRestorationTester(compose)
@@ -222,7 +289,7 @@ class DetailFlowTest {
     }
     private fun capture(name:String) {
         val bitmap=compose.onRoot().captureToImage().asAndroidBitmap()
-        val dir=compose.activity.getExternalFilesDir("v0.4.0-remove-copy")!!;dir.mkdirs()
+        val dir=compose.activity.getExternalFilesDir("v0.4.0-card-selection")!!;dir.mkdirs()
         File(dir,"$name.jpg").outputStream().use { bitmap.compress(Bitmap.CompressFormat.JPEG,88,it) }
     }
 }

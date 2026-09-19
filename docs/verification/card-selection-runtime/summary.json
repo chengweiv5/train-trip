@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "cases": 14,
+  "first_run": {
+    "tests": 14,
+    "passed": 13,
+    "failed": 1,
+    "reason": "Station dialog matcher also matched selectable card text"
+  },
+  "targeted_rerun": {
+    "tests": 1,
+    "passed": 1
+  },
+  "production_changes_after_first_run": false,
+  "build": "passed",
+  "lint_errors": 0,
+  "lint_existing_warnings": 12,
+  "runtime_images": 16,
+  "runtime_ocr_blocks": 462,
+  "design_images": 4,
+  "design_ocr_blocks": 138,
+  "selection_unit": "trip",
+  "seat_interactive": false,
+  "launch_without_selection": true,
+  "phone": {
+    "device": "ALN-AL00",
+    "version": [
+      "versionCode=8 minSdk=26 targetSdk=36",
+      "versionName=0.4.0"
+    ],
+    "apk_sha256": "cc81fcaef015091686d4d7ac75b900562ecfc10a5f499ff66eef763cf0df9ea9",
+    "installed_sha256": "cc81fcaef015091686d4d7ac75b900562ecfc10a5f499ff66eef763cf0df9ea9",
+    "preferences_preserved": true,
+    "foreground": "mResumedActivity: ActivityRecord{5ed2ece u0 cn.traintrip.app/.MainActivity t42186}\nResumedActivity: ActivityRecord{5ed2ece u0 cn.traintrip.app/.MainActivity t42186}\nmLastResumedActivity=ActivityRecord{5ed2ece u0 cn.traintrip.app/.MainActivity t42186}",
+    "verified_at": "2026-09-19T13:56:40.241090+08:00",
+    "backup": ".verification-private/v0.4.0/card-selection/phone"
+  }
+}

@@ -1,6 +1,10 @@
 @file:OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 package cn.traintrip.app.ui
 
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
@@ -23,7 +27,7 @@ import cn.traintrip.app.*
 import cn.traintrip.core.*
 import java.time.LocalDate
 
-@Composable fun DetailScreen(s:UiState,onBack:()->Unit,onSelect:(Trip,SeatType)->Unit,onRefresh:()->Unit,onRetry:()->Unit,onClearSelection:()->Unit,onOpenApp:()->Unit) {
+@Composable fun DetailScreen(s:UiState,onBack:()->Unit,onSelect:(Trip)->Unit,onRefresh:()->Unit,onRetry:()->Unit,onClearSelection:()->Unit,onOpenApp:()->Unit) {
     val f=s.applied ?: s.filters
     val all=remember(s.progress,f,s.cityId) { s.progress?.trips.orEmpty().filter { it.to.cityId==s.cityId && it.confirmed(f) }.distinctBy { it.key } }
     var dateKey by rememberSaveable(s.cityId,s.searchSession) { mutableStateOf<String?>(null) }
@@ -45,9 +49,9 @@ import java.time.LocalDate
         station=code;stationsOpen=false
     }
     Scaffold(containerColor=Cream,bottomBar={
-        DetailActions(selected,s.selectedSeat,f.people,s.notice,onOpenApp)
+        DetailActions(selected,f.people,s.notice,onOpenApp)
     }) { padding->
-        LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("detail-list"),state=listState,contentPadding=PaddingValues(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+        LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("detail-list").selectableGroup(),state=listState,contentPadding=PaddingValues(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
             item { BackHeader("${s.catalog.byCity[f.originCityId]?.name}出发 · 只看直达",onBack) }
             item { Text("去${s.catalog.byCity[s.cityId]?.name.orEmpty()}",style=MaterialTheme.typography.headlineLarge);Text(s.catalog.byCity[s.cityId]?.provinceLabel.orEmpty(),color=Muted,style=MaterialTheme.typography.bodyMedium);Text("${all.map { it.trainKey }.distinct().size} 趟车次",color=Muted,style=MaterialTheme.typography.bodyMedium) }
             item { CityRefreshStatus(s,onRefresh,onRetry) }
@@ -69,7 +73,7 @@ import java.time.LocalDate
             }
             if(trips.isEmpty()) item { Hint("当前没有符合筛选条件的车次，请调整日期或到达站。") }
             items(trips,key={it.key}) { t->
-                Surface(Modifier.fillMaxWidth().testTag("trip-${t.key}"),shape=RoundedCornerShape(18.dp),color=if(t.key==s.selectedTripKey) Sage else Color.White,border=if(t.key==s.selectedTripKey) BorderStroke(1.5.dp,Forest) else null) {
+                Surface(Modifier.fillMaxWidth().testTag("trip-${t.key}").clip(RoundedCornerShape(18.dp)).selectable(selected=t.key==s.selectedTripKey,role=Role.RadioButton,onClick={onSelect(t)}),shape=RoundedCornerShape(18.dp),color=if(t.key==s.selectedTripKey) Sage else Color.White,border=if(t.key==s.selectedTripKey) BorderStroke(1.5.dp,Forest) else null) {
                   Column(Modifier.padding(horizontal=12.dp,vertical=10.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
                     Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
                         Text(t.trainCode,Modifier.weight(1f),style=MaterialTheme.typography.titleMedium)
@@ -78,13 +82,13 @@ import java.time.LocalDate
                     TripTiming(t)
                     FlowRow(horizontalArrangement=Arrangement.spacedBy(6.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
                         f.seats.filter { t.seats[it]?.confirmedFor(f.people)==true }.sortedBy { it.ordinal }.forEach { seat->
-                            SeatChoice("${seat.label} ${t.seats.getValue(seat).label()}",s.selectedTripKey==t.key && s.selectedSeat==seat,{onSelect(t,seat)})
+                            SeatAvailabilityLabel("${seat.label} ${t.seats.getValue(seat).label()}")
                         }
                     }
                     Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
                         val queriedAt=formatTime(t.queriedAt)
                         Text(if(compact) "${queriedAt.substringBefore(' ')} 查询\n${queriedAt.substringAfter(' ')}" else "$queriedAt 查询",Modifier.weight(1f),style=MaterialTheme.typography.bodySmall,color=Muted)
-                        TextButton({seatTrip=t},Modifier.heightIn(min=48.dp),contentPadding=PaddingValues(0.dp)) { Text("更多席别与余票 ›",style=MaterialTheme.typography.bodySmall) }
+                        TextButton({seatTrip=t},Modifier.heightIn(min=48.dp).testTag("seat-details-${t.key}"),contentPadding=PaddingValues(0.dp)) { Text("更多席别与余票 ›",style=MaterialTheme.typography.bodySmall) }
                     }
                   }
                 }

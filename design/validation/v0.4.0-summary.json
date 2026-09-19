@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "visible_nodes": 324,
-  "text_nodes": 148,
+  "visible_nodes": 315,
+  "text_nodes": 143,
   "root_frames": 7,
   "reusable_components": 2,
   "tolerance_px": 0.5,
@@ -14,7 +14,7 @@
   "unresolved_references": [],
   "raw_clip_notes": "C3NO9 right edge round-off only; no overflow at 0.5 px tolerance.",
   "ocr_images": 4,
-  "ocr_text_blocks": 141,
+  "ocr_text_blocks": 138,
   "contrast": {
     "body_on_cream": 11.25,
     "muted_on_cream": 4.72,
@@ -22,23 +22,31 @@
     "primary_on_tint": 6.41,
     "warning_on_warning_bg": 5.66
   },
-  "visual_review": "Saved removal design: selected, compact, unselected and five feedback cards reviewed; no visible text overflow.",
-  "spec_review": "User-approved removal of copy action; current design and Android implementation agree.",
-  "runtime_tests": "DetailFlowTest: OK (6 tests); build and lint passed.",
+  "visual_review": "Whole-card selection with informational seats and optional summary; active launch action in unselected state. Selected, compact and feedback renders reviewed.",
+  "spec_review": "User approved; independent spec review Approved.",
+  "runtime_tests": "14 related cases passed: 13 on initial run; corrected dialog matcher passed targeted rerun. Production build and lint passed.",
   "interaction_target": "railway-12306-app",
   "web_fallback": false,
   "saved_source": {
     "source": "design/train-trip-v0.4.0.pen",
-    "bytes": 143306,
-    "sha256": "0070305d3d3fe6d38e5403e7bc419251ab117957ca7fbe60ab73cc05bb9393ec",
+    "bytes": 141788,
+    "sha256": "00ce1e932cd85ac3396a1a0cfb498b6006af3455ee44f94391f4d74bed623acf",
     "reopened_from_disk": true,
     "readback_method": "Pencil MCP opened separately copied saved .pen file",
     "matches_verified_snapshot": true,
     "root_frames": 7,
-    "saved_at": "2026-09-19T13:20:00.808897",
+    "saved_at": "2026-09-19T13:58:05.919946",
     "interaction_target": "railway-12306-app",
     "web_fallback": false
   },
   "copy_nodes": [],
-  "ocr_copy_labels": []
+  "ocr_copy_labels": [],
+  "seat_selection_actions": [],
+  "card_selection_actions": [
+    "jVGAq",
+    "N5LlSd",
+    "DEBFn",
+    "ZAEJ2",
+    "i52G1J"
+  ]
 }

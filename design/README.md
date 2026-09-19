@@ -4,9 +4,9 @@
 
 [可编辑源文件](train-trip-v0.4.0.pen) · [完整设计说明](../docs/superpowers/specs/2026-09-19-v0.4.0-train-detail-ui-design.md) · [设计评审 PDF](reference/v0.4.0/export.pdf)
 
-UI 设计已在 v0.4.0 App 中实现；运行验证见 [实现验收](../docs/verification/2026-09-19-v0.4.0-implementation.md) 和 [移除复制入口验收](../docs/verification/2026-09-19-v0.4.0-remove-copy.md)。底部仅保留已选摘要和“打开 12306 App”主操作，点击唤起铁路12306；未安装或打开失败时提示并保留选择，不自动跳转官网。复制入口已移除，刷新余票放在列表上方。未选择、已选择、320dp / 1.3 倍字体及五张反馈卡片均已出稿。完整可编辑层级另存为 [恢复快照](v0.4.0-recovery.json)。原首版和目的地设计稿保留；下文描述历史版本，其强制购票前核验和官网跳转规则已由本节所链接的新设计和实现替代。
+UI 设计已在 v0.4.0 App 中实现；运行验证见 [实现验收](../docs/verification/2026-09-19-v0.4.0-implementation.md) 和 [整卡选择验收](../docs/verification/2026-09-19-trip-card-selection.md)。整卡点击临时标记车次，席别只显示余票。底部有选择时显示车次摘要，“打开 12306 App”始终可用，点击唤起铁路12306；未安装或打开失败时提示并保留选择，不自动跳转官网。复制入口已移除，刷新余票放在列表上方。未选择、已选择、320dp / 1.3 倍字体及五张反馈卡片均已出稿。完整可编辑层级另存为 [恢复快照](v0.4.0-recovery.json)。原首版和目的地设计稿保留；下文描述历史版本，其强制购票前核验和官网跳转规则已由本节所链接的新设计和实现替代。
 
-画板：未选择 `xUauz`、已选择 `bArbH`、大字体 `u5nS2`、反馈状态 `ePGKM`。结构、OCR 和视觉检查见 [验证记录](../docs/verification/2026-09-19-v0.4.0-train-detail-ui.md)。
+画板：未选择 `zvir8`、已选择 `bArbH`、大字体 `VhZVb`、反馈状态 `ePGKM`。结构、OCR 和视觉检查见 [验证记录](../docs/verification/2026-09-19-v0.4.0-train-detail-ui.md)。
 
 ## 凌晨出发预设（2026-09-19）
 

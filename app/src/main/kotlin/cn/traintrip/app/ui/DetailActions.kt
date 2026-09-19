@@ -1,9 +1,7 @@
 package cn.traintrip.app.ui
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -38,28 +36,23 @@ import cn.traintrip.core.*
     }
 }
 
-@Composable internal fun SeatChoice(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier) {
-    Surface(modifier.heightIn(min=48.dp).selectable(selected,onClick=onClick,role=Role.RadioButton),
-        color=if(selected) Forest else Color.White,shape=RoundedCornerShape(12.dp),border=BorderStroke(1.dp,if(selected) Forest else Line)) {
-        Row(Modifier.padding(horizontal=8.dp,vertical=6.dp),horizontalArrangement=Arrangement.spacedBy(6.dp),verticalAlignment=Alignment.CenterVertically) {
-            if(selected) ActionIcon("check",Color.White)
-            Text(text,color=if(selected) Color.White else Forest,style=MaterialTheme.typography.bodyMedium)
-        }
-    }
+@Composable internal fun SeatAvailabilityLabel(text:String) {
+    Text(text,Modifier.padding(horizontal=8.dp,vertical=6.dp),color=Forest,style=MaterialTheme.typography.bodyMedium)
 }
 
-@Composable internal fun DetailActions(selected:Trip?,seat:SeatType?,people:Int,notice:String?,onOpenApp:()->Unit) {
+@Composable internal fun DetailActions(selected:Trip?,people:Int,notice:String?,onOpenApp:()->Unit) {
     val fontScale=LocalDensity.current.fontScale
     Surface(color=Color.White) {
         Column {
             HorizontalDivider(color=Line)
             Column(Modifier.fillMaxWidth().padding(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Column(Modifier.fillMaxWidth().testTag("selected-summary"),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-                    Text(if(selected!=null && seat!=null) "${selected.trainCode} · ${selected.date.monthValue}月${selected.date.dayOfMonth}日 · ${seat.label}" else "先点选一个席别",style=MaterialTheme.typography.titleSmall,color=Forest)
-                    if(selected!=null) Text("${selected.from.name} ${selected.departure} → ${selected.to.name} · ${people}位成人",style=MaterialTheme.typography.bodySmall,color=Muted)
+                if(selected!=null) Column(Modifier.fillMaxWidth().testTag("selected-summary"),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text("${selected.trainCode} · ${selected.date.monthValue}月${selected.date.dayOfMonth}日",style=MaterialTheme.typography.titleSmall,color=Forest)
+                    val arrivalDay=selected.arrivalDayOffset?.takeIf { it>0 }?.let { "（+$it 天）" }.orEmpty()
+                    Text("${selected.from.name} ${selected.departure} → ${selected.to.name} ${selected.arrival}$arrivalDay · ${people}位成人",style=MaterialTheme.typography.bodySmall,color=Muted)
                 }
                 notice?.let { Text(it,Modifier.fillMaxWidth().testTag("detail-notice").semantics { liveRegion=LiveRegionMode.Polite },style=MaterialTheme.typography.bodySmall,color=Amber) }
-                Button(onOpenApp,Modifier.fillMaxWidth().heightIn(min=if(fontScale>1.15f) 60.dp else 56.dp).testTag("open-12306"),enabled=selected!=null && seat!=null,shape=RoundedCornerShape(16.dp),contentPadding=PaddingValues(12.dp)) {
+                Button(onOpenApp,Modifier.fillMaxWidth().heightIn(min=if(fontScale>1.15f) 60.dp else 56.dp).testTag("open-12306"),shape=RoundedCornerShape(16.dp),contentPadding=PaddingValues(12.dp)) {
                     ActionIcon("phone",LocalContentColor.current);Spacer(Modifier.width(8.dp));Text("打开 12306 App")
                 }
                 Text("在 12306 App 内填写条件并购票",style=MaterialTheme.typography.bodySmall,color=Muted)
