@@ -39,7 +39,7 @@ class GuideNetwork(private val client: OkHttpClient = OkHttpClient.Builder()
             it.isHttps && it.host == "you.ctrip.com" && it.username.isEmpty() && it.password.isEmpty() && it.port == 443
         } == true
         fun isPhotoUrl(url: String): Boolean = url.toHttpUrlOrNull()?.let {
-            it.isHttps && it.host.endsWith(".c-ctrip.com") && it.username.isEmpty() && it.password.isEmpty() && it.port == 443
+            it.isHttps && (TavilyGuideSource.domesticHost(it.host) || it.host.endsWith(".c-ctrip.com")) && it.username.isEmpty() && it.password.isEmpty() && it.port == 443
         } == true
     }
 }

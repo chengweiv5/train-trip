@@ -10,15 +10,16 @@ import kotlinx.coroutines.flow.*
 data class DestinationState(
     val cityId: String? = null, val guide: DestinationGuide? = null, val loading: Boolean = false,
     val stage: String = "", val error: String? = null, val configured: Boolean = false,
-    val settingsError: String? = null, val guides: Map<String, DestinationGuide> = DestinationGuides.all.associateBy { it.cityId }
+    val settingsError: String? = null, val tavilyConfigured: Boolean = false, val guides: Map<String, DestinationGuide> = DestinationGuides.all.associateBy { it.cityId }
 )
 
 class DestinationViewModel @JvmOverloads constructor(app: Application,
     private val credentials: GuideCredentials = DeepSeekSettings(app),
     private val store: GuideStore = AndroidGuideStore(app),
-    source: GuideMaterialSource = CtripGuideSource(), generator: GuideGenerator = DeepSeekGuideGenerator()
+    source: GuideMaterialSource? = null, generator: GuideGenerator = DeepSeekGuideGenerator(),
+    private val searchCredentials: GuideCredentials = TavilySettings(app)
 ) : AndroidViewModel(app) {
-    private val repository = GuideRepository(source, generator, store)
+    private val repository = GuideRepository(source ?: TavilyGuideSource { searchCredentials.read() }, generator, store)
     private val mutable = MutableStateFlow(DestinationState())
     val state = mutable.asStateFlow()
     private var active: City? = null
@@ -26,8 +27,7 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
     private var requestId = 0L
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            try { val configured = credentials.read() != null; mutable.update { it.copy(configured = configured) } }
-            catch (_: Exception) { mutable.update { it.copy(settingsError = "无法读取已保存的密钥，请重新配置") } }
+            refreshConfiguration()
             val cached = (store as? AndroidGuideStore)?.all().orEmpty()
             mutable.update { it.copy(guides = it.guides + cached) }
         }
@@ -57,10 +57,10 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
         mutable.update { it.copy(loading = true, error = null, stage = "准备获取资料…") }
         job = viewModelScope.launch {
             try {
-                val key = withContext(Dispatchers.IO) { credentials.read() }
+                val (key, searchKey) = withContext(Dispatchers.IO) { credentials.read() to searchCredentials.read() }
                 if (requestId != id) return@launch
-                if (key == null) { mutable.update { it.copy(loading = false, configured = false, stage = "") }; return@launch }
-                mutable.update { it.copy(configured = true) }
+                mutable.update { it.copy(configured = key != null, tavilyConfigured = searchKey != null) }
+                if (key == null || searchKey == null) { mutable.update { it.copy(loading = false, stage = "") }; return@launch }
                 val guide = withContext(Dispatchers.IO) {
                     repository.generate(city, key, { stage -> if (requestId == id) mutable.update { it.copy(stage = stage) } }) { guide ->
                         (store as? AndroidGuideStore)?.preparePhoto(guide) ?: guide
@@ -83,26 +83,45 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
         cancel()
         active = null
     }
-    fun saveKey(value: String, complete: () -> Unit) {
-        viewModelScope.launch {
-            try {
-                val configured = withContext(Dispatchers.IO) {
-                    if (value.isNotBlank()) credentials.save(value.trim())
-                    credentials.read() != null
-                }
-                mutable.update { it.copy(configured = configured, settingsError = null) }
-                complete()
-                if (configured && mutable.value.guide == null && active != null) retry()
-            } catch (_: Exception) { mutable.update { it.copy(settingsError = "密钥保存失败，请检查输入后重试") } }
-        }
+    private fun refreshConfiguration() {
+        val deepSeek = runCatching { credentials.read() != null }
+        val tavily = runCatching { searchCredentials.read() != null }
+        mutable.update { it.copy(configured = deepSeek.getOrDefault(false), tavilyConfigured = tavily.getOrDefault(false),
+            settingsError = if (deepSeek.isFailure || tavily.isFailure) "无法读取已保存的密钥，请重新配置" else it.settingsError) }
     }
-    fun removeKey(complete: () -> Unit) {
+    fun saveKey(value: String, complete: () -> Unit) = saveKeys(value, "", complete)
+    fun saveKeys(deepSeek: String, tavily: String, complete: () -> Unit) {
         cancel()
         viewModelScope.launch {
             try {
-                withContext(Dispatchers.IO) { credentials.remove() }
-                mutable.update { it.copy(configured = false, settingsError = null) }; complete()
-            } catch (_: Exception) { mutable.update { it.copy(settingsError = "移除配置失败，请重试") } }
+                withContext(Dispatchers.IO) {
+                    if (deepSeek.isNotBlank()) validateGuideKey(deepSeek.trim(), "sk-", "DeepSeek")
+                    if (tavily.isNotBlank()) validateGuideKey(tavily.trim(), "tvly-", "Tavily")
+                    if (deepSeek.isNotBlank()) credentials.save(deepSeek.trim())
+                    if (tavily.isNotBlank()) searchCredentials.save(tavily.trim())
+                }
+                mutable.update { it.copy(settingsError = null) }
+                withContext(Dispatchers.IO) { refreshConfiguration() }
+                complete()
+                if (mutable.value.configured && mutable.value.tavilyConfigured && mutable.value.guide == null && active != null) retry()
+            } catch (_: Exception) {
+                withContext(Dispatchers.IO) { refreshConfiguration() }
+                mutable.update { it.copy(settingsError = "配置未全部保存，请检查输入和各项状态后重试") }
+            }
+        }
+    }
+    fun removeKey(complete: () -> Unit) = remove(credentials, complete)
+    fun removeTavilyKey(complete: () -> Unit) = remove(searchCredentials, complete)
+    private fun remove(target: GuideCredentials, complete: () -> Unit) {
+        cancel()
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) { target.remove(); refreshConfiguration() }
+                mutable.update { it.copy(settingsError = null) }; complete()
+            } catch (_: Exception) {
+                withContext(Dispatchers.IO) { refreshConfiguration() }
+                mutable.update { it.copy(settingsError = "移除配置失败，请重试") }
+            }
         }
     }
 }

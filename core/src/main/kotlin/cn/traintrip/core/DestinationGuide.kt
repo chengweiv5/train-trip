@@ -13,9 +13,10 @@ data class DestinationPhoto(
     val remoteUrl: String? = null
 )
 data class DestinationExperience(
-    val id: String, val name: String, val reason: String, val duration: String, val location: String
+    val id: String, val name: String, val reason: String, val duration: String, val location: String,
+    val sourceUrl: String? = null, val evidence: String? = null
 )
-data class DestinationFood(val name: String, val description: String)
+data class DestinationFood(val name: String, val description: String, val sourceUrl: String? = null, val evidence: String? = null)
 data class PlanDay(val label: String, val experienceIds: List<String>, val description: String)
 data class DayPlan(val days: Int, val title: String, val schedule: List<PlanDay>, val note: String)
 data class DestinationGuide(

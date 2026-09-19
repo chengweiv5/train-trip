@@ -1,0 +1,31 @@
+# v0.4.0 Tavily 目的地内容验证
+
+## 实现
+
+默认资料入口已改为 Tavily，博查未接入。手机发起两条省市景点/美食搜索，限制国内网站，再由 DeepSeek `deepseek-flash` 整理。无服务端。两项密钥分别使用 Android Keystore 加密，原 DeepSeek preference 与 alias 保持兼容。
+
+景点/美食逐条校验 sourceId、名称和原文引文；只允许补入紧邻段落的【原文标题】，不匹配条目丢弃。来源 URL 由程序提供，每条可打开原文。残句截去，无有效景点时失败。可选路线若含空日程或未知景点则丢弃，不影响正文。图片只取原文结果中可关联景点的国内 HTTPS 图片；本轮泰安无可靠配图，显示无图页面。
+
+缓存优先，缺任一密钥不调用也不标记 attempt；失败、退出与重启不自动重试。设置保存/移除取消旧请求，空值保留，独立删除不影响另一项与缓存。
+
+## 验证
+
+- 58 项 core JUnit 测试通过，涵盖请求参数、鉴权隔离、重定向、伪装域名、城市过滤、逐条证据、相邻标题、无依据条目、可选路线和旧目录回归。
+- Android 专用模拟器 `emulator-5582`：首轮 28 项目的地测试通过；来源入口调整后 20 项通过；双密钥/缓存组 10 项通过。最终图片、标题与逐条校验变化由 core 测试覆盖。设置弹窗 UI 树确认两项输入及按钮可达；安全窗口禁止截屏，未关闭该保护。
+- debug APK、AndroidTest APK 构建通过；lint 0 errors、15 warnings。
+- 实际 Tavily：四条泰安/苏州探测均成功，每条 1 credit；之后 App 同等请求链路执行泰安景点/美食两次 basic 搜索，返回 9 篇有效文档。累计 6 次搜索，后两次未持久记录 usage（预计 2 credits，以提供方账单为准）。
+- 实际 DeepSeek：本轮总计 5 次调用。前三次暴露完整路线和原文标题处理问题，第四次仍有单条格式偏差；最终逐条校验后调用成功，输出泰安 4 个景点、5 种美食、0 条路线、无配图。两篇采用来源均为泰安市文化和旅游局。
+- 真实输出、原始非敏感响应、测试日志存放 `.verification-private/v0.4.0/tavily/`，不入 Git。
+- 仓库和 APK 密钥扫描：431 个 tracked/untracked 非忽略文件及 APK 各 ZIP 条目，真实 DeepSeek/Tavily Key 命中 0；最终交付前再扫描。
+
+## 尚未完成与限制
+
+当前 ADB 只检测到专用模拟器，Mate 60 Pro 未连接。已提示连接并允许 USB 调试；本轮未覆盖安装真机，未设置真机 Tavily Key，也未验证真机实际生成与重启离线缓存。原先真机 DeepSeek 配置和失败 attempt 均未改动。
+
+检索片段可能不完整或过时，城市名过滤/原文匹配不等于事实真伪验证。简介概括、标签及游览时长仍为模型建议；票价、营业与预约须查看原文及最新公告。不保证任意新城市都有完整景点、美食、路线或照片。
+
+## 交付与回滚
+
+个人自用 APK：`artifacts/train-trip-tavily-personal-debug.apk`，版本 0.4.0 / versionCode 8。功能分支本地提交；包含个人素材，不公开推送。
+
+代码前备份 `.verification-private/v0.4.0/tavily/source-before.tar`，开发前 HEAD 见同目录 `head-before.txt`。旧 APK `artifacts/train-trip-deepseek-personal-debug.apk` 可覆盖安装回滚；无需卸载/清数据，缓存和旧 KeyStore 保留。

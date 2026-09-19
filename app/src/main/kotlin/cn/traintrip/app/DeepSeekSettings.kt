@@ -16,9 +16,12 @@ interface GuideCredentials {
     fun remove()
 }
 
-class DeepSeekSettings(context: Context) : GuideCredentials {
-    private val prefs = context.getSharedPreferences("destination-ai", Context.MODE_PRIVATE)
-    private val alias = "train-trip-deepseek"
+class DeepSeekSettings(context: Context) : EncryptedGuideSettings(context, "destination-ai", "train-trip-deepseek", "sk-", "DeepSeek")
+class TavilySettings(context: Context) : EncryptedGuideSettings(context, "destination-search", "train-trip-tavily", "tvly-", "Tavily")
+
+open class EncryptedGuideSettings(context: Context, preference: String, private val alias: String,
+    private val prefix: String, private val provider: String) : GuideCredentials {
+    private val prefs = context.getSharedPreferences(preference, Context.MODE_PRIVATE)
     private fun encryptionKey(): SecretKey {
         val ks = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
         (ks.getKey(alias, null) as? SecretKey)?.let { return it }
@@ -37,7 +40,7 @@ class DeepSeekSettings(context: Context) : GuideCredentials {
         } catch (_: Exception) { throw IllegalStateException("无法读取已保存的密钥，请重新配置") }
     }
     override fun save(value: String) {
-        require(value.startsWith("sk-") && value.length in 20..200 && value.none { it.isWhitespace() }) { "请输入有效的 DeepSeek API Key" }
+        validateGuideKey(value, prefix, provider)
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(Cipher.ENCRYPT_MODE, encryptionKey())
         val encrypted = cipher.doFinal(value.toByteArray(Charsets.UTF_8))
@@ -45,4 +48,8 @@ class DeepSeekSettings(context: Context) : GuideCredentials {
         check(prefs.edit().putString("encryptedKey", data).commit()) { "密钥保存失败，请重试" }
     }
     override fun remove() { check(prefs.edit().remove("encryptedKey").commit()) { "移除配置失败" } }
+}
+
+internal fun validateGuideKey(value: String, prefix: String, provider: String) {
+    require(value.startsWith(prefix) && value.length in 20..200 && value.none { it.isWhitespace() }) { "请输入有效的 $provider API Key" }
 }

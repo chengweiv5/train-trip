@@ -37,7 +37,7 @@ class DeepSeekDestinationTest {
     private val source=object:GuideMaterialSource {
         override suspend fun fetch(city:City,stage:(String)->Unit)=GuideMaterial(city.id,city.name,city.province.name,emptyList(),emptyList(),emptyList())
     }
-    private fun vm(credentials:Credentials,store:Store,generator:GuideGenerator)=DestinationViewModel(compose.activity.application as Application,credentials,store,source,generator)
+    private fun vm(credentials:Credentials,store:Store,generator:GuideGenerator)=DestinationViewModel(compose.activity.application as Application,credentials,store,source,generator,Credentials("tvly-test-only-123456789"))
     @Test fun newCityGeneratesOnceAndRestartUsesSavedContent() {
         val store=Store();var calls=0
         val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide { calls++;return guide() } }
@@ -79,9 +79,35 @@ class DeepSeekDestinationTest {
         compose.runOnIdle { model.open(city) }
         compose.waitUntil(5000) { !model.state.value.loading && model.state.value.cityId!=null }
         assertEquals(0,calls)
-        compose.runOnIdle { model.saveKey("fake-key") {} }
+        compose.runOnIdle { model.saveKey("sk-test-only-1234567890") {} }
         compose.waitUntil(5000) { model.state.value.guide!=null }
         assertEquals(1,calls)
+    }
+    @Test fun missingTavilyDoesNotSearchOrMarkAttemptAndSavePreservesDeepSeek() {
+        var calls=0;val store=Store();val deep=Credentials("sk-test-existing-123456789");val search=Credentials(null)
+        val countingSource=object:GuideMaterialSource {
+            override suspend fun fetch(city:City,stage:(String)->Unit):GuideMaterial { calls++;return source.fetch(city,stage) }
+        }
+        val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String)=guide() }
+        val model=DestinationViewModel(compose.activity.application as Application,deep,store,countingSource,generator,search)
+        compose.runOnIdle { model.open(city) }
+        compose.waitUntil(5000) { model.state.value.cityId!=null && !model.state.value.loading }
+        assertEquals(0,calls);assertFalse(store.attempted(city.id))
+        compose.runOnIdle { model.saveKeys("","tvly-test-new-123456789") {} }
+        compose.waitUntil(5000) { model.state.value.guide!=null }
+        assertEquals("sk-test-existing-123456789",deep.read());assertEquals(1,calls)
+        var removed=false
+        compose.runOnIdle { model.removeTavilyKey { removed=true } }
+        compose.waitUntil(5000) { removed }
+        assertTrue(model.state.value.configured);assertFalse(model.state.value.tavilyConfigured)
+        assertNotNull(store.read(city.id));assertEquals("sk-test-existing-123456789",deep.read())
+    }
+    @Test fun settingsSeparatelyShowAndMaskBothInputs() {
+        var saved:Pair<String,String>?=null
+        compose.setContent { TrainTripTheme { DeepSeekSettingsDialog(DestinationState(configured=true),{d,t->saved=d to t},{},{},{}) } }
+        compose.onNodeWithTag("tavily-key").performScrollTo().performTextInput("tvly-test-ui-only")
+        compose.onNodeWithTag("save-deepseek").performClick()
+        assertEquals("" to "tvly-test-ui-only",saved)
     }
     @Test fun cancellationDoesNotPublishOrSaveLateResult() {
         val store=Store()
@@ -110,7 +136,7 @@ class DeepSeekDestinationTest {
         compose.runOnIdle { model.open(city) }
         compose.waitUntil(5000) { !model.state.value.loading && model.state.value.cityId!=null }
         var saved=false
-        compose.runOnIdle { model.leave();model.saveKey("fake-key") { saved=true } }
+        compose.runOnIdle { model.leave();model.saveKey("sk-test-only-1234567890") { saved=true } }
         compose.waitUntil(5000) { saved }
         assertEquals(0,calls)
         compose.runOnIdle { model.open(city) }
@@ -131,6 +157,14 @@ class DeepSeekDestinationTest {
         val settings=DeepSeekSettings(context)
         val fake="sk-instrumentation-test-only-123456"
         settings.save(fake)
+        assertEquals(fake,settings.read())
+        val tavily=TavilySettings(context)
+        val searchFake="tvly-instrumentation-test-only-123456"
+        tavily.save(searchFake)
+        assertEquals(searchFake,tavily.read())
+        assertEquals(fake,DeepSeekSettings(context).read())
+        tavily.remove()
+        assertNull(tavily.read())
         assertEquals(fake,settings.read())
         val stored=context.getSharedPreferences("destination-ai",0).getString("encryptedKey",null)
         assertFalse(stored.orEmpty().contains(fake))

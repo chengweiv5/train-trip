@@ -19,8 +19,8 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
         if (apiKey.isBlank() || apiKey.any { it.isWhitespace() }) throw IOException("请先配置有效的 DeepSeek API Key")
         val payload = mapOf("model" to MODEL, "thinking" to mapOf("type" to "disabled"), "max_tokens" to 4200,
             "response_format" to mapOf("type" to "json_object"), "messages" to listOf(
-                mapOf("role" to "system", "content" to PROMPT),
-                mapOf("role" to "user", "content" to Gson().toJson(material.copy(places = material.places.map { it.copy(imageUrl = null) })))) )
+                mapOf("role" to "system", "content" to if (material.documents.isEmpty()) PROMPT else SearchGuideDecoder.prompt),
+                mapOf("role" to "user", "content" to Gson().toJson(material.copy(places = material.places.map { it.copy(imageUrl = null) }, documents = material.documents.map { it.copy(images = emptyList()) })))) )
         val request = Request.Builder().url(endpoint).header("Authorization", "Bearer $apiKey")
             .post(Gson().toJson(payload).toRequestBody("application/json".toMediaType())).build()
         val response = client.newCall(request).boundedResponse(512 * 1024)
@@ -34,7 +34,8 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
             val root = JsonParser.parseString(String(response.bytes, Charsets.UTF_8)).asJsonObject
             val choice = root.objects("choices").firstOrNull() ?: throw IOException("DeepSeek 未返回内容")
             if (choice.text("finish_reason") != "stop") throw IOException("生成内容未完成，请重试")
-            decode(choice.obj("message").text("content"), material)
+            if (material.documents.isEmpty()) decode(choice.obj("message").text("content"), material)
+            else SearchGuideDecoder.decode(choice.obj("message").text("content"), material)
         } catch (e: IOException) { throw e } catch (_: Exception) { throw IOException("生成内容格式不完整，请重试") }
     }
 

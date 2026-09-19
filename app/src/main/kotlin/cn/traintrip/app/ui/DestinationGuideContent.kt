@@ -30,7 +30,7 @@ internal enum class GuideSection(val id: String, val label: String, val title: S
 }
 
 internal fun LazyListScope.guideSectionContent(
-    section: GuideSection, guide: DestinationGuide, days: Int, onDays: (Int) -> Unit
+    section: GuideSection, guide: DestinationGuide, days: Int, onSource: (String) -> Unit, onDays: (Int) -> Unit
 ) {
     item("section-title") {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
@@ -49,6 +49,7 @@ internal fun LazyListScope.guideSectionContent(
         GuideSection.PLACES -> itemsIndexed(guide.experiences, key = { _, e -> e.id }) { index, experience ->
             GuideContentCard(experience.name, Modifier.testTag("guide-experience-${experience.id}"), index + 1) {
                 Text(experience.reason, style = MaterialTheme.typography.bodyMedium)
+                experience.sourceUrl?.let { url -> TextButton({ onSource(url) }, contentPadding=PaddingValues(0.dp)) { Text("查看原文",style=MaterialTheme.typography.bodySmall) } }
                 HorizontalDivider(Modifier.padding(top = 3.dp), color = Line.copy(alpha = .55f))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text("建议 ${experience.duration}", style = MaterialTheme.typography.bodySmall, color = Muted)
@@ -60,6 +61,7 @@ internal fun LazyListScope.guideSectionContent(
             itemsIndexed(guide.foods, key = { _, food -> food.name }) { index, food ->
             GuideContentCard(food.name, Modifier.testTag("guide-food-$index"), index + 1) {
                 Text(food.description, style = MaterialTheme.typography.bodyMedium)
+                food.sourceUrl?.let { url -> TextButton({ onSource(url) }, contentPadding=PaddingValues(0.dp)) { Text("查看原文",style=MaterialTheme.typography.bodySmall) } }
             }
         } }
         GuideSection.PLANS -> {

@@ -50,5 +50,5 @@ import cn.traintrip.core.DestinationGuides
             } }
         }
     }
-    if(contentSettings) DeepSeekSettingsDialog(destination,{destinationVm.saveKey(it){contentSettings=false}},{destinationVm.removeKey{contentSettings=false}},{contentSettings=false})
+    if(contentSettings) DeepSeekSettingsDialog(destination,{d,t->destinationVm.saveKeys(d,t){contentSettings=false}},{destinationVm.removeKey{contentSettings=false}},{destinationVm.removeTavilyKey{contentSettings=false}},{contentSettings=false})
 }

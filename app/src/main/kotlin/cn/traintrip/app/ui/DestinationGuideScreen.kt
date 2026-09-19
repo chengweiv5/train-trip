@@ -131,7 +131,7 @@ import kotlinx.coroutines.withContext
                             if (scrollOverview) {
                                 item("overview") { GuideOverview(cityName, provinceLabel, guide, Modifier.padding(bottom = 8.dp)) }
                             }
-                            guideSectionContent(section, guide, days) { days = it }
+                            guideSectionContent(section, guide, days, onSource) { days = it }
                             if(runtime!=null) item("runtime") { GuideRuntimeStatus(guide,runtime,onRefresh,onSettings) }
                             item("sources") {
                                 TextButton({ sourcesOpen = true }, Modifier.testTag("guide-sources-${section.id}"),
@@ -233,7 +233,7 @@ import kotlinx.coroutines.withContext
             }
             items(guide.sources) { source ->
                 TextButton({ onSource(source.url) }, contentPadding = PaddingValues(0.dp)) { Text(source.title) }
-                Text("核对 ${source.checkedOn}", style = MaterialTheme.typography.bodySmall, color = Muted)
+                Text("${if(guide.generatedAt!=null) "检索" else "核对"} ${source.checkedOn}", style = MaterialTheme.typography.bodySmall, color = Muted)
             }
             guide.photo?.let { photo -> item {
                 HorizontalDivider(color = Line)
@@ -260,9 +260,9 @@ import kotlinx.coroutines.withContext
         state.error?.let { Hint(it,true) }
         guide?.generatedAt?.let { Text("DeepSeek 整理 · ${it.take(10)} · 已保存到本机",style=MaterialTheme.typography.bodySmall,color=Muted) }
         if(!state.loading) {
-            if(!state.configured) {
-                if(guide==null) Text("配置 DeepSeek 后，可按需整理新城市。",style=MaterialTheme.typography.bodyMedium)
-                TextButton(onSettings) { Text("配置 DeepSeek") }
+            if(!state.configured || !state.tavilyConfigured) {
+                if(guide==null) Text("配置 Tavily 和 DeepSeek 后，可按需整理新城市。",style=MaterialTheme.typography.bodyMedium)
+                TextButton(onSettings) { Text("配置内容服务") }
             } else TextButton(onRefresh,Modifier.testTag("refresh-guide")) {
                 Text(if(guide!=null) "更新目的地介绍" else if(state.error!=null) "重试整理" else "整理目的地介绍")
             }

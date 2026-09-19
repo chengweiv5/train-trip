@@ -21,11 +21,11 @@
 
 **Interfaces:** `SourceDocument(id,title,url,content,kind,images)`、`SourceImage(url,description)`；`GuideMaterial.documents: List<SourceDocument> = emptyList()`；`TavilyGuideSource(key: () -> String?) : GuideMaterialSource`；`SearchGuideDecoder.decode(content,material): DestinationGuide`。
 
-- [ ] 加入请求/域名/城市/引用伪造测试，断言无景点时失败、两个顺序 basic 请求、Auth 只在 header、模型不能引入未知条目。
-- [ ] 源请求最大 2 MiB，最多 6 结果/次、10 文档/城、2400 字/篇；HTTP 非 2xx 映射固定中文消息。
-- [ ] quote 要求去除空白后精确属于正文且包含 name；景点 20–260 字、美食 10–220 字。模型 name、sourceId、quote 不一致时拒绝整个结果；位置未匹配原文时使用通用说明。
-- [ ] 景点/美食新增可选 sourceUrl/evidence，旧缓存兼容。照片只来自该条目原始文档，说明包含景点名，网络和重定向受批准域名限制。
-- [ ] `JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ./gradlew :core:test --offline` 全部通过。
+- [x] 加入请求/域名/城市/引用伪造测试，断言无景点时失败、两个顺序 basic 请求、Auth 只在 header、模型不能引入未知条目。
+- [x] 源请求最大 2 MiB，最多 6 结果/次、10 文档/城、2400 字/篇；HTTP 非 2xx 映射固定中文消息。
+- [x] quote 要求去除空白后精确属于正文且包含 name；景点 20–260 字、美食 10–220 字。模型 name、sourceId、quote 不一致时丢弃该条目，没有有效景点则拒收；位置未匹配原文时使用通用说明。
+- [x] 景点/美食新增可选 sourceUrl/evidence，旧缓存兼容。照片只来自该条目原始文档，说明包含景点名，网络和重定向受批准域名限制。
+- [x] `JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ./gradlew :core:test --offline` 全部通过。
 
 ## Task 2: 两项安全配置与 UI
 
@@ -33,17 +33,17 @@
 
 **Interfaces:** `TavilySettings: GuideCredentials`；state 增加 `tavilyConfigured`，`configured` 保持 DeepSeek 状态；`saveKeys(deepSeek,tavily,complete)`、`removeTavilyKey(complete)`，旧 `saveKey` 兼容。
 
-- [ ] 双输入先校验再存，各自 KeyStore alias，空白保留；保存/移除取消旧请求并回读状态。
-- [ ] ViewModel 缺任一 key 直接显示设置入口，不产生搜索或 attempt；默认 source 使用 Tavily。
-- [ ] 更新弹窗用途/计费说明，独立移除，配置前入口同时提及两家服务。
-- [ ] 现有 8 个 Android 回归注入 Tavily 假凭据；新增独立删除、缺 Tavily 不发请求、旧配置保留测试。
-- [ ] 构建 debug APK、AndroidTest APK、lint，通过后在独立模拟器运行此测试类和目的地相关 UI 测试。
+- [x] 双输入先校验再存，各自 KeyStore alias，空白保留；保存/移除取消旧请求并回读状态。
+- [x] ViewModel 缺任一 key 直接显示设置入口，不产生搜索或 attempt；默认 source 使用 Tavily。
+- [x] 更新弹窗用途/计费说明，独立移除，配置前入口同时提及两家服务。
+- [x] 现有 8 个 Android 回归注入 Tavily 假凭据；新增独立删除、缺 Tavily 不发请求、旧配置保留测试。
+- [x] 构建 debug APK、AndroidTest APK、lint，通过后在独立模拟器运行此测试类和目的地相关 UI 测试。
 
 ## Task 3: 真实验证与本地交付
 
 **Files:** core/src/test/kotlin/cn/traintrip/core/LiveTavilySmoke.kt；docs/verification/2026-09-19-tavily-destination.md。
 
-- [ ] 手动 smoke 仅从 stdin 收 key，记录非敏感用量/来源/结果，可用已抓取资料减少重复搜索。
+- [x] 手动 smoke 仅从 stdin 收 key，记录非敏感用量/来源/结果，可用已抓取资料减少重复搜索。
 - [ ] 备份已装 APK，覆盖安装到 FMR0224725012307，经遮罩设置输入 Tavily Key，明确重试泰安。
-- [ ] 验证城市内容和来源、缓存文件、重新打开不改缓存时间；原有筛选条件和 DeepSeek 配置保留。
-- [ ] 扫描变更与 APK 无真实密钥，记录测试/图片缺口/回滚；本地提交并发送 punk-12 通知后回读。
+- [ ] 真机验证城市内容和来源、缓存文件、重新打开不改缓存时间；原有筛选条件和 DeepSeek 配置保留。
+- [x] 扫描变更与 APK 无真实密钥，记录测试/图片缺口/回滚；本地提交并发送 punk-12 通知后回读。

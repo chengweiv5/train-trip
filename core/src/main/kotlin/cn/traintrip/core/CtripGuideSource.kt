@@ -12,7 +12,8 @@ data class SourcePlace(val id: String, val name: String, val introduction: Strin
 data class SourceFood(val id: String, val name: String, val context: String, val url: String,
     val description: String = "资料源收录的菜品，可结合个人口味选择。")
 data class GuideMaterial(val cityId: String, val name: String, val province: String,
-    val places: List<SourcePlace>, val foods: List<SourceFood>, val sources: List<GuideSource>)
+    val places: List<SourcePlace>, val foods: List<SourceFood>, val sources: List<GuideSource>,
+    val documents: List<SourceDocument> = emptyList())
 interface GuideMaterialSource { suspend fun fetch(city: City, stage: (String) -> Unit): GuideMaterial }
 interface GuideGenerator { suspend fun generate(material: GuideMaterial, apiKey: String): DestinationGuide }
 
