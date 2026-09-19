@@ -19,7 +19,7 @@ class GuideNetwork(private val client: OkHttpClient = OkHttpClient.Builder()
     private suspend fun download(initial: String, photo: Boolean): ByteArray {
         var url = initial
         repeat(4) {
-            if (!(if (photo) isPhotoUrl(url) else isPageUrl(url))) throw IOException("资料链接不受支持")
+            if (!SimplifiedGuidePolicy.urlAllowed(url) || !(if (photo) isPhotoUrl(url) else isPageUrl(url))) throw IOException("资料链接不受支持")
             val request = Request.Builder().url(url).header("User-Agent", "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 Chrome/130.0.0.0 Mobile Safari/537.36").build()
             val result = client.newCall(request).boundedResponse(5 * 1024 * 1024)
             if (result.code in 300..399) {

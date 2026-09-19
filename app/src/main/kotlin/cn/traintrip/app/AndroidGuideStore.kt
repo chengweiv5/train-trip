@@ -19,17 +19,29 @@ class AndroidGuideStore(context: Context, private val loadPhoto: suspend (String
         require(cityId.matches(Regex("[0-9]{6}")))
         return File(directory, "$cityId.$suffix")
     }
-    override fun read(cityId: String): DestinationGuide? = runCatching {
+    private fun storedGuide(cityId: String): DestinationGuide? = runCatching {
         val raw = AtomicFile(file(cityId, "json")).readFully()
         require(raw.size <= 512 * 1024)
         val root = JsonParser.parseString(String(raw, Charsets.UTF_8)).asJsonObject
         require(root["schemaVersion"].asInt == 1)
-        DestinationGuides.validateGenerated(Gson().fromJson(root["guide"], DestinationGuide::class.java), cityId)
+        Gson().fromJson(root["guide"], DestinationGuide::class.java)
+    }.getOrNull()
+    override fun read(cityId: String): DestinationGuide? = runCatching {
+        storedGuide(cityId)?.let { DestinationGuides.validateGenerated(it, cityId) }
     }.getOrNull()
     fun all(): Map<String, DestinationGuide> = directory.listFiles().orEmpty().filter { it.name.matches(Regex("[0-9]{6}\\.json")) }
         .mapNotNull { read(it.nameWithoutExtension) }.associateBy { it.cityId }
-    override fun attempted(cityId: String): Boolean = file(cityId, "attempt").exists()
-    override fun markAttempted(cityId: String) { atomic(file(cityId, "attempt"), byteArrayOf(1)) }
+    override fun attempted(cityId: String): Boolean {
+        if (file(cityId, "simplified-attempt").exists()) return true
+        // Old rejected resources may be regenerated once. Keep files for rollback,
+        // and record the new attempt before I/O so failures never loop on restart.
+        val traditional = runCatching { storedGuide(cityId)?.let { !SimplifiedGuidePolicy.guideAllowed(it) } == true }.getOrDefault(false)
+        return !traditional && file(cityId, "attempt").exists()
+    }
+    override fun markAttempted(cityId: String) {
+        atomic(file(cityId, "simplified-attempt"), byteArrayOf(1))
+        atomic(file(cityId, "attempt"), byteArrayOf(1))
+    }
     override fun save(guide: DestinationGuide) {
         DestinationGuides.validateGenerated(guide, guide.cityId)
         atomic(file(guide.cityId, "json"), Gson().toJson(mapOf("schemaVersion" to 1, "guide" to guide)).toByteArray(Charsets.UTF_8))

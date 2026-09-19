@@ -1,0 +1,10 @@
+{
+  "upstream": "https://github.com/BYVoid/OpenCC",
+  "commit": "f509f2f0ed60cf670f44796a5da3746d974e8892",
+  "inputs": {
+    "TSCharacters.txt": "9ff46a7d30e5765375eb13d33f2b03a34d298913caf2b120380679f33ae1642d",
+    "STCharacters.txt": "a0ca1601c70648cf48b33c3c6210ccbecc5c7eead4b4c3daf76587ba2c03582b"
+  },
+  "derivedCharacters": 3197,
+  "outputSha256": "9cb8f88158d1bb06a5ff1d327b6772343e64bc06e6cdf2ab9dbc6253a2a71e11"
+}

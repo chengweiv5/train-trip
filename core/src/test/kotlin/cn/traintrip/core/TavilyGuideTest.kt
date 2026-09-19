@@ -14,7 +14,7 @@ class TavilyGuideTest {
     private val quote = "岱庙位于泰安市区，是了解当地历史文化与古代建筑的游览地点，庭院内保存着传统建筑。"
     private fun result(url: String = "https://tsgw.taian.gov.cn/art/1.html", content: String = quote) =
         mapOf("title" to "泰安岱庙介绍", "url" to url, "content" to content)
-    private fun response(vararg results: Map<String, String>) = Gson().toJson(mapOf("results" to results.toList()))
+    private fun response(vararg results: Map<String, Any>) = Gson().toJson(mapOf("results" to results.toList()))
     private fun source(server: MockWebServer) = TavilyGuideSource({ "tvly-test-only" }, server.url("/search").toString(), OkHttpClient())
     private fun material() = GuideMaterial(city.id,city.name,city.province.name,emptyList(),emptyList(),
         listOf(GuideSource("岱庙介绍","https://tsgw.taian.gov.cn/art/1.html","2026-09-19")),
@@ -48,6 +48,31 @@ class TavilyGuideTest {
         assertEquals(1,TavilyGuideSource.parse(raw,city,"places").size)
         assertFalse(GuideNetwork.isPhotoUrl("https://dimg.c-ctrip.com.evil.test/a.jpg"))
         assertTrue(GuideNetwork.isPhotoUrl("https://tsgw.taian.gov.cn/picture/a.jpg"))
+    }
+    @Test fun traditionalVersionTitleBodyAndImageMetadataAreExcluded() {
+        val original=result()
+        val image=mapOf("url" to "https://tsgw.taian.gov.cn/picture/a.jpg", "description" to "岱庙傳統建築照片")
+        val raw=response(result("http://he.people.com.cn/BIG5/n2/2021/a.html"),
+            original + ("title" to "泰安遊覽"),original + ("content" to quote+"傳統建築"),
+            original + ("content" to quote.repeat(100)+"傳統建築"),
+            original + ("images" to listOf(image)))
+        val docs=TavilyGuideSource.parse(raw,city,"places")
+        assertEquals(1,docs.size)
+        assertTrue(docs.single().images.isEmpty())
+        assertTrue(SimplifiedGuidePolicy.documentAllowed(docs.single()))
+    }
+    @Test fun traditionalMaterialAndModelOutputCannotBeCached() {
+        assertTrue(runCatching { SearchGuideDecoder.decode(content(),material().copy(documents=material().documents.map { it.copy(content=it.content+"風景") })) }.isFailure)
+        assertTrue(runCatching { SearchGuideDecoder.decode(content().replace("漫步历史古建","漫步歷史古建"),material()) }.isFailure)
+        assertTrue(runCatching { SearchGuideDecoder.decode(content(),material().copy(sources=material().sources.map { it.copy(title="泰安旅遊") })) }.isFailure)
+    }
+    @Test fun onlyTraditionalResultsStopBeforeMoreSearchesOrModelCalls() = runBlocking {
+        MockWebServer().use { server ->
+            server.enqueue(MockResponse().setBody(response(result("https://he.people.com.cn/BIG5/a"))))
+            val error=runCatching { source(server).fetch(city) {} }.exceptionOrNull()
+            assertTrue(error!!.message.orEmpty().contains("简体中文"))
+            assertEquals(1,server.requestCount)
+        }
     }
     @Test fun errorsAndEmptyPlacesStopBeforeSecondRequestWithoutLeakingResponse() = runBlocking {
         for (code in listOf(401,402,429,432,503)) MockWebServer().use { server ->

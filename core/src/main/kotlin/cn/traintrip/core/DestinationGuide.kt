@@ -40,6 +40,7 @@ object DestinationGuides {
         Gson().fromJson(reader, Array<DestinationGuide>::class.java).toList().also { guides ->
             require(guides.map { it.cityId }.distinct().size == guides.size)
             guides.forEach { guide ->
+                SimplifiedGuidePolicy.requireGuide(guide)
                 require(listOf(guide.cityId, guide.name, guide.tagline, guide.suggestedDays,
                     guide.pace, guide.season, guide.arrivalAdvice).all { it.isNotBlank() })
                 require(guide.tags.size in 2..3 && guide.tags.all { it.isNotBlank() })
@@ -74,6 +75,7 @@ object DestinationGuides {
     }.getOrElse { emptyList() }
 
     fun validateGenerated(guide: DestinationGuide, cityId: String): DestinationGuide {
+        SimplifiedGuidePolicy.requireGuide(guide)
         require(cityId.matches(Regex("[0-9]{6}")) && guide.cityId == cityId)
         require(listOf(guide.name, guide.tagline, guide.suggestedDays, guide.pace, guide.season, guide.arrivalAdvice)
             .all { it.isNotBlank() && it.length <= 1800 })

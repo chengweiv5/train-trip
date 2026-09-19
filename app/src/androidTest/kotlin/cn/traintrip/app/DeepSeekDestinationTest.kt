@@ -175,6 +175,36 @@ class DeepSeekDestinationTest {
         store.save(guide())
         assertEquals(city.id,AndroidGuideStore(context).read(city.id)?.cityId)
     }
+    @Test fun legacyTraditionalCacheIsHiddenAndGetsOnlyOneAutomaticRetry() {
+        val context=compose.activity
+        val legacy=guide().copy(cityId="130600",name="保定",tagline="保定文化名城待卿來",
+            sources=listOf(GuideSource("河北保定古城", "http://he.people.com.cn/BIG5/n2/2021/1003/c192235-34942447.html","2026-09-19")))
+        val directory=java.io.File(context.filesDir,"destination-guides").apply { mkdirs() }
+        val cache=java.io.File(directory,"130600.json")
+        val old=if(cache.exists())cache.readBytes() else null
+        val attempt=java.io.File(directory,"130600.attempt")
+        val oldAttempt=if(attempt.exists())attempt.readBytes() else null
+        val current=java.io.File(directory,"130600.simplified-attempt")
+        val oldCurrent=if(current.exists())current.readBytes() else null
+        try {
+            current.delete()
+            cache.writeText(com.google.gson.Gson().toJson(mapOf("schemaVersion" to 1,"guide" to legacy)))
+            val raw=cache.readBytes();attempt.writeBytes(byteArrayOf(1))
+            val store=AndroidGuideStore(context)
+            assertNull(store.read("130600"));assertFalse(store.all().containsKey("130600"))
+            assertFalse(store.attempted("130600"))
+            store.markAttempted("130600")
+            assertTrue(AndroidGuideStore(context).attempted("130600"))
+            assertArrayEquals(raw,cache.readBytes())
+            assertTrue(runCatching { store.save(legacy) }.isFailure)
+            val valid=guide().copy(cityId="130600",name="保定")
+            store.save(valid)
+            assertEquals(valid,AndroidGuideStore(context).read("130600"))
+        } finally {
+            fun restore(file:java.io.File,bytes:ByteArray?) { if(bytes==null)file.delete() else file.writeBytes(bytes) }
+            restore(cache,old);restore(attempt,oldAttempt);restore(current,oldCurrent)
+        }
+    }
     @Test fun sourcePhotoIsDecodedAndSavedAndInvalidPhotoIsOptional() = kotlinx.coroutines.runBlocking {
         val bitmap=android.graphics.Bitmap.createBitmap(1800,900,android.graphics.Bitmap.Config.ARGB_8888)
         val bytes=java.io.ByteArrayOutputStream().also { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG,100,it) }.toByteArray()

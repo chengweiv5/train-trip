@@ -1,0 +1,5 @@
+Traditional-only character data derived from OpenCC.
+Source: https://github.com/BYVoid/OpenCC
+Commit: f509f2f0ed60cf670f44796a5da3746d974e8892
+Modified: excluded characters also valid in simplified Chinese; detection only.
+Licensed under Apache-2.0. See LICENSE.txt.

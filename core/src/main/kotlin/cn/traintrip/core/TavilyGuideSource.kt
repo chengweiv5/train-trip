@@ -26,7 +26,7 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
             ?: throw IOException("请先配置有效的 Tavily API Key")
         stage("Tavily 正在搜索${city.name}景点资料…")
         val places = search(city,"places","旅游 景点 介绍",apiKey)
-        if (places.isEmpty()) throw IOException("暂未检索到${city.name}可用的国内景点资料，请稍后重试")
+        if (places.isEmpty()) throw IOException("暂未检索到${city.name}可用的简体中文景点资料，请稍后重试")
         stage("Tavily 正在搜索${city.name}美食资料…")
         val foods = search(city,"food","特色美食 小吃 介绍",apiKey)
         // The same page can contain both kinds of evidence; retain both roles with unique IDs.
@@ -37,7 +37,7 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
             docs.distinctBy { it.url }.map { GuideSource(it.title,it.url,checked) },docs)
     }
     private suspend fun search(city: City, kind: String, terms: String, apiKey: String): List<SourceDocument> {
-        val payload = mapOf("query" to "${city.province.name} ${city.name} $terms", "topic" to "general",
+        val payload = mapOf("query" to "${city.province.name} ${city.name} $terms 简体中文 -inurl:BIG5 -inurl:zh-hant -inurl:zh-tw", "topic" to "general",
             "search_depth" to "basic", "max_results" to 6, "include_answer" to false,
             "include_raw_content" to false,"include_images" to true,"include_image_descriptions" to true,
             "include_usage" to true,"country" to "china","language" to "zh-cn",
@@ -58,7 +58,7 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
         internal val DOMAINS = listOf("gov.cn","ctrip.com","mafengwo.cn","people.com.cn","xinhuanet.com","news.cn","cnr.cn","cctv.com")
         internal fun domesticHost(host: String) = DOMAINS.any { host == it || host.endsWith(".$it") }
         internal fun sourceUrl(url: String) = url.toHttpUrlOrNull()?.let {
-            domesticHost(it.host) && it.username.isEmpty() && it.password.isEmpty() &&
+            domesticHost(it.host) && SimplifiedGuidePolicy.urlAllowed(url) && it.username.isEmpty() && it.password.isEmpty() &&
                 ((it.isHttps && it.port == 443) || (!it.isHttps && it.port == 80))
         } == true
         internal fun parse(raw: String, city: City, kind: String): List<SourceDocument> {
@@ -66,6 +66,7 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
             require(root["results"]?.isJsonArray == true)
             val cityName = city.name.removeSuffix("市")
             return root.objects("results").take(6).mapNotNull { r ->
+                if (!SimplifiedGuidePolicy.textAllowed(r.text("title")) || !SimplifiedGuidePolicy.textAllowed(r.text("content"))) return@mapNotNull null
                 val title = r.text("title").take(180)
                 val content = r.text("content").take(2400).trim()
                 val url = r.text("url")
@@ -73,7 +74,7 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
                 val images = r.objects("images").mapNotNull { image ->
                     val description = image.text("description")
                     val imageUrl = image.text("url")
-                    if (description.length in 5..300 && GuideNetwork.isPhotoUrl(imageUrl) && !DECORATION.containsMatchIn(imageUrl))
+                    if (description.length in 5..300 && SimplifiedGuidePolicy.textAllowed(description) && SimplifiedGuidePolicy.urlAllowed(imageUrl) && GuideNetwork.isPhotoUrl(imageUrl) && !DECORATION.containsMatchIn(imageUrl))
                         SourceImage(imageUrl,description) else null
                 }.take(5)
                 SourceDocument("",title,url,content,kind,images)
