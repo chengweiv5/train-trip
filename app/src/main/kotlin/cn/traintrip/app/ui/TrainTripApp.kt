@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import cn.traintrip.app.*
 import cn.traintrip.core.OfficialTicketSource
+import cn.traintrip.core.DestinationGuides
 
 @Composable fun TrainTripApp(vm:AppViewModel) {
     val s by vm.state.collectAsStateWithLifecycle()
@@ -38,13 +39,17 @@ import cn.traintrip.core.OfficialTicketSource
         runCatching { context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(OfficialTicketSource.INIT))) }
             .onFailure { Toast.makeText(context,"未找到浏览器，请手动打开 12306",Toast.LENGTH_LONG).show() }
     }
-    BackHandler(s.page!=Page.FILTERS) { if(s.page==Page.DETAIL) vm.showResults() else vm.showFilters() }
+    BackHandler(s.page!=Page.FILTERS) { if(s.page==Page.DETAIL || s.page==Page.DESTINATION) vm.backFromCity() else vm.showFilters() }
     Surface(Modifier.fillMaxSize(),color=Cream) {
         Box(Modifier.fillMaxSize().safeDrawingPadding()) {
-            screenState.SaveableStateProvider(s.page.name) { when(s.page) {
+            screenState.SaveableStateProvider(if(s.page==Page.DETAIL || s.page==Page.DESTINATION) "${s.page.name}/${s.cityId}" else s.page.name) { when(s.page) {
                 Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()})
-                Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search(refresh=true)},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities)
-                Page.DETAIL->DetailScreen(s,vm::showResults,vm::select,vm::recheck,copy)
+                Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search(refresh=true)},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities,vm::showDestination)
+                Page.DESTINATION->DestinationGuideScreen(s.catalog.byCity[s.cityId]?.name.orEmpty(),s.cityId?.let(DestinationGuides::find),vm::backFromCity,vm::showDestinationTrains) { url ->
+                    runCatching { context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(url))) }
+                        .onFailure { Toast.makeText(context,"未找到浏览器",Toast.LENGTH_SHORT).show() }
+                }
+                Page.DETAIL->DetailScreen(s,vm::backFromCity,vm::select,vm::recheck,copy)
             } }
         }
     }

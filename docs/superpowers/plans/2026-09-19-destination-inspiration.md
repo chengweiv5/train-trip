@@ -24,11 +24,11 @@
 
 **Interfaces:** `DestinationGuides.find(cityId: String): DestinationGuide?`, `DestinationGuides.all: List<DestinationGuide>`. Guide contains cityId, name, tagline, tags, suggestedDays, pace, season, arrivalAdvice, experiences (id/name/reason/duration/location), foods (name/description), plans (days/title/stops/note), source metadata and photo metadata.
 
-- [ ] Read 5 city source pages and retain revision/time/URL; use only supported sights and foods.
-- [ ] Download 5 Commons photos with verified creator/license and original file URL; resize JPEG to at most 960px, record derivative.
-- [ ] Add catalogue loader with safe empty fallback, exact city IDs and no network dependency.
-- [ ] Test five-city coverage, unknown city fallback, safe missing/corrupt resource, required attribution fields, valid plan references, local JPEG existence.
-- [ ] Run `JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ./gradlew :core:test --offline`.
+- [x] Read 5 city source pages and retain revision/time/URL; use only supported sights and foods.
+- [x] Download 5 Commons photos with verified creator/license and original file URL; resize JPEG to at most 960px, record derivative.
+- [x] Add catalogue loader with safe empty fallback, exact city IDs and no network dependency.
+- [x] Test five-city coverage, unknown city fallback, safe missing/corrupt resource, required attribution fields, valid plan references, local JPEG existence.
+- [x] Run `JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ./gradlew :core:test --offline`.
 
 ### Task 2: Cards, destination screen and navigation
 
@@ -36,21 +36,21 @@
 
 **Interfaces:** `DestinationGuideScreen(cityName, guide, onBack, onTrains, onSource)`. Result adds `onGuide` callback. `showCity` remains direct train navigation; `showDestination` and `showDestinationTrains` set explicit return target.
 
-- [ ] Cards show photo, reason, tags and days above ticket summary. Add visible “了解目的地” and “查看车次”; unknown guide retains original card behavior.
-- [ ] Detail uses LazyColumn with stable section keys, saveable 1/2-day selection and fixed bottom train button; use dynamic text heights and wrapping tags.
-- [ ] Show 3 experiences, foods, itinerary, seasonal/arrival advice and an attribution/source dialog with clickable HTTPS URLs.
-- [ ] Add DESTINATION route; saveable page key includes cityId for city-specific scroll position; back behavior tested for both entry paths.
-- [ ] Keep old ticket source, selection, recheck and handoff unchanged.
+- [x] Cards show photo, reason, tags and days above ticket summary. Add visible “了解目的地” and “查看车次”; unknown guide retains original card behavior.
+- [x] Detail uses LazyColumn with stable section keys, saveable 1/2-day selection and fixed bottom train button; use dynamic text heights and wrapping tags.
+- [x] Show 3 experiences, foods, itinerary, seasonal/arrival advice and an attribution/source dialog with clickable HTTPS URLs.
+- [x] Add DESTINATION route; saveable page key includes cityId for city-specific scroll position; back behavior tested for both entry paths.
+- [x] Keep old ticket source, selection, recheck and handoff unchanged.
 
 ### Task 3: Design and user-flow verification
 
 **Files:** design/train-trip-v1.pen; design/README.md; app/src/androidTest/kotlin/cn/traintrip/app/DestinationGuideTest.kt; app/build.gradle.kts; docs/verification/2026-09-19-destination-inspiration.md; README.md.
 
-- [ ] Create editable inspiration card and full guide plus unavailable-content state in worktree Pencil file; render, verify bounds, export references and OCR.
-- [ ] Build offline sample tests without real ticket requests, verify navigation, day switch, fallback, attribution and 1.3x font/compact width.
-- [ ] Run existing TimeRangePicker and UI polish tests on a temporary emulator only; copy screenshot evidence and inspect it.
-- [ ] Build `:core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --offline`; record warnings and exit status.
-- [ ] Bump version to 0.2.0 / code 4, preserve previous APKs, copy final artifact and verify SHA-256 and signing certificate.
-- [ ] Record actual validation, limitations and rollback; commit scoped changes; send completion notification via punk-12 with artifact location.
+- [x] Create editable inspiration card and full guide plus unavailable-content state in worktree Pencil file; render, verify bounds, export references and OCR.
+- [x] Build offline sample tests without real ticket requests, verify navigation, day switch, fallback, attribution and 1.3x font/compact width.
+- [x] Run existing TimeRangePicker and UI polish tests on a temporary emulator only; copy screenshot evidence and inspect it.
+- [x] Build `:core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --offline`; record warnings and exit status.
+- [x] Bump version to 0.2.0 / code 4, preserve previous APKs, copy final artifact and verify SHA-256 and signing certificate.
+- [x] Record actual validation, limitations and rollback; commit scoped changes; send completion notification via punk-12 with artifact location.
 
 Spec coverage review: five-city scope, both navigation paths, unknown city, offline failure, attribution, large font and ticket isolation mapped above. No new dependencies or live ticket load are required.

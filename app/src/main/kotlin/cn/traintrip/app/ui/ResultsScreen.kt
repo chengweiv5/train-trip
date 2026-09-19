@@ -5,18 +5,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.platform.testTag
 import kotlinx.coroutines.launch
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cn.traintrip.app.*
 import cn.traintrip.core.*
 
-@Composable fun ResultsScreen(s:UiState,onBack:()->Unit,onCity:(String)->Unit,onRefresh:()->Unit,onStop:()->Unit,onResume:()->Unit,onRetry:()->Unit,onSort:()->Unit) {
+@Composable fun ResultsScreen(s:UiState,onBack:()->Unit,onCity:(String)->Unit,onRefresh:()->Unit,onStop:()->Unit,onResume:()->Unit,onRetry:()->Unit,onSort:()->Unit,onGuide:(String)->Unit=onCity) {
     val f=s.applied ?: s.filters
     val progress=s.progress
     val groups=remember(progress,f,s.citySortByCount,s.catalog) { groupResults(s.catalog,f,progress,s.citySortByCount) }
@@ -82,7 +82,7 @@ import cn.traintrip.core.*
         item { Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) { TextButton(onSort,Modifier.weight(1f),contentPadding=PaddingValues(0.dp)) { Text(if(s.citySortByCount) "省内 · 车次数最多 ↓" else "省内 · 车程最短 ↓") };TextButton(onRefresh,enabled=!s.loading && progress?.running!=true) { Text("刷新") } } }
         items(groups,key={"province-${it.province.id}"}) { group ->
             ProvinceResultGroup(group,group.province.id in expanded,{toggle(group.province.id)},{collapse(group.province.id)},content={
-                group.cities.forEach { city -> CityCard(city,f,onCity,s.catalog) }
+                group.cities.forEach { city -> CityCard(city,f,onCity,onGuide,s.catalog) }
                 if(group.cities.isEmpty()) Text(group.status,style=MaterialTheme.typography.bodyMedium,color=Muted)
                 if(group.incomplete && progress?.running!=true && progress!=null) TextButton(onRetry) { Text("重试未成功项") }
             })
@@ -93,7 +93,7 @@ import cn.traintrip.core.*
             items(uncertainGroups,key={"province-uncertain-${it.province.id}"}) { group ->
                 val id="uncertain-${group.province.id}"
                 ProvinceResultGroup(group,id in expanded,{toggle(id)},{collapse(id)},uncertain=true,content={
-                    group.cities.forEach { city -> CityCard(city,f,onCity,s.catalog,true) }
+                    group.cities.forEach { city -> CityCard(city,f,onCity,onGuide,s.catalog,true) }
                 })
             }
         }
@@ -111,16 +111,29 @@ import cn.traintrip.core.*
         } }
     },confirmButton={TextButton({showErrors=false}) { Text("关闭") }})
 }
-@Composable private fun CityCard(city:CityResult,f:SearchFilters,onCity:(String)->Unit,catalog:StationCatalog,uncertain:Boolean=false) {
-    ContentCard(Modifier.fillMaxWidth().testTag("${if(uncertain) "uncertain-" else ""}city-card-${city.cityId}"),onClick={onCity(city.cityId)}) {
+@Composable private fun CityCard(city:CityResult,f:SearchFilters,onCity:(String)->Unit,onGuide:(String)->Unit,catalog:StationCatalog,uncertain:Boolean=false) {
+    val guide=DestinationGuides.find(city.cityId)
+    ContentCard(Modifier.fillMaxWidth().testTag("${if(uncertain) "uncertain-" else ""}city-card-${city.cityId}"),onClick={if(guide!=null) onGuide(city.cityId) else onCity(city.cityId)}) {
         Row(verticalAlignment=Alignment.CenterVertically) {
             Text(city.cityName,Modifier.weight(1f),style=MaterialTheme.typography.titleLarge)
             Text(if(uncertain) "${city.trainCount} 趟待核验" else "${city.trainCount} 趟有票",color=if(uncertain) Amber else Forest,style=MaterialTheme.typography.bodySmall,fontWeight=FontWeight.SemiBold)
             Text("  ›",color=Muted)
         }
         Text(catalog.byCity[city.cityId]?.provinceLabel.orEmpty(),style=MaterialTheme.typography.bodySmall,color=Muted)
+        if(guide!=null) {
+            DestinationPhoto(guide.photo,Modifier.height(144.dp))
+            Text(guide.tagline,style=MaterialTheme.typography.bodyMedium,color=Forest)
+            DestinationTags(guide)
+            Text("建议 ${guide.suggestedDays} · ${guide.pace}",style=MaterialTheme.typography.bodySmall,color=Muted)
+        }
         Text("最快 ${durationText(city.shortestMinutes)} · ${city.trips.map { it.date }.distinct().sorted().joinToString("、") { dateLabel(it) }}",style=MaterialTheme.typography.bodyMedium)
         Text(city.trips.flatMap { t-> f.seats.filter { t.seats[it]?.let { a->a.confirmedFor(f.people) || a.uncertainFor(f.people) }==true } }.distinct().sortedBy { it.ordinal }.joinToString(" / ") { it.label },style=MaterialTheme.typography.bodySmall,color=Forest)
         Text("${city.trips.map { it.to.name }.distinct().take(4).joinToString(" / ")} · ${formatTime(city.trips.maxOf { it.queriedAt })} 查询",style=MaterialTheme.typography.bodySmall,color=Muted)
+        if(guide!=null) {
+            Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                TextButton({onGuide(city.cityId)},Modifier.weight(1f)) { Text("了解目的地") }
+                TextButton({onCity(city.cityId)},Modifier.weight(1f).testTag("trains-${city.cityId}")) { Text("查看车次") }
+            }
+        }
     }
 }

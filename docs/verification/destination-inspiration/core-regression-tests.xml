@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cn.traintrip.core.CoreTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-09-19T01:11:06.691Z" hostname="DJX34Q0R35" time="0.274">
+  <properties/>
+  <testcase name="historicalOfficialFixtureMatchesKnownFields" classname="cn.traintrip.core.CoreTest" time="0.045"/>
+  <testcase name="cityGroupingAndDuplicates" classname="cn.traintrip.core.CoreTest" time="0.071"/>
+  <testcase name="sourceParserRejectsUnknownProtocolAndPreservesBoardingDate" classname="cn.traintrip.core.CoreTest" time="0.027"/>
+  <testcase name="cancellationDoesNotBecomeAnEmptySuccess" classname="cn.traintrip.core.CoreTest" time="0.088"/>
+  <testcase name="inventoryDoesNotInventCountsOrCombineSeats" classname="cn.traintrip.core.CoreTest" time="0.017"/>
+  <testcase name="midnightAndEndpoints" classname="cn.traintrip.core.CoreTest" time="0.014"/>
+  <testcase name="searchFailureAndResumeStayPartial" classname="cn.traintrip.core.CoreTest" time="0.011"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

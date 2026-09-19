@@ -7,18 +7,17 @@ import cn.traintrip.core.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-enum class Page { FILTERS, RESULTS, DETAIL }
+enum class Page { FILTERS, RESULTS, DESTINATION, DETAIL }
 data class UiState(
     val catalog:StationCatalog, val filters:SearchFilters, val applied:SearchFilters?=null,
     val sourceInfo:SourceInfo?=null, val loading:Boolean=false, val error:String?=null,
     val page:Page=Page.FILTERS, val progress:SearchProgress?=null, val cityId:String?=null,
     val selectedTripKey:String?=null, val selectedSeat:SeatType?=null, val rechecking:Boolean=false,
     val notice:String?=null, val handoffReady:Boolean=false, val handoffText:String?=null,
-    val citySortByCount:Boolean=false, val searchSession:Long=0
+    val citySortByCount:Boolean=false, val searchSession:Long=0, val detailFromGuide:Boolean=false
 )
-class AppViewModel(app:Application):AndroidViewModel(app) {
+class AppViewModel @JvmOverloads constructor(app:Application,private val source:TicketSource=OfficialTicketSource()):AndroidViewModel(app) {
     private val preferences=Preferences(app)
-    private val source:TicketSource=OfficialTicketSource()
     private val initialCatalog=StationCatalog.bundled()
     private val mutable=MutableStateFlow(UiState(initialCatalog,preferences.load(initialCatalog)))
     val state:StateFlow<UiState> = mutable.asStateFlow()
@@ -27,7 +26,14 @@ class AppViewModel(app:Application):AndroidViewModel(app) {
     fun updateFilters(f:SearchFilters) { preferences.save(f);mutable.update { it.copy(filters=f,error=null) } }
     fun showFilters() { stopSearch();checkJob?.cancel();mutable.update { it.copy(page=Page.FILTERS,rechecking=false) } }
     fun showResults() { checkJob?.cancel();mutable.update { it.copy(page=Page.RESULTS,rechecking=false,selectedTripKey=null,selectedSeat=null) } }
-    fun showCity(id:String) { mutable.update { it.copy(page=Page.DETAIL,cityId=id,selectedTripKey=null,selectedSeat=null) } }
+    fun showCity(id:String) { mutable.update { it.copy(page=Page.DETAIL,cityId=id,selectedTripKey=null,selectedSeat=null,detailFromGuide=false) } }
+    fun showDestination(id:String) { mutable.update { it.copy(page=Page.DESTINATION,cityId=id,selectedTripKey=null,selectedSeat=null) } }
+    fun showDestinationTrains() { mutable.update { it.copy(page=Page.DETAIL,detailFromGuide=true,selectedTripKey=null,selectedSeat=null) } }
+    fun backFromCity() {
+        checkJob?.cancel()
+        mutable.update { it.copy(page=if(it.page==Page.DETAIL && it.detailFromGuide) Page.DESTINATION else Page.RESULTS,
+            rechecking=false,selectedTripKey=null,selectedSeat=null) }
+    }
     fun sortCities() { mutable.update { it.copy(citySortByCount=!it.citySortByCount) } }
     fun dismissNotice() { mutable.update { it.copy(notice=null,handoffReady=false) } }
     fun select(trip:Trip,seat:SeatType) {

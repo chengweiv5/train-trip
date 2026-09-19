@@ -1,0 +1,79 @@
+
+cn.traintrip.app.DestinationGuideTest:
+Error in sourcesAndPhotoLicenseOpenTheCorrectUrls(cn.traintrip.app.DestinationGuideTest):
+java.lang.AssertionError: Failed to capture a node to bitmap.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (isRoot)
+Nodes found:
+1) Node #1 at (l=0.0, t=0.0, r=1236.0, b=2676.0)px
+Has 1 child
+2) Node #59 at (l=0.0, t=0.0, r=960.0, b=1794.0)px
+Has 1 child
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AndroidImageHelpers_androidKt.captureToImage(AndroidImageHelpers.android.kt:51)
+	at cn.traintrip.app.DestinationGuideTest.capture(DestinationGuideTest.kt:146)
+	at cn.traintrip.app.DestinationGuideTest.sourcesAndPhotoLicenseOpenTheCorrectUrls(DestinationGuideTest.kt:117)
+
+Error in guidePathPreservesPlanAndCanRecheckTickets(cn.traintrip.app.DestinationGuideTest):
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'plan-2')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at cn.traintrip.app.DestinationGuideTest.guidePathPreservesPlanAndCanRecheckTickets(DestinationGuideTest.kt:67)
+..
+Error in compactLargeFontAndRestorationKeepPlanAndActionReachable(cn.traintrip.app.DestinationGuideTest):
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'plan-2')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at cn.traintrip.app.DestinationGuideTest.compactLargeFontAndRestorationKeepPlanAndActionReachable(DestinationGuideTest.kt:136)
+
+cn.traintrip.app.TimeRangePickerTest:....
+cn.traintrip.app.UiPolishTest:.....
+
+Time: 53.887
+There were 3 failures:
+1) sourcesAndPhotoLicenseOpenTheCorrectUrls(cn.traintrip.app.DestinationGuideTest)
+java.lang.AssertionError: Failed to capture a node to bitmap.
+Reason: Expected exactly '1' node but found '2' nodes that satisfy: (isRoot)
+Nodes found:
+1) Node #1 at (l=0.0, t=0.0, r=1236.0, b=2676.0)px
+Has 1 child
+2) Node #59 at (l=0.0, t=0.0, r=960.0, b=1794.0)px
+Has 1 child
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AndroidImageHelpers_androidKt.captureToImage(AndroidImageHelpers.android.kt:51)
+	at cn.traintrip.app.DestinationGuideTest.capture(DestinationGuideTest.kt:146)
+	at cn.traintrip.app.DestinationGuideTest.sourcesAndPhotoLicenseOpenTheCorrectUrls(DestinationGuideTest.kt:117)
+2) guidePathPreservesPlanAndCanRecheckTickets(cn.traintrip.app.DestinationGuideTest)
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'plan-2')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at cn.traintrip.app.DestinationGuideTest.guidePathPreservesPlanAndCanRecheckTickets(DestinationGuideTest.kt:67)
+3) compactLargeFontAndRestorationKeepPlanAndActionReachable(cn.traintrip.app.DestinationGuideTest)
+java.lang.AssertionError: Action performScrollTo() failed.
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'plan-2')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.ActionsKt.performScrollTo(Actions.kt:81)
+	at cn.traintrip.app.DestinationGuideTest.compactLargeFontAndRestorationKeepPlanAndActionReachable(DestinationGuideTest.kt:136)
+
+FAILURES!!!
+Tests run: 14,  Failures: 3

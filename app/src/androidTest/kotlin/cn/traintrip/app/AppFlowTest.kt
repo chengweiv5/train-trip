@@ -64,7 +64,7 @@ class AppFlowTest {
         }
         compose.onNode(hasText("天津") and !hasSetTextAction()).performScrollTo().assertExists()
         capture("02-cities")
-        compose.onNode(hasText("天津") and !hasSetTextAction()).performClick()
+        compose.onNodeWithTag("trains-${vm.state.value.catalog.byCode.getValue("TJP").cityId}").performScrollTo().performClick()
         compose.onNodeWithText("去天津").assertExists()
         capture("03-trains")
         compose.runOnIdle {

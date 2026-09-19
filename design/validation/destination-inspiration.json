@@ -1,0 +1,1035 @@
+{
+  "checkedAt": "2026-09-19",
+  "nodes": 79,
+  "issues": [],
+  "audit": [
+    {
+      "id": "Mav9U",
+      "nodes": [
+        {
+          "id": "Mav9U",
+          "name": "组件 · 五城目的地灵感",
+          "type": "frame",
+          "bounds": {
+            "x": 2396,
+            "y": 0,
+            "width": 372,
+            "height": 469
+          }
+        },
+        {
+          "id": "lgQID",
+          "parent": "Mav9U",
+          "name": "城市及余票示例",
+          "type": "text",
+          "text": "天津                              68 趟有票",
+          "bounds": {
+            "x": 18,
+            "y": 18,
+            "width": 336,
+            "height": 33
+          }
+        },
+        {
+          "id": "m6Z6i",
+          "parent": "Mav9U",
+          "name": "天津实景 · 海河与天津之眼",
+          "type": "frame",
+          "bounds": {
+            "x": 18,
+            "y": 63,
+            "width": 336,
+            "height": 144
+          }
+        },
+        {
+          "id": "DtC4s",
+          "parent": "Mav9U",
+          "name": "一句话推荐",
+          "type": "text",
+          "text": "逛洋楼、听相声，把一天留给津味生活。",
+          "bounds": {
+            "x": 18,
+            "y": 219,
+            "width": 336,
+            "height": 23
+          }
+        },
+        {
+          "id": "vAkU0",
+          "parent": "Mav9U",
+          "name": "旅行特色",
+          "type": "text",
+          "text": "洋楼漫步   ·   相声   ·   地方小吃",
+          "bounds": {
+            "x": 18,
+            "y": 254,
+            "width": 336,
+            "height": 20
+          }
+        },
+        {
+          "id": "WCFyb",
+          "parent": "Mav9U",
+          "name": "建议天数与节奏",
+          "type": "text",
+          "text": "建议 1–2 天 · 轻松慢逛",
+          "bounds": {
+            "x": 18,
+            "y": 286,
+            "width": 336,
+            "height": 20
+          }
+        },
+        {
+          "id": "uj2Vy",
+          "parent": "Mav9U",
+          "name": "车程与日期示例",
+          "type": "text",
+          "text": "最快 21 分钟 · 10 月 1 日可出发",
+          "bounds": {
+            "x": 18,
+            "y": 318,
+            "width": 336,
+            "height": 21
+          }
+        },
+        {
+          "id": "x8UD5H",
+          "parent": "Mav9U",
+          "name": "席别与站点示例",
+          "type": "text",
+          "text": "二等座 / 一等座\n天津 · 14:32 查询",
+          "bounds": {
+            "x": 18,
+            "y": 351,
+            "width": 336,
+            "height": 40
+          }
+        },
+        {
+          "id": "kzhoo",
+          "parent": "Mav9U",
+          "name": "双入口",
+          "type": "frame",
+          "bounds": {
+            "x": 18,
+            "y": 403,
+            "width": 336,
+            "height": 48
+          }
+        },
+        {
+          "id": "k6E2Lh",
+          "parent": "kzhoo",
+          "name": "了解目的地",
+          "type": "frame",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 162,
+            "height": 48
+          }
+        },
+        {
+          "id": "GaysD",
+          "parent": "k6E2Lh",
+          "name": "了解目的地文案",
+          "type": "text",
+          "text": "了解目的地",
+          "bounds": {
+            "x": 46,
+            "y": 14,
+            "width": 70,
+            "height": 20
+          }
+        },
+        {
+          "id": "CC6dn",
+          "parent": "kzhoo",
+          "name": "查看车次",
+          "type": "frame",
+          "bounds": {
+            "x": 174,
+            "y": 0,
+            "width": 162,
+            "height": 48
+          }
+        },
+        {
+          "id": "thqrV",
+          "parent": "CC6dn",
+          "name": "查看车次文案",
+          "type": "text",
+          "text": "查看车次",
+          "bounds": {
+            "x": 53,
+            "y": 14,
+            "width": 56,
+            "height": 20
+          }
+        }
+      ]
+    },
+    {
+      "id": "syZ4p",
+      "nodes": [
+        {
+          "id": "syZ4p",
+          "name": "08 · 天津 / 目的地灵感",
+          "type": "frame",
+          "bounds": {
+            "x": 2868,
+            "y": 0,
+            "width": 412,
+            "height": 1777
+          }
+        },
+        {
+          "id": "M04EG3",
+          "parent": "syZ4p",
+          "name": "目的地导航",
+          "type": "text",
+          "text": "‹ 返回                         目的地灵感",
+          "bounds": {
+            "x": 20,
+            "y": 28,
+            "width": 372,
+            "height": 21
+          }
+        },
+        {
+          "id": "lciY9",
+          "parent": "syZ4p",
+          "name": "目的地名称",
+          "type": "text",
+          "text": "天津",
+          "bounds": {
+            "x": 20,
+            "y": 69,
+            "width": 372,
+            "height": 42
+          }
+        },
+        {
+          "id": "wQFeE",
+          "parent": "syZ4p",
+          "name": "推荐理由",
+          "type": "text",
+          "text": "逛洋楼、听相声，把一天留给津味生活。",
+          "bounds": {
+            "x": 20,
+            "y": 131,
+            "width": 372,
+            "height": 27
+          }
+        },
+        {
+          "id": "IYTGv",
+          "parent": "syZ4p",
+          "name": "天津实景照片",
+          "type": "frame",
+          "bounds": {
+            "x": 20,
+            "y": 178,
+            "width": 372,
+            "height": 200
+          }
+        },
+        {
+          "id": "SYX5K",
+          "parent": "syZ4p",
+          "name": "照片说明与署名入口",
+          "type": "text",
+          "text": "天津 · 海河与天津之眼\n资料来源与图片署名 ›",
+          "bounds": {
+            "x": 20,
+            "y": 398,
+            "width": 372,
+            "height": 36
+          }
+        },
+        {
+          "id": "eT5FZ",
+          "parent": "syZ4p",
+          "name": "特色与游玩建议",
+          "type": "text",
+          "text": "洋楼漫步 · 相声 · 地方小吃\n建议 1–2 天 · 轻松慢逛",
+          "bounds": {
+            "x": 20,
+            "y": 454,
+            "width": 372,
+            "height": 42
+          }
+        },
+        {
+          "id": "K3gkJe",
+          "parent": "syZ4p",
+          "name": "景点区标题",
+          "type": "text",
+          "text": "值得去的地方",
+          "bounds": {
+            "x": 20,
+            "y": 516,
+            "width": 372,
+            "height": 30
+          }
+        },
+        {
+          "id": "T5jZ3u",
+          "parent": "syZ4p",
+          "name": "五大道介绍",
+          "type": "frame",
+          "bounds": {
+            "x": 20,
+            "y": 566,
+            "width": 372,
+            "height": 102
+          }
+        },
+        {
+          "id": "QiNyq",
+          "parent": "T5jZ3u",
+          "name": "五大道",
+          "type": "text",
+          "text": "五大道",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "UpDHK",
+          "parent": "T5jZ3u",
+          "name": "五大道吸引力",
+          "type": "text",
+          "text": "沿花园式洋楼街区慢走，适合喜欢建筑、街拍和咖啡小店的人。",
+          "bounds": {
+            "x": 0,
+            "y": 34,
+            "width": 372,
+            "height": 42
+          }
+        },
+        {
+          "id": "BtWKe",
+          "parent": "T5jZ3u",
+          "name": "五大道时间与位置",
+          "type": "text",
+          "text": "建议 2–3 小时 · 和平区 · 市区",
+          "bounds": {
+            "x": 0,
+            "y": 84,
+            "width": 372,
+            "height": 18
+          }
+        },
+        {
+          "id": "xD2Rn",
+          "parent": "syZ4p",
+          "name": "古文化街介绍",
+          "type": "frame",
+          "bounds": {
+            "x": 20,
+            "y": 688,
+            "width": 372,
+            "height": 81
+          }
+        },
+        {
+          "id": "UtDhL",
+          "parent": "xD2Rn",
+          "name": "古文化街",
+          "type": "text",
+          "text": "古文化街",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "cp3eS",
+          "parent": "xD2Rn",
+          "name": "古文化街吸引力",
+          "type": "text",
+          "text": "看民俗街巷、找地方小吃，体会天津的传统市井味。",
+          "bounds": {
+            "x": 0,
+            "y": 34,
+            "width": 372,
+            "height": 21
+          }
+        },
+        {
+          "id": "iABNf",
+          "parent": "xD2Rn",
+          "name": "古文化街时间与位置",
+          "type": "text",
+          "text": "建议 1–2 小时 · 南开区 · 市区",
+          "bounds": {
+            "x": 0,
+            "y": 63,
+            "width": 372,
+            "height": 18
+          }
+        },
+        {
+          "id": "zV6SQ",
+          "parent": "syZ4p",
+          "name": "海河漫步与相声介绍",
+          "type": "frame",
+          "bounds": {
+            "x": 20,
+            "y": 789,
+            "width": 372,
+            "height": 81
+          }
+        },
+        {
+          "id": "bg2r4",
+          "parent": "zV6SQ",
+          "name": "海河漫步与相声",
+          "type": "text",
+          "text": "海河漫步与相声",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "VaRxG",
+          "parent": "zV6SQ",
+          "name": "海河漫步与相声吸引力",
+          "type": "text",
+          "text": "傍晚沿河看桥梁与城市夜色；有兴趣可另选一场相声。",
+          "bounds": {
+            "x": 0,
+            "y": 34,
+            "width": 372,
+            "height": 21
+          }
+        },
+        {
+          "id": "g3Imly",
+          "parent": "zV6SQ",
+          "name": "海河漫步与相声时间与位置",
+          "type": "text",
+          "text": "建议 2–3 小时 · 演出需另查场次",
+          "bounds": {
+            "x": 0,
+            "y": 63,
+            "width": 372,
+            "height": 18
+          }
+        },
+        {
+          "id": "yt29n",
+          "parent": "syZ4p",
+          "name": "美食标题",
+          "type": "text",
+          "text": "尝尝当地味道",
+          "bounds": {
+            "x": 20,
+            "y": 890,
+            "width": 372,
+            "height": 30
+          }
+        },
+        {
+          "id": "CsJ0p",
+          "parent": "syZ4p",
+          "name": "地方美食",
+          "type": "text",
+          "text": "煎饼馃子\n适合作为早点，热乎的饼皮配馃子或薄脆。\n\n十八街麻花\n酥脆的传统点心，适合少量尝味或带作伴手礼。\n\n耳朵眼炸糕\n天津传统小吃，可以和街区漫步放在同一站。",
+          "bounds": {
+            "x": 20,
+            "y": 940,
+            "width": 372,
+            "height": 168
+          }
+        },
+        {
+          "id": "gqyDr",
+          "parent": "syZ4p",
+          "name": "玩法标题",
+          "type": "text",
+          "text": "可以这样玩",
+          "bounds": {
+            "x": 20,
+            "y": 1128,
+            "width": 372,
+            "height": 30
+          }
+        },
+        {
+          "id": "k6CGfT",
+          "parent": "syZ4p",
+          "name": "完整游玩日说明",
+          "type": "text",
+          "text": "按完整游玩日安排，抵达较晚可少选一站。",
+          "bounds": {
+            "x": 20,
+            "y": 1178,
+            "width": 372,
+            "height": 18
+          }
+        },
+        {
+          "id": "TF8Hr",
+          "parent": "syZ4p",
+          "name": "一日两日切换",
+          "type": "frame",
+          "bounds": {
+            "x": 20,
+            "y": 1216,
+            "width": 372,
+            "height": 48
+          }
+        },
+        {
+          "id": "fh9TP",
+          "parent": "TF8Hr",
+          "name": "1 日玩法",
+          "type": "frame",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 112,
+            "height": 48
+          }
+        },
+        {
+          "id": "G9MeVq",
+          "parent": "fh9TP",
+          "name": "1 日玩法标签",
+          "type": "text",
+          "text": "1 日玩法",
+          "bounds": {
+            "x": 29.5,
+            "y": 14,
+            "width": 53,
+            "height": 20
+          }
+        },
+        {
+          "id": "B6KXV",
+          "parent": "TF8Hr",
+          "name": "2 日玩法",
+          "type": "frame",
+          "bounds": {
+            "x": 122,
+            "y": 0,
+            "width": 112,
+            "height": 48
+          }
+        },
+        {
+          "id": "gJVgr",
+          "parent": "B6KXV",
+          "name": "2 日玩法标签",
+          "type": "text",
+          "text": "2 日玩法",
+          "bounds": {
+            "x": 29.5,
+            "y": 14,
+            "width": 53,
+            "height": 20
+          }
+        },
+        {
+          "id": "lxeFc",
+          "parent": "syZ4p",
+          "name": "一日玩法内容",
+          "type": "text",
+          "text": "一天慢逛津城\n五大道 → 海河漫步与相声\n上午五大道，中间留足午餐与休息时间；傍晚沿海河走走，演出按场次选。",
+          "bounds": {
+            "x": 20,
+            "y": 1284,
+            "width": 372,
+            "height": 84
+          }
+        },
+        {
+          "id": "WqWtK",
+          "parent": "syZ4p",
+          "name": "玩法提醒",
+          "type": "text",
+          "text": "相声并非每天或随到随看；晚到时保留一处街区即可。",
+          "bounds": {
+            "x": 20,
+            "y": 1388,
+            "width": 372,
+            "height": 18
+          }
+        },
+        {
+          "id": "WbzDW",
+          "parent": "syZ4p",
+          "name": "出行提醒标题",
+          "type": "text",
+          "text": "出发前知道这些",
+          "bounds": {
+            "x": 20,
+            "y": 1426,
+            "width": 372,
+            "height": 30
+          }
+        },
+        {
+          "id": "Ehxlw",
+          "parent": "syZ4p",
+          "name": "季节与交通提示",
+          "type": "text",
+          "text": "春秋适合户外漫步；夏日注意遮阳，冬季海河边风凉。相声演出按场次安排，先确认再安排行程。\n\n天津、天津西和滨海是不同到达站。看车次时结合住宿与首站位置确认市内接驳。",
+          "bounds": {
+            "x": 20,
+            "y": 1476,
+            "width": 372,
+            "height": 105
+          }
+        },
+        {
+          "id": "AagPm",
+          "parent": "syZ4p",
+          "name": "资料时效与编辑建议",
+          "type": "text",
+          "text": "玩法与耗时为参考建议；门票、开放及预约要求请出发前查看景区官方信息。\n资料核对：2026-09-19 · 已保存离线资料\n查看来源与图片署名 ›",
+          "bounds": {
+            "x": 20,
+            "y": 1601,
+            "width": 372,
+            "height": 72
+          }
+        },
+        {
+          "id": "ASIH6",
+          "parent": "syZ4p",
+          "name": "固定底部查看车次",
+          "type": "frame",
+          "bounds": {
+            "x": 20,
+            "y": 1693,
+            "width": 372,
+            "height": 56
+          }
+        },
+        {
+          "id": "yMhOO",
+          "parent": "ASIH6",
+          "name": "查看车次文案",
+          "type": "text",
+          "text": "查看车次 →",
+          "bounds": {
+            "x": 144,
+            "y": 16.5,
+            "width": 84,
+            "height": 23
+          }
+        }
+      ]
+    },
+    {
+      "id": "e3qHZk",
+      "nodes": [
+        {
+          "id": "e3qHZk",
+          "name": "09 · 五城灵感 / 交互与来源",
+          "type": "frame",
+          "bounds": {
+            "x": 3340,
+            "y": 0,
+            "width": 412,
+            "height": 710
+          }
+        },
+        {
+          "id": "yGs38",
+          "parent": "e3qHZk",
+          "name": "内容覆盖标题",
+          "type": "text",
+          "text": "内容覆盖",
+          "bounds": {
+            "x": 20,
+            "y": 20,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "TUG49",
+          "parent": "e3qHZk",
+          "name": "内容覆盖正文",
+          "type": "text",
+          "text": "首版天津、济南、青岛、大同、洛阳。其他城市保留原来的车次查询。",
+          "bounds": {
+            "x": 20,
+            "y": 66,
+            "width": 372,
+            "height": 42
+          }
+        },
+        {
+          "id": "VkJRC",
+          "parent": "e3qHZk",
+          "name": "导航规则标题",
+          "type": "text",
+          "text": "导航规则",
+          "bounds": {
+            "x": 20,
+            "y": 128,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "hAMM2",
+          "parent": "e3qHZk",
+          "name": "导航规则正文",
+          "type": "text",
+          "text": "结果 → 目的地 → 车次；返回依次回到目的地与结果。直接查看车次时返回结果。保存城市各自的玩法选择和滚动位置。",
+          "bounds": {
+            "x": 20,
+            "y": 174,
+            "width": 372,
+            "height": 63
+          }
+        },
+        {
+          "id": "S9eikN",
+          "parent": "e3qHZk",
+          "name": "资料来源标题",
+          "type": "text",
+          "text": "资料来源",
+          "bounds": {
+            "x": 20,
+            "y": 257,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "KgtEH",
+          "parent": "e3qHZk",
+          "name": "资料来源正文",
+          "type": "text",
+          "text": "参考 Wikivoyage 旅行指南整理改写；正文按 CC BY-SA 4.0 提供。玩法与耗时为编辑建议。来源可在 App 详情打开。",
+          "bounds": {
+            "x": 20,
+            "y": 303,
+            "width": 372,
+            "height": 42
+          }
+        },
+        {
+          "id": "nRS1l",
+          "parent": "e3qHZk",
+          "name": "天津照片署名标题",
+          "type": "text",
+          "text": "天津照片署名",
+          "bounds": {
+            "x": 20,
+            "y": 365,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "KrNam",
+          "parent": "e3qHZk",
+          "name": "天津照片署名正文",
+          "type": "text",
+          "text": "海河与天津之眼 · KangTyngrwey\nCC BY-SA 4.0 · 已缩放，展示时裁剪\n原图、作者和许可均可从 App 来源弹窗打开。",
+          "bounds": {
+            "x": 20,
+            "y": 411,
+            "width": 372,
+            "height": 63
+          }
+        },
+        {
+          "id": "O7J1z",
+          "parent": "e3qHZk",
+          "name": "无资料状态标题",
+          "type": "text",
+          "text": "无资料状态",
+          "bounds": {
+            "x": 20,
+            "y": 494,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "v7kgPC",
+          "parent": "e3qHZk",
+          "name": "无资料状态正文",
+          "type": "text",
+          "text": "这个城市的旅行资料还在整理中。可以先查看车次，选择合适的出发时间。底部查看车次保持可用。",
+          "bounds": {
+            "x": 20,
+            "y": 540,
+            "width": 372,
+            "height": 42
+          }
+        },
+        {
+          "id": "OI8Bl",
+          "parent": "e3qHZk",
+          "name": "实现验收标题",
+          "type": "text",
+          "text": "实现验收",
+          "bounds": {
+            "x": 20,
+            "y": 602,
+            "width": 372,
+            "height": 26
+          }
+        },
+        {
+          "id": "K9hXq",
+          "parent": "e3qHZk",
+          "name": "实现验收正文",
+          "type": "text",
+          "text": "图片与资料离线提供，不增加车票查询等待；支持 1.3 倍字体与 320dp 窄屏。示例车次、时间和余票不代表实时查询。",
+          "bounds": {
+            "x": 20,
+            "y": 648,
+            "width": 372,
+            "height": 42
+          }
+        }
+      ]
+    },
+    {
+      "id": "J9IQLh",
+      "nodes": [
+        {
+          "id": "J9IQLh",
+          "name": "10 · 有票城市 / 目的地灵感",
+          "type": "frame",
+          "bounds": {
+            "x": 2396,
+            "y": 569,
+            "width": 412,
+            "height": 1016
+          }
+        },
+        {
+          "id": "RAPda",
+          "parent": "J9IQLh",
+          "name": "结果导航",
+          "type": "text",
+          "text": "‹ 返回           北京出发 · 10 月 1 日",
+          "bounds": {
+            "x": 20,
+            "y": 28,
+            "width": 372,
+            "height": 21
+          }
+        },
+        {
+          "id": "wGQPc",
+          "parent": "J9IQLh",
+          "name": "结果标题",
+          "type": "text",
+          "text": "这些城市，有票可去",
+          "bounds": {
+            "x": 20,
+            "y": 69,
+            "width": 372,
+            "height": 42
+          }
+        },
+        {
+          "id": "yIuod",
+          "parent": "J9IQLh",
+          "name": "范围与筛选示例",
+          "type": "text",
+          "text": "找到 3 个城市\n全天出发 · 1 人 · 全部席别\n查看本次 24 个城市范围\n可能未覆盖全部目的地",
+          "bounds": {
+            "x": 20,
+            "y": 131,
+            "width": 372,
+            "height": 84
+          }
+        },
+        {
+          "id": "nSWZr",
+          "parent": "J9IQLh",
+          "name": "排序与刷新",
+          "type": "text",
+          "text": "车程最短优先 ↓                     刷新",
+          "bounds": {
+            "x": 20,
+            "y": 235,
+            "width": 372,
+            "height": 21
+          }
+        },
+        {
+          "id": "TP4py",
+          "parent": "J9IQLh",
+          "name": "天津灵感卡片",
+          "type": "ref",
+          "bounds": {
+            "x": 20,
+            "y": 276,
+            "width": 372,
+            "height": 469
+          }
+        },
+        {
+          "id": "lRu1B",
+          "parent": "J9IQLh",
+          "name": "未覆盖城市沿用车次卡片",
+          "type": "ref",
+          "bounds": {
+            "x": 20,
+            "y": 765,
+            "width": 372,
+            "height": 167
+          }
+        },
+        {
+          "id": "X0RBP",
+          "parent": "J9IQLh",
+          "name": "样例说明",
+          "type": "text",
+          "text": "余票与车程为设计示例。首版灵感覆盖 5 城，其余城市继续直接查看车次。",
+          "bounds": {
+            "x": 20,
+            "y": 952,
+            "width": 372,
+            "height": 36
+          }
+        }
+      ]
+    },
+    {
+      "id": "pVPBz",
+      "nodes": [
+        {
+          "id": "pVPBz",
+          "name": "11 · 来源与图片署名",
+          "type": "frame",
+          "bounds": {
+            "x": 3340,
+            "y": 810,
+            "width": 412,
+            "height": 469
+          }
+        },
+        {
+          "id": "G1XdY",
+          "parent": "pVPBz",
+          "name": "标题",
+          "type": "text",
+          "text": "资料来源与图片署名",
+          "bounds": {
+            "x": 24,
+            "y": 24,
+            "width": 364,
+            "height": 33
+          }
+        },
+        {
+          "id": "u543PP",
+          "parent": "pVPBz",
+          "name": "来源说明",
+          "type": "text",
+          "text": "景点与美食参考以下资料整理改写；玩法、停留时长与强度为编辑建议。来源内容可能早于核对日期。",
+          "bounds": {
+            "x": 24,
+            "y": 73,
+            "width": 364,
+            "height": 42
+          }
+        },
+        {
+          "id": "hrBXK",
+          "parent": "pVPBz",
+          "name": "中文来源",
+          "type": "text",
+          "text": "天津 · Wikivoyage 中文旅行指南 ↗\n核对 2026-09-19",
+          "bounds": {
+            "x": 24,
+            "y": 131,
+            "width": 364,
+            "height": 42
+          }
+        },
+        {
+          "id": "oO44j",
+          "parent": "pVPBz",
+          "name": "英文来源",
+          "type": "text",
+          "text": "天津 · Wikivoyage 英文旅行指南 ↗\n核对 2026-09-19",
+          "bounds": {
+            "x": 24,
+            "y": 189,
+            "width": 364,
+            "height": 42
+          }
+        },
+        {
+          "id": "c9XuPI",
+          "parent": "pVPBz",
+          "name": "正文许可",
+          "type": "text",
+          "text": "改编正文：CC BY-SA 4.0 ↗",
+          "bounds": {
+            "x": 24,
+            "y": 247,
+            "width": 364,
+            "height": 21
+          }
+        },
+        {
+          "id": "iZAHO",
+          "parent": "pVPBz",
+          "name": "图片署名",
+          "type": "text",
+          "text": "天津 · 海河与天津之眼\n摄影：KangTyngrwey\nCC BY-SA 4.0 · 已缩放，展示时裁剪",
+          "bounds": {
+            "x": 24,
+            "y": 284,
+            "width": 364,
+            "height": 63
+          }
+        },
+        {
+          "id": "HqkNH",
+          "parent": "pVPBz",
+          "name": "原图与许可",
+          "type": "text",
+          "text": "查看原图与作者 ↗\n查看图片许可 ↗",
+          "bounds": {
+            "x": 24,
+            "y": 363,
+            "width": 364,
+            "height": 42
+          }
+        },
+        {
+          "id": "TfLOf",
+          "parent": "pVPBz",
+          "name": "关闭",
+          "type": "text",
+          "text": "关闭",
+          "bounds": {
+            "x": 24,
+            "y": 421,
+            "width": 364,
+            "height": 24
+          }
+        }
+      ]
+    }
+  ]
+}
