@@ -1,0 +1,19 @@
+{
+  "baseline": "6ec8b27",
+  "branch": "codex/destination-guide-pages-design",
+  "versionName": "0.4.0",
+  "versionCode": 8,
+  "apk": "artifacts/train-trip-destination-pages-debug.apk",
+  "apkBytes": 13341291,
+  "sha256": "b776ff51d3c91348c5e5e5788b3686124d6e3e758a0387b5507caf6148c18f0f",
+  "signatureVerified": "v2",
+  "regressionTests": 15,
+  "finalDestinationTests": 9,
+  "lintErrors": 0,
+  "lintWarnings": 12,
+  "device": "dedicated read-only API 36 emulator-5592",
+  "ocrScreens": 4,
+  "ocrTextBlocks": 85,
+  "phoneInstalled": false,
+  "remotePushed": false
+}

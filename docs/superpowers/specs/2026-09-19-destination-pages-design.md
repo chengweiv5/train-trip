@@ -29,3 +29,5 @@
 ## 回滚
 
 基线 `6ec8b27`，分支 `codex/destination-guide-pages-design`。修改前源码位于 `.verification-private/destination-pages/source-before.tar`。代码通过本次实现的反向提交回滚；已有设置、个人手机、历史设计稿与历史安装包不受影响。
+
+规格评审：Approved。高度依据已明确为安全区内完整视口；验收已覆盖同城新查询会话重置，并保留 pace、玩法 note 和门票预约说明。

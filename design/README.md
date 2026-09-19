@@ -1,5 +1,9 @@
 # Train Trip V1 UI 设计
 
+## 目的地四分页（2026-09-19）
+
+用户已确认景点 / 美食 / 玩法 / 贴士分页样稿，现已实现于 Android。景点和美食共用白色独立卡片，顶部紧凑摘要、主题切换与固定车次操作；窄屏或大字体时摘要进入滚动区域。可编辑样稿片段见 [approved-preview.html](reference/destination-pages/approved-preview.html)，完整约定见 [设计规格](../docs/superpowers/specs/2026-09-19-destination-pages-design.md)，运行验证见 [验收](../docs/verification/2026-09-19-destination-pages.md)。历史 Pencil 目的地长页保留为旧稿。
+
 ## v0.4.0 车次信息页 UI（2026-09-19）
 
 [可编辑源文件](train-trip-v0.4.0.pen) · [完整设计说明](../docs/superpowers/specs/2026-09-19-v0.4.0-train-detail-ui-design.md) · [设计评审 PDF](reference/v0.4.0/export.pdf)

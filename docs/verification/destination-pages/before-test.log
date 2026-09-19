@@ -1,0 +1,33 @@
+
+cn.traintrip.app.DestinationGuideTest:
+Error in tabsAndSwipeShowOneTopicAndStopAtEnds(cn.traintrip.app.DestinationGuideTest):
+java.lang.AssertionError: Failed to assert the following: (Selected = 'true')
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'guide-tab-places')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:262)
+	at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:254)
+	at androidx.compose.ui.test.AssertionsKt.assertIsSelected(Assertions.kt:88)
+	at cn.traintrip.app.DestinationGuideTest.tabsAndSwipeShowOneTopicAndStopAtEnds(DestinationGuideTest.kt:159)
+
+
+Time: 2.489
+There was 1 failure:
+1) tabsAndSwipeShowOneTopicAndStopAtEnds(cn.traintrip.app.DestinationGuideTest)
+java.lang.AssertionError: Failed to assert the following: (Selected = 'true')
+Reason: Expected exactly '1' node but could not find any node that satisfies: (TestTag = 'guide-tab-places')
+
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow(SemanticsNodeInteraction.kt:178)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchOneOrThrow$default(SemanticsNodeInteraction.kt:150)
+	at androidx.compose.ui.test.SemanticsNodeInteraction.fetchSemanticsNode(SemanticsNodeInteraction.kt:84)
+	at androidx.compose.ui.test.AssertionsKt.assert(Assertions.kt:262)
+	at androidx.compose.ui.test.AssertionsKt.assert$default(Assertions.kt:254)
+	at androidx.compose.ui.test.AssertionsKt.assertIsSelected(Assertions.kt:88)
+	at cn.traintrip.app.DestinationGuideTest.tabsAndSwipeShowOneTopicAndStopAtEnds(DestinationGuideTest.kt:159)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+

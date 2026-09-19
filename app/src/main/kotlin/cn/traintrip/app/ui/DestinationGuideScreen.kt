@@ -3,9 +3,15 @@ package cn.traintrip.app.ui
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -17,10 +23,19 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import cn.traintrip.core.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Composable fun DestinationPhoto(photo: DestinationPhoto, modifier: Modifier = Modifier) {
@@ -58,106 +73,145 @@ import kotlinx.coroutines.withContext
 
 @Composable fun DestinationGuideScreen(
     cityName: String, guide: DestinationGuide?, onBack: () -> Unit,
-    onTrains: () -> Unit, onSource: (String) -> Unit
+    onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String = ""
+) = key(guide?.cityId ?: cityName) {
+    DestinationGuidePage(cityName, guide, onBack, onTrains, onSource, provinceLabel)
+}
+
+@Composable private fun DestinationGuidePage(
+    cityName: String, guide: DestinationGuide?, onBack: () -> Unit,
+    onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String
 ) {
-    var days by rememberSaveable(guide?.cityId) { mutableIntStateOf(1) }
-    var sourcesOpen by rememberSaveable(guide?.cityId) { mutableStateOf(false) }
-    Scaffold(containerColor = Cream, bottomBar = {
-        Surface(color = Cream, shadowElevation = 3.dp) {
-            Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)) {
-                PrimaryButton("查看车次  →", onTrains, modifier = Modifier.testTag("guide-trains"))
+    var days by rememberSaveable { mutableIntStateOf(1) }
+    var sourcesOpen by rememberSaveable { mutableStateOf(false) }
+    val pager = rememberPagerState { GuideSection.entries.size }
+    val pageLists = GuideSection.entries.map { key(it) { rememberLazyListState() } }
+    val scope = rememberCoroutineScope()
+    val fontScale = LocalDensity.current.fontScale
+    // Use the whole safe viewport, independent of the header's measured height.
+    BoxWithConstraints(Modifier.fillMaxSize().testTag("destination-guide")) {
+        val scrollOverview = maxHeight < 640.dp || fontScale > 1.15f
+        val showTabIcons = maxWidth >= 360.dp && fontScale <= 1.15f
+        Scaffold(containerColor = Cream, contentWindowInsets = WindowInsets(0, 0, 0, 0), bottomBar = {
+            Surface(color = Cream, shadowElevation = 3.dp) {
+                Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)) {
+                    PrimaryButton("查看车次  →", onTrains, modifier = Modifier.testTag("guide-trains"))
+                }
             }
-        }
-    }) { padding ->
-        LazyColumn(
-            Modifier.fillMaxSize().padding(padding).testTag("destination-guide"),
-            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            item("header") { BackHeader("目的地灵感", onBack) }
-            item("title") {
-                Text(cityName, style = MaterialTheme.typography.headlineLarge)
-                if (guide != null) Text(guide.tagline, Modifier.padding(top = 10.dp),
-                    style = MaterialTheme.typography.titleMedium, color = Forest)
-            }
-            if (guide == null) {
-                item("missing") { Hint("暂无目的地介绍，可先查看车次。") }
-            } else {
-                item("photo") {
-                    DestinationPhoto(guide.photo, Modifier.height(200.dp))
-                    Text(guide.photo.description, Modifier.padding(top = 6.dp),
-                        style = MaterialTheme.typography.bodySmall, color = Muted)
-                }
-                item("overview") {
-                    DestinationTags(guide)
-                    Text("建议 ${guide.suggestedDays} · ${guide.pace}", Modifier.padding(top = 12.dp),
-                        style = MaterialTheme.typography.bodyMedium)
-                    TextButton({ sourcesOpen = true }, contentPadding = PaddingValues(0.dp)) {
-                        Text("资料来源与图片署名", style = MaterialTheme.typography.bodySmall)
+        }) { padding ->
+            Column(Modifier.fillMaxSize().padding(padding)) {
+                Box(Modifier.padding(horizontal = 16.dp)) { BackHeader("目的地灵感", onBack) }
+                if (guide == null) {
+                    LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                        item { Text(cityName, style = MaterialTheme.typography.headlineLarge) }
+                        item { Hint("暂无目的地介绍，可先查看车次。") }
                     }
-                }
-                item("experiences-title") { SectionTitle("值得去的地方") }
-                items(guide.experiences, key = { "experience-${it.id}" }) { experience ->
-                    Column(verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                        Text(experience.name, style = MaterialTheme.typography.titleMedium)
-                        Text(experience.reason, style = MaterialTheme.typography.bodyMedium)
-                        Text("建议 ${experience.duration} · ${experience.location}",
-                            style = MaterialTheme.typography.bodySmall, color = Muted)
-                        HorizontalDivider(Modifier.padding(top = 7.dp), color = Line)
+                } else {
+                    if (!scrollOverview) {
+                        GuideOverview(cityName, provinceLabel, guide, Modifier.padding(horizontal = 20.dp, vertical = 12.dp))
                     }
-                }
-                item("food-title") { SectionTitle("尝尝当地味道") }
-                item("food") {
-                    ContentCard(Modifier.fillMaxWidth()) {
-                        guide.foods.forEach { food ->
-                            Text(food.name, style = MaterialTheme.typography.titleSmall, color = Forest)
-                            Text(food.description, style = MaterialTheme.typography.bodyMedium)
+                    GuideTabs(pager.currentPage, showTabIcons) { page ->
+                        scope.launch { pager.animateScrollToPage(page) }
+                    }
+                    HorizontalPager(pager, Modifier.fillMaxWidth().weight(1f).testTag("guide-pager"),
+                        verticalAlignment = Alignment.Top, key = { GuideSection.entries[it].id }) { page ->
+                        val section = GuideSection.entries[page]
+                        LazyColumn(Modifier.fillMaxSize().testTag("guide-page-${section.id}"),
+                            state = pageLists[page], contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 6.dp, bottom = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            if (scrollOverview) {
+                                item("overview") { GuideOverview(cityName, provinceLabel, guide, Modifier.padding(bottom = 8.dp)) }
+                            }
+                            guideSectionContent(section, guide, days) { days = it }
+                            item("sources") {
+                                TextButton({ sourcesOpen = true }, Modifier.testTag("guide-sources-${section.id}"),
+                                    contentPadding = PaddingValues(vertical = 12.dp)) {
+                                    Text("资料来源与图片署名", style = MaterialTheme.typography.bodySmall)
+                                }
+                            }
                         }
-                    }
-                }
-                item("plan-title") {
-                    SectionTitle("可以这样玩")
-                    Text("按完整游玩日安排，抵达较晚可少选一站。", color = Muted,
-                        style = MaterialTheme.typography.bodySmall)
-                    FlowRow(Modifier.padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        guide.plans.forEach { plan ->
-                            Choice("${plan.days} 日玩法", days == plan.days, { days = plan.days },
-                                Modifier.testTag("plan-${plan.days}"))
-                        }
-                    }
-                }
-                item("plan") {
-                    val plan = guide.plans.first { it.days == days }
-                    ContentCard(Modifier.fillMaxWidth().testTag("selected-plan")) {
-                        Text(plan.title, style = MaterialTheme.typography.titleMedium)
-                        plan.schedule.forEach { day ->
-                            Text(day.label, style = MaterialTheme.typography.labelLarge, color = Forest)
-                            Text(day.experienceIds.joinToString(" → ") { id ->
-                                guide.experiences.first { it.id == id }.name
-                            }, style = MaterialTheme.typography.bodyMedium)
-                            Text(day.description, style = MaterialTheme.typography.bodyMedium, color = Muted)
-                        }
-                        Text(plan.note, style = MaterialTheme.typography.bodySmall, color = Muted)
-                    }
-                }
-                item("advice") {
-                    SectionTitle("出发前知道这些")
-                    Text(guide.season, Modifier.padding(top = 10.dp), style = MaterialTheme.typography.bodyMedium)
-                    Text(guide.arrivalAdvice, Modifier.padding(top = 10.dp), style = MaterialTheme.typography.bodyMedium)
-                    Text("玩法与耗时为参考建议；门票、开放及预约要求请出发前查看景区官方信息。",
-                        Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall, color = Muted)
-                }
-                item("sources") {
-                    Text("资料核对：${guide.sources.maxOf { it.checkedOn }}",
-                        style = MaterialTheme.typography.bodySmall, color = Muted)
-                    TextButton({ sourcesOpen = true }, contentPadding = PaddingValues(0.dp)) {
-                        Text("查看来源与图片署名")
                     }
                 }
             }
         }
     }
     if (sourcesOpen && guide != null) GuideSourcesDialog(guide, onSource) { sourcesOpen = false }
+}
+
+@Composable private fun GuideOverview(cityName: String, provinceLabel: String, guide: DestinationGuide, modifier: Modifier = Modifier) {
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                if (provinceLabel.isNotBlank()) Text(provinceLabel, style = MaterialTheme.typography.bodySmall, color = Muted)
+                Text(cityName, style = MaterialTheme.typography.headlineLarge)
+                Text("建议 ${guide.suggestedDays} · ${guide.pace}", style = MaterialTheme.typography.bodySmall, color = Muted)
+            }
+            Box(Modifier.width(112.dp).height(100.dp)) { DestinationPhoto(guide.photo, Modifier.fillMaxSize()) }
+        }
+        Text(guide.tagline, style = MaterialTheme.typography.bodyLarge, color = Forest)
+        DestinationTags(guide)
+    }
+}
+
+@Composable private fun GuideTabs(selected: Int, showIcons: Boolean, onSelect: (Int) -> Unit) {
+    Surface(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(15.dp), color = Line.copy(alpha = .5f)) {
+        Row(Modifier.selectableGroup().padding(4.dp), horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+            GuideSection.entries.forEachIndexed { index, section ->
+                val active = selected == index
+                Surface(Modifier.weight(1f).heightIn(min = 48.dp).testTag("guide-tab-${section.id}")
+                    .selectable(active, role = Role.Tab, onClick = { onSelect(index) }),
+                    shape = RoundedCornerShape(11.dp), color = if (active) Forest else Color.Transparent) {
+                    Row(Modifier.padding(horizontal = 6.dp, vertical = 10.dp),
+                        horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically) {
+                        if (showIcons) GuideTabIcon(section, if (active) Color.White else Muted)
+                        Text(section.label, color = if (active) Color.White else Muted,
+                            style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable private fun GuideTabIcon(section: GuideSection, color: Color) {
+    Canvas(Modifier.size(15.dp)) {
+        val unit = size.width / 24f
+        val stroke = Stroke(1.5f * unit, cap = StrokeCap.Round)
+        fun line(x1: Float, y1: Float, x2: Float, y2: Float) =
+            drawLine(color, Offset(x1 * unit, y1 * unit), Offset(x2 * unit, y2 * unit), stroke.width, StrokeCap.Round)
+        when (section) {
+            GuideSection.PLACES -> {
+                val outline = Path().apply {
+                    moveTo(12 * unit, 22 * unit)
+                    cubicTo(8 * unit, 17 * unit, 4 * unit, 13 * unit, 4 * unit, 10 * unit)
+                    cubicTo(4 * unit, 0f, 20 * unit, 0f, 20 * unit, 10 * unit)
+                    cubicTo(20 * unit, 13 * unit, 16 * unit, 17 * unit, 12 * unit, 22 * unit)
+                }
+                drawPath(outline, color, style = stroke)
+                drawCircle(color, 2.5f * unit, Offset(12 * unit, 10 * unit), style = stroke)
+            }
+            GuideSection.FOOD -> {
+                line(4f, 3f, 4f, 9f); line(8f, 3f, 8f, 21f); line(12f, 3f, 12f, 9f)
+                line(4f, 9f, 12f, 9f); line(19f, 3f, 16f, 12f); line(16f, 12f, 20f, 12f); line(20f, 3f, 20f, 21f)
+            }
+            GuideSection.PLANS -> {
+                drawCircle(color, 3 * unit, Offset(5 * unit, 5 * unit), style = stroke)
+                drawCircle(color, 3 * unit, Offset(19 * unit, 19 * unit), style = stroke)
+                val route = Path().apply {
+                    moveTo(8 * unit, 5 * unit); lineTo(16 * unit, 5 * unit)
+                    cubicTo(24 * unit, 5 * unit, 24 * unit, 12 * unit, 12 * unit, 12 * unit)
+                    cubicTo(0f, 12 * unit, 0f, 19 * unit, 8 * unit, 19 * unit); lineTo(16 * unit, 19 * unit)
+                }
+                drawPath(route, color, style = stroke)
+            }
+            GuideSection.TIPS -> {
+                drawCircle(color, 9 * unit, Offset(12 * unit, 12 * unit), style = stroke)
+                line(12f, 11f, 12f, 17f); drawCircle(color, unit, Offset(12 * unit, 7 * unit))
+            }
+        }
+    }
 }
 
 @Composable private fun GuideSourcesDialog(guide: DestinationGuide, onSource: (String) -> Unit, onClose: () -> Unit) {

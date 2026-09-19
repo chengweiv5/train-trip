@@ -6,6 +6,8 @@
 
 ## 当前状态
 
+“了解目的地”已改为景点 / 美食 / 玩法 / 贴士四个分页，支持点击和横滑，景点与美食统一卡片；切换和返回保留阅读位置。已验证 320dp 大字体与短屏。此次安装包为 `artifacts/train-trip-destination-pages-debug.apk`，版本沿用 0.4.0；未覆盖安装手机。见 [目的地分页验收](docs/verification/2026-09-19-destination-pages.md)。
+
 v0.4.0 已实现筛选条件、真实余票查询、目的地城市汇总和车次详情。车次页支持手动刷新当前城市，点击整张卡片可标记意向车次，席别只展示余票；无需选择也可点击“打开 12306 App”。打开 App 不强制查询、不弹二次确认，也不回退官网。
 
 本地安装包：`artifacts/train-trip-v0.4.0-debug.apk`（构建产物，不随源码提交）。自行构建后可从 `app/build/outputs/apk/debug/app-debug.apk` 获取，将文件传到手机后点击安装。应用名“有票就出发”，包名 `cn.traintrip.app`，版本 `0.4.0`。这是本机调试签名的自用版本，尚未上架。

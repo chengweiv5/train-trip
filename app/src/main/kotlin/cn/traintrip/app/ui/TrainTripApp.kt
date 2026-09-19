@@ -35,10 +35,10 @@ import cn.traintrip.core.DestinationGuides
             screenState.SaveableStateProvider(if(s.page==Page.DETAIL || s.page==Page.DESTINATION) "${s.page.name}/${s.cityId}/${s.searchSession}" else s.page.name) { when(s.page) {
                 Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()})
                 Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search(refresh=true)},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities,vm::showDestination)
-                Page.DESTINATION->DestinationGuideScreen(s.catalog.byCity[s.cityId]?.name.orEmpty(),s.cityId?.let(DestinationGuides::find),vm::backFromCity,vm::showDestinationTrains) { url ->
+                Page.DESTINATION->DestinationGuideScreen(s.catalog.byCity[s.cityId]?.name.orEmpty(),s.cityId?.let(DestinationGuides::find),vm::backFromCity,vm::showDestinationTrains, onSource = { url ->
                     runCatching { context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(url))) }
                         .onFailure { Toast.makeText(context,"未找到浏览器",Toast.LENGTH_SHORT).show() }
-                }
+                }, provinceLabel = s.catalog.byCity[s.cityId]?.provinceLabel.orEmpty())
                 Page.DETAIL->DetailScreen(s,vm::backFromCity,vm::select,{vm.refreshCity()},{vm.refreshCity(retryFailed=true)},vm::clearSelection,::openRailway)
             } }
         }
