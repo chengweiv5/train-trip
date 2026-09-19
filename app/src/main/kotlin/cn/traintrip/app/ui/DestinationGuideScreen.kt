@@ -263,7 +263,8 @@ import kotlinx.coroutines.withContext
             if(!state.configured || !state.tavilyConfigured) {
                 if(guide==null) Text("配置 Tavily 和 DeepSeek 后，可按需整理新城市。",style=MaterialTheme.typography.bodyMedium)
                 TextButton(onSettings) { Text("配置内容服务") }
-            } else TextButton(onRefresh,Modifier.testTag("refresh-guide")) {
+            } else TextButton(onRefresh,Modifier.heightIn(min = 48.dp).testTag("refresh-guide"),
+                contentPadding = PaddingValues(vertical = 12.dp)) {
                 Text(if(guide!=null) "更新目的地介绍" else if(state.error!=null) "重试整理" else "整理目的地介绍")
             }
         }
