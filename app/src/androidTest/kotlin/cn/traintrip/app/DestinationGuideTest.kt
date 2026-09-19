@@ -60,11 +60,11 @@ class DestinationGuideTest {
     @Test fun guidePathPreservesPlanAndCanRefreshTickets() {
         val (vm, source) = startResults()
         revealCity(tianjin)
-        compose.onNodeWithText("了解目的地").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("guide-$tianjin").performScrollTo().assertIsDisplayed()
         capture("01-city-card")
-        compose.onNodeWithText("了解目的地").performClick()
+        compose.onNodeWithTag("guide-$tianjin").performClick()
         compose.onNodeWithText(guide.tagline).assertIsDisplayed()
-        compose.waitUntil(5000) { compose.onAllNodesWithContentDescription(guide.photo.description).fetchSemanticsNodes().isNotEmpty() }
+        compose.waitUntil(5000) { compose.onAllNodesWithContentDescription(guide.photo!!.description).fetchSemanticsNodes().isNotEmpty() }
         capture("02-destination")
         compose.onNodeWithTag("guide-tab-plans").performClick()
         page("plans").performScrollToNode(hasTestTag("plan-2"))
@@ -82,7 +82,7 @@ class DestinationGuideTest {
         Espresso.pressBack()
         compose.onNodeWithText("两天多一点津味").assertIsDisplayed()
         Espresso.pressBack()
-        compose.onNodeWithText("了解目的地").assertIsDisplayed()
+        compose.onNodeWithTag("guide-$tianjin").assertIsDisplayed()
         compose.runOnIdle {
             assertEquals(Page.RESULTS, vm.state.value.page)
             assertEquals(3, source.queries) // two query units plus one explicit city refresh
@@ -97,7 +97,7 @@ class DestinationGuideTest {
         Espresso.pressBack()
         compose.runOnIdle { assertEquals(Page.RESULTS, vm.state.value.page) }
         revealCity(shanghai)
-        compose.onNodeWithTag("city-card-$shanghai").performClick()
+        compose.onNodeWithTag("trains-$shanghai").performClick()
         compose.onNodeWithText("去上海").assertIsDisplayed()
         Espresso.pressBack()
         compose.runOnIdle { assertEquals(Page.RESULTS, vm.state.value.page) }
@@ -120,7 +120,7 @@ class DestinationGuideTest {
         compose.onNodeWithText(guide.sources.first().title).performScrollTo().performClick()
         compose.runOnIdle { assertEquals(guide.sources.first().url, opened) }
         compose.onNodeWithText("查看原图与作者").performScrollTo().performClick()
-        compose.runOnIdle { assertEquals(guide.photo.sourceUrl, opened) }
+        compose.runOnIdle { assertEquals(guide.photo!!.sourceUrl, opened) }
         compose.onNodeWithText("图片仅用于个人离线浏览，权利归原权利人所有。").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("查看图片许可").assertDoesNotExist()
         compose.onNodeWithText("改编正文：CC BY-SA 4.0").assertDoesNotExist()
@@ -130,7 +130,7 @@ class DestinationGuideTest {
 
     @Test fun explicitlyLicensedPhotoKeepsLicenseLink() {
         val url = "https://creativecommons.org/licenses/by/4.0/"
-        val licensedGuide = guide.copy(photo = guide.photo.copy(license = "CC BY 4.0", licenseUrl = url))
+        val licensedGuide = guide.copy(photo = guide.photo!!.copy(license = "CC BY 4.0", licenseUrl = url))
         var opened = ""
         compose.setContent { TrainTripTheme { Box(Modifier.fillMaxSize().safeDrawingPadding()) {
             DestinationGuideScreen("天津", licensedGuide, {}, {}, { opened = it })
@@ -231,7 +231,7 @@ class DestinationGuideTest {
     @Test fun differentCitiesAndNewSearchDoNotReuseTab() {
         val (vm,_)=startResults()
         revealCity(tianjin)
-        compose.onNodeWithText("了解目的地").performClick()
+        compose.onNodeWithTag("guide-$tianjin").performClick()
         compose.onNodeWithTag("guide-tab-food").performClick()
         compose.runOnIdle { vm.showDestination("140200") }
         compose.onNodeWithTag("guide-tab-places").assertIsSelected()

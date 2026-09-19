@@ -17,7 +17,7 @@ class DestinationGuideTest {
         DestinationGuides.all.forEach { guide ->
             assertEquals(guide.name, catalogue.byCity[guide.cityId]?.name)
             assertSame(guide, DestinationGuides.find(guide.cityId))
-            val photo = File("../app/src/main/assets/destinations/${guide.photo.assetName}")
+            val photo = File("../app/src/main/assets/destinations/${guide.photo!!.assetName}")
             assertTrue("Missing ${photo.path}", photo.isFile && photo.length() > 1000)
             val bytes = photo.readBytes()
             assertEquals(0xff, bytes[0].toInt() and 255)
@@ -45,10 +45,10 @@ class DestinationGuideTest {
                 assertTrue(plan.schedule.flatMap { it.experienceIds }.all { it in ids })
             }
             assertTrue(guide.sources.all { URI(it.url).host.endsWith(".gov.cn") && it.checkedOn == "2026-09-19" })
-            assertTrue(URI(guide.photo.sourceUrl).host.endsWith(".gov.cn"))
-            assertTrue(guide.photo.credit.isNotBlank())
-            assertNull(guide.photo.license)
-            assertNull(guide.photo.licenseUrl)
+            assertTrue(URI(guide.photo!!.sourceUrl).host.endsWith(".gov.cn"))
+            assertTrue(guide.photo!!.credit.isNotBlank())
+            assertNull(guide.photo!!.license)
+            assertNull(guide.photo!!.licenseUrl)
         }
     }
 

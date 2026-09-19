@@ -9,7 +9,8 @@ import java.time.LocalDate
 data class GuideSource(val title: String, val url: String, val checkedOn: String)
 data class DestinationPhoto(
     val assetName: String, val description: String, val credit: String,
-    val sourceUrl: String, val license: String? = null, val licenseUrl: String? = null
+    val sourceUrl: String, val license: String? = null, val licenseUrl: String? = null,
+    val remoteUrl: String? = null
 )
 data class DestinationExperience(
     val id: String, val name: String, val reason: String, val duration: String, val location: String
@@ -21,7 +22,8 @@ data class DestinationGuide(
     val cityId: String, val name: String, val tagline: String, val tags: List<String>,
     val suggestedDays: String, val pace: String, val season: String, val arrivalAdvice: String,
     val experiences: List<DestinationExperience>, val foods: List<DestinationFood>,
-    val plans: List<DayPlan>, val sources: List<GuideSource>, val photo: DestinationPhoto
+    val plans: List<DayPlan>, val sources: List<GuideSource>, val photo: DestinationPhoto?,
+    val generatedAt: String? = null, val model: String? = null
 )
 
 object DestinationGuides {
@@ -60,7 +62,7 @@ object DestinationGuides {
                     require(source.title.isNotBlank() && isWebUrl(source.url))
                     LocalDate.parse(source.checkedOn)
                 }
-                val photo = guide.photo
+                val photo = requireNotNull(guide.photo)
                 require(photo.assetName.matches(Regex("[a-z_]+\\.jpg")))
                 require(listOf(photo.description, photo.credit).all { it.isNotBlank() })
                 require(isWebUrl(photo.sourceUrl))
@@ -69,6 +71,35 @@ object DestinationGuides {
             }
         }
     }.getOrElse { emptyList() }
+
+    fun validateGenerated(guide: DestinationGuide, cityId: String): DestinationGuide {
+        require(cityId.matches(Regex("[0-9]{6}")) && guide.cityId == cityId)
+        require(listOf(guide.name, guide.tagline, guide.suggestedDays, guide.pace, guide.season, guide.arrivalAdvice)
+            .all { it.isNotBlank() && it.length <= 1800 })
+        require(guide.tags.size in 2..3 && guide.tags.all { it.isNotBlank() && it.length <= 20 })
+        require(guide.experiences.size in 1..5 && guide.foods.size <= 6)
+        val ids = guide.experiences.map { it.id }.toSet()
+        require(ids.size == guide.experiences.size)
+        guide.experiences.forEach { require(listOf(it.id, it.name, it.reason, it.duration, it.location).all { s -> s.isNotBlank() && s.length <= 1800 }) }
+        guide.foods.forEach { require(it.name.isNotBlank() && it.description.isNotBlank() && it.description.length <= 1800) }
+        require(guide.foods.map { it.name }.distinct().size == guide.foods.size)
+        require(guide.plans.size <= 2 && guide.plans.map { it.days }.distinct().size == guide.plans.size)
+        guide.plans.forEach { p ->
+            require(p.days in 1..2 && p.schedule.size == p.days && p.title.isNotBlank() && p.note.isNotBlank())
+            p.schedule.forEach { d -> require(d.label.isNotBlank() && d.description.isNotBlank() && d.experienceIds.isNotEmpty() && d.experienceIds.all { it in ids }) }
+        }
+        require(guide.sources.size in 1..10)
+        guide.sources.forEach { require(it.title.isNotBlank() && isWebUrl(it.url)); LocalDate.parse(it.checkedOn) }
+        java.time.Instant.parse(requireNotNull(guide.generatedAt))
+        require(!guide.model.isNullOrBlank())
+        guide.photo?.let { p ->
+            require(p.assetName.matches(Regex("[a-z0-9_]+\\.jpg")) && p.description.isNotBlank() && p.credit.isNotBlank())
+            require(isWebUrl(p.sourceUrl))
+            require(p.remoteUrl == null || GuideNetwork.isPhotoUrl(p.remoteUrl))
+            require((p.license == null && p.licenseUrl == null) || (!p.license.isNullOrBlank() && p.licenseUrl?.let(::isWebUrl) == true))
+        }
+        return guide
+    }
 
     private fun isWebUrl(value: String): Boolean = runCatching {
         val uri = URI(value)

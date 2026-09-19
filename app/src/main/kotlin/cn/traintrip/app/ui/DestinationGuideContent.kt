@@ -56,12 +56,14 @@ internal fun LazyListScope.guideSectionContent(
                 }
             }
         }
-        GuideSection.FOOD -> itemsIndexed(guide.foods, key = { _, food -> food.name }) { index, food ->
+        GuideSection.FOOD -> { if(guide.foods.isEmpty()) item { Hint("暂未取得可靠的美食资料。") }
+            itemsIndexed(guide.foods, key = { _, food -> food.name }) { index, food ->
             GuideContentCard(food.name, Modifier.testTag("guide-food-$index"), index + 1) {
                 Text(food.description, style = MaterialTheme.typography.bodyMedium)
             }
-        }
+        } }
         GuideSection.PLANS -> {
+            if(guide.plans.isEmpty()) { item { Hint("暂未整理出可靠路线，可先按景点安排游览。") };return }
             item("day-picker") {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Text("按完整游玩日安排，抵达较晚可少选一站。", color = Muted,
@@ -82,7 +84,7 @@ internal fun LazyListScope.guideSectionContent(
                     }
                 }
             }
-            val plan = guide.plans.first { it.days == days }
+            val plan = guide.plans.firstOrNull { it.days == days } ?: guide.plans.first()
             item("plan-title") {
                 Text(plan.title, Modifier.testTag("selected-plan"), style = MaterialTheme.typography.titleMedium)
             }

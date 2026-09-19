@@ -12,35 +12,43 @@ import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import cn.traintrip.app.*
 import cn.traintrip.core.DestinationGuides
 
-@Composable fun TrainTripApp(vm:AppViewModel,launcher:((Context)->AppLaunchResult)?=null) {
+@Composable fun TrainTripApp(vm:AppViewModel,destinationVm:DestinationViewModel = viewModel(),launcher:((Context)->AppLaunchResult)?=null) {
     val s by vm.state.collectAsStateWithLifecycle()
+    val destination by destinationVm.state.collectAsStateWithLifecycle()
+    var contentSettings by remember { mutableStateOf(false) }
     val context=LocalContext.current
     val screenState=rememberSaveableStateHolder()
     val lifecycle=LocalLifecycleOwner.current.lifecycle
-    DisposableEffect(lifecycle,vm) {
-        val observer=LifecycleEventObserver { _,event->if(event==Lifecycle.Event.ON_STOP) vm.pauseForegroundWork() }
+    DisposableEffect(lifecycle,vm,destinationVm) {
+        val observer=LifecycleEventObserver { _,event->if(event==Lifecycle.Event.ON_STOP) { vm.pauseForegroundWork();destinationVm.cancel() } }
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }
+    }
+    LaunchedEffect(s.page,s.cityId) {
+        if(s.page==Page.DESTINATION) s.catalog.byCity[s.cityId]?.let(destinationVm::open)
+        else destinationVm.leave()
     }
     fun openRailway() { vm.reportAppLaunch(launcher?.invoke(context) ?: launchRailwayApp(context)) }
     BackHandler(s.page!=Page.FILTERS) { if(s.page==Page.DETAIL || s.page==Page.DESTINATION) vm.backFromCity() else vm.showFilters() }
     Surface(Modifier.fillMaxSize(),color=Cream) {
         Box(Modifier.fillMaxSize().safeDrawingPadding()) {
             screenState.SaveableStateProvider(if(s.page==Page.DETAIL || s.page==Page.DESTINATION) "${s.page.name}/${s.cityId}/${s.searchSession}" else s.page.name) { when(s.page) {
-                Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()})
-                Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search(refresh=true)},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities,vm::showDestination)
-                Page.DESTINATION->DestinationGuideScreen(s.catalog.byCity[s.cityId]?.name.orEmpty(),s.cityId?.let(DestinationGuides::find),vm::backFromCity,vm::showDestinationTrains, onSource = { url ->
+                Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()},{contentSettings=true})
+                Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search(refresh=true)},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities,vm::showDestination,destination.guides)
+                Page.DESTINATION->DestinationGuideScreen(s.catalog.byCity[s.cityId]?.name.orEmpty(),destination.guide.takeIf { destination.cityId==s.cityId } ?: destination.guides[s.cityId],vm::backFromCity,vm::showDestinationTrains, onSource = { url ->
                     runCatching { context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(url))) }
                         .onFailure { Toast.makeText(context,"未找到浏览器",Toast.LENGTH_SHORT).show() }
-                }, provinceLabel = s.catalog.byCity[s.cityId]?.provinceLabel.orEmpty())
+                }, provinceLabel = s.catalog.byCity[s.cityId]?.provinceLabel.orEmpty(), runtime = destination.takeIf { it.cityId==s.cityId },onRefresh=destinationVm::retry,onSettings={contentSettings=true})
                 Page.DETAIL->DetailScreen(s,vm::backFromCity,vm::select,{vm.refreshCity()},{vm.refreshCity(retryFailed=true)},vm::clearSelection,::openRailway)
             } }
         }
     }
+    if(contentSettings) DeepSeekSettingsDialog(destination,{destinationVm.saveKey(it){contentSettings=false}},{destinationVm.removeKey{contentSettings=false}},{contentSettings=false})
 }

@@ -8,12 +8,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cn.traintrip.app.UiState
 import cn.traintrip.core.*
 
-@Composable fun FiltersScreen(s:UiState,onUpdate:(SearchFilters)->Unit,onSearch:()->Unit) {
+@Composable fun FiltersScreen(s:UiState,onUpdate:(SearchFilters)->Unit,onSearch:()->Unit,onContentSettings:()->Unit={}) {
     var sheet by remember { mutableStateOf<String?>(null) }
     val destinationBrowser=rememberSaveable(saver=DestinationBrowserState.Saver) { DestinationBrowserState() }
     val f=s.filters
@@ -57,6 +58,7 @@ import cn.traintrip.core.*
         s.error?.let { Hint(it,true) }
         PrimaryButton("找找有票的城市  →",onSearch)
         Text("只看直达去程 · 购票在 12306 完成",style=MaterialTheme.typography.bodySmall,color=Muted)
+        TextButton(onContentSettings, Modifier.testTag("content-settings")) { Text("目的地内容设置") }
     }
     sheet?.let { key ->
         if(key=="scope") DestinationSelector(s,{sheet=null},{onUpdate(it);sheet=null},destinationBrowser)

@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import cn.traintrip.core.*
+import cn.traintrip.app.DestinationState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -43,7 +44,9 @@ import kotlinx.coroutines.withContext
     val bitmap by produceState<ImageBitmap?>(null, photo.assetName) {
         value = withContext(Dispatchers.IO) {
             runCatching {
-                context.assets.open("destinations/${photo.assetName}").use {
+                val stream = if(photo.remoteUrl!=null) java.io.File(context.filesDir,"destination-guides/${photo.assetName}").inputStream()
+                    else context.assets.open("destinations/${photo.assetName}")
+                stream.use {
                     BitmapFactory.decodeStream(it)?.asImageBitmap()
                 }
             }.getOrNull()
@@ -73,14 +76,16 @@ import kotlinx.coroutines.withContext
 
 @Composable fun DestinationGuideScreen(
     cityName: String, guide: DestinationGuide?, onBack: () -> Unit,
-    onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String = ""
-) = key(guide?.cityId ?: cityName) {
-    DestinationGuidePage(cityName, guide, onBack, onTrains, onSource, provinceLabel)
+    onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String = "",
+    runtime: DestinationState? = null, onRefresh: () -> Unit = {}, onSettings: () -> Unit = {}
+) = key(cityName) {
+    DestinationGuidePage(cityName, guide, onBack, onTrains, onSource, provinceLabel,runtime,onRefresh,onSettings)
 }
 
 @Composable private fun DestinationGuidePage(
     cityName: String, guide: DestinationGuide?, onBack: () -> Unit,
-    onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String
+    onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String,
+    runtime: DestinationState?, onRefresh: () -> Unit, onSettings: () -> Unit
 ) {
     var days by rememberSaveable { mutableIntStateOf(1) }
     var sourcesOpen by rememberSaveable { mutableStateOf(false) }
@@ -105,7 +110,10 @@ import kotlinx.coroutines.withContext
                     LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(20.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         item { Text(cityName, style = MaterialTheme.typography.headlineLarge) }
-                        item { Hint("暂无目的地介绍，可先查看车次。") }
+                        item {
+                            if(runtime==null) Hint("暂无目的地介绍，可先查看车次。")
+                            else GuideRuntimeStatus(guide,runtime,onRefresh,onSettings)
+                        }
                     }
                 } else {
                     if (!scrollOverview) {
@@ -124,6 +132,7 @@ import kotlinx.coroutines.withContext
                                 item("overview") { GuideOverview(cityName, provinceLabel, guide, Modifier.padding(bottom = 8.dp)) }
                             }
                             guideSectionContent(section, guide, days) { days = it }
+                            if(runtime!=null) item("runtime") { GuideRuntimeStatus(guide,runtime,onRefresh,onSettings) }
                             item("sources") {
                                 TextButton({ sourcesOpen = true }, Modifier.testTag("guide-sources-${section.id}"),
                                     contentPadding = PaddingValues(vertical = 12.dp)) {
@@ -147,7 +156,7 @@ import kotlinx.coroutines.withContext
                 Text(cityName, style = MaterialTheme.typography.headlineLarge)
                 Text("建议 ${guide.suggestedDays} · ${guide.pace}", style = MaterialTheme.typography.bodySmall, color = Muted)
             }
-            Box(Modifier.width(112.dp).height(100.dp)) { DestinationPhoto(guide.photo, Modifier.fillMaxSize()) }
+            guide.photo?.let { photo -> Box(Modifier.width(112.dp).height(100.dp)) { DestinationPhoto(photo, Modifier.fillMaxSize()) } }
         }
         Text(guide.tagline, style = MaterialTheme.typography.bodyLarge, color = Forest)
         DestinationTags(guide)
@@ -220,23 +229,43 @@ import kotlinx.coroutines.withContext
             item {
                 Text("景点与美食根据国内公开资料整理；玩法、停留时长与强度为编辑建议。核对日期不代表原文发布日期。",
                     style = MaterialTheme.typography.bodySmall)
+                guide.generatedAt?.let { Text("DeepSeek 整理 · ${it.take(10)}\n内容供行程参考，出行信息请以原文及景区最新公告为准。",style=MaterialTheme.typography.bodySmall) }
             }
             items(guide.sources) { source ->
                 TextButton({ onSource(source.url) }, contentPadding = PaddingValues(0.dp)) { Text(source.title) }
                 Text("核对 ${source.checkedOn}", style = MaterialTheme.typography.bodySmall, color = Muted)
             }
-            item {
+            guide.photo?.let { photo -> item {
                 HorizontalDivider(color = Line)
-                Text(guide.photo.description, Modifier.padding(top = 12.dp), style = MaterialTheme.typography.titleSmall)
-                Text("${guide.photo.credit}\n已缩放，展示时裁剪",
+                Text(photo.description, Modifier.padding(top = 12.dp), style = MaterialTheme.typography.titleSmall)
+                Text("${photo.credit}\n已缩放，展示时裁剪",
                     style = MaterialTheme.typography.bodySmall)
-                Text(guide.photo.license ?: "图片仅用于个人离线浏览，权利归原权利人所有。",
+                Text(photo.license ?: "图片仅用于个人离线浏览，权利归原权利人所有。",
                     style = MaterialTheme.typography.bodySmall, color = Muted)
-                TextButton({ onSource(guide.photo.sourceUrl) }, contentPadding = PaddingValues(0.dp)) { Text("查看原图与作者") }
-                guide.photo.licenseUrl?.let { url ->
+                TextButton({ onSource(photo.sourceUrl) }, contentPadding = PaddingValues(0.dp)) { Text("查看原图与作者") }
+                photo.licenseUrl?.let { url ->
                     TextButton({ onSource(url) }, contentPadding = PaddingValues(0.dp)) { Text("查看图片许可") }
                 }
-            }
+            } }
         }
     }, confirmButton = { TextButton(onClose) { Text("关闭") } })
+}
+
+@Composable private fun GuideRuntimeStatus(guide: DestinationGuide?, state: DestinationState, onRefresh: () -> Unit, onSettings: () -> Unit) {
+    Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
+        if(state.loading) {
+            LinearProgressIndicator(Modifier.fillMaxWidth())
+            Text(state.stage.ifBlank { "正在读取离线内容…" },style=MaterialTheme.typography.bodySmall,color=Muted)
+        }
+        state.error?.let { Hint(it,true) }
+        guide?.generatedAt?.let { Text("DeepSeek 整理 · ${it.take(10)} · 已保存到本机",style=MaterialTheme.typography.bodySmall,color=Muted) }
+        if(!state.loading) {
+            if(!state.configured) {
+                if(guide==null) Text("配置 DeepSeek 后，可按需整理新城市。",style=MaterialTheme.typography.bodyMedium)
+                TextButton(onSettings) { Text("配置 DeepSeek") }
+            } else TextButton(onRefresh,Modifier.testTag("refresh-guide")) {
+                Text(if(guide!=null) "更新目的地介绍" else if(state.error!=null) "重试整理" else "整理目的地介绍")
+            }
+        }
+    }
 }
