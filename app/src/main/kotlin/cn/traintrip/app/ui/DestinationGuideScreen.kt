@@ -81,7 +81,7 @@ import kotlinx.coroutines.withContext
                     style = MaterialTheme.typography.titleMedium, color = Forest)
             }
             if (guide == null) {
-                item("missing") { Hint("这个城市的旅行资料还在整理中。\n可以先查看车次，选择合适的出发时间。") }
+                item("missing") { Hint("暂无目的地介绍，可先查看车次。") }
             } else {
                 item("photo") {
                     DestinationPhoto(guide.photo, Modifier.height(200.dp))
@@ -148,7 +148,7 @@ import kotlinx.coroutines.withContext
                         Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall, color = Muted)
                 }
                 item("sources") {
-                    Text("资料核对：${guide.sources.maxOf { it.checkedOn }} · 已保存离线资料",
+                    Text("资料核对：${guide.sources.maxOf { it.checkedOn }}",
                         style = MaterialTheme.typography.bodySmall, color = Muted)
                     TextButton({ sourcesOpen = true }, contentPadding = PaddingValues(0.dp)) {
                         Text("查看来源与图片署名")

@@ -42,7 +42,6 @@ import cn.traintrip.core.*
         expanded=expanded-id
         if(index!=null) coroutine.launch { listState.scrollToItem(index) }
     }
-    var showScope by remember { mutableStateOf(false) }
     var showErrors by remember { mutableStateOf(false) }
     LazyColumn(Modifier.fillMaxSize().testTag("results-list"),state=listState,contentPadding=PaddingValues(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
         item { BackHeader("${s.catalog.byCity[f.originCityId]?.name}出发 · ${dateRange(f)}",onBack) }
@@ -53,20 +52,25 @@ import cn.traintrip.core.*
                 Text("${timeRange(f)} · ${f.people} 人 · ${if(f.seats.size==SeatType.entries.size) "全部席别" else "已选 ${f.seats.size} 类席别"}",style=MaterialTheme.typography.bodySmall,color=Muted)
             }
         }
-        item { TextButton({showScope=true},contentPadding=PaddingValues(0.dp)) { Text("查看本次 ${f.destinationCityIds.size} 个城市范围 · 可能未覆盖全部目的地") } }
-        if(s.loading) item { Hint("正在连接 12306，读取开售日期与车站信息…");SearchProgressBar(0f,Modifier.padding(top=10.dp));TextButton(onStop) { Text("停止查询") } }
+        if(s.loading) item { Hint("正在连接 12306…");SearchProgressBar(0f,Modifier.padding(top=10.dp));TextButton(onStop) { Text("停止查询") } }
         s.error?.let { error->item { Hint("这次没能查到余票\n$error",true);SecondaryButton("重试查询",onRefresh) } }
         if(progress!=null && !s.loading) {
             item {
-                val label=when {progress.running->"正在查询";progress.complete->"当前所选范围查询完成";progress.stopped->"查询已停止 · 保留部分结果";else->"部分结果"}
-                Hint("$label\n成功 ${progress.successCount} / ${progress.plan.size} 项 · 失败 ${progress.failureCount} · 未开售 ${progress.unopenedCount} · 待查 ${progress.remainingCount}",warning=progress.failureCount>0)
+                val label=when {progress.running->"正在查询 ${progress.outcomes.size} / ${progress.plan.size}";progress.complete->"查询完成";progress.stopped->"查询已停止";else->"部分查询未完成"}
+                val details=buildList {
+                    if(progress.failureCount>0) add("${progress.failureCount} 项失败")
+                    if(progress.unopenedCount>0) add("${progress.unopenedCount} 项未开售")
+                    if(!progress.running && progress.remainingCount>0) add("${progress.remainingCount} 项待查询")
+                }.joinToString(" · ")
+                if(progress.complete) Text(label,style=MaterialTheme.typography.bodySmall,color=Muted)
+                else Hint(if(details.isEmpty()) label else "$label\n$details",warning=progress.failureCount>0)
                 if(progress.running) {
                     SearchProgressBar(if(progress.plan.isEmpty()) 0f else progress.outcomes.size.toFloat()/progress.plan.size,Modifier.padding(top=10.dp))
                     TextButton(onStop) { Text("停止查询，保留结果") }
                 } else {
                     Row(horizontalArrangement=Arrangement.spacedBy(12.dp)) {
                         if(progress.remainingCount>0) TextButton(onResume) { Text("继续查询") }
-                        if(progress.failureCount>0 || progress.unopenedCount>0) TextButton(onRetry) { Text("重试未成功项") }
+                        if(progress.failureCount>0 || progress.unopenedCount>0) TextButton(onRetry) { Text("重试查询") }
                         if(progress.failureCount>0 || progress.unopenedCount>0) TextButton({showErrors=true}) { Text("查看原因") }
                     }
                 }
@@ -76,19 +80,13 @@ import cn.traintrip.core.*
         items(groups,key={"province-${it.province.id}"}) { group ->
             ProvinceResultGroup(group,group.province.id in expanded,{toggle(group.province.id)},{collapse(group.province.id)},content={
                 group.cities.forEach { city -> CityCard(city,f,onCity,onGuide,s.catalog) }
-                if(group.cities.isEmpty()) Text(group.status,style=MaterialTheme.typography.bodyMedium,color=Muted)
-                if(group.incomplete && progress?.running!=true && progress!=null) TextButton(onRetry) { Text("重试未成功项") }
+                if(group.incomplete && progress?.running!=true && progress!=null) TextButton(onRetry) { Text("重试查询") }
             })
         }
-        if(cities.isEmpty() && !s.loading && s.error==null && progress?.complete==true) item { Hint("暂时没有符合条件的票\n当前所选范围已查完。试试换一天，或放宽时段、席别。");SecondaryButton("调整出行条件",onBack) }
+        if(cities.isEmpty() && !s.loading && s.error==null && progress?.complete==true) item { Hint("没有符合条件的车票\n试试换一天，或放宽时段、席别。") }
         item { SecondaryButton("修改出行条件",onBack);Text("余票随时变化，可在车次页刷新。购票以 12306 App 实时结果为准。",Modifier.padding(vertical=12.dp),style=MaterialTheme.typography.bodySmall,color=Muted) }
     }
-    if(showScope) AlertDialog(onDismissRequest={showScope=false},title={Text("本次查询范围")},text={
-        LazyColumn { items(s.catalog.cities.filter { it.id in f.destinationCityIds }.groupBy { it.province }.entries.toList()) { (province,cities) ->
-            Text(province.name,style=MaterialTheme.typography.titleMedium);Text(cities.joinToString("、") { it.name },Modifier.padding(bottom=12.dp))
-        };item { Text("每个日期和出发站分别查询。合并前的铁路城市均保留代表站；查询完成仅代表所选查询项完成。",style=MaterialTheme.typography.bodySmall) } }
-    },confirmButton={TextButton({showScope=false}) { Text("知道了") }})
-    if(showErrors) AlertDialog(onDismissRequest={showErrors=false},title={Text("未成功查询项")},text={
+    if(showErrors) AlertDialog(onDismissRequest={showErrors=false},title={Text("查询未完成的原因")},text={
         androidx.compose.foundation.lazy.LazyColumn { items(progress?.plan?.filter { progress.outcomes[it.key] is QueryResult.Failure || progress.outcomes[it.key] is QueryResult.NotOnSale } ?: emptyList()) { u->
             val outcome=progress?.outcomes?.get(u.key)
             Text("${u.date} · ${u.destination.cityName}\n${when(outcome){is QueryResult.Failure->outcome.message;is QueryResult.NotOnSale->outcome.message;else->""}}",Modifier.padding(vertical=8.dp),style=MaterialTheme.typography.bodySmall)

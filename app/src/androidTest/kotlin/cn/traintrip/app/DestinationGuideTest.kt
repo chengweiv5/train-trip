@@ -102,7 +102,7 @@ class DestinationGuideTest {
     @Test fun missingGuideStillReachesTrains() {
         var opened = false
         compose.setContent { TrainTripTheme { DestinationGuideScreen("上海", null, {}, { opened = true }, {}) } }
-        compose.onNodeWithText("这个城市的旅行资料还在整理中。\n可以先查看车次，选择合适的出发时间。").assertIsDisplayed()
+        compose.onNodeWithText("暂无目的地介绍，可先查看车次。").assertIsDisplayed()
         compose.onNodeWithTag("guide-trains").performClick()
         compose.runOnIdle { assertTrue(opened) }
         capture("04-missing-guide")

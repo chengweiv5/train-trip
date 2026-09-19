@@ -1,0 +1,64 @@
+{
+  "baseCommit": "8125275b03b8a1706e9a0ab6b029016ddd09a2f9",
+  "branch": "codex/detail-compact-dates",
+  "commitStatusAtValidation": "uncommitted and unpushed; subsequently delivered with this verification record",
+  "build": "passed",
+  "lint": {
+    "errors": 0,
+    "existingWarnings": 12
+  },
+  "tests": {
+    "initial": {
+      "passed": 26,
+      "total": 28,
+      "failures": "fixture assumptions and partially obscured measurement; corrected"
+    },
+    "correctedCopyAndLayout": {
+      "passed": 12,
+      "total": 12
+    },
+    "afterUpstreamIntegration": {
+      "passed": 8,
+      "total": 8
+    }
+  },
+  "layout": {
+    "twoSeatCardDp": 201.53847,
+    "threeDatesSameRow": true,
+    "rightSpaceDp": 34.46153846153846,
+    "minimumSeatTargetDp": 48,
+    "largeFontScale": 1.3,
+    "largeFontWidthDp": 320
+  },
+  "visualReview": "screenshots, OCR and Compose text bounds checked",
+  "physicalInstall": {
+    "verifiedAt": "2026-09-19T05:30:27.059725+00:00",
+    "device": "HUAWEI Mate 60 Pro",
+    "versionName": "0.4.0",
+    "versionCode": 8,
+    "apkSha256": "784a5f69dd9ab99a8aacdba2d99a1eddb34e01c824e0238e975efc4c2c64f0b9",
+    "previousApkSha256": "ff589d2fc283cd7a5e7587da2f4cedf7735c1f7860109b43bb542849e53fe195",
+    "signaturesMatch": true,
+    "installedHashMatches": true,
+    "install": "Success",
+    "launch": "Status: ok",
+    "mainActivityResumed": true,
+    "preferencesPreservedAfterInstallAndLaunch": true
+  },
+  "sourcesSha256": {
+    "app/src/androidTest/kotlin/cn/traintrip/app/DestinationGuideTest.kt": "5c81e9ab7ef57f1d1685848506836fe872b9ec34e59d08799b3a766eb64c3f96",
+    "app/src/androidTest/kotlin/cn/traintrip/app/DestinationUiTest.kt": "be4751ef9108304c3658bd5d64d32d811ecd9277ae79f720197096a59cd31cef",
+    "app/src/androidTest/kotlin/cn/traintrip/app/DetailFlowTest.kt": "c688732172cb75af72d965fe34d6c63731a26f47bc8d27d34535dcb4ce6828e9",
+    "app/src/androidTest/kotlin/cn/traintrip/app/NotYetSaleFlowTest.kt": "9786501f3b81b38937c4a71f44abb1906f62f4acea0ae8ee40d6c913e9b487fd",
+    "app/src/androidTest/kotlin/cn/traintrip/app/SearchFailureTest.kt": "63c91fbfc476a29c80a32a178b9350171f7446eb367bcd7daf3873efcce1c6d6",
+    "app/src/main/kotlin/cn/traintrip/app/ui/DateFilterSheet.kt": "17fec631e88761649a8ca4ed3f43d2a58e154ca6ef2dc208504588cc04e02b55",
+    "app/src/main/kotlin/cn/traintrip/app/ui/DestinationGuideScreen.kt": "87b3e9825f0ebd77bc2587b78061476cbdf049263728a9fb00ea6b354189a43b",
+    "app/src/main/kotlin/cn/traintrip/app/ui/DestinationSelector.kt": "6b4876bfd5e4533d8962bb917a81f560c42a692d01b5ffec8fd03374337507ca",
+    "app/src/main/kotlin/cn/traintrip/app/ui/DetailActions.kt": "ed04d4e6efbc6bffe97d8fd074abfe9d91f29740802525723b6f84fb9b6bfbbd",
+    "app/src/main/kotlin/cn/traintrip/app/ui/DetailScreen.kt": "bcb5a7161914a0e8bc850e06845a2cce720ee3f20c0942347db0c9f3f5a30365",
+    "app/src/main/kotlin/cn/traintrip/app/ui/FilterSheets.kt": "9f7ffb44f03d0ce71b9bc4ee6975d4f25922d547d3be13ee60663a743250e3ec",
+    "app/src/main/kotlin/cn/traintrip/app/ui/FiltersScreen.kt": "a5662b9518e78b58c4ecd59288db23192b2670b62b35b2f52236ee1b020eaecf",
+    "app/src/main/kotlin/cn/traintrip/app/ui/ResultsScreen.kt": "f538a18179857bf3b33197b3761301f4cdf6102243f418572904960e1ae27847",
+    "app/src/androidTest/kotlin/cn/traintrip/app/DetailLayoutTest.kt": "ac8d1a605a18aebb2feeb4940c8bf6b2286e6db529779691f113e7545e81eed5"
+  }
+}

@@ -73,7 +73,7 @@ class DestinationBrowserState(initialProvince: String = "") {
                         label={Text("搜索省份或城市")},singleLine=true,
                         trailingIcon={if(search.isNotEmpty()) TextButton({search=""}) { Text("清除") }})
                     Row(Modifier.fillMaxWidth().padding(horizontal=12.dp),horizontalArrangement=Arrangement.SpaceBetween) {
-                        TextButton({selected=catalog.initialDestinations(s.filters.originCityId).toList()}) { Text("恢复默认范围") }
+                        TextButton({selected=catalog.initialDestinations(s.filters.originCityId).toList()}) { Text("恢复默认") }
                         TextButton({selected=emptyList()}) { Text("清空选择") }
                     }
                 }
@@ -130,7 +130,6 @@ class DestinationBrowserState(initialProvince: String = "") {
                             Text(if(selected.isEmpty()) "请至少选择一个城市" else "已选 $selectedProvinceCount 个省级地区 · ${selected.size} 个城市  ›",Modifier.weight(1f))
                         }
                         PrimaryButton("完成",{onApply(s.filters.copy(destinationCityIds=selected.toSet()))},selected.isNotEmpty(),Modifier.testTag("apply-destinations"))
-                        Text("目录为 2023 年行政区划快照；暂无车站的城市不可选。",style=MaterialTheme.typography.bodySmall,color=Muted)
                     }
                 }
             }

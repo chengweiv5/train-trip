@@ -41,7 +41,7 @@ import cn.traintrip.core.*
 @Composable internal fun SeatChoice(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier) {
     Surface(modifier.heightIn(min=48.dp).selectable(selected,onClick=onClick,role=Role.RadioButton),
         color=if(selected) Forest else Color.White,shape=RoundedCornerShape(12.dp),border=BorderStroke(1.dp,if(selected) Forest else Line)) {
-        Row(Modifier.padding(12.dp),horizontalArrangement=Arrangement.spacedBy(6.dp),verticalAlignment=Alignment.CenterVertically) {
+        Row(Modifier.padding(horizontal=8.dp,vertical=6.dp),horizontalArrangement=Arrangement.spacedBy(6.dp),verticalAlignment=Alignment.CenterVertically) {
             if(selected) ActionIcon("check",Color.White)
             Text(text,color=if(selected) Color.White else Forest,style=MaterialTheme.typography.bodyMedium)
         }
@@ -56,7 +56,7 @@ import cn.traintrip.core.*
             Column(Modifier.fillMaxWidth().padding(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 Column(Modifier.fillMaxWidth().testTag("selected-summary"),verticalArrangement=Arrangement.spacedBy(4.dp)) {
                     Text(if(selected!=null && seat!=null) "${selected.trainCode} · ${selected.date.monthValue}月${selected.date.dayOfMonth}日 · ${seat.label}" else "先点选一个席别",style=MaterialTheme.typography.titleSmall,color=Forest)
-                    Text(if(selected!=null) "${selected.from.name} ${selected.departure} → ${selected.to.name} · ${people}位成人" else "选好后，可打开 12306 App",style=MaterialTheme.typography.bodySmall,color=Muted)
+                    if(selected!=null) Text("${selected.from.name} ${selected.departure} → ${selected.to.name} · ${people}位成人",style=MaterialTheme.typography.bodySmall,color=Muted)
                 }
                 notice?.let { Text(it,Modifier.fillMaxWidth().testTag("detail-notice").semantics { liveRegion=LiveRegionMode.Polite },style=MaterialTheme.typography.bodySmall,color=Amber) }
                 Button(onOpenApp,Modifier.fillMaxWidth().heightIn(min=if(fontScale>1.15f) 60.dp else 56.dp).testTag("open-12306"),enabled=selected!=null && seat!=null,shape=RoundedCornerShape(16.dp),contentPadding=PaddingValues(12.dp)) {
@@ -83,7 +83,7 @@ import cn.traintrip.core.*
         TextButton(onRefresh,Modifier.heightIn(min=48.dp).testTag("refresh-tickets"),enabled=refresh?.running!=true,contentPadding=PaddingValues(horizontal=0.dp)) {
             Text(if(refresh?.running==true) "正在刷新余票…" else "刷新余票")
         }
-        if(refresh?.running==true) Text("已处理 ${refresh.outcomes.size} / ${refresh.plan.size} 项 · 仍可浏览和打开 12306 App",style=MaterialTheme.typography.bodySmall,color=Muted)
+        if(refresh?.running==true) Text("已完成 ${refresh.outcomes.size} / ${refresh.plan.size}",style=MaterialTheme.typography.bodySmall,color=Muted)
         if(failed.isNotEmpty() || refresh?.stopped==true) {
             Text(if(refresh?.stopped==true) "刷新已停止 · 保留已有结果" else "余票未更新 · ${failed.size} / ${cityPlan.size} 项未成功",color=Amber,style=MaterialTheme.typography.bodySmall)
             failed.forEach { unit->

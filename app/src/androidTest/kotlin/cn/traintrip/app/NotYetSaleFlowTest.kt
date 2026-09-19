@@ -52,9 +52,9 @@ class NotYetSaleFlowTest {
         }
         compose.onNodeWithText("找到 1 个城市").assertExists()
         compose.onNodeWithText("查看原因").assertDoesNotExist()
-        compose.onNodeWithText("重试未成功项").assertDoesNotExist()
+        compose.onNodeWithText("重试查询").assertDoesNotExist()
         compose.onNodeWithTag("trains-$tianjin").performScrollTo().performClick()
-        compose.onNodeWithText("1 趟车次 · 余票随时变化").assertExists()
+        compose.onNodeWithText("1 趟车次").assertExists()
         compose.onNodeWithText("G101").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("二等座 8 张").assertExists()
         compose.onNodeWithText("C2551").assertDoesNotExist()

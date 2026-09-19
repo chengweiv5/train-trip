@@ -144,6 +144,41 @@ class DestinationUiTest {
         capture("results-large-font")
     }
 
+    @Test fun incompleteQueryStatusNeverLooksCompleteAndKeepsAvailableCities() {
+        val complete=resultState()
+        val progress=complete.progress!!
+        val first=progress.plan.first()
+        val second=progress.plan[1]
+        var state by mutableStateOf(complete.copy(progress=progress.copy(outcomes=mapOf(first.key to progress.outcomes.getValue(first.key)),running=true)))
+        compose.setContent { TrainTripTheme { ResultsScreen(state,{},{},{},{},{},{},{}) } }
+        compose.onNodeWithText("正在查询 1 / ${progress.plan.size}").assertExists()
+        compose.onNodeWithText("查询完成").assertDoesNotExist()
+        compose.runOnIdle { state=state.copy(progress=state.progress!!.copy(running=false,stopped=true)) }
+        compose.onNodeWithText("查询已停止\n${progress.plan.size-1} 项待查询").assertExists()
+        compose.onNodeWithText("继续查询").assertExists()
+        val successful=progress.plan.last()
+        val mixed=progress.plan.associate { unit->unit.key to when(unit) {
+            first->QueryResult.Failure("测试失败")
+            second->QueryResult.NotOnSale("明日开售")
+            successful->progress.outcomes.getValue(unit.key)
+            else->QueryResult.Success(emptyList(),Instant.now())
+        } }
+        compose.runOnIdle { state=complete.copy(progress=progress.copy(outcomes=mixed)) }
+        compose.onNodeWithText("部分查询未完成\n1 项失败 · 1 项未开售").assertExists()
+        compose.onNodeWithTag("results-list").performScrollToNode(hasText("找到 1 个城市"))
+        compose.onNodeWithText("找到 1 个城市").assertIsDisplayed()
+        compose.onNodeWithText("查看原因").performScrollTo().performClick()
+        compose.onNodeWithText("测试失败",substring=true).assertIsDisplayed()
+        compose.onNodeWithText("明日开售",substring=true).assertIsDisplayed()
+        compose.onNodeWithText("关闭").performClick()
+        compose.runOnIdle { state=complete }
+        compose.onNodeWithText("查询完成").assertExists()
+        compose.onNodeWithText("查看原因").assertDoesNotExist()
+        compose.onNodeWithText("找到 3 个城市").assertExists()
+        compose.onNodeWithTag("results-list").performScrollToIndex(0)
+        capture("results-copy-cleanup")
+    }
+
     @Test fun oldPreferencesMigrateWithoutResettingOtherConditions() {
         val prefs=compose.activity.getSharedPreferences("travel-filters",0)
         val old="""{"origin":"0357","stations":["VNP"],"start":"${today().plusDays(1)}","end":"${today().plusDays(1)}","from":1320,"to":360,"seats":["SECOND"],"people":3,"max":480,"destinations":["1717","3102","0914"]}"""

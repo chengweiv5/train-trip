@@ -162,7 +162,7 @@ class DetailFlowTest {
         restoration.emulateSavedInstanceStateRestore()
         compose.onNodeWithText("车程最短 ↑").assertExists()
         compose.runOnIdle { assertEquals(key,vm.state.value.selectedTripKey) }
-        compose.onNodeWithText(dateLabel(date.plusDays(1))).performScrollTo().performClick()
+        compose.onNodeWithTag("detail-date-${date.plusDays(1)}").performScrollTo().performClick()
         compose.onNodeWithTag("open-12306").assertIsNotEnabled()
         compose.runOnIdle { assertNull(vm.state.value.selectedTripKey) }
         compose.onNodeWithText("全部日期").performScrollTo().performClick()

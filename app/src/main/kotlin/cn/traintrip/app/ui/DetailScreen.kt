@@ -2,6 +2,8 @@
 package cn.traintrip.app.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -15,6 +17,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cn.traintrip.app.*
 import cn.traintrip.core.*
@@ -44,17 +47,16 @@ import java.time.LocalDate
     Scaffold(containerColor=Cream,bottomBar={
         DetailActions(selected,s.selectedSeat,f.people,s.notice,onOpenApp)
     }) { padding->
-        LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("detail-list"),state=listState,contentPadding=PaddingValues(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("detail-list"),state=listState,contentPadding=PaddingValues(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
             item { BackHeader("${s.catalog.byCity[f.originCityId]?.name}出发 · 只看直达",onBack) }
-            item { Text("去${s.catalog.byCity[s.cityId]?.name.orEmpty()}",style=MaterialTheme.typography.headlineLarge);Text(s.catalog.byCity[s.cityId]?.provinceLabel.orEmpty(),color=Muted,style=MaterialTheme.typography.bodyMedium);Text("${all.map { it.trainKey }.distinct().size} 趟车次 · 余票随时变化",color=Muted,style=MaterialTheme.typography.bodyMedium) }
+            item { Text("去${s.catalog.byCity[s.cityId]?.name.orEmpty()}",style=MaterialTheme.typography.headlineLarge);Text(s.catalog.byCity[s.cityId]?.provinceLabel.orEmpty(),color=Muted,style=MaterialTheme.typography.bodyMedium);Text("${all.map { it.trainKey }.distinct().size} 趟车次",color=Muted,style=MaterialTheme.typography.bodyMedium) }
             item { CityRefreshStatus(s,onRefresh,onRetry) }
-            item { Text("点选席别，底部查看已选车次",style=MaterialTheme.typography.bodyMedium,color=Forest) }
             item {
-                BoxWithConstraints {
-                  FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp),maxItemsInEachRow=if(compact || maxWidth<300.dp) 1 else Int.MAX_VALUE) {
-                    Choice("全部日期",selectedDate==null,{changeDate(null)})
-                    f.dates().forEach { d->Choice(dateLabel(d),selectedDate==d,{changeDate(d)}) }
-                  }
+                Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("detail-dates"),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+                    Choice("全部日期",selectedDate==null,{changeDate(null)},Modifier.testTag("detail-date-all"),contentPadding=PaddingValues(horizontal=8.dp,vertical=12.dp),maxLines=1)
+                    f.dates().forEach { d->
+                        Choice("${d.monthValue}月${d.dayOfMonth}日",selectedDate==d,{changeDate(d)},Modifier.testTag("detail-date-$d"),contentPadding=PaddingValues(horizontal=8.dp,vertical=12.dp),maxLines=1)
+                    }
                 }
             }
             item {
@@ -68,18 +70,22 @@ import java.time.LocalDate
             if(trips.isEmpty()) item { Hint("当前没有符合筛选条件的车次，请调整日期或到达站。") }
             items(trips,key={it.key}) { t->
                 Surface(Modifier.fillMaxWidth().testTag("trip-${t.key}"),shape=RoundedCornerShape(18.dp),color=if(t.key==s.selectedTripKey) Sage else Color.White,border=if(t.key==s.selectedTripKey) BorderStroke(1.5.dp,Forest) else null) {
-                  Column(Modifier.padding(18.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-                    Row { Text(t.trainCode,Modifier.weight(1f),style=MaterialTheme.typography.titleMedium);Text(if(t.key==s.selectedTripKey) "已选择" else "直达",style=MaterialTheme.typography.bodySmall,color=Muted) }
+                  Column(Modifier.padding(horizontal=12.dp,vertical=10.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                    Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
+                        Text(t.trainCode,Modifier.weight(1f),style=MaterialTheme.typography.titleMedium)
+                        Text("${t.date} · ${if(t.key==s.selectedTripKey) "已选择" else "直达"}",Modifier.weight(2f),style=MaterialTheme.typography.bodySmall,color=Muted,textAlign=TextAlign.End)
+                    }
                     TripTiming(t)
-                    BoxWithConstraints {
-                      FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp),maxItemsInEachRow=if(compact || maxWidth<260.dp) 1 else Int.MAX_VALUE) {
+                    FlowRow(horizontalArrangement=Arrangement.spacedBy(6.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
                         f.seats.filter { t.seats[it]?.confirmedFor(f.people)==true }.sortedBy { it.ordinal }.forEach { seat->
                             SeatChoice("${seat.label} ${t.seats.getValue(seat).label()}",s.selectedTripKey==t.key && s.selectedSeat==seat,{onSelect(t,seat)})
                         }
                     }
+                    Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
+                        val queriedAt=formatTime(t.queriedAt)
+                        Text(if(compact) "${queriedAt.substringBefore(' ')} 查询\n${queriedAt.substringAfter(' ')}" else "$queriedAt 查询",Modifier.weight(1f),style=MaterialTheme.typography.bodySmall,color=Muted)
+                        TextButton({seatTrip=t},Modifier.heightIn(min=48.dp),contentPadding=PaddingValues(0.dp)) { Text("更多席别与余票 ›",style=MaterialTheme.typography.bodySmall) }
                     }
-                    TextButton({seatTrip=t},contentPadding=PaddingValues(0.dp)) { Text("更多席别与余票 ›",style=MaterialTheme.typography.bodySmall) }
-                    Text("${t.date} · ${formatTime(t.queriedAt)} 查询",style=MaterialTheme.typography.bodySmall,color=Muted)
                   }
                 }
             }
@@ -94,7 +100,7 @@ import java.time.LocalDate
         LazyColumn(verticalArrangement=Arrangement.spacedBy(10.dp)) {
             item { Text("${t.date} ${t.departure}\n${t.from.name} → ${t.to.name}",style=MaterialTheme.typography.bodyMedium) }
             items(SeatType.entries) { seat->Row { Text(seat.label,Modifier.weight(1f));Text(t.seats[seat]?.label() ?: "未提供",color=Muted) } }
-            item { Text("查询时间：${formatTime(t.queriedAt)}\n“有”表示有票，不显示具体张数。候补资格请在 12306 确认。${if(t.waitlistTrainFlag) "\n票源标记该车支持候补，具体席别以官方显示为准。" else ""}",style=MaterialTheme.typography.bodySmall,color=Muted) }
+            item { Text("查询时间：${formatTime(t.queriedAt)}${if(t.waitlistTrainFlag) "\n本车次支持候补，具体席别请在 12306 查看。" else ""}",style=MaterialTheme.typography.bodySmall,color=Muted) }
         }
     },confirmButton={TextButton({seatTrip=null}) { Text("知道了") }}) }
 }

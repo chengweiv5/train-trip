@@ -1,0 +1,7 @@
+--------- beginning of main
+09-19 13:23:10.081  2207  2223 I DetailLayout: cardHeightDp=201.53847
+09-19 13:23:10.375  2207  2223 I DetailLayout: dateBounds=[Rect.fromLTRB(65.0, 872.0, 297.0, 1028.0), Rect.fromLTRB(317.0, 872.0, 559.0, 1028.0), Rect.fromLTRB(579.0, 872.0, 821.0, 1028.0), Rect.fromLTRB(841.0, 872.0, 1083.0, 1028.0)]; rowBounds=Rect.fromLTRB(65.0, 872.0, 1195.0, 1028.0)
+09-19 13:24:55.017  2522  2536 I DetailLayout: cardHeightDp=201.53847
+09-19 13:24:55.308  2522  2536 I DetailLayout: dateBounds=[Rect.fromLTRB(65.0, 872.0, 297.0, 1028.0), Rect.fromLTRB(317.0, 872.0, 559.0, 1028.0), Rect.fromLTRB(579.0, 872.0, 821.0, 1028.0), Rect.fromLTRB(841.0, 872.0, 1083.0, 1028.0)]; rowBounds=Rect.fromLTRB(65.0, 872.0, 1195.0, 1028.0)
+09-19 13:28:39.792  2717  2731 I DetailLayout: cardHeightDp=201.53847
+09-19 13:28:40.091  2717  2731 I DetailLayout: dateBounds=[Rect.fromLTRB(65.0, 872.0, 297.0, 1028.0), Rect.fromLTRB(317.0, 872.0, 559.0, 1028.0), Rect.fromLTRB(579.0, 872.0, 821.0, 1028.0), Rect.fromLTRB(841.0, 872.0, 1083.0, 1028.0)]; rowBounds=Rect.fromLTRB(65.0, 872.0, 1195.0, 1028.0)

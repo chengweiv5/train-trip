@@ -55,7 +55,7 @@ import java.time.temporal.ChronoUnit
             if(range) DateRangePicker(dates,Modifier.weight(1f).testTag("range-calendar"),title=null,headline=null,showModeToggle=false,colors=calendarColors)
             else DatePicker(single,Modifier.weight(1f).testTag("single-calendar"),title=null,headline=null,showModeToggle=false,colors=calendarColors)
             Column(Modifier.padding(horizontal=20.dp).padding(bottom=20.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Text(error ?: "范围两端均包含，最多 31 天。未开售日期会在查询时提示。",color=if(error!=null) Amber else Muted,style=MaterialTheme.typography.bodySmall)
+                if(error!=null || range) Text(error ?: "最多选择 31 天",color=if(error!=null) Amber else Muted,style=MaterialTheme.typography.bodySmall)
                 Row(horizontalArrangement=Arrangement.spacedBy(12.dp)) {
                     SecondaryButton("取消",onDismiss,Modifier.weight(1f))
                     PrimaryButton(if(days!=null) "完成 · $days 天" else "完成",{candidate?.let(onApply)},candidate!=null && error==null,Modifier.weight(1f).testTag("apply-dates"))

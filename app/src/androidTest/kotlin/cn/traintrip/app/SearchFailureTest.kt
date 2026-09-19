@@ -51,11 +51,11 @@ class SearchFailureTest {
         compose.onNodeWithText("找到 2 个城市").assertExists()
         compose.onNodeWithText("继续查询").assertDoesNotExist()
         compose.onNodeWithText("查看原因").performScrollTo().performClick()
-        compose.onNodeWithText("未成功查询项").assertIsDisplayed()
+        compose.onNodeWithText("查询未完成的原因").assertIsDisplayed()
         compose.onNodeWithText(error, substring = true).assertIsDisplayed()
         compose.onNodeWithText("关闭").performClick()
         compose.runOnIdle { retry = true }
-        compose.onAllNodesWithText("重试未成功项")[0].performScrollTo().performClick()
+        compose.onAllNodesWithText("重试查询")[0].performScrollTo().performClick()
         compose.waitUntil(15000) { vm.state.value.progress?.complete == true }
         compose.runOnIdle {
             assertEquals(plan + plan.first(), calls)

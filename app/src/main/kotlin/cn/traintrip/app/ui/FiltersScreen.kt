@@ -36,7 +36,7 @@ import cn.traintrip.core.*
                     Text("→",color=Muted)
                     Text(dateLabel(f.endDate),style=MaterialTheme.typography.titleMedium)
                 }
-                Text(if(f.startDate==f.endDate) "单日出发" else "连续日期 · 两端均包含",style=MaterialTheme.typography.bodySmall,color=Muted)
+                Text(if(f.startDate==f.endDate) "单日出发" else "共 ${f.dates().size} 天",style=MaterialTheme.typography.bodySmall,color=Muted)
             }
         }
         Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
@@ -54,7 +54,6 @@ import cn.traintrip.core.*
             FilterRow("最长车程",f.maxMinutes?.let { durationText(it) } ?: "不限") { sheet="duration" }
             FilterRow("查询目的地","${f.destinationCityIds.size} 个城市 · ${f.destinationCityIds.mapNotNull { s.catalog.byCity[it]?.province?.id }.distinct().size} 个省级地区") { sheet="scope" }
         }
-        Text("首版按所选城市查询；可能未覆盖全部目的地。可在“查询目的地”中查看和调整范围。",style=MaterialTheme.typography.bodySmall,color=Muted)
         s.error?.let { Hint(it,true) }
         PrimaryButton("找找有票的城市  →",onSearch)
         Text("只看直达去程 · 购票在 12306 完成",style=MaterialTheme.typography.bodySmall,color=Muted)

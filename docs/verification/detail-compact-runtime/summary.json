@@ -1,0 +1,78 @@
+{
+  "status": "verified",
+  "branch": "codex/detail-compact-dates",
+  "base_commit": "b09d2d946c516facc19d4365a685f93d66498cc2",
+  "installed_version": "0.4.0 (8)",
+  "apk_sha256": "58ca96957b57ad91ff2a20730b74717c0d4d72f080eb5319781ef134708846ea",
+  "installed_apk_matches": true,
+  "preferences_unchanged_after_launch": true,
+  "phone_launch": "Status: ok",
+  "layout_environment": {
+    "normal_width_dp": 387.6923076923077,
+    "font_scale": 1,
+    "large_width_dp": 320,
+    "large_font_scale": 1.3
+  },
+  "three_dates": {
+    "all_same_row": true,
+    "fully_inside_viewport": true,
+    "row_bounds_px": [
+      65,
+      1033,
+      1195,
+      1189
+    ],
+    "button_bounds_px": [
+      [
+        65,
+        1033,
+        297,
+        1189
+      ],
+      [
+        317,
+        1033,
+        559,
+        1189
+      ],
+      [
+        579,
+        1033,
+        821,
+        1189
+      ],
+      [
+        841,
+        1033,
+        1083,
+        1189
+      ]
+    ],
+    "right_space_dp": 34.46153846153846
+  },
+  "two_seat_card": {
+    "before_height_dp": 264.30768,
+    "after_height_dp": 201.53847,
+    "reduction_percent": 23.7
+  },
+  "tests": {
+    "layout_and_existing_detail": 8,
+    "final_layout_after_timestamp_line_break": 2
+  },
+  "lint": {
+    "Warning": 12
+  },
+  "screenshots_reviewed": true,
+  "ocr_reviewed": true,
+  "source_sha256": {
+    "app/src/main/kotlin/cn/traintrip/app/ui/DetailScreen.kt": "75efbee25bda04c36194fb473c0065fdae0863aaf9acf501e2cf3799daa0c6a2",
+    "app/src/main/kotlin/cn/traintrip/app/ui/DetailActions.kt": "7a128f55d6799cfa620a0876a5a831ee1ba2d82508701b4a7764ed414db2861e",
+    "app/src/androidTest/kotlin/cn/traintrip/app/DetailFlowTest.kt": "d8277ffb32f1feff337e4f8a8e1f10601c687d402f01c6aad3bb21c376f84f79",
+    "app/src/androidTest/kotlin/cn/traintrip/app/DetailLayoutTest.kt": "af28eccdc7c29f57013d7e2d9ad2544c965fe77d58576327976c1c9434a64ecd"
+  },
+  "notes": [
+    "Layout verified in isolated emulator with exact Mate 60 Pro display size, plus 320dp and 1.3 font. Phone install, launch and preference preservation verified separately.",
+    "Existing detail behavior suite passed before final query-time line-break polish; final layout suite passed afterward.",
+    "Shared Pencil files are unchanged. Prior single-row design previews remain local."
+  ]
+}
