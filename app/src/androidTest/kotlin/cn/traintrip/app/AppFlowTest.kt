@@ -49,7 +49,7 @@ class AppFlowTest {
         compose.onNodeWithText("1 个城市 · 1 个省级地区").assertExists()
     }
 
-    @Test fun realSearchToTrainAndRecheck() {
+    @Test fun realSearchToTrainAndManualRefresh() {
         val vm=androidx.lifecycle.ViewModelProvider(compose.activity)[AppViewModel::class.java]
         compose.runOnIdle {
             val s=vm.state.value
@@ -72,24 +72,11 @@ class AppFlowTest {
             val trip=s.progress!!.trips.first { it.confirmed(f) }
             vm.select(trip,f.seats.first { trip.seats[it]?.confirmedFor(f.people)==true })
         }
-        compose.onNodeWithText("核验余票并去 12306").performClick()
-        compose.waitUntil(60000) { !vm.state.value.rechecking && vm.state.value.notice!=null }
-        compose.runOnIdle { assertTrue("Recheck should reach official handoff: ${vm.state.value.notice}",vm.state.value.handoffReady) }
-        capture("04-recheck")
-        val automation=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().uiAutomation
-        val expected=automation.executeShellCommand("cmd package resolve-activity --brief -a android.intent.action.VIEW -d ${OfficialTicketSource.INIT}").use { d->
-            android.os.ParcelFileDescriptor.AutoCloseInputStream(d).bufferedReader().readText().lineSequence().last { it.contains('/') }.substringBefore('/')
-        }
-        compose.onNodeWithText("复制行程并打开 12306").performClick()
-        var resumed=""
-        repeat(20) {
-            android.os.SystemClock.sleep(100)
-            automation.executeShellCommand("dumpsys activity activities").use { d->
-                resumed=android.os.ParcelFileDescriptor.AutoCloseInputStream(d).bufferedReader().readText().lineSequence().filter { it.contains("mResumedActivity") || it.contains("topResumedActivity") }.joinToString()
-            }
-            if(resumed.contains(expected)) return@repeat
-        }
-        assertTrue("Official page did not open: $resumed",resumed.contains(expected))
+        compose.onNodeWithText("刷新余票").performScrollTo().performClick()
+        compose.waitUntil(60000) { vm.state.value.cityRefresh?.running == false }
+        compose.runOnIdle { assertTrue("Refresh should succeed",vm.state.value.cityRefresh?.complete==true) }
+        compose.onNodeWithTag("open-12306").assertIsEnabled()
+        capture("04-manual-refresh")
     }
 
     private fun capture(name:String) {

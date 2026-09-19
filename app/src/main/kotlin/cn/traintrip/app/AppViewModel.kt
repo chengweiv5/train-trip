@@ -12,8 +12,8 @@ data class UiState(
     val catalog:StationCatalog, val filters:SearchFilters, val applied:SearchFilters?=null,
     val sourceInfo:SourceInfo?=null, val loading:Boolean=false, val error:String?=null,
     val page:Page=Page.FILTERS, val progress:SearchProgress?=null, val cityId:String?=null,
-    val selectedTripKey:String?=null, val selectedSeat:SeatType?=null, val rechecking:Boolean=false,
-    val notice:String?=null, val handoffReady:Boolean=false, val handoffText:String?=null,
+    val selectedTripKey:String?=null, val selectedSeat:SeatType?=null,
+    val notice:String?=null, val cityRefresh:SearchProgress?=null,
     val citySortByCount:Boolean=false, val searchSession:Long=0, val detailFromGuide:Boolean=false
 )
 class AppViewModel @JvmOverloads constructor(app:Application,private val source:TicketSource=OfficialTicketSource()):AndroidViewModel(app) {
@@ -22,78 +22,93 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
     private val mutable=MutableStateFlow(UiState(initialCatalog,preferences.load(initialCatalog)))
     val state:StateFlow<UiState> = mutable.asStateFlow()
     private var searchJob:Job?=null
-    private var checkJob:Job?=null
+    private var refreshJob:Job?=null
     fun updateFilters(f:SearchFilters) { preferences.save(f);mutable.update { it.copy(filters=f,error=null) } }
-    fun showFilters() { stopSearch();checkJob?.cancel();mutable.update { it.copy(page=Page.FILTERS,rechecking=false) } }
-    fun showResults() { checkJob?.cancel();mutable.update { it.copy(page=Page.RESULTS,rechecking=false,selectedTripKey=null,selectedSeat=null) } }
-    fun showCity(id:String) { mutable.update { it.copy(page=Page.DETAIL,cityId=id,selectedTripKey=null,selectedSeat=null,detailFromGuide=false) } }
-    fun showDestination(id:String) { mutable.update { it.copy(page=Page.DESTINATION,cityId=id,selectedTripKey=null,selectedSeat=null) } }
+    fun showFilters() { stopSearch();refreshJob?.cancel();mutable.update { it.copy(page=Page.FILTERS,cityRefresh=it.cityRefresh?.copy(running=false,stopped=it.cityRefresh.running || it.cityRefresh.stopped)) } }
+    fun showResults() { refreshJob?.cancel();mutable.update { it.copy(page=Page.RESULTS,cityRefresh=it.cityRefresh?.copy(running=false,stopped=it.cityRefresh.running || it.cityRefresh.stopped),selectedTripKey=null,selectedSeat=null) } }
+    fun showCity(id:String) { mutable.update { it.copy(page=Page.DETAIL,cityId=id,selectedTripKey=null,selectedSeat=null,cityRefresh=null,notice=null,detailFromGuide=false) } }
+    fun showDestination(id:String) { mutable.update { it.copy(page=Page.DESTINATION,cityId=id,selectedTripKey=null,selectedSeat=null,cityRefresh=null,notice=null) } }
     fun showDestinationTrains() { mutable.update { it.copy(page=Page.DETAIL,detailFromGuide=true,selectedTripKey=null,selectedSeat=null) } }
     fun backFromCity() {
-        checkJob?.cancel()
+        refreshJob?.cancel()
         mutable.update { it.copy(page=if(it.page==Page.DETAIL && it.detailFromGuide) Page.DESTINATION else Page.RESULTS,
-            rechecking=false,selectedTripKey=null,selectedSeat=null) }
+            cityRefresh=it.cityRefresh?.copy(running=false,stopped=it.cityRefresh.running || it.cityRefresh.stopped),selectedTripKey=null,selectedSeat=null) }
     }
     fun sortCities() { mutable.update { it.copy(citySortByCount=!it.citySortByCount) } }
-    fun dismissNotice() { mutable.update { it.copy(notice=null,handoffReady=false) } }
+    fun dismissNotice() { mutable.update { it.copy(notice=null) } }
+    fun clearSelection() { mutable.update { it.copy(selectedTripKey=null,selectedSeat=null,notice=null) } }
     fun select(trip:Trip,seat:SeatType) {
-        checkJob?.cancel()
-        mutable.update { it.copy(selectedTripKey=trip.key,selectedSeat=seat,rechecking=false,handoffReady=false,handoffText=null) }
+        mutable.update { it.copy(selectedTripKey=trip.key,selectedSeat=seat,notice=null) }
+    }
+    fun reportAppLaunch(result:AppLaunchResult) {
+        mutable.update { it.copy(notice=when(result) {
+            AppLaunchResult.OPENED -> null
+            AppLaunchResult.NOT_INSTALLED -> "未安装铁路12306\n安装后重试，已选车次会保留"
+            AppLaunchResult.FAILED -> "暂时无法打开 12306 App\n已选车次会保留，可以重试或复制车次"
+        }) }
     }
     fun stopSearch() { searchJob?.cancel();mutable.update { it.copy(loading=false,progress=it.progress?.copy(running=false,stopped=it.progress.running || it.progress.stopped)) } }
     fun pauseForegroundWork() {
         stopSearch()
-        checkJob?.cancel()
-        mutable.update { it.copy(rechecking=false) }
+        refreshJob?.cancel()
+        mutable.update { it.copy(cityRefresh=it.cityRefresh?.copy(running=false,stopped=it.cityRefresh.running || it.cityRefresh.stopped)) }
     }
     fun search(resume:Boolean=false,retryFailed:Boolean=false,refresh:Boolean=false) {
         val current=mutable.value
         val filters=if(resume || retryFailed || refresh) current.applied ?: current.filters else current.filters
         filters.validate()?.let { error -> mutable.update { it.copy(error=error) };return }
-        searchJob?.cancel();checkJob?.cancel()
+        searchJob?.cancel();refreshJob?.cancel()
         val previous=if(resume || retryFailed) current.progress else null
-        mutable.update { it.copy(searchSession=if(resume || retryFailed || refresh) it.searchSession else it.searchSession+1,applied=filters,page=Page.RESULTS,loading=true,error=null,progress=previous,selectedTripKey=null,selectedSeat=null,rechecking=false) }
+        mutable.update { it.copy(searchSession=if(resume || retryFailed || refresh) it.searchSession else it.searchSession+1,applied=filters,page=Page.RESULTS,loading=true,error=null,progress=previous,selectedTripKey=null,selectedSeat=null,cityRefresh=null,notice=null) }
         searchJob=viewModelScope.launch {
             try {
                 val info=source.initialize()
                 val plan=info.catalog.plan(filters)
                 val existing=previous?.outcomes?.filterValues { it !is QueryResult.Failure && it !is QueryResult.NotOnSale } ?: emptyMap()
                 mutable.update { it.copy(catalog=info.catalog,sourceInfo=info,loading=false) }
-                SearchEngine(source).search(plan,existing).collect { progress -> mutable.update { it.copy(progress=progress) } }
+                SearchEngine(source).search(plan,existing,previous?.retainedSuccesses.orEmpty()).collect { progress -> mutable.update { it.copy(progress=progress) } }
             } catch(e:CancellationException) { throw e }
             catch(e:Exception) { mutable.update { it.copy(loading=false,error=e.message ?: "查询失败，请稍后重试",progress=it.progress?.copy(running=false,stopped=true)) } }
         }
     }
-    fun recheck() {
-        val s=mutable.value;val f=s.applied ?: return
-        val trip=s.progress?.trips?.firstOrNull { it.key==s.selectedTripKey } ?: return
-        val seat=s.selectedSeat ?: return
+    fun refreshCity(retryFailed:Boolean=false) {
+        val current=mutable.value
+        if(current.cityRefresh?.running==true || current.page!=Page.DETAIL) return
+        val city=current.cityId ?: return
+        val progress=current.progress ?: return
+        val retryKeys=current.cityRefresh?.let { refresh ->
+            refresh.plan.filter { refresh.outcomes[it.key] !is QueryResult.Success }.map { it.key }.toSet()
+        }.orEmpty()
+        val plan=progress.plan.filter { it.destination.cityId==city && (!retryFailed || it.key in retryKeys) }
+        if(plan.isEmpty()) return
         stopSearch()
-        checkJob?.cancel();mutable.update { it.copy(rechecking=true,notice=null,handoffReady=false,handoffText=null) }
-        checkJob=viewModelScope.launch {
+        mutable.update { it.copy(cityRefresh=SearchProgress(plan,running=true),notice=null) }
+        refreshJob=viewModelScope.launch {
+            fun apply(update:SearchProgress) {
+                mutable.update { old ->
+                    val merged=old.progress?.mergeRefresh(update)
+                    val affected=update.outcomes.filterValues { it is QueryResult.Success }.keys.any { key ->
+                        old.progress?.successfulData?.get(key)?.trips?.any { it.key==old.selectedTripKey }==true
+                    }
+                    val chosen=merged?.trips?.firstOrNull { it.key==old.selectedTripKey }
+                    val invalid=affected && old.selectedTripKey!=null && (chosen==null || !chosen.confirmed(old.applied ?: old.filters) ||
+                        chosen.seats[old.selectedSeat]?.confirmedFor((old.applied ?: old.filters).people)!=true)
+                    old.copy(progress=merged,cityRefresh=update,
+                        selectedTripKey=if(invalid) null else old.selectedTripKey,
+                        selectedSeat=if(invalid) null else old.selectedSeat,
+                        notice=if(invalid) "所选席别当前不满足人数，请重新选择一个席别" else old.notice)
+                }
+            }
             try {
                 source.initialize()
-                val result=source.query(QueryUnit(trip.date,trip.from,trip.to))
-                when(result) {
-                    is QueryResult.Success -> {
-                        val fresh=result.trips.firstOrNull { it.key==trip.key }
-                        mutable.update { old ->
-                            val outcomes=old.progress?.outcomes?.mapValues { (_,v) -> if(v is QueryResult.Success) v.copy(trips=v.trips.mapNotNull { t -> if(t.key==trip.key) fresh else t }) else v }
-                            old.copy(progress=old.progress?.copy(outcomes=outcomes ?: emptyMap()))
-                        }
-                        val available=fresh?.takeIf { it.isSaleable() }?.seats?.get(seat)
-                        when {
-                            available?.confirmedFor(f.people)==true -> mutable.update { it.copy(rechecking=false,handoffReady=true,handoffText=itinerary(fresh,seat,f.people),notice="已核验当前余票。请在 12306 完成登录与购票。") }
-                            else -> mutable.update { it.copy(rechecking=false,selectedTripKey=null,selectedSeat=null,notice="这趟车当前不满足所选席别和人数，请选择其他车次。") }
-                        }
-                    }
-                    is QueryResult.Failure -> mutable.update { it.copy(rechecking=false,notice="没能确认最新余票：${result.message}\n旧结果时间：${formatTime(trip.queriedAt)}。",handoffText=itinerary(trip,seat,f.people)) }
-                    is QueryResult.NotOnSale -> mutable.update { it.copy(rechecking=false,notice=result.message,selectedTripKey=null,selectedSeat=null) }
-                }
+                SearchEngine(source).search(plan).collect { apply(it) }
             } catch(e:CancellationException) { throw e }
-            catch(e:Exception) { mutable.update { it.copy(rechecking=false,notice="核验失败：${e.message}。旧结果时间：${formatTime(trip.queriedAt)}。",handoffText=itinerary(trip,seat,f.people)) } }
+            catch(e:Exception) {
+                apply(SearchProgress(plan,plan.associate { it.key to QueryResult.Failure(e.message ?: "查询失败，请稍后重试") }))
+            }
         }
     }
+
 }
 fun formatTime(at:java.time.Instant):String = java.time.format.DateTimeFormatter.ofPattern("MM-dd HH:mm:ss").withZone(BEIJING_ZONE).format(at)
 fun itinerary(t:Trip,seat:SeatType,people:Int) = "${t.date} ${t.trainCode}\n${t.from.name} ${t.departure} → ${t.to.name} ${t.arrival}${t.arrivalDayOffset?.takeIf { it>0 }?.let { "（+$it 天）" } ?: ""}\n${seat.label} · $people 位成人\n查询时间：${formatTime(t.queriedAt)}\n余票以 12306 实时结果为准"

@@ -12,9 +12,10 @@ interface TicketSource {
     suspend fun query(unit: QueryUnit): QueryResult
 }
 class SearchEngine(private val source: TicketSource, private val spacingMillis: Long = 1100) {
-    fun search(plan: List<QueryUnit>, existing: Map<String,QueryResult> = emptyMap()): Flow<SearchProgress> = flow {
+    fun search(plan: List<QueryUnit>, existing: Map<String,QueryResult> = emptyMap(), retainedSuccesses: Map<String,QueryResult.Success> = emptyMap()): Flow<SearchProgress> = flow {
         val results = existing.filterKeys { key -> plan.any { it.key == key } }.toMutableMap()
-        emit(SearchProgress(plan,results.toMap(),running=true))
+        val retained = retainedSuccesses.filterKeys { key -> plan.any { it.key == key } && results[key] !is QueryResult.Success }.toMutableMap()
+        emit(SearchProgress(plan,results.toMap(),running=true,retainedSuccesses=retained.toMap()))
         for(unit in plan.filterNot { it.key in results }) {
             currentCoroutineContext().ensureActive()
             delay(spacingMillis)
@@ -27,8 +28,9 @@ class SearchEngine(private val source: TicketSource, private val spacingMillis: 
             }
             currentCoroutineContext().ensureActive()
             results[unit.key] = result
-            emit(SearchProgress(plan,results.toMap(),running=true))
+            if(result is QueryResult.Success) retained.remove(unit.key)
+            emit(SearchProgress(plan,results.toMap(),running=true,retainedSuccesses=retained.toMap()))
         }
-        emit(SearchProgress(plan,results.toMap()))
+        emit(SearchProgress(plan,results.toMap(),retainedSuccesses=retained.toMap()))
     }
 }

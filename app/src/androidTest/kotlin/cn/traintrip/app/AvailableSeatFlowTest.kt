@@ -21,11 +21,11 @@ class AvailableSeatFlowTest {
     private val tianjin = "120000"
     private val calls = AtomicInteger()
 
-    private fun searchAndSelect(recheckedSeat: String): AppViewModel {
+    private fun searchAndSelect(refreshedSeat: String): AppViewModel {
         val source = object : TicketSource {
             override suspend fun initialize() = SourceInfo("offline-test", today(), today().plusDays(15), catalog, Instant.now())
             override suspend fun query(unit: QueryUnit): QueryResult {
-                val raw = if (calls.incrementAndGet() == 1) "有" else recheckedSeat
+                val raw = if (calls.incrementAndGet() == 1) "有" else refreshedSeat
                 val row = MutableList(39) { "" }.apply {
                     this[1] = "预订"; this[2] = "offline-G101"; this[3] = "G101"
                     this[6] = "VNP"; this[7] = "TJP"
@@ -48,33 +48,31 @@ class AvailableSeatFlowTest {
         compose.onNodeWithText("1 趟有票").assertExists()
         compose.onNodeWithTag("trains-$tianjin").performScrollTo().performClick()
         compose.onNodeWithText("二等座 有票").performScrollTo().performClick()
-        compose.onNodeWithText("核验余票并去 12306").performClick()
-        compose.waitUntil(10000) { !vm.state.value.rechecking && vm.state.value.notice != null }
-        compose.runOnIdle { assertEquals("must query again before handoff", 2, calls.get()) }
+        compose.onNodeWithText("刷新余票").performScrollTo().performClick()
+        compose.waitUntil(10000) { vm.state.value.cityRefresh?.running == false }
+        compose.runOnIdle { assertEquals("manual refresh queries selected city", 2, calls.get()) }
         return vm
     }
 
-    @Test fun availableCountsForTwoPeopleAndRechecksNormally() {
+    @Test fun availableCountsForTwoPeopleAndRefreshesNormally() {
         val vm = searchAndSelect("有")
-        compose.onNodeWithText("已核验当前余票。请在 12306 完成登录与购票。").assertExists()
         compose.runOnIdle {
-            assertTrue(vm.state.value.handoffReady)
-            assertTrue(vm.state.value.handoffText!!.contains("2 位成人"))
+            assertNotNull(vm.state.value.selectedTripKey)
+            assertEquals(2, vm.state.value.applied!!.people)
             assertNull(vm.state.value.progress!!.trips.single().seats.getValue(SeatType.SECOND).count)
             vm.pauseForegroundWork()
         }
     }
 
-    @Test fun recheckRejectsExplicitCountBelowPartySize() { assertRecheckRejected("1") }
+    @Test fun refreshRejectsExplicitCountBelowPartySize() { assertRefreshRejected("1") }
 
-    @Test fun recheckRejectsTicketsThatBecameUnavailable() { assertRecheckRejected("无") }
+    @Test fun refreshRejectsTicketsThatBecameUnavailable() { assertRefreshRejected("无") }
 
-    private fun assertRecheckRejected(raw: String) {
+    private fun assertRefreshRejected(raw: String) {
         val vm = searchAndSelect(raw)
-        compose.onNodeWithText("这趟车当前不满足所选席别和人数，请选择其他车次。").assertExists()
+        compose.onNodeWithText("所选席别当前不满足人数，请重新选择一个席别").assertExists()
         compose.runOnIdle {
             val state = vm.state.value
-            assertFalse(state.handoffReady)
             assertNull(state.selectedTripKey)
             assertNull(state.selectedSeat)
             assertTrue(aggregate(state.progress!!.trips, state.applied!!).isEmpty())

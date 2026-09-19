@@ -81,7 +81,7 @@ import cn.traintrip.core.*
             })
         }
         if(cities.isEmpty() && !s.loading && s.error==null && progress?.complete==true) item { Hint("暂时没有符合条件的票\n当前所选范围已查完。试试换一天，或放宽时段、席别。");SecondaryButton("调整出行条件",onBack) }
-        item { SecondaryButton("修改出行条件",onBack);Text("余票随时变化。选择车次后再次核验，并以 12306 购票结果为准。",Modifier.padding(vertical=12.dp),style=MaterialTheme.typography.bodySmall,color=Muted) }
+        item { SecondaryButton("修改出行条件",onBack);Text("余票随时变化，可在车次页刷新。购票以 12306 App 实时结果为准。",Modifier.padding(vertical=12.dp),style=MaterialTheme.typography.bodySmall,color=Muted) }
     }
     if(showScope) AlertDialog(onDismissRequest={showScope=false},title={Text("本次查询范围")},text={
         LazyColumn { items(s.catalog.cities.filter { it.id in f.destinationCityIds }.groupBy { it.province }.entries.toList()) { (province,cities) ->

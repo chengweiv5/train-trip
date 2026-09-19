@@ -56,7 +56,7 @@ class DestinationGuideTest {
         return vm to source
     }
 
-    @Test fun guidePathPreservesPlanAndCanRecheckTickets() {
+    @Test fun guidePathPreservesPlanAndCanRefreshTickets() {
         val (vm, source) = startResults()
         revealCity(tianjin)
         compose.onNodeWithText("了解目的地").performScrollTo().assertIsDisplayed()
@@ -72,17 +72,16 @@ class DestinationGuideTest {
         capture("03-two-days")
         compose.onNodeWithTag("guide-trains").performClick()
         compose.onNodeWithText("去天津").assertIsDisplayed()
-        compose.onNodeWithText("二等座 8 张").performClick()
-        compose.onNodeWithText("核验余票并去 12306").performClick()
-        compose.waitUntil(5000) { vm.state.value.handoffReady }
-        compose.onNodeWithText("留在这里").performClick()
+        compose.onNodeWithText("二等座 8 张").performScrollTo().performClick()
+        compose.onNodeWithText("刷新余票").performScrollTo().performClick()
+        compose.waitUntil(5000) { vm.state.value.cityRefresh?.running == false }
         Espresso.pressBack()
         compose.onNodeWithText("两天多一点津味").assertIsDisplayed()
         Espresso.pressBack()
         compose.onNodeWithText("了解目的地").assertIsDisplayed()
         compose.runOnIdle {
             assertEquals(Page.RESULTS, vm.state.value.page)
-            assertEquals(3, source.queries) // two query units plus one explicit ticket recheck
+            assertEquals(3, source.queries) // two query units plus one explicit city refresh
         }
     }
 

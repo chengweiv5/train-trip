@@ -97,11 +97,24 @@ sealed interface QueryResult {
     data class Failure(val message: String): QueryResult
     data class NotOnSale(val message: String): QueryResult
 }
-data class SearchProgress(val plan: List<QueryUnit>, val outcomes: Map<String, QueryResult> = emptyMap(), val running: Boolean = false, val stopped: Boolean = false) {
+data class SearchProgress(val plan: List<QueryUnit>, val outcomes: Map<String, QueryResult> = emptyMap(), val running: Boolean = false, val stopped: Boolean = false,
+    val retainedSuccesses: Map<String, QueryResult.Success> = emptyMap()) {
     val successCount get() = outcomes.values.count { it is QueryResult.Success }
     val failureCount get() = outcomes.values.count { it is QueryResult.Failure }
     val unopenedCount get() = outcomes.values.count { it is QueryResult.NotOnSale }
     val remainingCount get() = plan.size - outcomes.size
-    val trips get() = outcomes.values.filterIsInstance<QueryResult.Success>().flatMap { it.trips }.distinctBy { it.key }
+    val successfulData get() = retainedSuccesses + outcomes.filterValues { it is QueryResult.Success }.mapValues { it.value as QueryResult.Success }
+    val trips get() = successfulData.values.flatMap { it.trips }.distinctBy { it.key }
     val complete get() = !running && remainingCount == 0 && failureCount == 0 && unopenedCount == 0
+
+    // A failed attempt changes coverage, but never turns previously seen tickets into "no tickets".
+    fun mergeRefresh(update: SearchProgress): SearchProgress {
+        val changed = update.outcomes.filterKeys { key -> plan.any { it.key == key } }
+        val retained = retainedSuccesses.toMutableMap()
+        changed.forEach { (key, result) ->
+            if (result is QueryResult.Success) retained.remove(key)
+            else successfulData[key]?.let { retained[key] = it }
+        }
+        return copy(outcomes = outcomes + changed, retainedSuccesses = retained)
+    }
 }

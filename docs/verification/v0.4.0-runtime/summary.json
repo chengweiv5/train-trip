@@ -1,0 +1,25 @@
+{
+  "version": "0.4.0",
+  "versionCode": 8,
+  "base": "d4f101355cff253ceaee4b92e5b8e3f24d9e1009",
+  "designCommit": "2f2c602",
+  "coreTests": 36,
+  "coreFailures": 0,
+  "offlineUiTests": 38,
+  "offlineUiPassed": true,
+  "finalDetailTests": 6,
+  "finalDetailPassed": true,
+  "nativeLaunchPassed": true,
+  "lintErrors": 0,
+  "lintWarnings": 12,
+  "runtimeImages": 9,
+  "ocrBlocks": 221,
+  "apkSha256": "6cad5e81ccd80b39f6331f2d5e7626f33572591800424ada0f7e69767a2b80a1",
+  "phonePreferencesUnchanged": true,
+  "liveTicketQueriesThisRun": 0,
+  "notes": [
+    "38-test offline suite passed before final behavior-preserving retry-key simplification; six detail tests passed again afterward including rendered-text size and target-size assertions.",
+    "Real Mate 60 Pro: com.MobileTicket foreground verified and returned to cn.traintrip.app.",
+    "Layout assertions verify no text overflow, >=48dp primary/copy targets, copy below summary, last item reachable and restored scroll in 320dp / 1.3 font."
+  ]
+}
