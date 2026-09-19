@@ -69,5 +69,5 @@ class GuideRepository(val source: GuideMaterialSource, val generator: GuideGener
 
 - [x] `JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ANDROID_HOME=/Users/bytedance/Library/Android/sdk ./gradlew :core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --offline`。
 - [x] 隔离模拟器完成相关测试及截图目视；真实 API 用已取得的公开页面验证，保留模型、来源及生成结果，不记录密钥。未保存精确 token 用量，不推算费用。
-- [ ] 真机已完成备份、安装、密钥配置、设置与 APK 哈希回读；手机被另一应用占用后暂停，首次生成及重启缓存复用待验收。
+- [ ] 真机已完成备份、安装、密钥配置、设置与 APK 哈希回读；继续验证泰安时携程要求网页验证。重启后无自动重试、尝试记录不变、设置保留均通过；完整生成及成功缓存复用受来源验证页阻塞。
 - [x] 扫描变更与 APK 已通过，验收与回滚说明已写入；本地交付记录与 punk-12 通知已完成。
