@@ -112,7 +112,7 @@ class DestinationGuideTest {
         capture("04-missing-guide")
     }
 
-    @Test fun sourcesAndPhotoLicenseOpenTheCorrectUrls() {
+    @Test fun domesticSourcesOpenCorrectUrlsWithoutClaimingPhotoLicense() {
         var opened = ""
         compose.setContent { TrainTripTheme { Box(Modifier.fillMaxSize().safeDrawingPadding()) { DestinationGuideScreen("天津", guide, {}, {}, { opened = it }) } } }
         page("places").performScrollToNode(hasText("资料来源与图片署名"))
@@ -121,9 +121,25 @@ class DestinationGuideTest {
         compose.runOnIdle { assertEquals(guide.sources.first().url, opened) }
         compose.onNodeWithText("查看原图与作者").performScrollTo().performClick()
         compose.runOnIdle { assertEquals(guide.photo.sourceUrl, opened) }
-        compose.onNodeWithText("查看图片许可").performScrollTo().performClick()
-        compose.runOnIdle { assertEquals(guide.photo.licenseUrl, opened) }
+        compose.onNodeWithText("图片仅用于个人离线浏览，权利归原权利人所有。").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("查看图片许可").assertDoesNotExist()
+        compose.onNodeWithText("改编正文：CC BY-SA 4.0").assertDoesNotExist()
+        assertTextFits()
         capture("05-sources")
+    }
+
+    @Test fun explicitlyLicensedPhotoKeepsLicenseLink() {
+        val url = "https://creativecommons.org/licenses/by/4.0/"
+        val licensedGuide = guide.copy(photo = guide.photo.copy(license = "CC BY 4.0", licenseUrl = url))
+        var opened = ""
+        compose.setContent { TrainTripTheme { Box(Modifier.fillMaxSize().safeDrawingPadding()) {
+            DestinationGuideScreen("天津", licensedGuide, {}, {}, { opened = it })
+        } } }
+        page("places").performScrollToNode(hasText("资料来源与图片署名"))
+        compose.onNodeWithText("资料来源与图片署名").performClick()
+        compose.onNodeWithText("查看图片许可").performScrollTo().performClick()
+        compose.runOnIdle { assertEquals(url, opened) }
+        compose.onNodeWithText("图片仅用于个人离线浏览，权利归原权利人所有。").assertDoesNotExist()
     }
 
     @Test fun compactLargeFontAndRestorationKeepPlanAndActionReachable() {

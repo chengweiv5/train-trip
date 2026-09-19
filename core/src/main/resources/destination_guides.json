@@ -16,21 +16,21 @@
       {
         "id": "avenues",
         "name": "五大道",
-        "reason": "沿花园式洋楼街区慢走，适合喜欢建筑、街拍和咖啡小店的人。",
+        "reason": "五大道的洋楼街区适合步行看建筑，给沿途休息和拍照留些时间。",
         "duration": "2–3 小时",
         "location": "和平区 · 市区"
       },
       {
         "id": "culture",
         "name": "古文化街",
-        "reason": "看民俗街巷、找地方小吃，体会天津的传统市井味。",
+        "reason": "围绕天后宫逛传统街巷，看看泥人张、老字号和天津民俗。",
         "duration": "1–2 小时",
         "location": "南开区 · 市区"
       },
       {
         "id": "river",
         "name": "海河漫步与相声",
-        "reason": "傍晚沿河看桥梁与城市夜色；有兴趣可另选一场相声。",
+        "reason": "沿海河看夜景，再按兴趣选择茶馆相声，感受津城的夜间生活。",
         "duration": "2–3 小时",
         "location": "市区 · 演出需另查场次"
       }
@@ -38,15 +38,15 @@
     "foods": [
       {
         "name": "煎饼馃子",
-        "description": "适合作为早点，热乎的饼皮配馃子或薄脆。"
+        "description": "天津常见早点，适合在出发逛街前尝一份。"
       },
       {
         "name": "十八街麻花",
-        "description": "酥脆的传统点心，适合少量尝味或带作伴手礼。"
+        "description": "天津老字号点心，可选小份尝味，也适合带作伴手礼。"
       },
       {
         "name": "耳朵眼炸糕",
-        "description": "天津传统小吃，可以和街区漫步放在同一站。"
+        "description": "外皮酥、内里软糯的津味小吃，逛街时可以少量尝试。"
       }
     ],
     "plans": [
@@ -90,23 +90,26 @@
     ],
     "sources": [
       {
-        "title": "天津 · Wikivoyage 中文旅行指南",
-        "url": "https://zh.wikivoyage.org/wiki/%E5%A4%A9%E6%B4%A5",
+        "title": "天津文旅 · 古文化街的民俗密码",
+        "url": "https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/t20240419_6605163.html",
         "checkedOn": "2026-09-19"
       },
       {
-        "title": "天津 · Wikivoyage 英文旅行指南",
-        "url": "https://en.wikivoyage.org/wiki/Tianjin",
+        "title": "天津文旅 · 特色小吃与津味生活",
+        "url": "https://whly.tj.gov.cn/XWDTYXWZX6562/MTJJ8464/202411/t20241105_6770998.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "天津东疆 · 夜津城与相声文化",
+        "url": "https://www.dongjiang.gov.cn/contents/110/6232.html",
         "checkedOn": "2026-09-19"
       }
     ],
     "photo": {
       "assetName": "tianjin.jpg",
-      "author": "KangTyngrwey",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tianjin_Eye_and_Tianjin.jpg",
-      "license": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-      "description": "天津 · 海河与天津之眼"
+      "description": "天津 · 古文化街",
+      "credit": "摄影：胡凌云／天津日报；天津市文化和旅游局刊载",
+      "sourceUrl": "https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/t20240419_6605163.html"
     }
   },
   {
@@ -126,21 +129,21 @@
       {
         "id": "baotu",
         "name": "趵突泉",
-        "reason": "看泉眼与园林，是理解“泉城”最直接的一站。",
+        "reason": "泉城代表性的看泉去处，可从泉池和园林开始认识济南。",
         "duration": "1.5–2 小时",
         "location": "历下区 · 市区"
       },
       {
         "id": "blacktiger",
         "name": "黑虎泉与护城河",
-        "reason": "沿护城河观察泉水和城市日常，适合边走边停。",
+        "reason": "在解放阁附近看泉水从石虎口流出，再顺着护城河慢慢走。",
         "duration": "1–2 小时",
         "location": "历下区 · 市区"
       },
       {
         "id": "daming",
         "name": "大明湖",
-        "reason": "沿湖看亭台与水景，适合给行程留一段安静时间。",
+        "reason": "泉水汇成的城中湖，湖岸串起亭台与园林，适合分段散步。",
         "duration": "2–3 小时",
         "location": "老城北部 · 市区"
       }
@@ -148,15 +151,15 @@
     "foods": [
       {
         "name": "油旋",
-        "description": "葱香酥饼，外皮酥脆，适合做早餐或散步间的小吃。"
+        "description": "螺旋状的葱油小饼，外酥内软，适合边走边尝。"
       },
       {
         "name": "甜沫",
-        "description": "名字虽甜，实际是咸口的小米面粥，可搭配油旋尝试。"
+        "description": "济南传统早点之一，可以与当地面点搭配，口味以店内做法为准。"
       },
       {
         "name": "九转大肠",
-        "description": "济南代表性鲁菜之一，适合愿意尝试猪大肠和浓郁味道的人。"
+        "description": "济南鲁菜代表菜之一，适合接受内脏食材的人按口味选择。"
       }
     ],
     "plans": [
@@ -200,23 +203,31 @@
     ],
     "sources": [
       {
-        "title": "济南 · Wikivoyage 中文旅行指南",
-        "url": "https://zh.wikivoyage.org/wiki/%E6%B5%8E%E5%8D%97",
+        "title": "济南园林 · 大明湖风景名胜区",
+        "url": "https://jnly.jinan.gov.cn/col117783/art/2025/art_117783_4779721.html",
         "checkedOn": "2026-09-19"
       },
       {
-        "title": "济南 · Wikivoyage 英文旅行指南",
-        "url": "https://en.wikivoyage.org/wiki/Jinan",
+        "title": "济南历下 · 黑虎泉",
+        "url": "http://www.lixia.gov.cn/col41272/art/2025/art_41272_3311973.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "山东省民政厅 · 济南传统小吃",
+        "url": "http://mzt.shandong.gov.cn/art/2022/5/26/art_92441_10297434.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "山东省民政厅 · 聚丰德与鲁菜",
+        "url": "http://mzt.shandong.gov.cn/art/2014/10/23/art_92441_10297430.html",
         "checkedOn": "2026-09-19"
       }
     ],
     "photo": {
       "assetName": "jinan.jpg",
-      "author": "Adam C. Powell, Ph.D.",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Black_Tiger_Spring,_Jinan.jpg",
-      "license": "CC BY-SA 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-      "description": "济南 · 黑虎泉"
+      "description": "济南 · 大明湖",
+      "credit": "济南市园林和林业绿化局网站刊载；原页面未署名",
+      "sourceUrl": "https://jnly.jinan.gov.cn/col117783/art/2025/art_117783_4779721.html"
     }
   },
   {
@@ -236,21 +247,21 @@
       {
         "id": "pier",
         "name": "栈桥与老城",
-        "reason": "从海湾向老街延伸，看海景与近代城市风貌。",
+        "reason": "从栈桥看青岛湾，再走进中山路一带，感受海边老城的街道风貌。",
         "duration": "1–2 小时",
         "location": "市南区 · 沿海"
       },
       {
         "id": "badaguan",
         "name": "八大关",
-        "reason": "林荫街道与近代建筑交错，适合慢走、拍照和看海。",
+        "reason": "沿林荫道路看不同风格的建筑，可以把八大关与邻近海湾一起慢逛。",
         "duration": "2–3 小时",
         "location": "市南区 · 有坡路"
       },
       {
         "id": "beer",
         "name": "青岛啤酒博物馆",
-        "reason": "从老厂房了解青岛啤酒的历史，适合对工业文化感兴趣的人。",
+        "reason": "从老厂房里的历史展陈认识青岛啤酒，再了解酿造工艺与城市产业记忆。",
         "duration": "1.5–2 小时",
         "location": "市北区 · 需市内接驳"
       }
@@ -258,15 +269,15 @@
     "foods": [
       {
         "name": "辣炒蛤蜊",
-        "description": "青岛常见海鲜吃法，点餐前确认分量和口味。"
+        "description": "青岛常见的海鲜吃法，可提前说明辣度，按人数点小份。"
       },
       {
         "name": "鲅鱼水饺",
-        "description": "当地饺子馆常见的鱼肉馅水饺，可作为一顿正餐。"
+        "description": "鱼肉做馅的地方风味水饺，适合安排成一顿正餐。"
       },
       {
         "name": "青岛啤酒",
-        "description": "地方代表饮品；不喝酒也可以只看酿造历史。"
+        "description": "当地代表饮品；博物馆也适合只看历史和工艺，不必参加品饮。"
       }
     ],
     "plans": [
@@ -310,23 +321,31 @@
     ],
     "sources": [
       {
-        "title": "青岛 · Wikivoyage 中文旅行指南",
-        "url": "https://zh.wikivoyage.org/wiki/%E9%9D%92%E5%B2%9B",
+        "title": "青岛文旅 · 醉美海湾与滨海漫步",
+        "url": "http://whlyj.qingdao.gov.cn/wlzx/202303/t20230323_7080922.shtml",
         "checkedOn": "2026-09-19"
       },
       {
-        "title": "青岛 · Wikivoyage 英文旅行指南",
-        "url": "https://en.wikivoyage.org/wiki/Qingdao",
+        "title": "山东省外办 · 青岛参访景点",
+        "url": "http://wb.shandong.gov.cn/col/col101409/index.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "青岛政务网 · 开海与海鲜风味",
+        "url": "http://www.qingdao.gov.cn/zwgk/xxgk/whly/gkml/gzxx/202409/t20240912_8264891.shtml",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "国务院侨办 · 青岛菜与鲅鱼饺子",
+        "url": "https://www.gqb.gov.cn/news/2016/0601/39350.shtml",
         "checkedOn": "2026-09-19"
       }
     ],
     "photo": {
       "assetName": "qingdao.jpg",
-      "author": "xiquinhosilva",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Qingdao_Harbour_51341-Qingdao_(49055637186).jpg",
-      "license": "CC BY 2.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
-      "description": "青岛 · 海港风光"
+      "description": "青岛 · 青岛湾",
+      "credit": "图片署名：青岛图片库（图／董天顺）；青岛市文化和旅游局刊载",
+      "sourceUrl": "http://whlyj.qingdao.gov.cn/wlzx/202303/t20230323_7080922.shtml"
     }
   },
   {
@@ -346,21 +365,21 @@
       {
         "id": "yungang",
         "name": "云冈石窟",
-        "reason": "近距离看北魏造像与石窟艺术，适合愿意慢看细节的人。",
+        "reason": "把半天留给石窟参观，细看崖壁上的造像，再安排返回古城休息。",
         "duration": "3–4 小时",
         "location": "市区以西 · 郊区，另计交通"
       },
       {
         "id": "huayan",
         "name": "华严寺",
-        "reason": "看辽金木构和彩塑，感受古代寺院的空间与工艺。",
+        "reason": "古城里的辽金寺庙建筑群，木构、塑像与殿内细节值得留时间慢看。",
         "duration": "1.5–2 小时",
         "location": "古城内 · 市区"
       },
       {
         "id": "wall",
         "name": "九龙壁与古城街巷",
-        "reason": "看琉璃龙壁，再沿古城街巷散步，适合衔接吃饭和休息。",
+        "reason": "在和阳街看明代琉璃龙壁，再把周边古城街巷与吃饭休息串起来。",
         "duration": "1–2 小时",
         "location": "古城内 · 市区"
       }
@@ -368,15 +387,15 @@
     "foods": [
       {
         "name": "大同刀削面",
-        "description": "山西代表面食，面条口感有层次，适合到站后的第一顿。"
+        "description": "大同文旅推荐的地方面食，到站后可以先用一碗热面补充体力。"
       },
       {
-        "name": "莜面",
-        "description": "山西地方面食，可尝试不同形状与蘸汁的组合。"
+        "name": "烧麦",
+        "description": "当地常见风味之一，可按人数点一笼，与正餐或小吃搭配。"
       },
       {
-        "name": "油炸糕",
-        "description": "大同地方小吃，适合少量搭配正餐尝味。"
+        "name": "油糕",
+        "description": "大同地方面点，适合与刀削面等主食搭配着少量尝味。"
       }
     ],
     "plans": [
@@ -420,28 +439,26 @@
     ],
     "sources": [
       {
-        "title": "大同 · Wikivoyage 旅行指南",
-        "url": "https://zh.wikivoyage.org/wiki/大同",
+        "title": "大同文旅 · 云冈石窟旅游攻略",
+        "url": "https://www.dt.gov.cn/dtszf/bumdtq/202312/bdde3568ef7548e8876120f535983ce1.shtml",
         "checkedOn": "2026-09-19"
       },
       {
-        "title": "大同 · Wikivoyage 英文旅行指南",
-        "url": "https://en.wikivoyage.org/wiki/Datong",
+        "title": "大同市政府 · 华严寺的文脉传承",
+        "url": "https://www.dt.gov.cn/dtszf/bmdt/202402/36078b1b7bc14518a89bc2928ff5c0f8.shtml",
         "checkedOn": "2026-09-19"
       },
       {
-        "title": "大同地方饮食 · 维基百科",
-        "url": "https://zh.wikipedia.org/wiki/大同市",
+        "title": "大同文旅 · 九龙壁",
+        "url": "https://www.dt.gov.cn/dtszf/bumdtq/202402/c1e83cd66d484af69540c8cb52c957e6.shtml",
         "checkedOn": "2026-09-19"
       }
     ],
     "photo": {
       "assetName": "datong.jpg",
-      "author": "Áine Hickey",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Yungang_Caves.jpg",
-      "license": "CC BY 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
-      "description": "大同 · 云冈石窟"
+      "description": "大同 · 华严寺",
+      "credit": "大同市政府网站／市外办刊载；原页面未署名",
+      "sourceUrl": "https://www.dt.gov.cn/english/placestovisit/202501/ed041cbc2944459891140a2e12429c7d.shtml"
     }
   },
   {
@@ -461,21 +478,21 @@
       {
         "id": "longmen",
         "name": "龙门石窟",
-        "reason": "沿伊河看石窟与造像，适合喜欢雕刻、历史和大型遗址的人。",
+        "reason": "沿伊河看北魏至唐代的石窟造像，建议慢看重点窟龛与雕刻细节。",
         "duration": "3–4 小时",
         "location": "市区南侧 · 另计交通"
       },
       {
         "id": "baima",
         "name": "白马寺",
-        "reason": "看古寺空间与佛教文化，适合放慢脚步安排半天。",
+        "reason": "市区东侧的历史寺院，可看殿阁、石刻及不同风格的佛殿，单独安排半天更从容。",
         "duration": "2–3 小时",
         "location": "市区东侧 · 另计交通"
       },
       {
         "id": "lijing",
         "name": "丽景门与老城街巷",
-        "reason": "从城门走入老街，感受街巷风貌和夜间餐饮氛围。",
+        "reason": "从丽景门走向老城十字街，把街巷散步与晚餐放在一起安排。",
         "duration": "1–2 小时",
         "location": "老城区 · 市区"
       }
@@ -483,15 +500,15 @@
     "foods": [
       {
         "name": "洛阳水席",
-        "description": "以汤菜见长的地方宴席，可按人数选择菜品，不必追求整套。"
+        "description": "洛阳地方宴席，可按人数选几道汤菜或小碗菜，避免一桌点得太满。"
       },
       {
         "name": "浆面条",
-        "description": "洛阳有名的地方主食，适合想尝试河南面食的人。"
+        "description": "有发酵酸香的洛阳面食，第一次尝试可以从小份开始。"
       },
       {
-        "name": "小街天府涮牛肚",
-        "description": "旅行资料列出的本地人常去小吃点之一，可按口味选择；营业情况需另查。"
+        "name": "洛阳汤食",
+        "description": "街头汤馆是当地生活的一部分，可选自己喜欢的肉汤或素汤作早餐。"
       }
     ],
     "plans": [
@@ -535,23 +552,31 @@
     ],
     "sources": [
       {
-        "title": "洛阳地方饮食 · 维基百科",
-        "url": "https://zh.wikipedia.org/wiki/洛阳市",
+        "title": "河南文旅 · 龙门石窟艺术",
+        "url": "https://hct.henan.gov.cn/2023/11-17/2849317.html",
         "checkedOn": "2026-09-19"
       },
       {
-        "title": "浆面条 · 维基百科",
-        "url": "https://zh.wikipedia.org/wiki/浆面条",
+        "title": "河南文旅 · 白马寺与洛阳采风",
+        "url": "https://hct.henan.gov.cn/2023/09-26/2822294.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "河南文旅 · 乘地铁游洛阳",
+        "url": "https://hct.henan.gov.cn/2023/02-17/2691276.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "河南文旅 · 洛阳游玩与地方美食",
+        "url": "https://hct.henan.gov.cn/2024/01-10/2882945.html",
         "checkedOn": "2026-09-19"
       }
     ],
     "photo": {
       "assetName": "luoyang.jpg",
-      "author": "Rialfver\n\nOriginal uploader was Rialfver at nl.wikipedia",
-      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Longmen_Grottoes_3.jpg",
-      "license": "CC BY-SA 3.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
-      "description": "洛阳 · 龙门石窟"
+      "description": "洛阳 · 龙门石窟",
+      "credit": "河南省文化和旅游厅刊载，来源：学习强国；原页面未标明摄影者",
+      "sourceUrl": "https://hct.henan.gov.cn/2023/11-17/2849317.html"
     }
   }
 ]

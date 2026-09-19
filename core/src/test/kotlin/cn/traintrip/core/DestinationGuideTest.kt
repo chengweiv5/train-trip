@@ -3,6 +3,10 @@ package cn.traintrip.core
 import org.junit.Assert.*
 import org.junit.Test
 import java.io.File
+import java.net.URI
+import com.google.gson.Gson
+import com.google.gson.JsonParser
+import javax.imageio.ImageIO
 
 class DestinationGuideTest {
     @Test fun fiveGuidesMatchStationIdentitiesAndPackageRealPhotos() {
@@ -18,6 +22,7 @@ class DestinationGuideTest {
             val bytes = photo.readBytes()
             assertEquals(0xff, bytes[0].toInt() and 255)
             assertEquals(0xd8, bytes[1].toInt() and 255)
+            assertNotNull("Undecodable ${photo.path}", ImageIO.read(photo))
         }
         val other = catalogue.cities.first { it.name == "上海" }
         assertNull(DestinationGuides.find(other.id))
@@ -39,9 +44,32 @@ class DestinationGuideTest {
                 assertEquals(plan.days, plan.schedule.size)
                 assertTrue(plan.schedule.flatMap { it.experienceIds }.all { it in ids })
             }
-            assertTrue(guide.sources.all { it.url.startsWith("https://") && it.checkedOn == "2026-09-19" })
-            assertTrue(guide.photo.licenseUrl.startsWith("https://"))
-            assertTrue(guide.photo.author.isNotBlank())
+            assertTrue(guide.sources.all { URI(it.url).host.endsWith(".gov.cn") && it.checkedOn == "2026-09-19" })
+            assertTrue(URI(guide.photo.sourceUrl).host.endsWith(".gov.cn"))
+            assertTrue(guide.photo.credit.isNotBlank())
+            assertNull(guide.photo.license)
+            assertNull(guide.photo.licenseUrl)
+        }
+    }
+
+    @Test fun optionalPhotoLicenseAndPublicWebLinksAreValidated() {
+        val json = Gson().toJson(DestinationGuides.all)
+        val array = JsonParser.parseString(json).asJsonArray
+        val guide = array[0].asJsonObject
+        val source = guide["sources"].asJsonArray[0].asJsonObject
+        val photo = guide["photo"].asJsonObject
+        source.addProperty("url", "http://example.gov.cn/guide")
+        assertEquals(5, DestinationGuides.parse(array.toString().reader()).size)
+        photo.addProperty("license", "CC BY 4.0")
+        assertTrue(DestinationGuides.parse(array.toString().reader()).isEmpty())
+        photo.addProperty("licenseUrl", "https://creativecommons.org/licenses/by/4.0/")
+        assertEquals(5, DestinationGuides.parse(array.toString().reader()).size)
+        photo.remove("license")
+        assertTrue(DestinationGuides.parse(array.toString().reader()).isEmpty())
+        photo.remove("licenseUrl")
+        listOf("javascript:alert(1)", "https:///missing-host", "https://name@example.gov.cn/guide").forEach {
+            source.addProperty("url", it)
+            assertTrue("Accepted invalid URL: $it", DestinationGuides.parse(array.toString().reader()).isEmpty())
         }
     }
 }

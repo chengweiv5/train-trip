@@ -2,13 +2,14 @@ package cn.traintrip.core
 
 import com.google.gson.Gson
 import java.io.Reader
+import java.net.URI
 import java.time.LocalDate
 
 /** Offline editorial content, independent of ticket inventory and departure dates. */
 data class GuideSource(val title: String, val url: String, val checkedOn: String)
 data class DestinationPhoto(
-    val assetName: String, val description: String, val author: String,
-    val sourceUrl: String, val license: String, val licenseUrl: String
+    val assetName: String, val description: String, val credit: String,
+    val sourceUrl: String, val license: String? = null, val licenseUrl: String? = null
 )
 data class DestinationExperience(
     val id: String, val name: String, val reason: String, val duration: String, val location: String
@@ -24,7 +25,6 @@ data class DestinationGuide(
 )
 
 object DestinationGuides {
-    const val CONTENT_LICENSE_URL = "https://creativecommons.org/licenses/by-sa/4.0/"
     val all: List<DestinationGuide> by lazy {
         DestinationGuides::class.java.getResourceAsStream("/destination_guides.json")
             ?.bufferedReader()?.use(::parse).orEmpty()
@@ -57,14 +57,21 @@ object DestinationGuides {
                 }
                 require(guide.sources.isNotEmpty())
                 guide.sources.forEach { source ->
-                    require(source.title.isNotBlank() && source.url.startsWith("https://"))
+                    require(source.title.isNotBlank() && isWebUrl(source.url))
                     LocalDate.parse(source.checkedOn)
                 }
                 val photo = guide.photo
                 require(photo.assetName.matches(Regex("[a-z_]+\\.jpg")))
-                require(listOf(photo.description, photo.author, photo.license).all { it.isNotBlank() })
-                require(photo.sourceUrl.startsWith("https://") && photo.licenseUrl.startsWith("https://"))
+                require(listOf(photo.description, photo.credit).all { it.isNotBlank() })
+                require(isWebUrl(photo.sourceUrl))
+                require((photo.license == null && photo.licenseUrl == null) ||
+                    (!photo.license.isNullOrBlank() && photo.licenseUrl?.let(::isWebUrl) == true))
             }
         }
     }.getOrElse { emptyList() }
+
+    private fun isWebUrl(value: String): Boolean = runCatching {
+        val uri = URI(value)
+        uri.scheme in setOf("http", "https") && !uri.host.isNullOrBlank() && uri.userInfo == null
+    }.getOrDefault(false)
 }

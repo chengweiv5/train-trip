@@ -218,7 +218,7 @@ import kotlinx.coroutines.withContext
     AlertDialog(onDismissRequest = onClose, title = { Text("资料来源与图片署名") }, text = {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             item {
-                Text("景点与美食参考以下资料整理改写；玩法、停留时长与强度为编辑建议。来源内容可能早于核对日期。",
+                Text("景点与美食根据国内公开资料整理；玩法、停留时长与强度为编辑建议。核对日期不代表原文发布日期。",
                     style = MaterialTheme.typography.bodySmall)
             }
             items(guide.sources) { source ->
@@ -226,15 +226,16 @@ import kotlinx.coroutines.withContext
                 Text("核对 ${source.checkedOn}", style = MaterialTheme.typography.bodySmall, color = Muted)
             }
             item {
-                TextButton({ onSource(DestinationGuides.CONTENT_LICENSE_URL) }, contentPadding = PaddingValues(0.dp)) {
-                    Text("改编正文：CC BY-SA 4.0")
-                }
                 HorizontalDivider(color = Line)
                 Text(guide.photo.description, Modifier.padding(top = 12.dp), style = MaterialTheme.typography.titleSmall)
-                Text("摄影：${guide.photo.author}\n${guide.photo.license} · 已缩放，展示时裁剪",
+                Text("${guide.photo.credit}\n已缩放，展示时裁剪",
                     style = MaterialTheme.typography.bodySmall)
+                Text(guide.photo.license ?: "图片仅用于个人离线浏览，权利归原权利人所有。",
+                    style = MaterialTheme.typography.bodySmall, color = Muted)
                 TextButton({ onSource(guide.photo.sourceUrl) }, contentPadding = PaddingValues(0.dp)) { Text("查看原图与作者") }
-                TextButton({ onSource(guide.photo.licenseUrl) }, contentPadding = PaddingValues(0.dp)) { Text("查看图片许可") }
+                guide.photo.licenseUrl?.let { url ->
+                    TextButton({ onSource(url) }, contentPadding = PaddingValues(0.dp)) { Text("查看图片许可") }
+                }
             }
         }
     }, confirmButton = { TextButton(onClose) { Text("关闭") } })

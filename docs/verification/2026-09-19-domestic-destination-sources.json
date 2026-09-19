@@ -1,0 +1,192 @@
+[
+  {
+    "cityId": "120000",
+    "name": "天津",
+    "sources": [
+      {
+        "title": "天津文旅 · 古文化街的民俗密码",
+        "url": "https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/t20240419_6605163.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "天津文旅 · 特色小吃与津味生活",
+        "url": "https://whly.tj.gov.cn/XWDTYXWZX6562/MTJJ8464/202411/t20241105_6770998.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "天津东疆 · 夜津城与相声文化",
+        "url": "https://www.dongjiang.gov.cn/contents/110/6232.html",
+        "checkedOn": "2026-09-19"
+      }
+    ],
+    "photo": {
+      "assetName": "tianjin.jpg",
+      "description": "天津 · 古文化街",
+      "credit": "摄影：胡凌云／天津日报；天津市文化和旅游局刊载",
+      "sourceUrl": "https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/t20240419_6605163.html"
+    },
+    "downloadUrl": "https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/W020240419322837439812.jpg",
+    "originalSha256": "83d5055a0b4f4b0ac978d0f32db8b2f91c3ad8cfb896180cc1f4abc7a5cb8825",
+    "packagedSha256": "dc800e634cac53bb4a72dc9919fecdd2871a0ecf89c550e79f1d879ff3caaad3",
+    "dimensions": [
+      400,
+      250
+    ],
+    "usage": "个人离线浏览；未取得再分发授权；不公开推送"
+  },
+  {
+    "cityId": "370100",
+    "name": "济南",
+    "sources": [
+      {
+        "title": "济南园林 · 大明湖风景名胜区",
+        "url": "https://jnly.jinan.gov.cn/col117783/art/2025/art_117783_4779721.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "济南历下 · 黑虎泉",
+        "url": "http://www.lixia.gov.cn/col41272/art/2025/art_41272_3311973.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "山东省民政厅 · 济南传统小吃",
+        "url": "http://mzt.shandong.gov.cn/art/2022/5/26/art_92441_10297434.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "山东省民政厅 · 聚丰德与鲁菜",
+        "url": "http://mzt.shandong.gov.cn/art/2014/10/23/art_92441_10297430.html",
+        "checkedOn": "2026-09-19"
+      }
+    ],
+    "photo": {
+      "assetName": "jinan.jpg",
+      "description": "济南 · 大明湖",
+      "credit": "济南市园林和林业绿化局网站刊载；原页面未署名",
+      "sourceUrl": "https://jnly.jinan.gov.cn/col117783/art/2025/art_117783_4779721.html"
+    },
+    "downloadUrl": "https://jnly.jinan.gov.cn/cms_files/complat3/1603/picture/20254/52383e8e940a4cedbadfeeb7a9af6cf1.jpg",
+    "originalSha256": "5d88452aa82a67a8a087c290419749b85acb145726dd69f1c7e5adaa318b2054",
+    "packagedSha256": "53791e567ba63ddb40d1f19e15d3b27732659a09a45b956669472092081d6670",
+    "dimensions": [
+      1200,
+      418
+    ],
+    "usage": "个人离线浏览；未取得再分发授权；不公开推送"
+  },
+  {
+    "cityId": "370200",
+    "name": "青岛",
+    "sources": [
+      {
+        "title": "青岛文旅 · 醉美海湾与滨海漫步",
+        "url": "http://whlyj.qingdao.gov.cn/wlzx/202303/t20230323_7080922.shtml",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "山东省外办 · 青岛参访景点",
+        "url": "http://wb.shandong.gov.cn/col/col101409/index.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "青岛政务网 · 开海与海鲜风味",
+        "url": "http://www.qingdao.gov.cn/zwgk/xxgk/whly/gkml/gzxx/202409/t20240912_8264891.shtml",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "国务院侨办 · 青岛菜与鲅鱼饺子",
+        "url": "https://www.gqb.gov.cn/news/2016/0601/39350.shtml",
+        "checkedOn": "2026-09-19"
+      }
+    ],
+    "photo": {
+      "assetName": "qingdao.jpg",
+      "description": "青岛 · 青岛湾",
+      "credit": "图片署名：青岛图片库（图／董天顺）；青岛市文化和旅游局刊载",
+      "sourceUrl": "http://whlyj.qingdao.gov.cn/wlzx/202303/t20230323_7080922.shtml"
+    },
+    "downloadUrl": "http://whlyj.qingdao.gov.cn/wlzx/202303/W020230323565855622039_ORIGIN.jpg",
+    "originalSha256": "a2f75a364a66718d1c43d7923978be145d09337403932f01dd97b30c4546b3fd",
+    "packagedSha256": "f6732dc074cbf2b8f4b523cd3431a039027d2e63b3bdded18783b49946a2a2f7",
+    "dimensions": [
+      800,
+      289
+    ],
+    "usage": "个人离线浏览；未取得再分发授权；不公开推送"
+  },
+  {
+    "cityId": "140200",
+    "name": "大同",
+    "sources": [
+      {
+        "title": "大同文旅 · 云冈石窟旅游攻略",
+        "url": "https://www.dt.gov.cn/dtszf/bumdtq/202312/bdde3568ef7548e8876120f535983ce1.shtml",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "大同市政府 · 华严寺的文脉传承",
+        "url": "https://www.dt.gov.cn/dtszf/bmdt/202402/36078b1b7bc14518a89bc2928ff5c0f8.shtml",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "大同文旅 · 九龙壁",
+        "url": "https://www.dt.gov.cn/dtszf/bumdtq/202402/c1e83cd66d484af69540c8cb52c957e6.shtml",
+        "checkedOn": "2026-09-19"
+      }
+    ],
+    "photo": {
+      "assetName": "datong.jpg",
+      "description": "大同 · 华严寺",
+      "credit": "大同市政府网站／市外办刊载；原页面未署名",
+      "sourceUrl": "https://www.dt.gov.cn/english/placestovisit/202501/ed041cbc2944459891140a2e12429c7d.shtml"
+    },
+    "downloadUrl": "https://www.dt.gov.cn/english/placestovisit/202501/ed041cbc2944459891140a2e12429c7d/images/8f922e64cfbc48d78f28e61c4b43e33f.jpg",
+    "originalSha256": "0dcf766bfa30e779889e437fed44fefce7d9a4a3a1dd394b03c3057908a2de0d",
+    "packagedSha256": "49926520138d7a431f2baacdd24dbaa520cbf263af508368f4e379784f6ed587",
+    "dimensions": [
+      1200,
+      795
+    ],
+    "usage": "个人离线浏览；未取得再分发授权；不公开推送"
+  },
+  {
+    "cityId": "410300",
+    "name": "洛阳",
+    "sources": [
+      {
+        "title": "河南文旅 · 龙门石窟艺术",
+        "url": "https://hct.henan.gov.cn/2023/11-17/2849317.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "河南文旅 · 白马寺与洛阳采风",
+        "url": "https://hct.henan.gov.cn/2023/09-26/2822294.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "河南文旅 · 乘地铁游洛阳",
+        "url": "https://hct.henan.gov.cn/2023/02-17/2691276.html",
+        "checkedOn": "2026-09-19"
+      },
+      {
+        "title": "河南文旅 · 洛阳游玩与地方美食",
+        "url": "https://hct.henan.gov.cn/2024/01-10/2882945.html",
+        "checkedOn": "2026-09-19"
+      }
+    ],
+    "photo": {
+      "assetName": "luoyang.jpg",
+      "description": "洛阳 · 龙门石窟",
+      "credit": "河南省文化和旅游厅刊载，来源：学习强国；原页面未标明摄影者",
+      "sourceUrl": "https://hct.henan.gov.cn/2023/11-17/2849317.html"
+    },
+    "downloadUrl": "https://img.henan.gov.cn/9cda102c8f76e63e131c1b1951c9f34d?p=0",
+    "originalSha256": "ac80279c272871818553306df8d0a5096fc8a44da8bcf9b457af7af7ce47acda",
+    "packagedSha256": "4a9d7c94a79ce0a5a33211994d44cd8839bad08e1be79ee80306148ce87e5be4",
+    "dimensions": [
+      800,
+      531
+    ],
+    "usage": "个人离线浏览；未取得再分发授权；不公开推送"
+  }
+]
