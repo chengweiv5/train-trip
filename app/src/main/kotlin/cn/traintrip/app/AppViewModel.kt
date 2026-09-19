@@ -44,7 +44,7 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
         mutable.update { it.copy(notice=when(result) {
             AppLaunchResult.OPENED -> null
             AppLaunchResult.NOT_INSTALLED -> "未安装铁路12306\n安装后重试，已选车次会保留"
-            AppLaunchResult.FAILED -> "暂时无法打开 12306 App\n已选车次会保留，可以重试或复制车次"
+            AppLaunchResult.FAILED -> "暂时无法打开 12306 App\n已选车次会保留，请稍后重试"
         }) }
     }
     fun stopSearch() { searchJob?.cancel();mutable.update { it.copy(loading=false,progress=it.progress?.copy(running=false,stopped=it.progress.running || it.progress.stopped)) } }
@@ -111,4 +111,3 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
 
 }
 fun formatTime(at:java.time.Instant):String = java.time.format.DateTimeFormatter.ofPattern("MM-dd HH:mm:ss").withZone(BEIJING_ZONE).format(at)
-fun itinerary(t:Trip,seat:SeatType,people:Int) = "${t.date} ${t.trainCode}\n${t.from.name} ${t.departure} → ${t.to.name} ${t.arrival}${t.arrivalDayOffset?.takeIf { it>0 }?.let { "（+$it 天）" } ?: ""}\n${seat.label} · $people 位成人\n查询时间：${formatTime(t.queriedAt)}\n余票以 12306 实时结果为准"

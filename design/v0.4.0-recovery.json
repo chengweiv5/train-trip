@@ -83,7 +83,7 @@
           "fill": "$tt-muted",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "一个主按钮 · 已选摘要旁复制 · 主动刷新余票 · 打开铁路12306 App。\n本稿仅更新车次信息页；日期、车次、余票均为设计示例。手机上列表滚动，底部操作固定于系统安全区上方。",
+          "content": "一个主按钮 · 已选车次摘要 · 主动刷新余票 · 打开铁路12306 App。\n本稿仅更新车次信息页；日期、车次、余票均为设计示例。手机上列表滚动，底部操作固定于系统安全区上方。",
           "lineHeight": 1.6,
           "fontFamily": "$tt-font",
           "fontSize": 14,
@@ -145,46 +145,6 @@
           "fontFamily": "$tt-font",
           "fontSize": 14,
           "fontWeight": "normal"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "d7A18",
-      "x": 612,
-      "y": 245,
-      "name": "组件 · 复制车次",
-      "reusable": true,
-      "metadata": {
-        "type": "interaction",
-        "action": "copy-itinerary",
-        "accessibilityLabel": "复制已选车次信息"
-      },
-      "width": 84,
-      "height": 48,
-      "gap": 5,
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon",
-          "id": "fkhKp",
-          "name": "复制图标",
-          "width": 16,
-          "height": 16,
-          "icon": "copy",
-          "library": "lucide",
-          "fill": "$tt-primary"
-        },
-        {
-          "type": "text",
-          "id": "bnt0O",
-          "name": "复制文字",
-          "fill": "$tt-primary",
-          "content": "复制车次",
-          "fontFamily": "$tt-font",
-          "fontSize": 12,
-          "fontWeight": "500"
         }
       ]
     },
@@ -1121,10 +1081,10 @@
             {
               "type": "frame",
               "id": "SGutd",
-              "name": "已选摘要与复制",
+              "name": "已选摘要",
               "width": "fill_container",
+              "layout": "vertical",
               "gap": 8,
-              "alignItems": "center",
               "children": [
                 {
                   "type": "frame",
@@ -1159,12 +1119,6 @@
                       "fontWeight": "normal"
                     }
                   ]
-                },
-                {
-                  "id": "EHLkK",
-                  "type": "ref",
-                  "ref": "d7A18",
-                  "name": "复制当前已选车次"
                 }
               ]
             },
@@ -2146,10 +2100,10 @@
             {
               "type": "frame",
               "id": "buaa0",
-              "name": "已选摘要与复制",
+              "name": "已选摘要",
               "width": "fill_container",
+              "layout": "vertical",
               "gap": 8,
-              "alignItems": "center",
               "children": [
                 {
                   "type": "frame",
@@ -2178,19 +2132,12 @@
                       "fill": "$tt-muted",
                       "textGrowth": "fixed-width",
                       "width": "fill_container",
-                      "content": "选好后，可复制车次并打开 12306 App",
+                      "content": "选好后，可打开 12306 App",
                       "fontFamily": "$tt-font",
                       "fontSize": 12,
                       "fontWeight": "normal"
                     }
                   ]
-                },
-                {
-                  "id": "ZEokt",
-                  "type": "ref",
-                  "ref": "d7A18",
-                  "enabled": false,
-                  "name": "复制当前已选车次"
                 }
               ]
             },
@@ -3266,7 +3213,7 @@
             {
               "type": "frame",
               "id": "QNrE0",
-              "name": "已选摘要与复制",
+              "name": "已选摘要",
               "width": "fill_container",
               "layout": "vertical",
               "gap": 8,
@@ -3304,22 +3251,6 @@
                       "fontWeight": "normal"
                     }
                   ]
-                },
-                {
-                  "id": "zv7p5",
-                  "type": "ref",
-                  "ref": "d7A18",
-                  "width": 118,
-                  "name": "复制当前已选车次",
-                  "descendants": {
-                    "fkhKp": {
-                      "width": 20,
-                      "height": 20
-                    },
-                    "bnt0O": {
-                      "fontSize": 15.6
-                    }
-                  }
                 }
               ]
             },
@@ -3383,7 +3314,7 @@
       "id": "ePGKM",
       "x": 0,
       "y": 1810,
-      "name": "04 · 刷新、复制与跳转反馈",
+      "name": "04 · 刷新与跳转反馈",
       "width": 1388,
       "fill": "$tt-bg",
       "layout": "vertical",
@@ -3731,96 +3662,6 @@
           "children": [
             {
               "type": "frame",
-              "id": "WuIE7",
-              "name": "反馈 · 复制成功",
-              "width": "fill_container",
-              "fill": "$tt-surface",
-              "cornerRadius": 16,
-              "stroke": "$tt-line",
-              "strokeWidth": 1,
-              "layout": "vertical",
-              "gap": 14,
-              "padding": 20,
-              "children": [
-                {
-                  "type": "text",
-                  "id": "J2V5ec",
-                  "name": "复制成功标题",
-                  "fill": "$tt-ink",
-                  "textGrowth": "fixed-width",
-                  "width": "fill_container",
-                  "content": "复制成功",
-                  "lineHeight": 1.5,
-                  "fontFamily": "$tt-font",
-                  "fontSize": 18,
-                  "fontWeight": "600"
-                },
-                {
-                  "type": "frame",
-                  "id": "e2cK8F",
-                  "name": "复制成功界面片段",
-                  "width": "fill_container",
-                  "fill": "$tt-tint",
-                  "cornerRadius": 12,
-                  "layout": "vertical",
-                  "gap": 8,
-                  "padding": 16,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "atDhW",
-                      "name": "复制成功状态图标",
-                      "width": 22,
-                      "height": 22,
-                      "icon": "copy-check",
-                      "library": "lucide",
-                      "fill": "$tt-primary"
-                    },
-                    {
-                      "type": "text",
-                      "id": "EHYkx",
-                      "name": "复制成功界面主文案",
-                      "fill": "$tt-primary",
-                      "textGrowth": "fixed-width",
-                      "width": "fill_container",
-                      "content": "已复制车次信息",
-                      "lineHeight": 1.5,
-                      "fontFamily": "$tt-font",
-                      "fontSize": 16,
-                      "fontWeight": "600"
-                    },
-                    {
-                      "type": "text",
-                      "id": "g2SklV",
-                      "name": "复制成功界面辅助文案",
-                      "fill": "$tt-muted",
-                      "textGrowth": "fixed-width",
-                      "width": "fill_container",
-                      "content": "日期、车次、站点、席别和人数",
-                      "lineHeight": 1.5,
-                      "fontFamily": "$tt-font",
-                      "fontSize": 13,
-                      "fontWeight": "normal"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "UtCcu",
-                  "name": "复制成功交互规则",
-                  "fill": "$tt-muted",
-                  "textGrowth": "fixed-width",
-                  "width": "fill_container",
-                  "content": "短暂显示轻提示，留在当前页；不刷新、不跳转。主按钮也不会自动改写剪贴板。",
-                  "lineHeight": 1.5,
-                  "fontFamily": "$tt-font",
-                  "fontSize": 14,
-                  "fontWeight": "normal"
-                }
-              ]
-            },
-            {
-              "type": "frame",
               "id": "OLoeN",
               "name": "反馈 · 正常跳转",
               "width": "fill_container",
@@ -3991,7 +3832,7 @@
                   "fill": "$tt-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "已安装但打开失败时提示“暂时无法打开 12306 App”。保留选择和复制入口，不自动打开官网。",
+                  "content": "已安装但打开失败时提示“暂时无法打开 12306 App”。保留已选车次并允许重试，不自动打开官网。",
                   "lineHeight": 1.5,
                   "fontFamily": "$tt-font",
                   "fontSize": 14,

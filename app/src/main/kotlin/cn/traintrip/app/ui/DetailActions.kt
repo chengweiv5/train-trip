@@ -30,11 +30,6 @@ import cn.traintrip.core.*
                 drawRoundRect(color,Offset(w*.24f,h*.08f),Size(w*.52f,h*.84f),CornerRadius(w*.08f),style=stroke)
                 drawLine(color,Offset(w*.43f,h*.76f),Offset(w*.57f,h*.76f),stroke.width,StrokeCap.Round)
             }
-            "copy" -> {
-                drawRoundRect(color,Offset(w*.33f,h*.3f),Size(w*.52f,h*.6f),CornerRadius(w*.07f),style=stroke)
-                drawLine(color,Offset(w*.14f,h*.68f),Offset(w*.14f,h*.12f),stroke.width,StrokeCap.Round)
-                drawLine(color,Offset(w*.14f,h*.12f),Offset(w*.66f,h*.12f),stroke.width,StrokeCap.Round)
-            }
             else -> {
                 drawLine(color,Offset(w*.15f,h*.5f),Offset(w*.4f,h*.75f),stroke.width,StrokeCap.Round)
                 drawLine(color,Offset(w*.4f,h*.75f),Offset(w*.86f,h*.23f),stroke.width,StrokeCap.Round)
@@ -53,33 +48,21 @@ import cn.traintrip.core.*
     }
 }
 
-@Composable internal fun DetailActions(selected:Trip?,seat:SeatType?,people:Int,notice:String?,onOpenApp:()->Unit,onCopy:(String)->Unit) {
+@Composable internal fun DetailActions(selected:Trip?,seat:SeatType?,people:Int,notice:String?,onOpenApp:()->Unit) {
     val fontScale=LocalDensity.current.fontScale
     Surface(color=Color.White) {
         Column {
             HorizontalDivider(color=Line)
-            BoxWithConstraints(Modifier.fillMaxWidth().padding(horizontal=20.dp,vertical=12.dp)) {
-                val stacked=maxWidth<340.dp || fontScale>1.15f
-                Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                    val summary:@Composable ()->Unit={
-                        Column(verticalArrangement=Arrangement.spacedBy(4.dp),modifier=Modifier.testTag("selected-summary")) {
-                            Text(if(selected!=null && seat!=null) "${selected.trainCode} · ${selected.date.monthValue}月${selected.date.dayOfMonth}日 · ${seat.label}" else "先点选一个席别",style=MaterialTheme.typography.titleSmall,color=Forest)
-                            Text(if(selected!=null) "${selected.from.name} ${selected.departure} → ${selected.to.name} · ${people}位成人" else "选好后，可复制车次并打开 12306 App",style=MaterialTheme.typography.bodySmall,color=Muted)
-                        }
-                    }
-                    val copy:@Composable ()->Unit={
-                        if(selected!=null && seat!=null) TextButton({onCopy(itinerary(selected,seat,people))},Modifier.heightIn(min=48.dp).testTag("copy-trip").semantics { contentDescription="复制 ${selected.trainCode} ${seat.label} 车次信息" },contentPadding=PaddingValues(horizontal=8.dp)) {
-                            ActionIcon("copy",Forest);Spacer(Modifier.width(6.dp));Text("复制车次")
-                        }
-                    }
-                    if(stacked) { summary();copy() }
-                    else Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(8.dp)) { Box(Modifier.weight(1f)) { summary() };copy() }
-                    notice?.let { Text(it,Modifier.fillMaxWidth().testTag("detail-notice").semantics { liveRegion=LiveRegionMode.Polite },style=MaterialTheme.typography.bodySmall,color=Amber) }
-                    Button(onOpenApp,Modifier.fillMaxWidth().heightIn(min=if(fontScale>1.15f) 60.dp else 56.dp).testTag("open-12306"),enabled=selected!=null && seat!=null,shape=RoundedCornerShape(16.dp),contentPadding=PaddingValues(12.dp)) {
-                        ActionIcon("phone",LocalContentColor.current);Spacer(Modifier.width(8.dp));Text("打开 12306 App")
-                    }
-                    Text("在 12306 App 内填写条件并购票",style=MaterialTheme.typography.bodySmall,color=Muted)
+            Column(Modifier.fillMaxWidth().padding(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                Column(Modifier.fillMaxWidth().testTag("selected-summary"),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                    Text(if(selected!=null && seat!=null) "${selected.trainCode} · ${selected.date.monthValue}月${selected.date.dayOfMonth}日 · ${seat.label}" else "先点选一个席别",style=MaterialTheme.typography.titleSmall,color=Forest)
+                    Text(if(selected!=null) "${selected.from.name} ${selected.departure} → ${selected.to.name} · ${people}位成人" else "选好后，可打开 12306 App",style=MaterialTheme.typography.bodySmall,color=Muted)
                 }
+                notice?.let { Text(it,Modifier.fillMaxWidth().testTag("detail-notice").semantics { liveRegion=LiveRegionMode.Polite },style=MaterialTheme.typography.bodySmall,color=Amber) }
+                Button(onOpenApp,Modifier.fillMaxWidth().heightIn(min=if(fontScale>1.15f) 60.dp else 56.dp).testTag("open-12306"),enabled=selected!=null && seat!=null,shape=RoundedCornerShape(16.dp),contentPadding=PaddingValues(12.dp)) {
+                    ActionIcon("phone",LocalContentColor.current);Spacer(Modifier.width(8.dp));Text("打开 12306 App")
+                }
+                Text("在 12306 App 内填写条件并购票",style=MaterialTheme.typography.bodySmall,color=Muted)
             }
         }
     }

@@ -92,19 +92,18 @@ class DetailFlowTest {
             assertEquals("unchanged",clipboard.primaryClip!!.getItemAt(0).text.toString())
             assertNotNull(vm.state.value.selectedTripKey)
         }
+        compose.onNodeWithText("复制车次",substring=true).assertDoesNotExist()
         capture("02-selected")
         for(result in listOf(AppLaunchResult.NOT_INSTALLED,AppLaunchResult.FAILED)) {
             compose.runOnIdle { launchResult=result }
             compose.onNodeWithTag("open-12306").performClick()
             compose.onNodeWithTag("detail-notice").assertIsDisplayed()
-            compose.onNodeWithTag("copy-trip").assertIsDisplayed()
+            compose.onNodeWithTag("copy-trip").assertDoesNotExist()
             compose.runOnIdle { assertEquals(1,source.calls.size);assertNotNull(vm.state.value.selectedTripKey) }
             capture("03-${result.name.lowercase()}")
         }
-        compose.onNodeWithTag("copy-trip").performClick()
         compose.runOnIdle {
-            val text=clipboard.primaryClip!!.getItemAt(0).text.toString()
-            assertTrue(text.contains("G1"));assertTrue(text.contains("2 位成人"));assertTrue(text.contains("查询时间"))
+            assertEquals("unchanged",clipboard.primaryClip!!.getItemAt(0).text.toString())
             vm.pauseForegroundWork()
         }
     }
@@ -174,18 +173,18 @@ class DetailFlowTest {
         compose.runOnIdle { assertNull(vm.state.value.selectedTripKey) }
         compose.onNodeWithTag("open-12306").assertIsNotEnabled()
     }
-    @Test fun compactLargeFontKeepsSummaryCopyAndLastCardReachable() {
+    @Test fun compactLargeFontKeepsSummaryAndLastCardReachable() {
         val restoration=StateRestorationTester(compose)
         val (vm,_)=start(large=true,restoration=restoration)
         selectFirst(vm)
         compose.onNodeWithTag("open-12306").assertIsDisplayed()
-        compose.onNodeWithTag("copy-trip").assertIsDisplayed()
+        compose.onNodeWithTag("copy-trip").assertDoesNotExist()
         val summary=compose.onNodeWithTag("selected-summary").fetchSemanticsNode().boundsInRoot
-        val copy=compose.onNodeWithTag("copy-trip").fetchSemanticsNode().boundsInRoot
-        assertTrue(copy.top>=summary.bottom)
+        val action=compose.onNodeWithTag("open-12306").fetchSemanticsNode().boundsInRoot
+        assertTrue(action.top>=summary.bottom)
         assertVisibleTextFits()
         val density=compose.activity.resources.displayMetrics.density
-        for(tag in listOf("open-12306","copy-trip")) {
+        for(tag in listOf("open-12306")) {
             val bounds=compose.onNodeWithTag(tag).fetchSemanticsNode().boundsInRoot
             assertTrue("$tag target height",bounds.height>=48*density-1)
         }
@@ -223,7 +222,7 @@ class DetailFlowTest {
     }
     private fun capture(name:String) {
         val bitmap=compose.onRoot().captureToImage().asAndroidBitmap()
-        val dir=compose.activity.getExternalFilesDir("v0.4.0")!!;dir.mkdirs()
+        val dir=compose.activity.getExternalFilesDir("v0.4.0-remove-copy")!!;dir.mkdirs()
         File(dir,"$name.jpg").outputStream().use { bitmap.compress(Bitmap.CompressFormat.JPEG,88,it) }
     }
 }

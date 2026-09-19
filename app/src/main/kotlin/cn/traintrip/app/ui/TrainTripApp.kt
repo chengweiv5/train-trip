@@ -1,7 +1,5 @@
 package cn.traintrip.app.ui
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -30,10 +28,6 @@ import cn.traintrip.core.DestinationGuides
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }
     }
-    val copy:(String)->Unit={text->
-        (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(ClipData.newPlainText("火车行程",text))
-        Toast.makeText(context,"已复制车次信息",Toast.LENGTH_SHORT).show()
-    }
     fun openRailway() { vm.reportAppLaunch(launcher?.invoke(context) ?: launchRailwayApp(context)) }
     BackHandler(s.page!=Page.FILTERS) { if(s.page==Page.DETAIL || s.page==Page.DESTINATION) vm.backFromCity() else vm.showFilters() }
     Surface(Modifier.fillMaxSize(),color=Cream) {
@@ -45,7 +39,7 @@ import cn.traintrip.core.DestinationGuides
                     runCatching { context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(url))) }
                         .onFailure { Toast.makeText(context,"未找到浏览器",Toast.LENGTH_SHORT).show() }
                 }
-                Page.DETAIL->DetailScreen(s,vm::backFromCity,vm::select,{vm.refreshCity()},{vm.refreshCity(retryFailed=true)},vm::clearSelection,::openRailway,copy)
+                Page.DETAIL->DetailScreen(s,vm::backFromCity,vm::select,{vm.refreshCity()},{vm.refreshCity(retryFailed=true)},vm::clearSelection,::openRailway)
             } }
         }
     }

@@ -20,7 +20,7 @@ import cn.traintrip.app.*
 import cn.traintrip.core.*
 import java.time.LocalDate
 
-@Composable fun DetailScreen(s:UiState,onBack:()->Unit,onSelect:(Trip,SeatType)->Unit,onRefresh:()->Unit,onRetry:()->Unit,onClearSelection:()->Unit,onOpenApp:()->Unit,onCopy:(String)->Unit) {
+@Composable fun DetailScreen(s:UiState,onBack:()->Unit,onSelect:(Trip,SeatType)->Unit,onRefresh:()->Unit,onRetry:()->Unit,onClearSelection:()->Unit,onOpenApp:()->Unit) {
     val f=s.applied ?: s.filters
     val all=remember(s.progress,f,s.cityId) { s.progress?.trips.orEmpty().filter { it.to.cityId==s.cityId && it.confirmed(f) }.distinctBy { it.key } }
     var dateKey by rememberSaveable(s.cityId,s.searchSession) { mutableStateOf<String?>(null) }
@@ -42,7 +42,7 @@ import java.time.LocalDate
         station=code;stationsOpen=false
     }
     Scaffold(containerColor=Cream,bottomBar={
-        DetailActions(selected,s.selectedSeat,f.people,s.notice,onOpenApp,onCopy)
+        DetailActions(selected,s.selectedSeat,f.people,s.notice,onOpenApp)
     }) { padding->
         LazyColumn(Modifier.fillMaxSize().padding(padding).testTag("detail-list"),state=listState,contentPadding=PaddingValues(horizontal=20.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
             item { BackHeader("${s.catalog.byCity[f.originCityId]?.name}出发 · 只看直达",onBack) }

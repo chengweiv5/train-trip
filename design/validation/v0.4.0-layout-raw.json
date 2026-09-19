@@ -72,7 +72,7 @@
         "height": 44
       },
       "problem": null,
-      "text": "一个主按钮 · 已选摘要旁复制 · 主动刷新余票 · 打开铁路12306 App。\n本稿仅更新车次信息页；日期、车次、余票均为设计示例。手机上列表滚动，底部操作固定于系统安全区上方。",
+      "text": "一个主按钮 · 已选车次摘要 · 主动刷新余票 · 打开铁路12306 App。\n本稿仅更新车次信息页；日期、车次、余票均为设计示例。手机上列表滚动，底部操作固定于系统安全区上方。",
       "fontSize": 14,
       "fill": "#617065",
       "metadata": null,
@@ -145,69 +145,6 @@
       "ref": null
     },
     {
-      "id": "d7A18",
-      "parent": null,
-      "name": "组件 · 复制车次",
-      "type": "frame",
-      "bounds": {
-        "x": 612,
-        "y": 245,
-        "width": 84,
-        "height": 48
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "metadata": {
-        "type": "interaction",
-        "action": "copy-itinerary",
-        "accessibilityLabel": "复制已选车次信息"
-      },
-      "placeholder": false,
-      "reusable": true,
-      "ref": null
-    },
-    {
-      "id": "fkhKp",
-      "parent": "d7A18",
-      "name": "复制图标",
-      "type": "icon",
-      "bounds": {
-        "x": 7,
-        "y": 16,
-        "width": 16,
-        "height": 16
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#2D5E3A",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "bnt0O",
-      "parent": "d7A18",
-      "name": "复制文字",
-      "type": "text",
-      "bounds": {
-        "x": 28,
-        "y": 15.5,
-        "width": 49,
-        "height": 17
-      },
-      "problem": null,
-      "text": "复制车次",
-      "fontSize": 12,
-      "fill": "#2D5E3A",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
       "id": "bArbH",
       "parent": null,
       "name": "02 · 已选择 / 一个主操作",
@@ -216,7 +153,7 @@
         "x": 492,
         "y": 365,
         "width": 412,
-        "height": 1235
+        "height": 1228
       },
       "problem": null,
       "text": null,
@@ -245,6 +182,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -284,6 +222,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -363,6 +302,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "scroll-region",
         "scrolls": true
@@ -385,6 +325,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "back-to-city"
@@ -447,6 +388,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -506,6 +448,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -654,6 +597,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -673,6 +617,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "sort"
@@ -735,6 +680,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "filter-station"
@@ -797,6 +743,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -836,6 +783,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "refresh-city-trips",
@@ -919,6 +867,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -961,6 +910,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1040,6 +990,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1059,6 +1010,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1118,6 +1070,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1197,6 +1150,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1256,6 +1210,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1423,6 +1378,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "all-seat-status"
@@ -1508,6 +1464,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1587,6 +1544,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1606,6 +1564,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1665,6 +1624,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1744,6 +1704,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1803,6 +1764,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -1950,6 +1912,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "all-seat-status"
@@ -2007,7 +1970,7 @@
         "x": 0,
         "y": 1030,
         "width": 412,
-        "height": 177
+        "height": 170
       },
       "problem": null,
       "text": null,
@@ -2024,17 +1987,18 @@
     {
       "id": "SGutd",
       "parent": "jf9s1",
-      "name": "已选摘要与复制",
+      "name": "已选摘要",
       "type": "frame",
       "bounds": {
         "x": 20,
         "y": 16,
         "width": 372,
-        "height": 48
+        "height": 41
       },
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -2047,13 +2011,14 @@
       "type": "frame",
       "bounds": {
         "x": 0,
-        "y": 3.5,
-        "width": 280,
+        "y": 0,
+        "width": 372,
         "height": 41
       },
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -2067,7 +2032,7 @@
       "bounds": {
         "x": 0,
         "y": 0,
-        "width": 280,
+        "width": 372,
         "height": 20
       },
       "problem": null,
@@ -2087,7 +2052,7 @@
       "bounds": {
         "x": 0,
         "y": 24,
-        "width": 280,
+        "width": 372,
         "height": 17
       },
       "problem": null,
@@ -2100,76 +2065,13 @@
       "ref": null
     },
     {
-      "id": "EHLkK",
-      "parent": "SGutd",
-      "name": "复制当前已选车次",
-      "type": "frame",
-      "bounds": {
-        "x": 288,
-        "y": 0,
-        "width": 84,
-        "height": 48
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "metadata": {
-        "type": "interaction",
-        "action": "copy-itinerary",
-        "accessibilityLabel": "复制已选车次信息"
-      },
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "EHLkK/fkhKp",
-      "parent": "EHLkK",
-      "name": "复制图标",
-      "type": "icon",
-      "bounds": {
-        "x": 7,
-        "y": 16,
-        "width": 16,
-        "height": 16
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#2D5E3A",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "EHLkK/bnt0O",
-      "parent": "EHLkK",
-      "name": "复制文字",
-      "type": "text",
-      "bounds": {
-        "x": 28,
-        "y": 15.5,
-        "width": 49,
-        "height": 17
-      },
-      "problem": null,
-      "text": "复制车次",
-      "fontSize": 12,
-      "fill": "#2D5E3A",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
       "id": "ZkMuF",
       "parent": "jf9s1",
       "name": "打开铁路12306 App",
       "type": "frame",
       "bounds": {
         "x": 20,
-        "y": 76,
+        "y": 69,
         "width": 372,
         "height": 56
       },
@@ -2236,7 +2138,7 @@
       "type": "text",
       "bounds": {
         "x": 20,
-        "y": 144,
+        "y": 137,
         "width": 372,
         "height": 17
       },
@@ -2256,7 +2158,7 @@
       "type": "frame",
       "bounds": {
         "x": 0,
-        "y": 1207,
+        "y": 1200,
         "width": 412,
         "height": 28
       },
@@ -2327,6 +2229,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -2366,6 +2269,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -2445,6 +2349,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "scroll-region",
         "scrolls": true
@@ -2467,6 +2372,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "back-to-city"
@@ -2529,6 +2435,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -2588,6 +2495,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -2736,6 +2644,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -2755,6 +2664,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "sort"
@@ -2817,6 +2727,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "filter-station"
@@ -2879,6 +2790,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -2918,6 +2830,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "refresh-city-trips",
@@ -3001,6 +2914,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3043,6 +2957,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3122,6 +3037,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3141,6 +3057,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3200,6 +3117,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3279,6 +3197,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3338,6 +3257,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3485,6 +3405,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "all-seat-status"
@@ -3570,6 +3491,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3649,6 +3571,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3668,6 +3591,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3727,6 +3651,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3806,6 +3731,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -3865,6 +3791,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4012,6 +3939,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "all-seat-status"
@@ -4086,7 +4014,7 @@
     {
       "id": "buaa0",
       "parent": "eaDrz",
-      "name": "已选摘要与复制",
+      "name": "已选摘要",
       "type": "frame",
       "bounds": {
         "x": 20,
@@ -4097,6 +4025,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4116,6 +4045,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4153,7 +4083,7 @@
         "height": 17
       },
       "problem": null,
-      "text": "选好后，可复制车次并打开 12306 App",
+      "text": "选好后，可打开 12306 App",
       "fontSize": 12,
       "fill": "#617065",
       "metadata": null,
@@ -4297,7 +4227,7 @@
         "x": 984,
         "y": 365,
         "width": 320,
-        "height": 1358
+        "height": 1302
       },
       "problem": null,
       "text": null,
@@ -4326,6 +4256,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4365,6 +4296,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4444,6 +4376,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "scroll-region",
         "scrolls": true
@@ -4466,6 +4399,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "back-to-city"
@@ -4528,6 +4462,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4587,6 +4522,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4735,6 +4671,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4754,6 +4691,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "sort"
@@ -4816,6 +4754,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "filter-station"
@@ -4878,6 +4817,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -4917,6 +4857,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "refresh-city-trips",
@@ -5000,6 +4941,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5042,6 +4984,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5121,6 +5064,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5140,6 +5084,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5159,6 +5104,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5218,6 +5164,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5277,6 +5224,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5356,6 +5304,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5523,6 +5472,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "all-seat-status"
@@ -5580,7 +5530,7 @@
         "x": 0,
         "y": 1082,
         "width": 320,
-        "height": 248
+        "height": 192
       },
       "problem": null,
       "text": null,
@@ -5597,17 +5547,18 @@
     {
       "id": "QNrE0",
       "parent": "nS0yy",
-      "name": "已选摘要与复制",
+      "name": "已选摘要",
       "type": "frame",
       "bounds": {
         "x": 20,
         "y": 16,
         "width": 280,
-        "height": 109
+        "height": 53
       },
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5627,6 +5578,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -5673,76 +5625,13 @@
       "ref": null
     },
     {
-      "id": "zv7p5",
-      "parent": "QNrE0",
-      "name": "复制当前已选车次",
-      "type": "frame",
-      "bounds": {
-        "x": 0,
-        "y": 61,
-        "width": 118,
-        "height": 48
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "metadata": {
-        "type": "interaction",
-        "action": "copy-itinerary",
-        "accessibilityLabel": "复制已选车次信息"
-      },
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "zv7p5/fkhKp",
-      "parent": "zv7p5",
-      "name": "复制图标",
-      "type": "icon",
-      "bounds": {
-        "x": 15,
-        "y": 14,
-        "width": 20,
-        "height": 20
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#2D5E3A",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "zv7p5/bnt0O",
-      "parent": "zv7p5",
-      "name": "复制文字",
-      "type": "text",
-      "bounds": {
-        "x": 40,
-        "y": 12.5,
-        "width": 63,
-        "height": 23
-      },
-      "problem": null,
-      "text": "复制车次",
-      "fontSize": 15.6,
-      "fill": "#2D5E3A",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
       "id": "y1puvY",
       "parent": "nS0yy",
       "name": "打开铁路12306 App",
       "type": "frame",
       "bounds": {
         "x": 20,
-        "y": 137,
+        "y": 81,
         "width": 280,
         "height": 60
       },
@@ -5809,7 +5698,7 @@
       "type": "text",
       "bounds": {
         "x": 20,
-        "y": 209,
+        "y": 153,
         "width": 280,
         "height": 23
       },
@@ -5829,7 +5718,7 @@
       "type": "frame",
       "bounds": {
         "x": 0,
-        "y": 1330,
+        "y": 1274,
         "width": 320,
         "height": 28
       },
@@ -5865,7 +5754,7 @@
     {
       "id": "ePGKM",
       "parent": null,
-      "name": "04 · 刷新、复制与跳转反馈",
+      "name": "04 · 刷新与跳转反馈",
       "type": "frame",
       "bounds": {
         "x": 0,
@@ -5936,6 +5825,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -6215,6 +6105,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
+      "fill": null,
       "metadata": {
         "type": "interaction",
         "action": "retry-refresh"
@@ -6417,146 +6308,7 @@
       "problem": null,
       "text": null,
       "fontSize": null,
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "WuIE7",
-      "parent": "d0Dv46",
-      "name": "反馈 · 复制成功",
-      "type": "frame",
-      "bounds": {
-        "x": 0,
-        "y": 0,
-        "width": 430.6666666666667,
-        "height": 251
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#FFFFFF",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "J2V5ec",
-      "parent": "WuIE7",
-      "name": "复制成功标题",
-      "type": "text",
-      "bounds": {
-        "x": 20,
-        "y": 20,
-        "width": 390.6666666666667,
-        "height": 27
-      },
-      "problem": null,
-      "text": "复制成功",
-      "fontSize": 18,
-      "fill": "#20392C",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "e2cK8F",
-      "parent": "WuIE7",
-      "name": "复制成功界面片段",
-      "type": "frame",
-      "bounds": {
-        "x": 20,
-        "y": 61,
-        "width": 390.6666666666667,
-        "height": 114
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#E6EFDF",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "atDhW",
-      "parent": "e2cK8F",
-      "name": "复制成功状态图标",
-      "type": "icon",
-      "bounds": {
-        "x": 16,
-        "y": 16,
-        "width": 22,
-        "height": 22
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#2D5E3A",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "EHYkx",
-      "parent": "e2cK8F",
-      "name": "复制成功界面主文案",
-      "type": "text",
-      "bounds": {
-        "x": 16,
-        "y": 46,
-        "width": 358.6666666666667,
-        "height": 24
-      },
-      "problem": null,
-      "text": "已复制车次信息",
-      "fontSize": 16,
-      "fill": "#2D5E3A",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "g2SklV",
-      "parent": "e2cK8F",
-      "name": "复制成功界面辅助文案",
-      "type": "text",
-      "bounds": {
-        "x": 16,
-        "y": 78,
-        "width": 358.6666666666667,
-        "height": 20
-      },
-      "problem": null,
-      "text": "日期、车次、站点、席别和人数",
-      "fontSize": 13,
-      "fill": "#617065",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "UtCcu",
-      "parent": "WuIE7",
-      "name": "复制成功交互规则",
-      "type": "text",
-      "bounds": {
-        "x": 20,
-        "y": 189,
-        "width": 390.6666666666667,
-        "height": 42
-      },
-      "problem": null,
-      "text": "短暂显示轻提示，留在当前页；不刷新、不跳转。主按钮也不会自动改写剪贴板。",
-      "fontSize": 14,
-      "fill": "#617065",
+      "fill": null,
       "metadata": null,
       "placeholder": false,
       "reusable": false,
@@ -6568,10 +6320,10 @@
       "name": "反馈 · 正常跳转",
       "type": "frame",
       "bounds": {
-        "x": 450.6666666666667,
+        "x": 0,
         "y": 0,
-        "width": 430.6666666666667,
-        "height": 251
+        "width": 656,
+        "height": 230
       },
       "problem": null,
       "text": null,
@@ -6590,7 +6342,7 @@
       "bounds": {
         "x": 20,
         "y": 20,
-        "width": 390.6666666666667,
+        "width": 616,
         "height": 27
       },
       "problem": null,
@@ -6610,7 +6362,7 @@
       "bounds": {
         "x": 20,
         "y": 61,
-        "width": 390.6666666666667,
+        "width": 616,
         "height": 114
       },
       "problem": null,
@@ -6650,7 +6402,7 @@
       "bounds": {
         "x": 16,
         "y": 46,
-        "width": 358.6666666666667,
+        "width": 584,
         "height": 24
       },
       "problem": null,
@@ -6670,7 +6422,7 @@
       "bounds": {
         "x": 16,
         "y": 78,
-        "width": 358.6666666666667,
+        "width": 584,
         "height": 20
       },
       "problem": null,
@@ -6690,8 +6442,8 @@
       "bounds": {
         "x": 20,
         "y": 189,
-        "width": 390.6666666666667,
-        "height": 42
+        "width": 616,
+        "height": 21
       },
       "problem": null,
       "text": "点击主按钮唤起已安装的铁路12306 App。不承诺预填或直达订单页；返回保留选择与位置。",
@@ -6708,9 +6460,9 @@
       "name": "反馈 · 跳转失败",
       "type": "frame",
       "bounds": {
-        "x": 901.3333333333334,
+        "x": 676,
         "y": 0,
-        "width": 430.66666666666663,
+        "width": 656,
         "height": 251
       },
       "problem": null,
@@ -6730,7 +6482,7 @@
       "bounds": {
         "x": 20,
         "y": 20,
-        "width": 390.6666666666667,
+        "width": 616,
         "height": 27
       },
       "problem": null,
@@ -6750,7 +6502,7 @@
       "bounds": {
         "x": 20,
         "y": 61,
-        "width": 390.6666666666667,
+        "width": 616,
         "height": 114
       },
       "problem": null,
@@ -6790,7 +6542,7 @@
       "bounds": {
         "x": 16,
         "y": 46,
-        "width": 358.6666666666667,
+        "width": 584,
         "height": 24
       },
       "problem": null,
@@ -6810,7 +6562,7 @@
       "bounds": {
         "x": 16,
         "y": 78,
-        "width": 358.6666666666667,
+        "width": 584,
         "height": 20
       },
       "problem": null,
@@ -6830,11 +6582,11 @@
       "bounds": {
         "x": 20,
         "y": 189,
-        "width": 390.6666666666667,
+        "width": 616,
         "height": 42
       },
       "problem": null,
-      "text": "已安装但打开失败时提示“暂时无法打开 12306 App”。保留选择和复制入口，不自动打开官网。",
+      "text": "已安装但打开失败时提示“暂时无法打开 12306 App”。保留已选车次并允许重试，不自动打开官网。",
       "fontSize": 14,
       "fill": "#617065",
       "metadata": null,
@@ -6930,236 +6682,74 @@
       "ref": null
     }
   ],
-  "variables": {
-    "variables": {
-      "tt-bg": {
-        "type": "color",
-        "value": "#F5F3EE"
-      },
-      "tt-surface": {
-        "type": "color",
-        "value": "#FFFFFF"
-      },
-      "tt-ink": {
-        "type": "color",
-        "value": "#20392C"
-      },
-      "tt-muted": {
-        "type": "color",
-        "value": "#617065"
-      },
-      "tt-primary": {
-        "type": "color",
-        "value": "#2D5E3A"
-      },
-      "tt-tint": {
-        "type": "color",
-        "value": "#E6EFDF"
-      },
-      "tt-line": {
-        "type": "color",
-        "value": "#D8DED3"
-      },
-      "tt-warning": {
-        "type": "color",
-        "value": "#87531F"
-      },
-      "tt-warning-bg": {
-        "type": "color",
-        "value": "#FBF0DE"
-      },
-      "tt-font": {
-        "type": "string",
-        "value": "Noto Sans SC"
-      }
+  "references": [
+    {
+      "id": "dyVIW",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "CJDPn",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "gq1jG",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "seuHd",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "ZkMuF",
+      "ref": "WNMsd"
+    },
+    {
+      "id": "w2Mbe",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "fQ7CI",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "Tcc6P",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "kgyke",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "EpaTd",
+      "ref": "WNMsd"
+    },
+    {
+      "id": "tiJe4",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "wi9y6",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "r11Usx",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "FjyVZ",
+      "ref": "DAfHT"
+    },
+    {
+      "id": "y1puvY",
+      "ref": "WNMsd"
     }
-  },
-  "roots": [
+  ],
+  "components": [
     {
-      "id": "bi8Au",
-      "parent": null,
-      "name": "00 · v0.4.0 车次页 / 设计说明",
-      "type": "frame",
-      "bounds": {
-        "x": 0,
-        "y": 0,
-        "width": 1388,
-        "height": 194
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#F5F3EE",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
+      "id": "DAfHT"
     },
     {
-      "id": "DAfHT",
-      "parent": null,
-      "name": "组件 · 席别可选",
-      "type": "frame",
-      "bounds": {
-        "x": 412,
-        "y": 245,
-        "width": 160,
-        "height": 52
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#FFFFFF",
-      "metadata": {
-        "type": "interaction",
-        "action": "select-seat",
-        "selected": false
-      },
-      "placeholder": false,
-      "reusable": true,
-      "ref": null
-    },
-    {
-      "id": "d7A18",
-      "parent": null,
-      "name": "组件 · 复制车次",
-      "type": "frame",
-      "bounds": {
-        "x": 612,
-        "y": 245,
-        "width": 84,
-        "height": 48
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "metadata": {
-        "type": "interaction",
-        "action": "copy-itinerary",
-        "accessibilityLabel": "复制已选车次信息"
-      },
-      "placeholder": false,
-      "reusable": true,
-      "ref": null
-    },
-    {
-      "id": "bArbH",
-      "parent": null,
-      "name": "02 · 已选择 / 一个主操作",
-      "type": "frame",
-      "bounds": {
-        "x": 492,
-        "y": 365,
-        "width": 412,
-        "height": 1235
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#F5F3EE",
-      "metadata": {
-        "type": "screen",
-        "state": "selected",
-        "viewportWidthDp": 412
-      },
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "xUauz",
-      "parent": null,
-      "name": "01 · 未选择 / 引导点选席别",
-      "type": "frame",
-      "bounds": {
-        "x": 0,
-        "y": 365,
-        "width": 412,
-        "height": 1228
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#F5F3EE",
-      "metadata": {
-        "type": "screen",
-        "state": "selected",
-        "viewportWidthDp": 412
-      },
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "u5nS2",
-      "parent": null,
-      "name": "03 · 320dp / 1.3 倍字体",
-      "type": "frame",
-      "bounds": {
-        "x": 984,
-        "y": 365,
-        "width": 320,
-        "height": 1358
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#F5F3EE",
-      "metadata": {
-        "type": "screen",
-        "state": "selected",
-        "viewportWidthDp": 412
-      },
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "ePGKM",
-      "parent": null,
-      "name": "04 · 刷新、复制与跳转反馈",
-      "type": "frame",
-      "bounds": {
-        "x": 0,
-        "y": 1810,
-        "width": 1388,
-        "height": 788
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#F5F3EE",
-      "metadata": null,
-      "placeholder": false,
-      "reusable": false,
-      "ref": null
-    },
-    {
-      "id": "WNMsd",
-      "parent": null,
-      "name": "组件 · 打开 12306 App",
-      "type": "frame",
-      "bounds": {
-        "x": 0,
-        "y": 245,
-        "width": 372,
-        "height": 56
-      },
-      "problem": null,
-      "text": null,
-      "fontSize": null,
-      "fill": "#2D5E3A",
-      "metadata": {
-        "type": "interaction",
-        "action": "launch-12306-app",
-        "target": "铁路12306",
-        "webFallback": false,
-        "confirmation": false,
-        "clipboard": false
-      },
-      "placeholder": false,
-      "reusable": true,
-      "ref": null
+      "id": "WNMsd"
     }
   ]
 }

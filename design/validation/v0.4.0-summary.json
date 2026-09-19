@@ -1,9 +1,9 @@
 {
   "status": "passed",
-  "visible_nodes": 340,
-  "text_nodes": 155,
-  "root_frames": 8,
-  "reusable_components": 3,
+  "visible_nodes": 324,
+  "text_nodes": 148,
+  "root_frames": 7,
+  "reusable_components": 2,
   "tolerance_px": 0.5,
   "bounds_errors": [],
   "sibling_overlaps": [],
@@ -12,9 +12,9 @@
   "unnamed_nodes": [],
   "placeholder_nodes": [],
   "unresolved_references": [],
-  "raw_clip_notes": "One decimal round-off flag at C3NO9: right edge 372.00000000000006 vs parent 372; no overflow at 0.5 px tolerance.",
+  "raw_clip_notes": "C3NO9 right edge round-off only; no overflow at 0.5 px tolerance.",
   "ocr_images": 4,
-  "ocr_text_blocks": 149,
+  "ocr_text_blocks": 141,
   "contrast": {
     "body_on_cream": 11.25,
     "muted_on_cream": 4.72,
@@ -22,21 +22,23 @@
     "primary_on_tint": 6.41,
     "warning_on_warning_bg": 5.66
   },
-  "visual_review": "Selected, 320dp 1.3x font and feedback panels reviewed after app-launch correction. No visible overflow or overlap.",
-  "spec_review": "Initial spec independently approved; user app-launch correction checked for consistency.",
-  "runtime_tests": "Not run; UI design only.",
+  "visual_review": "Saved removal design: selected, compact, unselected and five feedback cards reviewed; no visible text overflow.",
+  "spec_review": "User-approved removal of copy action; current design and Android implementation agree.",
+  "runtime_tests": "DetailFlowTest: OK (6 tests); build and lint passed.",
   "interaction_target": "railway-12306-app",
   "web_fallback": false,
   "saved_source": {
     "source": "design/train-trip-v0.4.0.pen",
-    "bytes": 148691,
-    "sha256": "799f57d363c41d06313d8595df5375627065fc9f9a47be4478f9618093dd75cf",
+    "bytes": 143306,
+    "sha256": "0070305d3d3fe6d38e5403e7bc419251ab117957ca7fbe60ab73cc05bb9393ec",
     "reopened_from_disk": true,
     "readback_method": "Pencil MCP opened separately copied saved .pen file",
     "matches_verified_snapshot": true,
-    "root_frames": 8,
-    "saved_at": "2026-09-19T12:19:21.145084",
+    "root_frames": 7,
+    "saved_at": "2026-09-19T13:20:00.808897",
     "interaction_target": "railway-12306-app",
     "web_fallback": false
-  }
+  },
+  "copy_nodes": [],
+  "ocr_copy_labels": []
 }

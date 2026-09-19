@@ -1,12 +1,12 @@
 {
   "source": "design/train-trip-v0.4.0.pen",
-  "bytes": 148691,
-  "sha256": "799f57d363c41d06313d8595df5375627065fc9f9a47be4478f9618093dd75cf",
+  "bytes": 143306,
+  "sha256": "0070305d3d3fe6d38e5403e7bc419251ab117957ca7fbe60ab73cc05bb9393ec",
   "reopened_from_disk": true,
   "readback_method": "Pencil MCP opened separately copied saved .pen file",
   "matches_verified_snapshot": true,
-  "root_frames": 8,
-  "saved_at": "2026-09-19T12:19:21.145084",
+  "root_frames": 7,
+  "saved_at": "2026-09-19T13:20:00.808897",
   "interaction_target": "railway-12306-app",
   "web_fallback": false
 }

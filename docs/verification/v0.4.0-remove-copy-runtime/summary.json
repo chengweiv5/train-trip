@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "ui_tests": 6,
+  "build": "passed",
+  "lint_errors": 0,
+  "lint_existing_warnings": 12,
+  "runtime_images": 9,
+  "runtime_ocr_blocks": 217,
+  "copy_action_removed": true,
+  "device": "ALN-AL00",
+  "version": "0.4.0",
+  "version_code": 8,
+  "apk_sha256": "ff589d2fc283cd7a5e7587da2f4cedf7735c1f7860109b43bb542849e53fe195",
+  "installed_apk_matches": true,
+  "preferences_preserved": true,
+  "foreground": "cn.traintrip.app/.MainActivity"
+}
