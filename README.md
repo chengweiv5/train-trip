@@ -17,3 +17,31 @@
 0.2.0 新增天津、济南、青岛、大同、洛阳五城目的地灵感：结果卡片展示实景图与亮点，详情提供景点、美食、一日/两日玩法和来源署名，资料离线可读。其他城市保留查票功能。详见 [五城灵感验收](docs/verification/2026-09-19-destination-inspiration.md)。
 
 0.2.0 将目的地统一到省下一级行政单位，补充省份搜索和跨省选择；结果按省份放入可独立展开的连续容器。行政目录为 2023 快照，应用中明确标注。详见 [目的地省市分组验证](docs/verification/2026-09-19-destination-provinces.md)。
+
+0.1.2 将自定义出发时段改为同窗口设置开始和结束的小时、分钟滚轮，点一次“完成”应用；支持跨午夜、恢复全天和大字体上下布局。Pencil 已同步，Mate 60 Pro 已覆盖安装并确认原有设置保留。详见 [时段选择验证](docs/verification/2026-09-19-time-range-picker.md)。
+
+0.1.1 修复同窗口日期范围选择、连续查询进度条和车次耗时/到达日期排版；对应 Pencil 文件同步更新。详见 [界面修复验证](docs/verification/2026-09-19-ui-polish.md)。
+
+默认选择 24 个明确列出的城市，可在“查询目的地”调整。每个合并前的铁路城市保留一个代表站，仍可能遗漏部分同城站或目的地；界面始终显示覆盖说明，不声称全国完整。票源为 12306 当前网页使用的匿名查询协议，协议变化或访问失败会明确报错。
+
+已通过 Android API 36 临时模拟器验证。2026-09-19 已在 Mate 60 Pro（ALN-AL00，HarmonyOS 4.2.0.221，Android API 31）安装并正常启动；真机余票查询、完整交互与 12306 跳转仍待实测。
+
+## 构建与验证
+
+使用 JDK 21、Android SDK 36。首次构建在 `local.properties` 中设置本机 `sdk.dir`。
+
+```bash
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ./gradlew :core:test :app:assembleDebug :app:lintDebug
+./gradlew :app:connectedDebugAndroidTest
+```
+
+第二条命令需连接测试设备；包含少量真实 12306 查询，不应高频循环。核心测试离线运行，不依赖票数保持不变。
+
+当前仅使用网络权限，无账号、定位、通讯录或存储权限。筛选偏好保存在本机；离开 App 停止查询，当前进程内保留结果并可继续。
+
+- [首版设计](docs/superpowers/specs/2026-09-18-train-trip-design.md)
+- [本轮验证计划](docs/superpowers/plans/2026-09-18-ticket-source-validation.md)
+- [验证报告](docs/verification/2026-09-18-ticket-source.md)
+- [结构化证据](docs/verification/2026-09-18-evidence.json)
+- [已确认 UI 设计](design/README.md)
+- [Android 实现与验收记录](docs/verification/2026-09-19-android-v1.md)

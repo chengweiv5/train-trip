@@ -20,7 +20,7 @@ class SearchFailureTest {
 
     @Test fun failureDoesNotBlockOtherCitiesAndRetryOnlyQueriesFailedItem() {
         val catalog = StationCatalog.bundled()
-        val filters = SearchFilters(destinationCityIds = setOf("TJP", "JNK", "QDK").map { catalog.byCode.getValue(it).cityId }.toSet())
+        val filters = SearchFilters(destinationCityIds = setOf("TJP", "SJP", "QDK").map { catalog.byCode.getValue(it).cityId }.toSet())
         val plan = catalog.plan(filters)
         val calls = mutableListOf<QueryUnit>()
         var retry = false
@@ -55,7 +55,7 @@ class SearchFailureTest {
         compose.onNodeWithText(error, substring = true).assertIsDisplayed()
         compose.onNodeWithText("关闭").performClick()
         compose.runOnIdle { retry = true }
-        compose.onNodeWithText("重试未成功项").performScrollTo().performClick()
+        compose.onAllNodesWithText("重试未成功项")[0].performScrollTo().performClick()
         compose.waitUntil(15000) { vm.state.value.progress?.complete == true }
         compose.runOnIdle {
             assertEquals(plan + plan.first(), calls)
