@@ -35,11 +35,10 @@ class NotYetSaleTest {
         assertEquals("12点45分起售", trip.saleText)
         val seat = trip.seats.getValue(SeatType.SECOND)
         assertEquals("*", seat.raw)
-        assertEquals("尚未起售", seat.label(2))
+        assertEquals("尚未起售", seat.label())
         assertNull(seat.count)
         for (people in listOf(1, 2)) {
             assertFalse(seat.confirmedFor(people))
-            assertFalse(seat.uncertainFor(people))
         }
         assertFalse(trip.isSaleable(at))
     }
@@ -52,30 +51,27 @@ class NotYetSaleTest {
         assertEquals(6, trips.count { it.saleState == SaleState.OPEN })
         val placeholders = trips.flatMap { it.seats.values }.filter { it.raw == "*" }
         assertEquals(1173, placeholders.size)
-        assertTrue(placeholders.all { it.label(2) == "尚未起售" && !it.confirmedFor(2) && !it.uncertainFor(2) })
+        assertTrue(placeholders.all { it.label() == "尚未起售" && !it.confirmedFor(2) })
         assertTrue(trips.none { trip -> trip.seats.values.any { it.kind == AvailabilityKind.UNKNOWN } })
         val c2551 = trips.single { it.trainCode == "C2551" && it.to.code == "TJP" }
         assertEquals("12点45分起售", c2551.saleText)
         assertTrue(aggregate(trips, filters, now = at).flatMap { it.trips }.all { it.saleState == SaleState.OPEN })
-        assertTrue(aggregate(trips, filters, uncertain = true, now = at).flatMap { it.trips }.all { it.saleState == SaleState.OPEN })
     }
 
     @Test fun mixedResponseKeepsOpenSeatsAndExcludesAllUnopenedTripsFromResults() {
         val trips = requireSuccess(parse(row(), row("G101", "Y", "预订", "8"), row("C2001", seat = "8"))).trips
         assertEquals(3, trips.size)
         assertEquals(listOf("G101"), aggregate(trips, filters, now = at).single().trips.map { it.trainCode })
-        assertTrue(aggregate(trips, filters, uncertain = true, now = at).isEmpty())
         val unopened = trips.filter { it.saleState == SaleState.NOT_YET }
         assertEquals(2, unopened.size)
         assertTrue(aggregate(unopened, filters, now = at).isEmpty())
-        assertTrue(aggregate(unopened, filters, uncertain = true, now = at).isEmpty())
     }
 
     @Test fun everySeatFieldAcceptsStarOnlyForUnopenedTrain() {
         val fields = row().apply { SeatType.entries.forEach { this[it.field] = "*" } }
         val trip = requireSuccess(parse(fields)).trips.single()
         assertEquals(SeatType.entries.size, trip.seats.size)
-        assertTrue(trip.seats.values.all { it.raw == "*" && it.label(1) == "尚未起售" })
+        assertTrue(trip.seats.values.all { it.raw == "*" && it.label() == "尚未起售" })
     }
 
     @Test fun starWithoutUnopenedContextStillFails() {

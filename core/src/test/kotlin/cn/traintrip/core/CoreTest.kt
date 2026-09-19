@@ -14,8 +14,7 @@ class CoreTest {
     private fun trip(seats: Map<SeatType,SeatAvailability> = mapOf(SeatType.SECOND to TicketParser.availability("有"))) = Trip(day,"internal1","G1",catalog.byCode.getValue("VNP"),catalog.byCode.getValue("TJP"),LocalTime.of(23,59),LocalTime.of(1,25),86,SaleState.OPEN,"预订",seats,now)
     private fun filters() = SearchFilters(startDate=day,endDate=day)
     @Test fun inventoryDoesNotInventCountsOrCombineSeats() {
-        assertTrue(trip().confirmed(filters(),now)); assertFalse(trip().confirmed(filters().copy(people=2),now))
-        assertTrue(trip().uncertain(filters().copy(people=2),now))
+        assertTrue(trip().confirmed(filters(),now)); assertTrue(trip().confirmed(filters().copy(people=2),now))
         val t=trip(mapOf(SeatType.SECOND to TicketParser.availability("1"),SeatType.FIRST to TicketParser.availability("1")))
         assertFalse(t.confirmed(filters().copy(people=2),now))
         for(raw in listOf("无","0","候补","","--","异常")) assertFalse(TicketParser.availability(raw).confirmedFor(1))

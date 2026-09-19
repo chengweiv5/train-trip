@@ -84,7 +84,6 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
                         val available=fresh?.takeIf { it.isSaleable() }?.seats?.get(seat)
                         when {
                             available?.confirmedFor(f.people)==true -> mutable.update { it.copy(rechecking=false,handoffReady=true,handoffText=itinerary(fresh,seat,f.people),notice="已核验当前余票。请在 12306 完成登录与购票。") }
-                            available?.uncertainFor(f.people)==true -> mutable.update { it.copy(rechecking=false,handoffReady=true,handoffText=itinerary(fresh,seat,f.people),notice="有票，但没有具体张数，尚不能确认足够 ${f.people} 人。请到 12306 确认。") }
                             else -> mutable.update { it.copy(rechecking=false,selectedTripKey=null,selectedSeat=null,notice="这趟车当前不满足所选席别和人数，请选择其他车次。") }
                         }
                     }

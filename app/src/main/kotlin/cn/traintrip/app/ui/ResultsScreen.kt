@@ -20,11 +20,9 @@ import cn.traintrip.core.*
     val f=s.applied ?: s.filters
     val progress=s.progress
     val groups=remember(progress,f,s.citySortByCount,s.catalog) { groupResults(s.catalog,f,progress,s.citySortByCount) }
-    val uncertainGroups=remember(progress,f,s.citySortByCount,s.catalog) { groupResults(s.catalog,f,progress,s.citySortByCount,uncertain=true) }
     val cities=groups.flatMap { it.cities }
     var expanded by rememberSaveable(s.searchSession) { mutableStateOf(emptyList<String>()) }
     var initialized by rememberSaveable(s.searchSession) { mutableStateOf(false) }
-    var uncertainInitialized by rememberSaveable(s.searchSession) { mutableStateOf(false) }
     val listState=rememberLazyListState()
     val coroutine=rememberCoroutineScope()
     var scrollSession by rememberSaveable { mutableLongStateOf(-1) }
@@ -32,16 +30,11 @@ import cn.traintrip.core.*
         if(scrollSession!=s.searchSession) {
             expanded=groups.firstOrNull { it.cities.isNotEmpty() }?.let { listOf(it.province.id) }.orEmpty()
             initialized=expanded.isNotEmpty()
-            uncertainInitialized=uncertainGroups.isNotEmpty()
-            if(uncertainInitialized) expanded=expanded+("uncertain-"+uncertainGroups.first().province.id)
             listState.scrollToItem(0);scrollSession=s.searchSession
         }
     }
     LaunchedEffect(groups,initialized) {
         if(!initialized) groups.firstOrNull { it.cities.isNotEmpty() }?.let { expanded=expanded+it.province.id;initialized=true }
-    }
-    LaunchedEffect(uncertainGroups,uncertainInitialized) {
-        if(!uncertainInitialized) uncertainGroups.firstOrNull()?.let { expanded=expanded+("uncertain-"+it.province.id);uncertainInitialized=true }
     }
     fun toggle(id:String) { expanded=if(id in expanded) expanded-id else expanded+id }
     fun collapse(id:String) {
@@ -88,15 +81,6 @@ import cn.traintrip.core.*
             })
         }
         if(cities.isEmpty() && !s.loading && s.error==null && progress?.complete==true) item { Hint("暂时没有符合条件的票\n当前所选范围已查完。试试换一天，或放宽时段、席别。");SecondaryButton("调整出行条件",onBack) }
-        if(uncertainGroups.isNotEmpty()) {
-            item { Text("数量待核验 · 未计入上方城市数",style=MaterialTheme.typography.titleMedium);Text("这些车次返回“有”但未公布张数，尚不能确认满足 ${f.people} 人。",style=MaterialTheme.typography.bodySmall,color=Amber) }
-            items(uncertainGroups,key={"province-uncertain-${it.province.id}"}) { group ->
-                val id="uncertain-${group.province.id}"
-                ProvinceResultGroup(group,id in expanded,{toggle(id)},{collapse(id)},uncertain=true,content={
-                    group.cities.forEach { city -> CityCard(city,f,onCity,onGuide,s.catalog,true) }
-                })
-            }
-        }
         item { SecondaryButton("修改出行条件",onBack);Text("余票随时变化。选择车次后再次核验，并以 12306 购票结果为准。",Modifier.padding(vertical=12.dp),style=MaterialTheme.typography.bodySmall,color=Muted) }
     }
     if(showScope) AlertDialog(onDismissRequest={showScope=false},title={Text("本次查询范围")},text={
@@ -111,12 +95,12 @@ import cn.traintrip.core.*
         } }
     },confirmButton={TextButton({showErrors=false}) { Text("关闭") }})
 }
-@Composable private fun CityCard(city:CityResult,f:SearchFilters,onCity:(String)->Unit,onGuide:(String)->Unit,catalog:StationCatalog,uncertain:Boolean=false) {
+@Composable private fun CityCard(city:CityResult,f:SearchFilters,onCity:(String)->Unit,onGuide:(String)->Unit,catalog:StationCatalog) {
     val guide=DestinationGuides.find(city.cityId)
-    ContentCard(Modifier.fillMaxWidth().testTag("${if(uncertain) "uncertain-" else ""}city-card-${city.cityId}"),onClick={if(guide!=null) onGuide(city.cityId) else onCity(city.cityId)}) {
+    ContentCard(Modifier.fillMaxWidth().testTag("city-card-${city.cityId}"),onClick={if(guide!=null) onGuide(city.cityId) else onCity(city.cityId)}) {
         Row(verticalAlignment=Alignment.CenterVertically) {
             Text(city.cityName,Modifier.weight(1f),style=MaterialTheme.typography.titleLarge)
-            Text(if(uncertain) "${city.trainCount} 趟待核验" else "${city.trainCount} 趟有票",color=if(uncertain) Amber else Forest,style=MaterialTheme.typography.bodySmall,fontWeight=FontWeight.SemiBold)
+            Text("${city.trainCount} 趟有票",color=Forest,style=MaterialTheme.typography.bodySmall,fontWeight=FontWeight.SemiBold)
             Text("  ›",color=Muted)
         }
         Text(catalog.byCity[city.cityId]?.provinceLabel.orEmpty(),style=MaterialTheme.typography.bodySmall,color=Muted)
@@ -127,7 +111,7 @@ import cn.traintrip.core.*
             Text("建议 ${guide.suggestedDays} · ${guide.pace}",style=MaterialTheme.typography.bodySmall,color=Muted)
         }
         Text("最快 ${durationText(city.shortestMinutes)} · ${city.trips.map { it.date }.distinct().sorted().joinToString("、") { dateLabel(it) }}",style=MaterialTheme.typography.bodyMedium)
-        Text(city.trips.flatMap { t-> f.seats.filter { t.seats[it]?.let { a->a.confirmedFor(f.people) || a.uncertainFor(f.people) }==true } }.distinct().sortedBy { it.ordinal }.joinToString(" / ") { it.label },style=MaterialTheme.typography.bodySmall,color=Forest)
+        Text(city.trips.flatMap { t-> f.seats.filter { t.seats[it]?.confirmedFor(f.people)==true } }.distinct().sortedBy { it.ordinal }.joinToString(" / ") { it.label },style=MaterialTheme.typography.bodySmall,color=Forest)
         Text("${city.trips.map { it.to.name }.distinct().take(4).joinToString(" / ")} · ${formatTime(city.trips.maxOf { it.queriedAt })} 查询",style=MaterialTheme.typography.bodySmall,color=Muted)
         if(guide!=null) {
             Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp)) {

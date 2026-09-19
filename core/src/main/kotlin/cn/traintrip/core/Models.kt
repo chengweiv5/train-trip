@@ -12,11 +12,10 @@ enum class SeatType(val label: String, val field: Int) {
 }
 enum class AvailabilityKind { COUNT, AVAILABLE, NONE, WAITLIST, NOT_OFFERED, NOT_YET, UNKNOWN }
 data class SeatAvailability(val raw: String, val kind: AvailabilityKind, val count: Int? = null) {
-    fun confirmedFor(people: Int) = (kind == AvailabilityKind.COUNT && (count ?: 0) >= people) || (kind == AvailabilityKind.AVAILABLE && people == 1)
-    fun uncertainFor(people: Int) = kind == AvailabilityKind.AVAILABLE && people > 1
-    fun label(people: Int) = when(kind) {
+    fun confirmedFor(people: Int) = (kind == AvailabilityKind.COUNT && (count ?: 0) >= people) || kind == AvailabilityKind.AVAILABLE
+    fun label() = when(kind) {
         AvailabilityKind.COUNT -> "$count 张"
-        AvailabilityKind.AVAILABLE -> if(people == 1) "有票" else "有票，数量待核验"
+        AvailabilityKind.AVAILABLE -> "有票"
         AvailabilityKind.NONE -> "无票"
         AvailabilityKind.WAITLIST -> "候补"
         AvailabilityKind.NOT_OFFERED -> "本车次不提供"
@@ -83,14 +82,13 @@ data class Trip(
         departure != null && f.acceptsTime(departure.toSecondOfDay()/60) && durationMinutes != null &&
         (f.maxMinutes == null || durationMinutes <= f.maxMinutes)
     fun confirmed(f: SearchFilters, now: Instant = Instant.now()) = matchesConditions(f) && isSaleable(now) && f.seats.any { seats[it]?.confirmedFor(f.people) == true }
-    fun uncertain(f: SearchFilters, now: Instant = Instant.now()) = matchesConditions(f) && isSaleable(now) && !confirmed(f,now) && f.seats.any { seats[it]?.uncertainFor(f.people) == true }
 }
 data class CityResult(val cityId: String, val cityName: String, val trips: List<Trip>) {
     val trainCount get() = trips.map { it.trainKey }.distinct().size
     val shortestMinutes get() = trips.mapNotNull { it.durationMinutes }.minOrNull() ?: Int.MAX_VALUE
 }
-fun aggregate(trips: List<Trip>, filters: SearchFilters, uncertain: Boolean = false, now: Instant = Instant.now()): List<CityResult> =
-    trips.distinctBy { it.key }.filter { if(uncertain) it.uncertain(filters,now) else it.confirmed(filters,now) }
+fun aggregate(trips: List<Trip>, filters: SearchFilters, now: Instant = Instant.now()): List<CityResult> =
+    trips.distinctBy { it.key }.filter { it.confirmed(filters,now) }
         .groupBy { it.to.cityId }.map { (id, list) -> CityResult(id,list.first().to.cityName,list) }.sortedBy { it.shortestMinutes }
 
 data class SourceInfo(val queryPath: String, val saleStart: LocalDate, val saleEnd: LocalDate, val catalog: StationCatalog, val fetchedAt: Instant)

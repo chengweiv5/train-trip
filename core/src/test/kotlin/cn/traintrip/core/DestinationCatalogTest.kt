@@ -64,8 +64,9 @@ class DestinationCatalogTest {
         assertTrue(groupResults(c,f,unopened).all { it.status.contains("尚未开售") })
         val empty=p.copy(outcomes=plan.associate { it.key to QueryResult.Success(emptyList(),Instant.now()) },running=false)
         assertTrue(groupResults(c,f,empty).all { it.status.contains("暂无符合") && !it.incomplete })
-        assertTrue(groupResults(c,f.copy(people=2),p).all { it.cities.isEmpty() })
-        assertEquals(1,groupResults(c,f.copy(people=2),p,uncertain=true).single().cities.size)
+        val multiPerson=groupResults(c,f.copy(people=2),p)
+        assertEquals(listOf("130100"),multiPerson.flatMap { it.cities }.map { it.cityId })
+        assertTrue(multiPerson.last().status.contains("仍在查询"))
     }
     @Test fun splitRailwayGroupAcceptsProtocolButOnlyIncludesSelectedAdministrativeCity() {
         val day=today().plusDays(1)

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="cn.traintrip.core.AvailableSeatTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-09-19T02:27:39.169Z" hostname="DJX34Q0R35" time="0.212">
+  <properties/>
+  <testcase name="availableStillRespectsSaleStateCutoffAndFilters" classname="cn.traintrip.core.AvailableSeatTest" time="0.14"/>
+  <testcase name="availableCountsForEverySupportedPartySizeWithoutInventingCounts" classname="cn.traintrip.core.AvailableSeatTest" time="0.051"/>
+  <testcase name="explicitCountsStillRequireEnoughSeatsInOneSeatType" classname="cn.traintrip.core.AvailableSeatTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

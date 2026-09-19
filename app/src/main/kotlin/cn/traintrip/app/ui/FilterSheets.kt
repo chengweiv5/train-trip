@@ -41,7 +41,7 @@ import cn.traintrip.core.*
                             val base=if(draft.seats.size==SeatType.entries.size) emptySet() else draft.seats
                             draft=draft.copy(seats=if(selected || draft.seats.size==SeatType.entries.size) base+seat else base-seat)
                         } }
-                        Text("候补不计入有票结果。多人需要同一车次、同一席别的数量足够。",style=MaterialTheme.typography.bodySmall,color=Muted)
+                        Text("候补不计入有票结果。“有”直接视为有票；数字余票需同一车次、同一席别满足人数。",style=MaterialTheme.typography.bodySmall,color=Muted)
                     }
                     "people" -> {
                         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.SpaceBetween) {
@@ -49,7 +49,7 @@ import cn.traintrip.core.*
                             Text("${draft.people} 位成人",style=MaterialTheme.typography.titleLarge)
                             OutlinedButton({draft=draft.copy(people=(draft.people+1).coerceAtMost(20))},enabled=draft.people<20) { Text("＋") }
                         }
-                        Text("多人出行时，需同一车次、同一席别余票足够；“有”但未公布张数的车次会单独提示。",color=Muted)
+                        Text("“有”表示有票，可直接计入有票城市。返回具体张数时，需同一车次、同一席别余票满足人数。",color=Muted)
                     }
                     "duration" -> {
                         Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {

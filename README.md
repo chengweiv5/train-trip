@@ -8,7 +8,9 @@
 
 首版 App 和可安装调试 APK 已完成：筛选条件、真实余票查询、目的地城市汇总、车次详情、购票前核验、复制行程和打开 12306 官方查询页。
 
-本地安装包：`artifacts/train-trip-v2.0-debug.apk`（构建产物，不随源码提交）。自行构建后可从 `app/build/outputs/apk/debug/app-debug.apk` 获取，将文件传到手机后点击安装。应用名“有票就出发”，包名 `cn.traintrip.app`，版本 `0.2.0`。这是本机调试签名的自用版本，尚未上架。
+本地安装包：`artifacts/train-trip-v2.3-debug.apk`（构建产物，不随源码提交）。自行构建后可从 `app/build/outputs/apk/debug/app-debug.apk` 获取，将文件传到手机后点击安装。应用名“有票就出发”，包名 `cn.traintrip.app`，版本 `0.2.3`。这是本机调试签名的自用版本，尚未上架。
+
+0.2.3 将席别返回“有”直接计入有票城市，支持多人出行；移除“数量待核验”分流。具体数字仍需满足人数，购票前继续重新查询核验。32 项核心测试、12 项离线界面交互通过，已覆盖安装到 Mate 60 Pro 并保留设置。详见 [“有”计入有票城市验收](docs/verification/2026-09-19-available-seat-counting.md)。
 
 0.2.2 修复尚未起售车次返回 `*` 导致整项解析失败的问题：保留起售状态与文案，正常有票车次继续参与结果，未起售车次不会误报有票。22 项核心测试、2 项模拟器交互及原始 310 条记录重放通过，已覆盖安装到 Mate 60 Pro 并保留原设置。详见 [尚未起售解析验收](docs/verification/2026-09-19-not-yet-sale-parsing.md)。
 

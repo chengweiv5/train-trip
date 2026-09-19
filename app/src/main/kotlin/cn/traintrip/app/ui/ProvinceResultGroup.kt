@@ -20,15 +20,15 @@ import androidx.compose.ui.unit.dp
 import cn.traintrip.core.*
 
 @Composable fun ProvinceResultGroup(group: ProvinceResult,expanded: Boolean,onToggle: () -> Unit,onCollapse: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit,uncertain: Boolean=false) {
+    content: @Composable ColumnScope.() -> Unit) {
     val angle by animateFloatAsState(if(expanded) 180f else 0f,tween(200),label="省份展开箭头")
-    val count="${group.cities.size} 个${if(uncertain) "待核验" else "有票"}城市"
-    Surface(Modifier.fillMaxWidth().testTag("province-group-${if(uncertain) "uncertain-" else ""}${group.province.id}"),
+    val count="${group.cities.size} 个有票城市"
+    Surface(Modifier.fillMaxWidth().testTag("province-group-${group.province.id}"),
         shape=RoundedCornerShape(20.dp),color=if(expanded) Sage.copy(alpha=.65f) else Color.White,border=BorderStroke(1.dp,Line)) {
         Column(Modifier.animateContentSize(tween(200))) {
             Column(Modifier.fillMaxWidth().clickable(role=Role.Button,onClick=onToggle)
                 .semantics(mergeDescendants=true) { stateDescription=if(expanded) "已展开" else "已收起" }
-                .testTag("province-toggle-${if(uncertain) "uncertain-" else ""}${group.province.id}").padding(horizontal=16.dp,vertical=12.dp)) {
+                .testTag("province-toggle-${group.province.id}").padding(horizontal=16.dp,vertical=12.dp)) {
                 Row(Modifier.fillMaxWidth().heightIn(min=48.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
                     Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(4.dp)) {
                         Text(group.province.name,style=MaterialTheme.typography.titleMedium)
@@ -47,7 +47,7 @@ import cn.traintrip.core.*
             }
             if(expanded) Column(Modifier.padding(horizontal=12.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
                 content()
-                TextButton(onCollapse,Modifier.fillMaxWidth().testTag("province-collapse-${if(uncertain) "uncertain-" else ""}${group.province.id}")) { Text("收起${group.province.name}  ⌃") }
+                TextButton(onCollapse,Modifier.fillMaxWidth().testTag("province-collapse-${group.province.id}")) { Text("收起${group.province.name}  ⌃") }
             }
         }
     }

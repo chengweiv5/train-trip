@@ -15,7 +15,7 @@ import java.time.LocalDate
 
 @Composable fun DetailScreen(s:UiState,onBack:()->Unit,onSelect:(Trip,SeatType)->Unit,onCheck:()->Unit,onCopy:(String)->Unit) {
     val f=s.applied ?: s.filters
-    val all=remember(s.progress,f,s.cityId) { s.progress?.trips.orEmpty().filter { it.to.cityId==s.cityId && (it.confirmed(f) || it.uncertain(f)) }.distinctBy { it.key } }
+    val all=remember(s.progress,f,s.cityId) { s.progress?.trips.orEmpty().filter { it.to.cityId==s.cityId && it.confirmed(f) }.distinctBy { it.key } }
     var selectedDate by remember(s.cityId) { mutableStateOf<LocalDate?>(null) }
     var station by remember(s.cityId) { mutableStateOf<String?>(null) }
     var shortest by remember(s.cityId) { mutableStateOf(false) }
@@ -48,8 +48,8 @@ import java.time.LocalDate
                     Row { Text(t.trainCode,Modifier.weight(1f),style=MaterialTheme.typography.titleMedium);Text("直达",style=MaterialTheme.typography.bodySmall,color=Muted) }
                     TripTiming(t)
                     FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                        f.seats.filter { t.seats[it]?.let { a->a.confirmedFor(f.people) || a.uncertainFor(f.people) }==true }.sortedBy { it.ordinal }.forEach { seat->
-                            Choice("${seat.label} ${t.seats.getValue(seat).label(f.people)}",s.selectedTripKey==t.key && s.selectedSeat==seat,{onSelect(t,seat)})
+                        f.seats.filter { t.seats[it]?.confirmedFor(f.people)==true }.sortedBy { it.ordinal }.forEach { seat->
+                            Choice("${seat.label} ${t.seats.getValue(seat).label()}",s.selectedTripKey==t.key && s.selectedSeat==seat,{onSelect(t,seat)})
                         }
                     }
                     TextButton({seatTrip=t},contentPadding=PaddingValues(0.dp)) { Text("更多席别与余票 ›",style=MaterialTheme.typography.bodySmall) }
@@ -66,8 +66,8 @@ import java.time.LocalDate
     seatTrip?.let { t->AlertDialog(onDismissRequest={seatTrip=null},title={Text("${t.trainCode} · 席别余票")},text={
         LazyColumn(verticalArrangement=Arrangement.spacedBy(10.dp)) {
             item { Text("${t.date} ${t.departure}\n${t.from.name} → ${t.to.name}",style=MaterialTheme.typography.bodyMedium) }
-            items(SeatType.entries) { seat->Row { Text(seat.label,Modifier.weight(1f));Text(t.seats[seat]?.label(f.people) ?: "未提供",color=Muted) } }
-            item { Text("查询时间：${formatTime(t.queriedAt)}\n“有票”未公布具体张数。候补资格请在 12306 确认。${if(t.waitlistTrainFlag) "\n票源标记该车支持候补，具体席别以官方显示为准。" else ""}",style=MaterialTheme.typography.bodySmall,color=Muted) }
+            items(SeatType.entries) { seat->Row { Text(seat.label,Modifier.weight(1f));Text(t.seats[seat]?.label() ?: "未提供",color=Muted) } }
+            item { Text("查询时间：${formatTime(t.queriedAt)}\n“有”表示有票，不显示具体张数。候补资格请在 12306 确认。${if(t.waitlistTrainFlag) "\n票源标记该车支持候补，具体席别以官方显示为准。" else ""}",style=MaterialTheme.typography.bodySmall,color=Muted) }
         }
     },confirmButton={TextButton({seatTrip=null}) { Text("知道了") }}) }
 }

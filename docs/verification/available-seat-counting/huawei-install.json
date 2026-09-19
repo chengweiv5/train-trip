@@ -1,0 +1,11 @@
+{
+  "version": "0.2.3",
+  "versionCode": 7,
+  "install_success": true,
+  "launch_status": "ok",
+  "foreground_verified": true,
+  "package_sha256": "4a367268a03beb8878ea67bb1f50afd0e9b692ff46bbb41469425b0cd33904b5",
+  "installed_package_matches": true,
+  "preferences_unchanged": true,
+  "backup_dir": "/private/tmp/train-trip-available-wgv8qrxi"
+}
