@@ -41,9 +41,9 @@ import cn.traintrip.core.*
         }
         Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
             SectionTitle("几点出发","自定义") { sheet="time" }
-            Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                listOf(Triple("全天",0,1440),Triple("早上",360,720),Triple("下午",720,1080),Triple("晚上",1080,1440)).forEach { (name,start,end) ->
-                    Choice(name,f.startMinute==start && f.endMinute==end,{onUpdate(f.copy(startMinute=start,endMinute=end))},Modifier.weight(1f))
+            FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                listOf(Triple("全天",0,1440),Triple("凌晨",0,360),Triple("早上",360,720),Triple("下午",720,1080),Triple("晚上",1080,1440)).forEach { (name,start,end) ->
+                    Choice(name,f.startMinute==start && f.endMinute==end,{onUpdate(f.copy(startMinute=start,endMinute=end))},Modifier.widthIn(min=64.dp))
                 }
             }
             Text("${timeText(f.startMinute)}–${timeText(f.endMinute)} · 所选日期每天适用",style=MaterialTheme.typography.bodySmall,color=Muted)

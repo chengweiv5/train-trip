@@ -1,0 +1,127 @@
+{
+  "date": "2026-09-19",
+  "status": "verified",
+  "scope": "凌晨 00:00–06:00 预设及窄屏大字体示例",
+  "sourceFiles": [
+    "design/train-trip-destination-ui.pen",
+    "design/train-trip-v1.pen"
+  ],
+  "saveVerification": "两份文件均由原生 Save 保存，Edited 标记消失；Pencil MCP 回读成功。",
+  "destination": {
+    "checks": [
+      {
+        "root": "a9i4j",
+        "nodeCount": 68,
+        "clipping": [],
+        "placeholders": [],
+        "siblingOverlaps": []
+      },
+      {
+        "root": "gNcl5",
+        "nodeCount": 25,
+        "clipping": [],
+        "placeholders": [],
+        "siblingOverlaps": []
+      },
+      {
+        "root": "xl7od",
+        "nodeCount": 20,
+        "clipping": [],
+        "placeholders": [],
+        "siblingOverlaps": []
+      }
+    ],
+    "topOverlaps": [],
+    "presets": [
+      "全天",
+      "凌晨",
+      "早上",
+      "下午",
+      "晚上"
+    ],
+    "narrowLabels": [
+      "几点出发",
+      "自定义",
+      "全天",
+      "凌晨",
+      "早上",
+      "下午",
+      "晚上",
+      "00:00–06:00 · 所选日期每天适用"
+    ]
+  },
+  "v1": {
+    "checks": [
+      {
+        "root": "a9i4j",
+        "nodeCount": 68,
+        "clipping": [],
+        "placeholders": [],
+        "siblingOverlaps": []
+      },
+      {
+        "root": "gNcl5",
+        "nodeCount": 25,
+        "clipping": [],
+        "placeholders": [],
+        "siblingOverlaps": []
+      },
+      {
+        "root": "ATqc3",
+        "nodeCount": 20,
+        "clipping": [],
+        "placeholders": [],
+        "siblingOverlaps": []
+      }
+    ],
+    "topOverlaps": [],
+    "presets": [
+      "全天",
+      "凌晨",
+      "早上",
+      "下午",
+      "晚上"
+    ],
+    "narrowLabels": [
+      "几点出发",
+      "自定义",
+      "全天",
+      "凌晨",
+      "早上",
+      "下午",
+      "晚上",
+      "00:00–06:00 · 所选日期每天适用"
+    ]
+  },
+  "visualReview": "Pencil 渲染复核五个预设、凌晨选中样式和 320dp / 1.3 倍字体换行示例；布局与文字完整。",
+  "ocrEvidence": "early-morning-ocr.json",
+  "backup": ".verification-private/early-morning-design/original/",
+  "rollback": "参见 .verification-private/rebase-backup-path 对应目录；仅撤回凌晨设计时，首版稿使用 origin-main-train-trip-v1.pen，恢复前备份任何后续修改。",
+  "savedFiles": [
+    {
+      "path": "design/train-trip-destination-ui.pen",
+      "bytes": 593954,
+      "sha256": "72049963bb7e9157b08d1c420573c9a5cf58cdce41d7bc34ad02d404d5523791"
+    },
+    {
+      "path": "design/train-trip-v1.pen",
+      "bytes": 322620,
+      "sha256": "94ce0fec63bc45e043e7360887c897846ad2638751263fb9a8fbe6179991ea4f"
+    }
+  ],
+  "rebase": {
+    "onto": "35892a2188ef1d24ac6d8be55177b362a3efae6f",
+    "conflict": "design/train-trip-v1.pen",
+    "resolution": "在最新主线稿上重放凌晨预设、交接说明和大字体示例",
+    "unrelatedRootNodesPreserved": 17,
+    "preservedMainBoards": [
+      "Mav9U",
+      "syZ4p",
+      "e3qHZk",
+      "J9IQLh",
+      "pVPBz"
+    ],
+    "narrowExample": "ATqc3",
+    "saveVerified": true
+  }
+}

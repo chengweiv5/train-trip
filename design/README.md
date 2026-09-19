@@ -1,5 +1,15 @@
 # Train Trip V1 UI 设计
 
+## 凌晨出发预设（2026-09-19）
+
+已同步 [目的地版](train-trip-destination-ui.pen) 与 [首版稿](train-trip-v1.pen) 的“几点出发”：全天、凌晨、早上、下午、晚上。凌晨对应 00:00–06:00，开始包含、结束不包含；点击立即应用并保存，具体范围在按钮下方显示。
+
+标准宽度的按钮最小宽 64dp、高 48dp、间距 8dp。窄屏或大字体按可用宽度换行；新增 320dp、1.3 倍字体的“凌晨选中”示例，目的地版节点 `xl7od`、首版节点 `ATqc3`。开发交接 `gNcl5` 已补齐五个时段及换行规则。
+
+两份源文件均已在 Pencil 保存并回读；本次变更节点无裁切、同级重叠或未完成占位。参考图和 OCR 已复核，见 [凌晨选中示例](reference/early-morning/destination/xl7od.jpeg)、[最新首页](reference/early-morning/destination/a9i4j.jpeg) 与 [验证记录](validation/early-morning.json)。
+
+本轮改动和 rebase 前状态均有备份，路径记录在本工作区 `.verification-private/rebase-backup-path`。若仅撤回凌晨设计，首版稿应使用备份目录中的 `origin-main-train-trip-v1.pen`，保留新主线画板；恢复前先备份后续修改。早期原件 `.verification-private/early-morning-design/original/` 基于旧主线，不应直接覆盖当前首版稿。
+
 ## 目的地省市分组 UI（2026-09-19）
 
 [查看三屏预览](reference/destination-ui/review-overview.jpeg) · [同省展开/收起细节](reference/destination-ui/results-clarity-review.jpeg) · [完整结果页](reference/destination-ui/results-accordion-review.jpeg) · [完整设计说明](destination-ui-proposal.md)。结果页以连续省份容器包住城市卡片，明确显示“展开 / 收起”，收起时预览城市名称。默认展开第一个省份，其余收起，各省独立开合。整体 UI 已确认，并在 Android 0.2.0 中实现、验证及覆盖安装至 Mate 60 Pro；详见 [开发与真机验证](../docs/verification/2026-09-19-destination-provinces.md)。

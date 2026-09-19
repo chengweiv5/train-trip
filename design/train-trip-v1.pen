@@ -632,10 +632,12 @@
                       "type": "frame",
                       "id": "YN87J",
                       "name": "全天时段",
-                      "width": "fill_container",
+                      "width": 64,
                       "height": 48,
                       "fill": "$tt-tint",
                       "cornerRadius": 12,
+                      "stroke": "$tt-tint",
+                      "strokeWidth": 1,
                       "layout": "vertical",
                       "justifyContent": "center",
                       "alignItems": "center",
@@ -654,12 +656,40 @@
                     },
                     {
                       "type": "frame",
-                      "id": "Bce2Y",
-                      "name": "早上时段",
-                      "width": "fill_container",
+                      "id": "MXkOw",
+                      "name": "凌晨时段",
+                      "width": 64,
                       "height": 48,
                       "fill": "$tt-surface",
                       "cornerRadius": 12,
+                      "stroke": "$tt-line",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Z0NIWV",
+                          "name": "凌晨文字",
+                          "fill": "$tt-muted",
+                          "content": "凌晨",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Bce2Y",
+                      "name": "早上时段",
+                      "width": 64,
+                      "height": 48,
+                      "fill": "$tt-surface",
+                      "cornerRadius": 12,
+                      "stroke": "$tt-line",
+                      "strokeWidth": 1,
                       "layout": "vertical",
                       "justifyContent": "center",
                       "alignItems": "center",
@@ -680,10 +710,12 @@
                       "type": "frame",
                       "id": "vHZg0",
                       "name": "下午时段",
-                      "width": "fill_container",
+                      "width": 64,
                       "height": 48,
                       "fill": "$tt-surface",
                       "cornerRadius": 12,
+                      "stroke": "$tt-line",
+                      "strokeWidth": 1,
                       "layout": "vertical",
                       "justifyContent": "center",
                       "alignItems": "center",
@@ -704,10 +736,12 @@
                       "type": "frame",
                       "id": "p2pUYK",
                       "name": "晚上时段",
-                      "width": "fill_container",
+                      "width": 64,
                       "height": 48,
                       "fill": "$tt-surface",
                       "cornerRadius": 12,
+                      "stroke": "$tt-line",
+                      "strokeWidth": 1,
                       "layout": "vertical",
                       "justifyContent": "center",
                       "alignItems": "center",
@@ -6802,7 +6836,7 @@
           "fill": "$tt-muted",
           "textGrowth": "fixed-width",
           "width": "fill_container",
-          "content": "自定义时段：同窗两组小时/分钟滚轮，一次完成；取消不应用。开始 00:00–23:59，结束可到 24:00（分钟固定 00），两端相同禁用完成。跨午夜：开始时刻以后或结束时刻以前。窄屏/大字体两组上下排列，底部操作固定。到达日保留 +1 / +2 天。12306 不承诺预填，可复制行程手动检索。",
+          "content": "快捷预设：全天 00:00–24:00、凌晨 00:00–06:00、早上 06:00–12:00、下午 12:00–18:00、晚上 18:00–24:00。点击立即应用并保存；开始包含、结束不包含。按钮最小宽 64dp、高 48dp，水平与换行间距 8dp；窄屏或大字体按可用宽度换行。\n自定义时段：同窗两组小时/分钟滚轮，一次完成；取消不应用。开始 00:00–23:59，结束可到 24:00（分钟固定 00），两端相同禁用完成。跨午夜：开始时刻以后或结束时刻以前。窄屏/大字体两组上下排列，底部操作固定。到达日保留 +1 / +2 天。12306 不承诺预填，可复制行程手动检索。",
           "lineHeight": 1.6,
           "fontFamily": "$tt-font",
           "fontSize": 13,
@@ -8571,6 +8605,255 @@
           "fontFamily": "$tt-font",
           "fontSize": 16,
           "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ATqc3",
+      "x": 1444,
+      "y": 453,
+      "name": "出发时段 · 凌晨选中 / 320dp 大字体",
+      "metadata": {
+        "type": "design-variant",
+        "viewportDp": 320,
+        "fontScale": 1.3
+      },
+      "clip": true,
+      "width": 320,
+      "fill": "$tt-bg",
+      "cornerRadius": 20,
+      "layout": "vertical",
+      "gap": 16,
+      "padding": 20,
+      "children": [
+        {
+          "type": "frame",
+          "id": "p8Ahiw",
+          "name": "出发时段 · 1.3 倍字体",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 10,
+          "children": [
+            {
+              "type": "frame",
+              "id": "o5jRH",
+              "name": "时段标题行",
+              "width": "fill_container",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "BTLUy",
+                  "name": "时段标签",
+                  "fill": "$tt-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "几点出发",
+                  "lineHeight": 1.45,
+                  "fontFamily": "$tt-font",
+                  "fontSize": 20.8,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "wZ4DX",
+                  "name": "自定义时段 · 48dp 点击区域",
+                  "metadata": {
+                    "type": "interaction",
+                    "action": "打开自定义时段弹层"
+                  },
+                  "width": 74,
+                  "height": 48,
+                  "justifyContent": "end",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "UVH8W",
+                      "name": "自定义时段入口",
+                      "fill": "$tt-primary",
+                      "content": "自定义",
+                      "fontFamily": "$tt-font",
+                      "fontSize": 18.2,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "oXAcg",
+              "name": "时段快捷选项",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "LaSe3",
+                  "name": "预设第一行",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "z2ct4",
+                      "name": "全天时段",
+                      "width": 64,
+                      "height": 52,
+                      "fill": "$tt-surface",
+                      "cornerRadius": 12,
+                      "stroke": "$tt-line",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "BGJUw",
+                          "name": "全天文字",
+                          "fill": "$tt-muted",
+                          "content": "全天",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 18.2,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "e5qsSZ",
+                      "name": "凌晨时段",
+                      "width": 64,
+                      "height": 52,
+                      "fill": "$tt-tint",
+                      "cornerRadius": 12,
+                      "stroke": "$tt-tint",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "q0lYWv",
+                          "name": "凌晨文字",
+                          "fill": "$tt-primary",
+                          "content": "凌晨",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 18.2,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZwFjU",
+                      "name": "早上时段",
+                      "width": 64,
+                      "height": 52,
+                      "fill": "$tt-surface",
+                      "cornerRadius": 12,
+                      "stroke": "$tt-line",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "axAd4",
+                          "name": "早上文字",
+                          "fill": "$tt-muted",
+                          "content": "早上",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 18.2,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "pXR8K",
+                  "name": "预设第二行",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "scTXk",
+                      "name": "下午时段",
+                      "width": 64,
+                      "height": 52,
+                      "fill": "$tt-surface",
+                      "cornerRadius": 12,
+                      "stroke": "$tt-line",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fuX5j",
+                          "name": "下午文字",
+                          "fill": "$tt-muted",
+                          "content": "下午",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 18.2,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JHP2z",
+                      "name": "晚上时段",
+                      "width": 64,
+                      "height": 52,
+                      "fill": "$tt-surface",
+                      "cornerRadius": 12,
+                      "stroke": "$tt-line",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "NRWdh",
+                          "name": "晚上文字",
+                          "fill": "$tt-muted",
+                          "content": "晚上",
+                          "fontFamily": "$tt-font",
+                          "fontSize": 18.2,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "fGK60",
+              "name": "当前时段说明",
+              "fill": "$tt-muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "00:00–06:00 · 所选日期每天适用",
+              "lineHeight": 1.45,
+              "fontFamily": "$tt-font",
+              "fontSize": 15.6,
+              "fontWeight": "normal"
+            }
+          ]
         }
       ]
     }
