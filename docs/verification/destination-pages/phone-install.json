@@ -1,0 +1,17 @@
+{
+  "installedOn": "2026-09-19T14:10:25",
+  "model": "ALN-AL00",
+  "androidApi": "31",
+  "versionName": "0.4.0",
+  "versionCode": 8,
+  "apkSha256": "b776ff51d3c91348c5e5e5788b3686124d6e3e758a0387b5507caf6148c18f0f",
+  "apkMatchesVerifiedDeliverable": true,
+  "settingsUnchangedAfterInstallAndLaunch": true,
+  "resumedActivity": [
+    "mResumedActivity: ActivityRecord{38739a3 u0 cn.traintrip.app/.MainActivity t42190}",
+    "ResumedActivity: ActivityRecord{38739a3 u0 cn.traintrip.app/.MainActivity t42190}",
+    "mLastResumedActivity=ActivityRecord{38739a3 u0 cn.traintrip.app/.MainActivity t42190}"
+  ],
+  "backupPath": "/Users/bytedance/.codex/worktrees/dbca/train-trip/.verification-private/destination-pages/phone-20260919T140930",
+  "verificationScope": "安装、启动、包哈希与设置保留；未执行真机完整 UI 回归"
+}

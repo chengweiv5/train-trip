@@ -14,6 +14,7 @@
   "device": "dedicated read-only API 36 emulator-5592",
   "ocrScreens": 4,
   "ocrTextBlocks": 85,
-  "phoneInstalled": false,
-  "remotePushed": false
+  "phoneInstalled": true,
+  "remotePushed": false,
+  "phoneVerification": "phone-install.json"
 }

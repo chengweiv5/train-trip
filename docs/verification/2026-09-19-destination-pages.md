@@ -29,8 +29,15 @@
 
 ## 交付与回滚
 
-安装包：`artifacts/train-trip-destination-pages-debug.apk`，SHA-256 `b776ff51d3c91348c5e5e5788b3686124d6e3e758a0387b5507caf6148c18f0f`。本轮未覆盖安装个人手机、未推送远端。
+安装包：`artifacts/train-trip-destination-pages-debug.apk`，SHA-256 `b776ff51d3c91348c5e5e5788b3686124d6e3e758a0387b5507caf6148c18f0f`。开发验收完成时未安装个人手机；后续经用户明确要求已安装，结果见下文。未推送远端。
 
 确认样稿可编辑源：[HTML](../../design/reference/destination-pages/approved-preview.html)，为 Codex 内联样稿片段，保留设计选项与交互。旧 Pencil 设计文件不改。
 
 修改前源码归档 `.verification-private/destination-pages/source-before.tar`，基线 `6ec8b27`。回滚采用本次实现提交的反向提交，不清空仓库或用户设置；旧 APK 保留，新增 APK 可独立删除。
+
+
+## 真机安装（用户后续授权）
+
+2026-09-19 14:10，用户明确要求“安装到手机”。Mate 60 Pro / ALN-AL00 / API 31 已执行保留数据覆盖安装并正常启动；版本为 0.4.0 / code 8。从手机拉回 APK 的 SHA-256 与上述安装包完全一致。安装后、启动后的 `travel-filters.xml` 均与安装前逐字节一致；前台回读为 `cn.traintrip.app/.MainActivity`。见 [真机回读证据](destination-pages/phone-install.json)。
+
+旧 APK、筛选设置与安装日志备份在 `.verification-private/destination-pages/phone-20260919T140930/`。需要回滚时，用其中的 `before.apk` 对同一手机执行 `adb -s FMR0224725012307 install -r`，不卸载或清除数据。此次验证范围为安装、启动、包哈希和设置保留，未宣称完成真机全功能回归。
