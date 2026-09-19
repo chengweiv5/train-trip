@@ -55,7 +55,24 @@
   "backup": "/var/folders/2w/1f00699j5n5f4jp09txy9n2c0000gn/T/train-trip-inspiration-backup-5uo7h14l",
   "limits": [
     "本轮车票数据为离线测试样例，未重新测试真实余票或浏览器实际跳转",
-    "本轮未在个人真机安装",
     "城市资料是静态编辑内容；玩法和耗时为建议，票价/营业/天气/返程不包含"
-  ]
+  ],
+  "deviceInstallation": {
+    "verified_at": "2026-09-19T09:30:46.051945+08:00",
+    "device": "HUAWEI ALN-AL00 / Mate 60 Pro",
+    "platform": "HarmonyOS 4.2.0 / Android API 31",
+    "version_before": "0.1.2",
+    "version": "0.2.0",
+    "version_code": 4,
+    "installation": "Performing Streamed Install\nSuccess",
+    "launch": "Starting: Intent { cmp=cn.traintrip.app/.MainActivity }\nStatus: ok\nLaunchState: COLD\nActivity: cn.traintrip.app/.MainActivity\nTotalTime: 964\nWaitTime: 967\nComplete",
+    "foreground_verified": true,
+    "preferences_readable": true,
+    "preferences_unchanged": true,
+    "preference_file_count": 1,
+    "installed_apk_sha256": "987a6ab29e1ce8c047f81a6efcf9be22f99fb20bcd183d38a4bfd3ec8c2c6490",
+    "installed_apk_matches_artifact": true,
+    "backup": "/var/folders/2w/1f00699j5n5f4jp09txy9n2c0000gn/T/train-trip-device-install-uyc53mf8",
+    "functional_ui_tests": "previously passed on temporary emulator; this run verified install, launch and data preservation"
+  }
 }
