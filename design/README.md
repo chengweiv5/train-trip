@@ -1,5 +1,13 @@
 # Train Trip V1 UI 设计
 
+## v0.4.0 车次信息页 UI（2026-09-19）
+
+[可编辑源文件](train-trip-v0.4.0.pen) · [完整设计说明](../docs/superpowers/specs/2026-09-19-v0.4.0-train-detail-ui-design.md) · [设计评审 PDF](reference/v0.4.0/export.pdf)
+
+本轮已完成 UI 设计，尚未修改 App。底部主操作为“打开 12306 App”，点击唤起铁路12306；未安装或打开失败时提示并保留选择，不自动跳转官网。复制入口收进已选摘要，刷新余票放在列表上方。未选择、已选择、320dp / 1.3 倍字体及六种反馈状态均已出稿。完整可编辑层级另存为 [恢复快照](v0.4.0-recovery.json)。原首版和目的地设计稿保留；下文描述历史版本，其强制购票前核验和官网跳转规则由本节所链接的新设计在后续实现时替代。
+
+画板：未选择 `xUauz`、已选择 `bArbH`、大字体 `u5nS2`、反馈状态 `ePGKM`。结构、OCR 和视觉检查见 [验证记录](../docs/verification/2026-09-19-v0.4.0-train-detail-ui.md)。
+
 ## 凌晨出发预设（2026-09-19）
 
 已同步 [目的地版](train-trip-destination-ui.pen) 与 [首版稿](train-trip-v1.pen) 的“几点出发”：全天、凌晨、早上、下午、晚上。凌晨对应 00:00–06:00，开始包含、结束不包含；点击立即应用并保存，具体范围在按钮下方显示。
@@ -9,6 +17,7 @@
 两份源文件均已在 Pencil 保存并回读；本次变更节点无裁切、同级重叠或未完成占位。参考图和 OCR 已复核，见 [凌晨选中示例](reference/early-morning/destination/xl7od.jpeg)、[最新首页](reference/early-morning/destination/a9i4j.jpeg) 与 [验证记录](validation/early-morning.json)。
 
 本轮改动和 rebase 前状态均有备份，路径记录在本工作区 `.verification-private/rebase-backup-path`。若仅撤回凌晨设计，首版稿应使用备份目录中的 `origin-main-train-trip-v1.pen`，保留新主线画板；恢复前先备份后续修改。早期原件 `.verification-private/early-morning-design/original/` 基于旧主线，不应直接覆盖当前首版稿。
+
 
 ## 目的地省市分组 UI（2026-09-19）
 

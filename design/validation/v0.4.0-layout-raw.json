@@ -1,0 +1,7165 @@
+{
+  "nodes": [
+    {
+      "id": "bi8Au",
+      "parent": null,
+      "name": "00 · v0.4.0 车次页 / 设计说明",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1388,
+        "height": 194
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "y9q4oQ",
+      "parent": "bi8Au",
+      "name": "版本与标题",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 28,
+        "width": 263,
+        "height": 41
+      },
+      "problem": null,
+      "text": "有票就出发 · v0.4.0",
+      "fontSize": 28,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "QApCf",
+      "parent": "bi8Au",
+      "name": "改版目标",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 81,
+        "width": 240,
+        "height": 29
+      },
+      "problem": null,
+      "text": "选好席别，轻松接着查票。",
+      "fontSize": 20,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "q5NP9",
+      "parent": "bi8Au",
+      "name": "方案说明",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 122,
+        "width": 1332,
+        "height": 44
+      },
+      "problem": null,
+      "text": "一个主按钮 · 已选摘要旁复制 · 主动刷新余票 · 打开铁路12306 App。\n本稿仅更新车次信息页；日期、车次、余票均为设计示例。手机上列表滚动，底部操作固定于系统安全区上方。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "DAfHT",
+      "parent": null,
+      "name": "组件 · 席别可选",
+      "type": "frame",
+      "bounds": {
+        "x": 412,
+        "y": 245,
+        "width": 160,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": true,
+      "ref": null
+    },
+    {
+      "id": "WLHvP",
+      "parent": "DAfHT",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 49,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "二等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "VoHvN",
+      "parent": "DAfHT",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 97,
+        "y": 16,
+        "width": 14,
+        "height": 20
+      },
+      "problem": null,
+      "text": "有",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "d7A18",
+      "parent": null,
+      "name": "组件 · 复制车次",
+      "type": "frame",
+      "bounds": {
+        "x": 612,
+        "y": 245,
+        "width": 84,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "copy-itinerary",
+        "accessibilityLabel": "复制已选车次信息"
+      },
+      "placeholder": false,
+      "reusable": true,
+      "ref": null
+    },
+    {
+      "id": "fkhKp",
+      "parent": "d7A18",
+      "name": "复制图标",
+      "type": "icon",
+      "bounds": {
+        "x": 7,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "bnt0O",
+      "parent": "d7A18",
+      "name": "复制文字",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 15.5,
+        "width": 49,
+        "height": 17
+      },
+      "problem": null,
+      "text": "复制车次",
+      "fontSize": 12,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "bArbH",
+      "parent": null,
+      "name": "02 · 已选择 / 一个主操作",
+      "type": "frame",
+      "bounds": {
+        "x": 492,
+        "y": 365,
+        "width": 412,
+        "height": 1235
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": {
+        "type": "screen",
+        "state": "selected",
+        "viewportWidthDp": 412
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "bgzUC",
+      "parent": "bArbH",
+      "name": "系统状态栏",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 412,
+        "height": 62
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "K2YYCK",
+      "parent": "bgzUC",
+      "name": "系统时间",
+      "type": "text",
+      "bounds": {
+        "x": 24,
+        "y": 22,
+        "width": 31,
+        "height": 18
+      },
+      "problem": null,
+      "text": "9:41",
+      "fontSize": 15,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "um2Eq",
+      "parent": "bgzUC",
+      "name": "系统图标",
+      "type": "frame",
+      "bounds": {
+        "x": 323,
+        "y": 20.5,
+        "width": 65,
+        "height": 21
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "PxXcW",
+      "parent": "um2Eq",
+      "name": "信号",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 2.5,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "OprvQ",
+      "parent": "um2Eq",
+      "name": "无线网络",
+      "type": "icon",
+      "bounds": {
+        "x": 22,
+        "y": 2.5,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "fSwHF",
+      "parent": "um2Eq",
+      "name": "电量",
+      "type": "icon",
+      "bounds": {
+        "x": 44,
+        "y": 0,
+        "width": 21,
+        "height": 21
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "o9RLhU",
+      "parent": "bArbH",
+      "name": "可滚动车次列表",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 62,
+        "width": 412,
+        "height": 968
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "scroll-region",
+        "scrolls": true
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "VH9Fy",
+      "parent": "o9RLhU",
+      "name": "返回与路线",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 0,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "back-to-city"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tJCyi",
+      "parent": "VH9Fy",
+      "name": "返回图标",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 14,
+        "width": 20,
+        "height": 20
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Se6h2",
+      "parent": "VH9Fy",
+      "name": "返回目的地",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 14,
+        "width": 133,
+        "height": 20
+      },
+      "problem": null,
+      "text": "北京出发 · 只看直达",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "wJ9D3",
+      "parent": "o9RLhU",
+      "name": "目的地标题",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 64,
+        "width": 372,
+        "height": 66
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "sBo5Z",
+      "parent": "wJ9D3",
+      "name": "城市标题",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 85,
+        "height": 41
+      },
+      "problem": null,
+      "text": "去天津",
+      "fontSize": 28,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "lGMm3",
+      "parent": "wJ9D3",
+      "name": "省份与数量",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 46,
+        "width": 123,
+        "height": 20
+      },
+      "problem": null,
+      "text": "天津市 · 12 趟车次",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "oqkz2",
+      "parent": "o9RLhU",
+      "name": "可出发日期",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 146,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "D3BPuv",
+      "parent": "oqkz2",
+      "name": "日期 · 全部日期",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 118.66666666666667,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#E6EFDF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "pEYq1",
+      "parent": "D3BPuv",
+      "name": "日期文字 · 全部日期",
+      "type": "text",
+      "bounds": {
+        "x": 31.333333333333336,
+        "y": 14,
+        "width": 56.00000000000001,
+        "height": 20
+      },
+      "problem": null,
+      "text": "全部日期",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "h12do",
+      "parent": "oqkz2",
+      "name": "日期 · 9月25日",
+      "type": "frame",
+      "bounds": {
+        "x": 126.66666666666667,
+        "y": 0,
+        "width": 118.66666666666667,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "N3PXE",
+      "parent": "h12do",
+      "name": "日期文字 · 9月25日",
+      "type": "text",
+      "bounds": {
+        "x": 33.333333333333336,
+        "y": 14,
+        "width": 52.00000000000001,
+        "height": 20
+      },
+      "problem": null,
+      "text": "9月25日",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "h8UZB",
+      "parent": "oqkz2",
+      "name": "日期 · 9月26日",
+      "type": "frame",
+      "bounds": {
+        "x": 253.33333333333334,
+        "y": 0,
+        "width": 118.66666666666666,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "oNETl",
+      "parent": "h8UZB",
+      "name": "日期文字 · 9月26日",
+      "type": "text",
+      "bounds": {
+        "x": 33.333333333333336,
+        "y": 14,
+        "width": 52.00000000000001,
+        "height": 20
+      },
+      "problem": null,
+      "text": "9月26日",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Z3uWLD",
+      "parent": "o9RLhU",
+      "name": "车次排序与到达站",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 210,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "wVR61",
+      "parent": "Z3uWLD",
+      "name": "出发时间 ↑",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 95,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "sort"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "SU6fS",
+      "parent": "wVR61",
+      "name": "控件文字 · 出发时间 ↑",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 14,
+        "width": 74,
+        "height": 20
+      },
+      "problem": null,
+      "text": "出发时间 ↑",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "g5nW4h",
+      "parent": "wVR61",
+      "name": "控件图标 · 出发时间 ↑",
+      "type": "icon",
+      "bounds": {
+        "x": 79,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "RUcGh",
+      "parent": "Z3uWLD",
+      "name": "全部到达站",
+      "type": "frame",
+      "bounds": {
+        "x": 281,
+        "y": 0,
+        "width": 91,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-station"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "oAn0Y",
+      "parent": "RUcGh",
+      "name": "控件文字 · 全部到达站",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 14,
+        "width": 70,
+        "height": 20
+      },
+      "problem": null,
+      "text": "全部到达站",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "QBjuf",
+      "parent": "RUcGh",
+      "name": "控件图标 · 全部到达站",
+      "type": "icon",
+      "bounds": {
+        "x": 75,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "FJ9as",
+      "parent": "o9RLhU",
+      "name": "查询时间与主动刷新",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 274,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "qNqVV",
+      "parent": "FJ9as",
+      "name": "最近查询时间",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 15.5,
+        "width": 147,
+        "height": 17
+      },
+      "problem": null,
+      "text": "09:41 更新 · 余票随时变化",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "vq5Og",
+      "parent": "FJ9as",
+      "name": "刷新余票按钮",
+      "type": "frame",
+      "bounds": {
+        "x": 294,
+        "y": 0,
+        "width": 78,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "refresh-city-trips",
+        "accessibilityLabel": "刷新当前城市余票"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "fzMyv",
+      "parent": "vq5Og",
+      "name": "刷新图标",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Lywd4",
+      "parent": "vq5Og",
+      "name": "刷新文字",
+      "type": "text",
+      "bounds": {
+        "x": 22,
+        "y": 14,
+        "width": 56,
+        "height": 20
+      },
+      "problem": null,
+      "text": "刷新余票",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "uKa9Z",
+      "parent": "o9RLhU",
+      "name": "选择席别提示",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 338,
+        "width": 372,
+        "height": 20
+      },
+      "problem": null,
+      "text": "点选席别，底部查看已选车次",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tcGTm",
+      "parent": "o9RLhU",
+      "name": "车次列表",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 374,
+        "width": 372,
+        "height": 574
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "hO5l3",
+      "parent": "tcGTm",
+      "name": "车次卡片 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 372,
+        "height": 281
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F0F5EB",
+      "metadata": {
+        "type": "train-option",
+        "selected": true
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "XqM2D",
+      "parent": "hO5l3",
+      "name": "车次与选择状态 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 340,
+        "height": 29
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ha6Ze",
+      "parent": "XqM2D",
+      "name": "车次编号 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 60,
+        "height": 29
+      },
+      "problem": null,
+      "text": "C2031",
+      "fontSize": 20,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "KYkli",
+      "parent": "XqM2D",
+      "name": "状态文字 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 303,
+        "y": 6,
+        "width": 37,
+        "height": 17
+      },
+      "problem": null,
+      "text": "已选择",
+      "fontSize": 12,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "oX0lQ",
+      "parent": "hO5l3",
+      "name": "乘车日期 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 57,
+        "width": 127,
+        "height": 17
+      },
+      "problem": null,
+      "text": "9月25日 · 周五 · 直达",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "FyqVO",
+      "parent": "hO5l3",
+      "name": "发到时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 86,
+        "width": 340,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "LlpkE",
+      "parent": "FyqVO",
+      "name": "出发站时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 96,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "eBNpF",
+      "parent": "LlpkE",
+      "name": "出发时间 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 77,
+        "height": 31
+      },
+      "problem": null,
+      "text": "08:00",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "X9ukO",
+      "parent": "LlpkE",
+      "name": "出发站 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 35,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "北京南",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "NVuDN",
+      "parent": "FyqVO",
+      "name": "运行时长 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 104,
+        "y": 2.5,
+        "width": 132,
+        "height": 50
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "JVNHw",
+      "parent": "NVuDN",
+      "name": "时长 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 47,
+        "y": 0,
+        "width": 38,
+        "height": 17
+      },
+      "problem": null,
+      "text": "30分钟",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "VYSYr",
+      "parent": "NVuDN",
+      "name": "时间连线 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 25,
+        "width": 132,
+        "height": 1
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#D8DED3",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dg9ju",
+      "parent": "NVuDN",
+      "name": "到达日期 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 44,
+        "y": 34,
+        "width": 44,
+        "height": 16
+      },
+      "problem": null,
+      "text": "当日到达",
+      "fontSize": 11,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "zzZop",
+      "parent": "FyqVO",
+      "name": "到达站时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 244,
+        "y": 0,
+        "width": 96,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "M8eDPE",
+      "parent": "zzZop",
+      "name": "到达时间 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 0,
+        "width": 76,
+        "height": 31
+      },
+      "problem": null,
+      "text": "08:30",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "VoFJT",
+      "parent": "zzZop",
+      "name": "到达站 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 68,
+        "y": 35,
+        "width": 28,
+        "height": 20
+      },
+      "problem": null,
+      "text": "天津",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "n6ymF",
+      "parent": "hO5l3",
+      "name": "可选席别 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 153,
+        "width": 340,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dyVIW",
+      "parent": "n6ymF",
+      "name": "二等座选项 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 166,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dyVIW/y1olIN",
+      "parent": "dyVIW",
+      "name": "席别选中勾",
+      "type": "icon",
+      "bounds": {
+        "x": 41,
+        "y": 18,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dyVIW/WLHvP",
+      "parent": "dyVIW",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 63,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "二等座",
+      "fontSize": 14,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dyVIW/VoHvN",
+      "parent": "dyVIW",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 111,
+        "y": 16,
+        "width": 14,
+        "height": 20
+      },
+      "problem": null,
+      "text": "有",
+      "fontSize": 14,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "CJDPn",
+      "parent": "n6ymF",
+      "name": "一等座选项 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 174,
+        "y": 0,
+        "width": 166,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "CJDPn/WLHvP",
+      "parent": "CJDPn",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 48,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "一等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "CJDPn/VoHvN",
+      "parent": "CJDPn",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 96,
+        "y": 16,
+        "width": 22,
+        "height": 20
+      },
+      "problem": null,
+      "text": "8张",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "QeZGt",
+      "parent": "hO5l3",
+      "name": "更多席别按钮 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 217,
+        "width": 340,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "all-seat-status"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "z3Jcpo",
+      "parent": "QeZGt",
+      "name": "更多席别文字 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 15.5,
+        "width": 85,
+        "height": 17
+      },
+      "problem": null,
+      "text": "更多席别与余票",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "rMXbd",
+      "parent": "QeZGt",
+      "name": "更多席别箭头 · C2031",
+      "type": "icon",
+      "bounds": {
+        "x": 324,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Hl5SG",
+      "parent": "tcGTm",
+      "name": "车次卡片 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 293,
+        "width": 372,
+        "height": 281
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "train-option",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "hk1p2",
+      "parent": "Hl5SG",
+      "name": "车次与选择状态 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 340,
+        "height": 29
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "g7Xr3g",
+      "parent": "hk1p2",
+      "name": "车次编号 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 60,
+        "height": 29
+      },
+      "problem": null,
+      "text": "C2033",
+      "fontSize": 20,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "X1I10",
+      "parent": "hk1p2",
+      "name": "状态文字 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 291,
+        "y": 6,
+        "width": 49,
+        "height": 17
+      },
+      "problem": null,
+      "text": "可选席别",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Tz0rC",
+      "parent": "Hl5SG",
+      "name": "乘车日期 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 57,
+        "width": 127,
+        "height": 17
+      },
+      "problem": null,
+      "text": "9月25日 · 周五 · 直达",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "rIGIi",
+      "parent": "Hl5SG",
+      "name": "发到时间 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 86,
+        "width": 340,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "UEwAY",
+      "parent": "rIGIi",
+      "name": "出发站时间 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 96,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "xTGDx",
+      "parent": "UEwAY",
+      "name": "出发时间 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 76,
+        "height": 31
+      },
+      "problem": null,
+      "text": "08:20",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dsGjb",
+      "parent": "UEwAY",
+      "name": "出发站 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 35,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "北京南",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "LjtSk",
+      "parent": "rIGIi",
+      "name": "运行时长 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 104,
+        "y": 2.5,
+        "width": 132,
+        "height": 50
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "KpJRQ",
+      "parent": "LjtSk",
+      "name": "时长 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 47,
+        "y": 0,
+        "width": 38,
+        "height": 17
+      },
+      "problem": null,
+      "text": "30分钟",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "IXdEO",
+      "parent": "LjtSk",
+      "name": "时间连线 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 25,
+        "width": 132,
+        "height": 1
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#D8DED3",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EUOQ5",
+      "parent": "LjtSk",
+      "name": "到达日期 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 44,
+        "y": 34,
+        "width": 44,
+        "height": 16
+      },
+      "problem": null,
+      "text": "当日到达",
+      "fontSize": 11,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EzauD",
+      "parent": "rIGIi",
+      "name": "到达站时间 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 244,
+        "y": 0,
+        "width": 96,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "W8tTf",
+      "parent": "EzauD",
+      "name": "到达时间 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 0,
+        "width": 76,
+        "height": 31
+      },
+      "problem": null,
+      "text": "08:50",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "F9W8Ic",
+      "parent": "EzauD",
+      "name": "到达站 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 68,
+        "y": 35,
+        "width": 28,
+        "height": 20
+      },
+      "problem": null,
+      "text": "天津",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "e9EvFX",
+      "parent": "Hl5SG",
+      "name": "可选席别 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 153,
+        "width": 340,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "gq1jG",
+      "parent": "e9EvFX",
+      "name": "二等座选项 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 166,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "gq1jG/WLHvP",
+      "parent": "gq1jG",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 52,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "二等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "gq1jG/VoHvN",
+      "parent": "gq1jG",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 100,
+        "y": 16,
+        "width": 14,
+        "height": 20
+      },
+      "problem": null,
+      "text": "有",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "seuHd",
+      "parent": "e9EvFX",
+      "name": "一等座选项 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 174,
+        "y": 0,
+        "width": 166,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "seuHd/WLHvP",
+      "parent": "seuHd",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 48,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "一等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "seuHd/VoHvN",
+      "parent": "seuHd",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 96,
+        "y": 16,
+        "width": 22,
+        "height": 20
+      },
+      "problem": null,
+      "text": "8张",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "QfBNP",
+      "parent": "Hl5SG",
+      "name": "更多席别按钮 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 217,
+        "width": 340,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "all-seat-status"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "OPiLH",
+      "parent": "QfBNP",
+      "name": "更多席别文字 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 15.5,
+        "width": 85,
+        "height": 17
+      },
+      "problem": null,
+      "text": "更多席别与余票",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "IEbQG",
+      "parent": "QfBNP",
+      "name": "更多席别箭头 · C2033",
+      "type": "icon",
+      "bounds": {
+        "x": 324,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "jf9s1",
+      "parent": "bArbH",
+      "name": "底部固定操作区",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1030,
+        "width": 412,
+        "height": 177
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "sticky-actions",
+        "anchor": "bottom-above-system-inset"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "SGutd",
+      "parent": "jf9s1",
+      "name": "已选摘要与复制",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 16,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Y68Xw9",
+      "parent": "SGutd",
+      "name": "已选行程摘要",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 3.5,
+        "width": 280,
+        "height": 41
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "jJd5g",
+      "parent": "Y68Xw9",
+      "name": "已选摘要标题",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 280,
+        "height": 20
+      },
+      "problem": null,
+      "text": "C2031 · 9月25日 · 二等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "bEX6k",
+      "parent": "Y68Xw9",
+      "name": "已选摘要路线",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 24,
+        "width": 280,
+        "height": 17
+      },
+      "problem": null,
+      "text": "北京南 08:00 → 天津 · 1位成人",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EHLkK",
+      "parent": "SGutd",
+      "name": "复制当前已选车次",
+      "type": "frame",
+      "bounds": {
+        "x": 288,
+        "y": 0,
+        "width": 84,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "copy-itinerary",
+        "accessibilityLabel": "复制已选车次信息"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EHLkK/fkhKp",
+      "parent": "EHLkK",
+      "name": "复制图标",
+      "type": "icon",
+      "bounds": {
+        "x": 7,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EHLkK/bnt0O",
+      "parent": "EHLkK",
+      "name": "复制文字",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 15.5,
+        "width": 49,
+        "height": 17
+      },
+      "problem": null,
+      "text": "复制车次",
+      "fontSize": 12,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ZkMuF",
+      "parent": "jf9s1",
+      "name": "打开铁路12306 App",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 76,
+        "width": 372,
+        "height": 56
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": {
+        "type": "interaction",
+        "action": "launch-12306-app",
+        "target": "铁路12306",
+        "webFallback": false,
+        "confirmation": false,
+        "clipboard": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ZkMuF/NiSyw",
+      "parent": "ZkMuF",
+      "name": "主按钮文字",
+      "type": "text",
+      "bounds": {
+        "x": 113.5,
+        "y": 16.5,
+        "width": 117,
+        "height": 23
+      },
+      "problem": null,
+      "text": "打开 12306 App",
+      "fontSize": 16,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ZkMuF/hoELg",
+      "parent": "ZkMuF",
+      "name": "打开手机 App 图标",
+      "type": "icon",
+      "bounds": {
+        "x": 240.5,
+        "y": 19,
+        "width": 18,
+        "height": 18
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "N7kJtQ",
+      "parent": "jf9s1",
+      "name": "12306 App 说明",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 144,
+        "width": 372,
+        "height": 17
+      },
+      "problem": null,
+      "text": "在 12306 App 内填写条件并购票",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "D7iCw",
+      "parent": "bArbH",
+      "name": "系统底部安全区",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1207,
+        "width": 412,
+        "height": 28
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "kFNLS",
+      "parent": "D7iCw",
+      "name": "手势条",
+      "type": "rectangle",
+      "bounds": {
+        "x": 150,
+        "y": 12,
+        "width": 112,
+        "height": 4
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "xUauz",
+      "parent": null,
+      "name": "01 · 未选择 / 引导点选席别",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 365,
+        "width": 412,
+        "height": 1228
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": {
+        "type": "screen",
+        "state": "selected",
+        "viewportWidthDp": 412
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "px03P",
+      "parent": "xUauz",
+      "name": "系统状态栏",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 412,
+        "height": 62
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "eUSYN",
+      "parent": "px03P",
+      "name": "系统时间",
+      "type": "text",
+      "bounds": {
+        "x": 24,
+        "y": 22,
+        "width": 31,
+        "height": 18
+      },
+      "problem": null,
+      "text": "9:41",
+      "fontSize": 15,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "O9uUXy",
+      "parent": "px03P",
+      "name": "系统图标",
+      "type": "frame",
+      "bounds": {
+        "x": 323,
+        "y": 20.5,
+        "width": 65,
+        "height": 21
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Y0qh2a",
+      "parent": "O9uUXy",
+      "name": "信号",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 2.5,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "AkkVR",
+      "parent": "O9uUXy",
+      "name": "无线网络",
+      "type": "icon",
+      "bounds": {
+        "x": 22,
+        "y": 2.5,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "DloEA",
+      "parent": "O9uUXy",
+      "name": "电量",
+      "type": "icon",
+      "bounds": {
+        "x": 44,
+        "y": 0,
+        "width": 21,
+        "height": 21
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "UlfRQ",
+      "parent": "xUauz",
+      "name": "可滚动车次列表",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 62,
+        "width": 412,
+        "height": 968
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "scroll-region",
+        "scrolls": true
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "MD4Vt",
+      "parent": "UlfRQ",
+      "name": "返回与路线",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 0,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "back-to-city"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "D0VYd",
+      "parent": "MD4Vt",
+      "name": "返回图标",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 14,
+        "width": 20,
+        "height": 20
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "N123R",
+      "parent": "MD4Vt",
+      "name": "返回目的地",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 14,
+        "width": 133,
+        "height": 20
+      },
+      "problem": null,
+      "text": "北京出发 · 只看直达",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Qm5eI",
+      "parent": "UlfRQ",
+      "name": "目的地标题",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 64,
+        "width": 372,
+        "height": 66
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "WMFXp",
+      "parent": "Qm5eI",
+      "name": "城市标题",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 85,
+        "height": 41
+      },
+      "problem": null,
+      "text": "去天津",
+      "fontSize": 28,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "GcPal",
+      "parent": "Qm5eI",
+      "name": "省份与数量",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 46,
+        "width": 123,
+        "height": 20
+      },
+      "problem": null,
+      "text": "天津市 · 12 趟车次",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tg2DC",
+      "parent": "UlfRQ",
+      "name": "可出发日期",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 146,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "G64OO",
+      "parent": "tg2DC",
+      "name": "日期 · 全部日期",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 118.66666666666667,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#E6EFDF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "xavEh",
+      "parent": "G64OO",
+      "name": "日期文字 · 全部日期",
+      "type": "text",
+      "bounds": {
+        "x": 31.333333333333336,
+        "y": 14,
+        "width": 56.00000000000001,
+        "height": 20
+      },
+      "problem": null,
+      "text": "全部日期",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "t55CB",
+      "parent": "tg2DC",
+      "name": "日期 · 9月25日",
+      "type": "frame",
+      "bounds": {
+        "x": 126.66666666666667,
+        "y": 0,
+        "width": 118.66666666666667,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Q5wwt",
+      "parent": "t55CB",
+      "name": "日期文字 · 9月25日",
+      "type": "text",
+      "bounds": {
+        "x": 33.333333333333336,
+        "y": 14,
+        "width": 52.00000000000001,
+        "height": 20
+      },
+      "problem": null,
+      "text": "9月25日",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "C3NO9",
+      "parent": "tg2DC",
+      "name": "日期 · 9月26日",
+      "type": "frame",
+      "bounds": {
+        "x": 253.33333333333334,
+        "y": 0,
+        "width": 118.66666666666666,
+        "height": 48
+      },
+      "problem": "partially clipped",
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "iiXT5",
+      "parent": "C3NO9",
+      "name": "日期文字 · 9月26日",
+      "type": "text",
+      "bounds": {
+        "x": 33.333333333333336,
+        "y": 14,
+        "width": 52.00000000000001,
+        "height": 20
+      },
+      "problem": null,
+      "text": "9月26日",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Xha44",
+      "parent": "UlfRQ",
+      "name": "车次排序与到达站",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 210,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "zRMR6",
+      "parent": "Xha44",
+      "name": "出发时间 ↑",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 95,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "sort"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "m7xw3f",
+      "parent": "zRMR6",
+      "name": "控件文字 · 出发时间 ↑",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 14,
+        "width": 74,
+        "height": 20
+      },
+      "problem": null,
+      "text": "出发时间 ↑",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EqTFM",
+      "parent": "zRMR6",
+      "name": "控件图标 · 出发时间 ↑",
+      "type": "icon",
+      "bounds": {
+        "x": 79,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "U6yGt",
+      "parent": "Xha44",
+      "name": "全部到达站",
+      "type": "frame",
+      "bounds": {
+        "x": 281,
+        "y": 0,
+        "width": 91,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-station"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "lGbfV",
+      "parent": "U6yGt",
+      "name": "控件文字 · 全部到达站",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 14,
+        "width": 70,
+        "height": 20
+      },
+      "problem": null,
+      "text": "全部到达站",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Ing4V",
+      "parent": "U6yGt",
+      "name": "控件图标 · 全部到达站",
+      "type": "icon",
+      "bounds": {
+        "x": 75,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "zqXMT",
+      "parent": "UlfRQ",
+      "name": "查询时间与主动刷新",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 274,
+        "width": 372,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "rQz20",
+      "parent": "zqXMT",
+      "name": "最近查询时间",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 15.5,
+        "width": 147,
+        "height": 17
+      },
+      "problem": null,
+      "text": "09:41 更新 · 余票随时变化",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "hJfC3",
+      "parent": "zqXMT",
+      "name": "刷新余票按钮",
+      "type": "frame",
+      "bounds": {
+        "x": 294,
+        "y": 0,
+        "width": 78,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "refresh-city-trips",
+        "accessibilityLabel": "刷新当前城市余票"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dCvLS",
+      "parent": "hJfC3",
+      "name": "刷新图标",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "JidOz",
+      "parent": "hJfC3",
+      "name": "刷新文字",
+      "type": "text",
+      "bounds": {
+        "x": 22,
+        "y": 14,
+        "width": 56,
+        "height": 20
+      },
+      "problem": null,
+      "text": "刷新余票",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ObSYQ",
+      "parent": "UlfRQ",
+      "name": "选择席别提示",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 338,
+        "width": 372,
+        "height": 20
+      },
+      "problem": null,
+      "text": "点选席别，底部查看已选车次",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "VWiMp",
+      "parent": "UlfRQ",
+      "name": "车次列表",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 374,
+        "width": 372,
+        "height": 574
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "pw4FC",
+      "parent": "VWiMp",
+      "name": "车次卡片 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 372,
+        "height": 281
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "train-option",
+        "selected": true
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "RuODa",
+      "parent": "pw4FC",
+      "name": "车次与选择状态 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 340,
+        "height": 29
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "QoqWz",
+      "parent": "RuODa",
+      "name": "车次编号 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 60,
+        "height": 29
+      },
+      "problem": null,
+      "text": "C2031",
+      "fontSize": 20,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "P2Nu1",
+      "parent": "RuODa",
+      "name": "状态文字 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 291,
+        "y": 6,
+        "width": 49,
+        "height": 17
+      },
+      "problem": null,
+      "text": "可选席别",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "UHmCU",
+      "parent": "pw4FC",
+      "name": "乘车日期 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 57,
+        "width": 127,
+        "height": 17
+      },
+      "problem": null,
+      "text": "9月25日 · 周五 · 直达",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "B90YP",
+      "parent": "pw4FC",
+      "name": "发到时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 86,
+        "width": 340,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "d9hrS",
+      "parent": "B90YP",
+      "name": "出发站时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 96,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ISMZD",
+      "parent": "d9hrS",
+      "name": "出发时间 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 77,
+        "height": 31
+      },
+      "problem": null,
+      "text": "08:00",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "QB3ba",
+      "parent": "d9hrS",
+      "name": "出发站 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 35,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "北京南",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "uMRO5",
+      "parent": "B90YP",
+      "name": "运行时长 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 104,
+        "y": 2.5,
+        "width": 132,
+        "height": 50
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "N4mlOH",
+      "parent": "uMRO5",
+      "name": "时长 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 47,
+        "y": 0,
+        "width": 38,
+        "height": 17
+      },
+      "problem": null,
+      "text": "30分钟",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "MsFa2",
+      "parent": "uMRO5",
+      "name": "时间连线 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 25,
+        "width": 132,
+        "height": 1
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#D8DED3",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "TBaRM",
+      "parent": "uMRO5",
+      "name": "到达日期 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 44,
+        "y": 34,
+        "width": 44,
+        "height": 16
+      },
+      "problem": null,
+      "text": "当日到达",
+      "fontSize": 11,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "bYfcN",
+      "parent": "B90YP",
+      "name": "到达站时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 244,
+        "y": 0,
+        "width": 96,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "OPpsO",
+      "parent": "bYfcN",
+      "name": "到达时间 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 0,
+        "width": 76,
+        "height": 31
+      },
+      "problem": null,
+      "text": "08:30",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "I4slT",
+      "parent": "bYfcN",
+      "name": "到达站 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 68,
+        "y": 35,
+        "width": 28,
+        "height": 20
+      },
+      "problem": null,
+      "text": "天津",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "J304Y",
+      "parent": "pw4FC",
+      "name": "可选席别 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 153,
+        "width": 340,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "w2Mbe",
+      "parent": "J304Y",
+      "name": "二等座选项 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 166,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "w2Mbe/WLHvP",
+      "parent": "w2Mbe",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 52,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "二等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "w2Mbe/VoHvN",
+      "parent": "w2Mbe",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 100,
+        "y": 16,
+        "width": 14,
+        "height": 20
+      },
+      "problem": null,
+      "text": "有",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "fQ7CI",
+      "parent": "J304Y",
+      "name": "一等座选项 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 174,
+        "y": 0,
+        "width": 166,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "fQ7CI/WLHvP",
+      "parent": "fQ7CI",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 48,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "一等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "fQ7CI/VoHvN",
+      "parent": "fQ7CI",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 96,
+        "y": 16,
+        "width": 22,
+        "height": 20
+      },
+      "problem": null,
+      "text": "8张",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "G7P5OE",
+      "parent": "pw4FC",
+      "name": "更多席别按钮 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 217,
+        "width": 340,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "all-seat-status"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "N5J28X",
+      "parent": "G7P5OE",
+      "name": "更多席别文字 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 15.5,
+        "width": 85,
+        "height": 17
+      },
+      "problem": null,
+      "text": "更多席别与余票",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "PAeGj",
+      "parent": "G7P5OE",
+      "name": "更多席别箭头 · C2031",
+      "type": "icon",
+      "bounds": {
+        "x": 324,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "VpoMk",
+      "parent": "VWiMp",
+      "name": "车次卡片 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 293,
+        "width": 372,
+        "height": 281
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "train-option",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "FmIoi",
+      "parent": "VpoMk",
+      "name": "车次与选择状态 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 340,
+        "height": 29
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "rrsWI",
+      "parent": "FmIoi",
+      "name": "车次编号 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 60,
+        "height": 29
+      },
+      "problem": null,
+      "text": "C2033",
+      "fontSize": 20,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "pZ5fr",
+      "parent": "FmIoi",
+      "name": "状态文字 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 291,
+        "y": 6,
+        "width": 49,
+        "height": 17
+      },
+      "problem": null,
+      "text": "可选席别",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ZHlft",
+      "parent": "VpoMk",
+      "name": "乘车日期 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 57,
+        "width": 127,
+        "height": 17
+      },
+      "problem": null,
+      "text": "9月25日 · 周五 · 直达",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "gIW4S",
+      "parent": "VpoMk",
+      "name": "发到时间 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 86,
+        "width": 340,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "MjG8n",
+      "parent": "gIW4S",
+      "name": "出发站时间 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 96,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "jy62h",
+      "parent": "MjG8n",
+      "name": "出发时间 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 76,
+        "height": 31
+      },
+      "problem": null,
+      "text": "08:20",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "n2AKw3",
+      "parent": "MjG8n",
+      "name": "出发站 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 35,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "北京南",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "N66LvS",
+      "parent": "gIW4S",
+      "name": "运行时长 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 104,
+        "y": 2.5,
+        "width": 132,
+        "height": 50
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "VbkRl",
+      "parent": "N66LvS",
+      "name": "时长 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 47,
+        "y": 0,
+        "width": 38,
+        "height": 17
+      },
+      "problem": null,
+      "text": "30分钟",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "zeIFK",
+      "parent": "N66LvS",
+      "name": "时间连线 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 25,
+        "width": 132,
+        "height": 1
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#D8DED3",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "RJoqi",
+      "parent": "N66LvS",
+      "name": "到达日期 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 44,
+        "y": 34,
+        "width": 44,
+        "height": 16
+      },
+      "problem": null,
+      "text": "当日到达",
+      "fontSize": 11,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "uAwaV",
+      "parent": "gIW4S",
+      "name": "到达站时间 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 244,
+        "y": 0,
+        "width": 96,
+        "height": 55
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "c6jzq",
+      "parent": "uAwaV",
+      "name": "到达时间 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 0,
+        "width": 76,
+        "height": 31
+      },
+      "problem": null,
+      "text": "08:50",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "D6rLxd",
+      "parent": "uAwaV",
+      "name": "到达站 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 68,
+        "y": 35,
+        "width": 28,
+        "height": 20
+      },
+      "problem": null,
+      "text": "天津",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "xkxcu",
+      "parent": "VpoMk",
+      "name": "可选席别 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 153,
+        "width": 340,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Tcc6P",
+      "parent": "xkxcu",
+      "name": "二等座选项 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 166,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Tcc6P/WLHvP",
+      "parent": "Tcc6P",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 52,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "二等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Tcc6P/VoHvN",
+      "parent": "Tcc6P",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 100,
+        "y": 16,
+        "width": 14,
+        "height": 20
+      },
+      "problem": null,
+      "text": "有",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "kgyke",
+      "parent": "xkxcu",
+      "name": "一等座选项 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 174,
+        "y": 0,
+        "width": 166,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "kgyke/WLHvP",
+      "parent": "kgyke",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 48,
+        "y": 16,
+        "width": 42,
+        "height": 20
+      },
+      "problem": null,
+      "text": "一等座",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "kgyke/VoHvN",
+      "parent": "kgyke",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 96,
+        "y": 16,
+        "width": 22,
+        "height": 20
+      },
+      "problem": null,
+      "text": "8张",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "O3Hzm",
+      "parent": "VpoMk",
+      "name": "更多席别按钮 · C2033",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 217,
+        "width": 340,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "all-seat-status"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "q3xsmu",
+      "parent": "O3Hzm",
+      "name": "更多席别文字 · C2033",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 15.5,
+        "width": 85,
+        "height": 17
+      },
+      "problem": null,
+      "text": "更多席别与余票",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "z5M2nj",
+      "parent": "O3Hzm",
+      "name": "更多席别箭头 · C2033",
+      "type": "icon",
+      "bounds": {
+        "x": 324,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "eaDrz",
+      "parent": "xUauz",
+      "name": "底部固定操作区",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1030,
+        "width": 412,
+        "height": 170
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "sticky-actions",
+        "anchor": "bottom-above-system-inset"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "buaa0",
+      "parent": "eaDrz",
+      "name": "已选摘要与复制",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 16,
+        "width": 372,
+        "height": 41
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ubim1",
+      "parent": "buaa0",
+      "name": "已选行程摘要",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 372,
+        "height": 41
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "eDbLs",
+      "parent": "ubim1",
+      "name": "已选摘要标题",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 372,
+        "height": 20
+      },
+      "problem": null,
+      "text": "先点选一个席别",
+      "fontSize": 14,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "daiMw",
+      "parent": "ubim1",
+      "name": "已选摘要路线",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 24,
+        "width": 372,
+        "height": 17
+      },
+      "problem": null,
+      "text": "选好后，可复制车次并打开 12306 App",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EpaTd",
+      "parent": "eaDrz",
+      "name": "打开铁路12306 App",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 69,
+        "width": 372,
+        "height": 56
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#D8DED3",
+      "metadata": {
+        "type": "interaction",
+        "action": "launch-12306-app",
+        "target": "铁路12306",
+        "webFallback": false,
+        "confirmation": false,
+        "clipboard": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EpaTd/NiSyw",
+      "parent": "EpaTd",
+      "name": "主按钮文字",
+      "type": "text",
+      "bounds": {
+        "x": 113.5,
+        "y": 16.5,
+        "width": 117,
+        "height": 23
+      },
+      "problem": null,
+      "text": "打开 12306 App",
+      "fontSize": 16,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EpaTd/hoELg",
+      "parent": "EpaTd",
+      "name": "打开手机 App 图标",
+      "type": "icon",
+      "bounds": {
+        "x": 240.5,
+        "y": 19,
+        "width": 18,
+        "height": 18
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "cvqsj",
+      "parent": "eaDrz",
+      "name": "12306 App 说明",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 137,
+        "width": 372,
+        "height": 17
+      },
+      "problem": null,
+      "text": "在 12306 App 内填写条件并购票",
+      "fontSize": 12,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "syTSF",
+      "parent": "xUauz",
+      "name": "系统底部安全区",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1200,
+        "width": 412,
+        "height": 28
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "BPcA7",
+      "parent": "syTSF",
+      "name": "手势条",
+      "type": "rectangle",
+      "bounds": {
+        "x": 150,
+        "y": 12,
+        "width": 112,
+        "height": 4
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "u5nS2",
+      "parent": null,
+      "name": "03 · 320dp / 1.3 倍字体",
+      "type": "frame",
+      "bounds": {
+        "x": 984,
+        "y": 365,
+        "width": 320,
+        "height": 1358
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": {
+        "type": "screen",
+        "state": "selected",
+        "viewportWidthDp": 412
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "NeO54",
+      "parent": "u5nS2",
+      "name": "系统状态栏",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 62
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "PukCh",
+      "parent": "NeO54",
+      "name": "系统时间",
+      "type": "text",
+      "bounds": {
+        "x": 24,
+        "y": 19,
+        "width": 40,
+        "height": 24
+      },
+      "problem": null,
+      "text": "9:41",
+      "fontSize": 19.5,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "hYuin",
+      "parent": "NeO54",
+      "name": "系统图标",
+      "type": "frame",
+      "bounds": {
+        "x": 231,
+        "y": 20.5,
+        "width": 65,
+        "height": 21
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "nEmGR",
+      "parent": "hYuin",
+      "name": "信号",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 2.5,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "bl7g4",
+      "parent": "hYuin",
+      "name": "无线网络",
+      "type": "icon",
+      "bounds": {
+        "x": 22,
+        "y": 2.5,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "bl6GU",
+      "parent": "hYuin",
+      "name": "电量",
+      "type": "icon",
+      "bounds": {
+        "x": 44,
+        "y": 0,
+        "width": 21,
+        "height": 21
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "FPYsr",
+      "parent": "u5nS2",
+      "name": "可滚动车次列表",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 62,
+        "width": 320,
+        "height": 1020
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "scroll-region",
+        "scrolls": true
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "IQkR6",
+      "parent": "FPYsr",
+      "name": "返回与路线",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 0,
+        "width": 280,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "back-to-city"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "RuF77",
+      "parent": "IQkR6",
+      "name": "返回图标",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 14,
+        "width": 20,
+        "height": 20
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "fPJoT",
+      "parent": "IQkR6",
+      "name": "返回目的地",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 11,
+        "width": 252,
+        "height": 26
+      },
+      "problem": null,
+      "text": "北京出发 · 只看直达",
+      "fontSize": 18.2,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dtOO6",
+      "parent": "FPYsr",
+      "name": "目的地标题",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 64,
+        "width": 280,
+        "height": 84
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "iiS7w",
+      "parent": "dtOO6",
+      "name": "城市标题",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 280,
+        "height": 53
+      },
+      "problem": null,
+      "text": "去天津",
+      "fontSize": 36.4,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "l9miV",
+      "parent": "dtOO6",
+      "name": "省份与数量",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 58,
+        "width": 280,
+        "height": 26
+      },
+      "problem": null,
+      "text": "天津市 · 12 趟车次",
+      "fontSize": 18.2,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "GR9oS",
+      "parent": "FPYsr",
+      "name": "可出发日期",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 164,
+        "width": 280,
+        "height": 160
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "WYz6f",
+      "parent": "GR9oS",
+      "name": "日期 · 全部日期",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 280,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#E6EFDF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "AhkGO",
+      "parent": "WYz6f",
+      "name": "日期文字 · 全部日期",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 11,
+        "width": 280,
+        "height": 26
+      },
+      "problem": null,
+      "text": "全部日期",
+      "fontSize": 18.2,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "X0Ua2R",
+      "parent": "GR9oS",
+      "name": "日期 · 9月25日",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 56,
+        "width": 280,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ctV0h",
+      "parent": "X0Ua2R",
+      "name": "日期文字 · 9月25日",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 11,
+        "width": 280,
+        "height": 26
+      },
+      "problem": null,
+      "text": "9月25日",
+      "fontSize": 18.2,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "PSNQj",
+      "parent": "GR9oS",
+      "name": "日期 · 9月26日",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 112,
+        "width": 280,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-date"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "rNv34",
+      "parent": "PSNQj",
+      "name": "日期文字 · 9月26日",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 11,
+        "width": 280,
+        "height": 26
+      },
+      "problem": null,
+      "text": "9月26日",
+      "fontSize": 18.2,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "YHrzn",
+      "parent": "FPYsr",
+      "name": "车次排序与到达站",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 340,
+        "width": 280,
+        "height": 96
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "yyt7Y",
+      "parent": "YHrzn",
+      "name": "出发时间 ↑",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 280,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "sort"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ttJLB",
+      "parent": "yyt7Y",
+      "name": "控件文字 · 出发时间 ↑",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 11,
+        "width": 259,
+        "height": 26
+      },
+      "problem": null,
+      "text": "出发时间 ↑",
+      "fontSize": 18.2,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "xIRQx",
+      "parent": "yyt7Y",
+      "name": "控件图标 · 出发时间 ↑",
+      "type": "icon",
+      "bounds": {
+        "x": 264,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "qFOXf",
+      "parent": "YHrzn",
+      "name": "全部到达站",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 48,
+        "width": 280,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "filter-station"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "BsSbC",
+      "parent": "qFOXf",
+      "name": "控件文字 · 全部到达站",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 11,
+        "width": 259,
+        "height": 26
+      },
+      "problem": null,
+      "text": "全部到达站",
+      "fontSize": 18.2,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tIJFN",
+      "parent": "qFOXf",
+      "name": "控件图标 · 全部到达站",
+      "type": "icon",
+      "bounds": {
+        "x": 264,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "OYOeM",
+      "parent": "FPYsr",
+      "name": "查询时间与主动刷新",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 452,
+        "width": 280,
+        "height": 75
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Sx4Rc",
+      "parent": "OYOeM",
+      "name": "最近查询时间",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 280,
+        "height": 23
+      },
+      "problem": null,
+      "text": "09:41 更新 · 余票随时变化",
+      "fontSize": 15.600000000000001,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Mifhc",
+      "parent": "OYOeM",
+      "name": "刷新余票按钮",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 27,
+        "width": 280,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "refresh-city-trips",
+        "accessibilityLabel": "刷新当前城市余票"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Snvfe",
+      "parent": "Mifhc",
+      "name": "刷新图标",
+      "type": "icon",
+      "bounds": {
+        "x": 0,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "bTKcS",
+      "parent": "Mifhc",
+      "name": "刷新文字",
+      "type": "text",
+      "bounds": {
+        "x": 22,
+        "y": 11,
+        "width": 258,
+        "height": 26
+      },
+      "problem": null,
+      "text": "刷新余票",
+      "fontSize": 18.2,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Qrldx",
+      "parent": "FPYsr",
+      "name": "选择席别提示",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 543,
+        "width": 280,
+        "height": 26
+      },
+      "problem": null,
+      "text": "点选席别，底部查看已选车次",
+      "fontSize": 18.2,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "b8sjxf",
+      "parent": "FPYsr",
+      "name": "车次列表",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 585,
+        "width": 280,
+        "height": 415
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "pOlks",
+      "parent": "b8sjxf",
+      "name": "车次卡片 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 280,
+        "height": 415
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F0F5EB",
+      "metadata": {
+        "type": "train-option",
+        "selected": true
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "oTitr",
+      "parent": "pOlks",
+      "name": "车次与选择状态 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 248,
+        "height": 38
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Mc1gA",
+      "parent": "oTitr",
+      "name": "车次编号 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 124,
+        "height": 38
+      },
+      "problem": null,
+      "text": "C2031",
+      "fontSize": 26,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "NQL8b",
+      "parent": "oTitr",
+      "name": "状态文字 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 124,
+        "y": 7.5,
+        "width": 124,
+        "height": 23
+      },
+      "problem": null,
+      "text": "已选择",
+      "fontSize": 15.600000000000001,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "KrXuI",
+      "parent": "pOlks",
+      "name": "乘车日期 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 66,
+        "width": 248,
+        "height": 23
+      },
+      "problem": null,
+      "text": "9月25日 · 周五 · 直达",
+      "fontSize": 15.600000000000001,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Z0glkk",
+      "parent": "pOlks",
+      "name": "发到时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 101,
+        "width": 248,
+        "height": 106
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Zab0F",
+      "parent": "Z0glkk",
+      "name": "大字体发到时刻双列",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 248,
+        "height": 71
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "c0pRu",
+      "parent": "Zab0F",
+      "name": "出发站时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 116,
+        "height": 71
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "WnLBr",
+      "parent": "c0pRu",
+      "name": "出发时间 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 116,
+        "height": 41
+      },
+      "problem": null,
+      "text": "08:00",
+      "fontSize": 33.800000000000004,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "uHQqB",
+      "parent": "c0pRu",
+      "name": "出发站 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 45,
+        "width": 116,
+        "height": 26
+      },
+      "problem": null,
+      "text": "北京南",
+      "fontSize": 18.2,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "H4an8s",
+      "parent": "Zab0F",
+      "name": "到达站时间 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 132,
+        "y": 0,
+        "width": 116,
+        "height": 71
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "f4ak9",
+      "parent": "H4an8s",
+      "name": "到达时间 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 116,
+        "height": 41
+      },
+      "problem": null,
+      "text": "08:30",
+      "fontSize": 33.800000000000004,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "pRghp",
+      "parent": "H4an8s",
+      "name": "到达站 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 45,
+        "width": 116,
+        "height": 26
+      },
+      "problem": null,
+      "text": "天津",
+      "fontSize": 18.2,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "aRrU9",
+      "parent": "Z0glkk",
+      "name": "运行时长 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 83,
+        "width": 248,
+        "height": 23
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "yeHYd",
+      "parent": "aRrU9",
+      "name": "时长 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 49,
+        "height": 23
+      },
+      "problem": null,
+      "text": "30分钟",
+      "fontSize": 15.600000000000001,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "FOarT",
+      "parent": "aRrU9",
+      "name": "时间连线 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 57,
+        "y": 11,
+        "width": 24,
+        "height": 1
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#D8DED3",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tQFbN",
+      "parent": "aRrU9",
+      "name": "到达日期 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 89,
+        "y": 1,
+        "width": 58,
+        "height": 21
+      },
+      "problem": null,
+      "text": "当日到达",
+      "fontSize": 14.3,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "N2WSg",
+      "parent": "pOlks",
+      "name": "可选席别 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 219,
+        "width": 248,
+        "height": 120
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tiJe4",
+      "parent": "N2WSg",
+      "name": "二等座选项 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 248,
+        "height": 56
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tiJe4/y1olIN",
+      "parent": "tiJe4",
+      "name": "席别选中勾",
+      "type": "icon",
+      "bounds": {
+        "x": 73,
+        "y": 20,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tiJe4/WLHvP",
+      "parent": "tiJe4",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 95,
+        "y": 15,
+        "width": 55,
+        "height": 26
+      },
+      "problem": null,
+      "text": "二等座",
+      "fontSize": 18.2,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tiJe4/VoHvN",
+      "parent": "tiJe4",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 156,
+        "y": 15,
+        "width": 19,
+        "height": 26
+      },
+      "problem": null,
+      "text": "有",
+      "fontSize": 18.2,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "wi9y6",
+      "parent": "N2WSg",
+      "name": "一等座选项 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 64,
+        "width": 248,
+        "height": 56
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "wi9y6/WLHvP",
+      "parent": "wi9y6",
+      "name": "席别文字",
+      "type": "text",
+      "bounds": {
+        "x": 79,
+        "y": 15,
+        "width": 55,
+        "height": 26
+      },
+      "problem": null,
+      "text": "一等座",
+      "fontSize": 18.2,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "wi9y6/VoHvN",
+      "parent": "wi9y6",
+      "name": "余票文字",
+      "type": "text",
+      "bounds": {
+        "x": 140,
+        "y": 15,
+        "width": 29,
+        "height": 26
+      },
+      "problem": null,
+      "text": "8张",
+      "fontSize": 18.2,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "P8veTE",
+      "parent": "pOlks",
+      "name": "更多席别按钮 · C2031",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 351,
+        "width": 248,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "all-seat-status"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "M2WyO9",
+      "parent": "P8veTE",
+      "name": "更多席别文字 · C2031",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 12.5,
+        "width": 232,
+        "height": 23
+      },
+      "problem": null,
+      "text": "更多席别与余票",
+      "fontSize": 15.600000000000001,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "oZ3y7",
+      "parent": "P8veTE",
+      "name": "更多席别箭头 · C2031",
+      "type": "icon",
+      "bounds": {
+        "x": 232,
+        "y": 16,
+        "width": 16,
+        "height": 16
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "nS0yy",
+      "parent": "u5nS2",
+      "name": "底部固定操作区",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1082,
+        "width": 320,
+        "height": 248
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "sticky-actions",
+        "anchor": "bottom-above-system-inset"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "QNrE0",
+      "parent": "nS0yy",
+      "name": "已选摘要与复制",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 16,
+        "width": 280,
+        "height": 109
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "X4w2t",
+      "parent": "QNrE0",
+      "name": "已选行程摘要",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 280,
+        "height": 53
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "vwnpu",
+      "parent": "X4w2t",
+      "name": "已选摘要标题",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 280,
+        "height": 26
+      },
+      "problem": null,
+      "text": "C2031 · 9月25日 · 二等座",
+      "fontSize": 18.2,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Kc70r",
+      "parent": "X4w2t",
+      "name": "已选摘要路线",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 30,
+        "width": 280,
+        "height": 23
+      },
+      "problem": null,
+      "text": "北京南 08:00 → 天津 · 1位成人",
+      "fontSize": 15.600000000000001,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "zv7p5",
+      "parent": "QNrE0",
+      "name": "复制当前已选车次",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 61,
+        "width": 118,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "copy-itinerary",
+        "accessibilityLabel": "复制已选车次信息"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "zv7p5/fkhKp",
+      "parent": "zv7p5",
+      "name": "复制图标",
+      "type": "icon",
+      "bounds": {
+        "x": 15,
+        "y": 14,
+        "width": 20,
+        "height": 20
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "zv7p5/bnt0O",
+      "parent": "zv7p5",
+      "name": "复制文字",
+      "type": "text",
+      "bounds": {
+        "x": 40,
+        "y": 12.5,
+        "width": 63,
+        "height": 23
+      },
+      "problem": null,
+      "text": "复制车次",
+      "fontSize": 15.6,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "y1puvY",
+      "parent": "nS0yy",
+      "name": "打开铁路12306 App",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 137,
+        "width": 280,
+        "height": 60
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": {
+        "type": "interaction",
+        "action": "launch-12306-app",
+        "target": "铁路12306",
+        "webFallback": false,
+        "confirmation": false,
+        "clipboard": false
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "y1puvY/NiSyw",
+      "parent": "y1puvY",
+      "name": "主按钮文字",
+      "type": "text",
+      "bounds": {
+        "x": 48.5,
+        "y": 15,
+        "width": 151,
+        "height": 30
+      },
+      "problem": null,
+      "text": "打开 12306 App",
+      "fontSize": 20.8,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "y1puvY/hoELg",
+      "parent": "y1puvY",
+      "name": "打开手机 App 图标",
+      "type": "icon",
+      "bounds": {
+        "x": 209.5,
+        "y": 19,
+        "width": 22,
+        "height": 22
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "g760Y",
+      "parent": "nS0yy",
+      "name": "12306 App 说明",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 209,
+        "width": 280,
+        "height": 23
+      },
+      "problem": null,
+      "text": "在 12306 App 内填写条件并购票",
+      "fontSize": 15.600000000000001,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "oxARt",
+      "parent": "u5nS2",
+      "name": "系统底部安全区",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1330,
+        "width": 320,
+        "height": 28
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "T9VLdo",
+      "parent": "oxARt",
+      "name": "手势条",
+      "type": "rectangle",
+      "bounds": {
+        "x": 104,
+        "y": 12,
+        "width": 112,
+        "height": 4
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ePGKM",
+      "parent": null,
+      "name": "04 · 刷新、复制与跳转反馈",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1810,
+        "width": 1388,
+        "height": 788
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EKKRt",
+      "parent": "ePGKM",
+      "name": "反馈画板标题",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 28,
+        "width": 1332,
+        "height": 36
+      },
+      "problem": null,
+      "text": "让刷新与跳转各自清楚",
+      "fontSize": 24,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dMpiQ",
+      "parent": "ePGKM",
+      "name": "反馈说明",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 88,
+        "width": 1332,
+        "height": 21
+      },
+      "problem": null,
+      "text": "刷新由用户主动发起；打开 12306 App 不等待核验，不弹二次确认。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "zcPAo",
+      "parent": "ePGKM",
+      "name": "反馈第一行",
+      "type": "frame",
+      "bounds": {
+        "x": 28,
+        "y": 133,
+        "width": 1332,
+        "height": 307
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "aWekD",
+      "parent": "zcPAo",
+      "name": "反馈 · 刷新中",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 430.6666666666667,
+        "height": 251
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dadZG",
+      "parent": "aWekD",
+      "name": "刷新中标题",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 20,
+        "width": 390.6666666666667,
+        "height": 27
+      },
+      "problem": null,
+      "text": "刷新中",
+      "fontSize": 18,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "T6Jtb",
+      "parent": "aWekD",
+      "name": "刷新中界面片段",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 61,
+        "width": 390.6666666666667,
+        "height": 114
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#E6EFDF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "n3ju1",
+      "parent": "T6Jtb",
+      "name": "刷新中状态图标",
+      "type": "icon",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 22,
+        "height": 22
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "xZfWv",
+      "parent": "T6Jtb",
+      "name": "刷新中界面主文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 46,
+        "width": 358.6666666666667,
+        "height": 24
+      },
+      "problem": null,
+      "text": "正在刷新余票…",
+      "fontSize": 16,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "P1jeV",
+      "parent": "T6Jtb",
+      "name": "刷新中界面辅助文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 78,
+        "width": 358.6666666666667,
+        "height": 20
+      },
+      "problem": null,
+      "text": "可继续浏览当前车次",
+      "fontSize": 13,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "X8CVu",
+      "parent": "aWekD",
+      "name": "刷新中交互规则",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 189,
+        "width": 390.6666666666667,
+        "height": 42
+      },
+      "problem": null,
+      "text": "刷新期间保留旧结果和选择；刷新按钮暂停重复点击。打开 12306 App 仍可使用。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "jwUa3",
+      "parent": "zcPAo",
+      "name": "反馈 · 刷新失败",
+      "type": "frame",
+      "bounds": {
+        "x": 450.6666666666667,
+        "y": 0,
+        "width": 430.6666666666667,
+        "height": 307
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "G1qBgU",
+      "parent": "jwUa3",
+      "name": "刷新失败标题",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 20,
+        "width": 390.6666666666667,
+        "height": 27
+      },
+      "problem": null,
+      "text": "刷新失败",
+      "fontSize": 18,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "M9g7M",
+      "parent": "jwUa3",
+      "name": "刷新失败界面片段",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 61,
+        "width": 390.6666666666667,
+        "height": 170
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FBF0DE",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "RMhPV",
+      "parent": "M9g7M",
+      "name": "刷新失败状态图标",
+      "type": "icon",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 22,
+        "height": 22
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#87531F",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "h2D32W",
+      "parent": "M9g7M",
+      "name": "刷新失败界面主文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 46,
+        "width": 358.6666666666667,
+        "height": 24
+      },
+      "problem": null,
+      "text": "余票未更新",
+      "fontSize": 16,
+      "fill": "#87531F",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "g0otz",
+      "parent": "M9g7M",
+      "name": "刷新失败界面辅助文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 78,
+        "width": 358.6666666666667,
+        "height": 20
+      },
+      "problem": null,
+      "text": "上次成功更新 09:41",
+      "fontSize": 13,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "I0h3M",
+      "parent": "M9g7M",
+      "name": "刷新失败重试",
+      "type": "frame",
+      "bounds": {
+        "x": 16,
+        "y": 106,
+        "width": 358.6666666666667,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "retry-refresh"
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "H1fAx0",
+      "parent": "I0h3M",
+      "name": "重试文字",
+      "type": "text",
+      "bounds": {
+        "x": 0,
+        "y": 13.5,
+        "width": 358.6666666666667,
+        "height": 21
+      },
+      "problem": null,
+      "text": "重试刷新",
+      "fontSize": 14,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ejtJ9",
+      "parent": "jwUa3",
+      "name": "刷新失败交互规则",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 245,
+        "width": 390.6666666666667,
+        "height": 42
+      },
+      "problem": null,
+      "text": "就地提示失败，保留真实旧时间与已选车次，提供重试；仍可打开 12306 App 手动查票。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "wX5tq",
+      "parent": "zcPAo",
+      "name": "反馈 · 已选席别失效",
+      "type": "frame",
+      "bounds": {
+        "x": 901.3333333333334,
+        "y": 0,
+        "width": 430.66666666666663,
+        "height": 251
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "r92EV",
+      "parent": "wX5tq",
+      "name": "已选席别失效标题",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 20,
+        "width": 390.6666666666667,
+        "height": 27
+      },
+      "problem": null,
+      "text": "已选席别失效",
+      "fontSize": 18,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EXgrP",
+      "parent": "wX5tq",
+      "name": "已选席别失效界面片段",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 61,
+        "width": 390.6666666666667,
+        "height": 114
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FBF0DE",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "FBCJa",
+      "parent": "EXgrP",
+      "name": "已选席别失效状态图标",
+      "type": "icon",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 22,
+        "height": 22
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#87531F",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "M3qIQ",
+      "parent": "EXgrP",
+      "name": "已选席别失效界面主文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 46,
+        "width": 358.6666666666667,
+        "height": 24
+      },
+      "problem": null,
+      "text": "所选席别当前不满足人数",
+      "fontSize": 16,
+      "fill": "#87531F",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tAAgV",
+      "parent": "EXgrP",
+      "name": "已选席别失效界面辅助文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 78,
+        "width": 358.6666666666667,
+        "height": 20
+      },
+      "problem": null,
+      "text": "请重新选择一个席别",
+      "fontSize": 13,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "A0U9u",
+      "parent": "wX5tq",
+      "name": "已选席别失效交互规则",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 189,
+        "width": 390.6666666666667,
+        "height": 42
+      },
+      "problem": null,
+      "text": "刷新成功后，若余票不足或车次消失，清除已选摘要。主按钮回到未选择状态。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "d0Dv46",
+      "parent": "ePGKM",
+      "name": "反馈第二行",
+      "type": "frame",
+      "bounds": {
+        "x": 28,
+        "y": 464,
+        "width": 1332,
+        "height": 251
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "WuIE7",
+      "parent": "d0Dv46",
+      "name": "反馈 · 复制成功",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 430.6666666666667,
+        "height": 251
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "J2V5ec",
+      "parent": "WuIE7",
+      "name": "复制成功标题",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 20,
+        "width": 390.6666666666667,
+        "height": 27
+      },
+      "problem": null,
+      "text": "复制成功",
+      "fontSize": 18,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "e2cK8F",
+      "parent": "WuIE7",
+      "name": "复制成功界面片段",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 61,
+        "width": 390.6666666666667,
+        "height": 114
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#E6EFDF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "atDhW",
+      "parent": "e2cK8F",
+      "name": "复制成功状态图标",
+      "type": "icon",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 22,
+        "height": 22
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "EHYkx",
+      "parent": "e2cK8F",
+      "name": "复制成功界面主文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 46,
+        "width": 358.6666666666667,
+        "height": 24
+      },
+      "problem": null,
+      "text": "已复制车次信息",
+      "fontSize": 16,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "g2SklV",
+      "parent": "e2cK8F",
+      "name": "复制成功界面辅助文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 78,
+        "width": 358.6666666666667,
+        "height": 20
+      },
+      "problem": null,
+      "text": "日期、车次、站点、席别和人数",
+      "fontSize": 13,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "UtCcu",
+      "parent": "WuIE7",
+      "name": "复制成功交互规则",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 189,
+        "width": 390.6666666666667,
+        "height": 42
+      },
+      "problem": null,
+      "text": "短暂显示轻提示，留在当前页；不刷新、不跳转。主按钮也不会自动改写剪贴板。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "OLoeN",
+      "parent": "d0Dv46",
+      "name": "反馈 · 正常跳转",
+      "type": "frame",
+      "bounds": {
+        "x": 450.6666666666667,
+        "y": 0,
+        "width": 430.6666666666667,
+        "height": 251
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "AvEBP",
+      "parent": "OLoeN",
+      "name": "正常跳转标题",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 20,
+        "width": 390.6666666666667,
+        "height": 27
+      },
+      "problem": null,
+      "text": "正常跳转",
+      "fontSize": 18,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "kQ7SQ",
+      "parent": "OLoeN",
+      "name": "正常跳转界面片段",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 61,
+        "width": 390.6666666666667,
+        "height": 114
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#E6EFDF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "c6iXT",
+      "parent": "kQ7SQ",
+      "name": "唤起 App 图标",
+      "type": "icon",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 22,
+        "height": 22
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "donTX",
+      "parent": "kQ7SQ",
+      "name": "正常跳转界面主文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 46,
+        "width": 358.6666666666667,
+        "height": 24
+      },
+      "problem": null,
+      "text": "直接打开铁路12306 App",
+      "fontSize": 16,
+      "fill": "#2D5E3A",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "mbiJd",
+      "parent": "kQ7SQ",
+      "name": "正常跳转界面辅助文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 78,
+        "width": 358.6666666666667,
+        "height": 20
+      },
+      "problem": null,
+      "text": "在 App 内填写条件并购票",
+      "fontSize": 13,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "tgCWd",
+      "parent": "OLoeN",
+      "name": "正常跳转交互规则",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 189,
+        "width": 390.6666666666667,
+        "height": 42
+      },
+      "problem": null,
+      "text": "点击主按钮唤起已安装的铁路12306 App。不承诺预填或直达订单页；返回保留选择与位置。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "KMAL0",
+      "parent": "d0Dv46",
+      "name": "反馈 · 跳转失败",
+      "type": "frame",
+      "bounds": {
+        "x": 901.3333333333334,
+        "y": 0,
+        "width": 430.66666666666663,
+        "height": 251
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "dRjDC",
+      "parent": "KMAL0",
+      "name": "跳转失败标题",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 20,
+        "width": 390.6666666666667,
+        "height": 27
+      },
+      "problem": null,
+      "text": "未安装 / 打开失败",
+      "fontSize": 18,
+      "fill": "#20392C",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "r1AWtM",
+      "parent": "KMAL0",
+      "name": "跳转失败界面片段",
+      "type": "frame",
+      "bounds": {
+        "x": 20,
+        "y": 61,
+        "width": 390.6666666666667,
+        "height": 114
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FBF0DE",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "qt6yo",
+      "parent": "r1AWtM",
+      "name": "跳转失败状态图标",
+      "type": "icon",
+      "bounds": {
+        "x": 16,
+        "y": 16,
+        "width": 22,
+        "height": 22
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#87531F",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "Lh3fR",
+      "parent": "r1AWtM",
+      "name": "跳转失败界面主文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 46,
+        "width": 358.6666666666667,
+        "height": 24
+      },
+      "problem": null,
+      "text": "未安装铁路12306",
+      "fontSize": 16,
+      "fill": "#87531F",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "NyyYt",
+      "parent": "r1AWtM",
+      "name": "跳转失败界面辅助文案",
+      "type": "text",
+      "bounds": {
+        "x": 16,
+        "y": 78,
+        "width": 358.6666666666667,
+        "height": 20
+      },
+      "problem": null,
+      "text": "安装后重试，已选车次会保留",
+      "fontSize": 13,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "vzE3b",
+      "parent": "KMAL0",
+      "name": "跳转失败交互规则",
+      "type": "text",
+      "bounds": {
+        "x": 20,
+        "y": 189,
+        "width": 390.6666666666667,
+        "height": 42
+      },
+      "problem": null,
+      "text": "已安装但打开失败时提示“暂时无法打开 12306 App”。保留选择和复制入口，不自动打开官网。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "htsng",
+      "parent": "ePGKM",
+      "name": "可访问性与布局约束",
+      "type": "text",
+      "bounds": {
+        "x": 28,
+        "y": 739,
+        "width": 1332,
+        "height": 21
+      },
+      "problem": null,
+      "text": "开发交接：席别以勾选图标、文案和颜色共同表达选中。最小点击区 48dp；底部随字体与摘要自然增高；滚动内容预留底部高度，系统安全区单独处理。",
+      "fontSize": 14,
+      "fill": "#617065",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "WNMsd",
+      "parent": null,
+      "name": "组件 · 打开 12306 App",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 245,
+        "width": 372,
+        "height": 56
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": {
+        "type": "interaction",
+        "action": "launch-12306-app",
+        "target": "铁路12306",
+        "webFallback": false,
+        "confirmation": false,
+        "clipboard": false
+      },
+      "placeholder": false,
+      "reusable": true,
+      "ref": null
+    },
+    {
+      "id": "NiSyw",
+      "parent": "WNMsd",
+      "name": "主按钮文字",
+      "type": "text",
+      "bounds": {
+        "x": 113.5,
+        "y": 16.5,
+        "width": 117,
+        "height": 23
+      },
+      "problem": null,
+      "text": "打开 12306 App",
+      "fontSize": 16,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "hoELg",
+      "parent": "WNMsd",
+      "name": "打开手机 App 图标",
+      "type": "icon",
+      "bounds": {
+        "x": 240.5,
+        "y": 19,
+        "width": 18,
+        "height": 18
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    }
+  ],
+  "variables": {
+    "variables": {
+      "tt-bg": {
+        "type": "color",
+        "value": "#F5F3EE"
+      },
+      "tt-surface": {
+        "type": "color",
+        "value": "#FFFFFF"
+      },
+      "tt-ink": {
+        "type": "color",
+        "value": "#20392C"
+      },
+      "tt-muted": {
+        "type": "color",
+        "value": "#617065"
+      },
+      "tt-primary": {
+        "type": "color",
+        "value": "#2D5E3A"
+      },
+      "tt-tint": {
+        "type": "color",
+        "value": "#E6EFDF"
+      },
+      "tt-line": {
+        "type": "color",
+        "value": "#D8DED3"
+      },
+      "tt-warning": {
+        "type": "color",
+        "value": "#87531F"
+      },
+      "tt-warning-bg": {
+        "type": "color",
+        "value": "#FBF0DE"
+      },
+      "tt-font": {
+        "type": "string",
+        "value": "Noto Sans SC"
+      }
+    }
+  },
+  "roots": [
+    {
+      "id": "bi8Au",
+      "parent": null,
+      "name": "00 · v0.4.0 车次页 / 设计说明",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 1388,
+        "height": 194
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "DAfHT",
+      "parent": null,
+      "name": "组件 · 席别可选",
+      "type": "frame",
+      "bounds": {
+        "x": 412,
+        "y": 245,
+        "width": 160,
+        "height": 52
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#FFFFFF",
+      "metadata": {
+        "type": "interaction",
+        "action": "select-seat",
+        "selected": false
+      },
+      "placeholder": false,
+      "reusable": true,
+      "ref": null
+    },
+    {
+      "id": "d7A18",
+      "parent": null,
+      "name": "组件 · 复制车次",
+      "type": "frame",
+      "bounds": {
+        "x": 612,
+        "y": 245,
+        "width": 84,
+        "height": 48
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "metadata": {
+        "type": "interaction",
+        "action": "copy-itinerary",
+        "accessibilityLabel": "复制已选车次信息"
+      },
+      "placeholder": false,
+      "reusable": true,
+      "ref": null
+    },
+    {
+      "id": "bArbH",
+      "parent": null,
+      "name": "02 · 已选择 / 一个主操作",
+      "type": "frame",
+      "bounds": {
+        "x": 492,
+        "y": 365,
+        "width": 412,
+        "height": 1235
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": {
+        "type": "screen",
+        "state": "selected",
+        "viewportWidthDp": 412
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "xUauz",
+      "parent": null,
+      "name": "01 · 未选择 / 引导点选席别",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 365,
+        "width": 412,
+        "height": 1228
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": {
+        "type": "screen",
+        "state": "selected",
+        "viewportWidthDp": 412
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "u5nS2",
+      "parent": null,
+      "name": "03 · 320dp / 1.3 倍字体",
+      "type": "frame",
+      "bounds": {
+        "x": 984,
+        "y": 365,
+        "width": 320,
+        "height": 1358
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": {
+        "type": "screen",
+        "state": "selected",
+        "viewportWidthDp": 412
+      },
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "ePGKM",
+      "parent": null,
+      "name": "04 · 刷新、复制与跳转反馈",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 1810,
+        "width": 1388,
+        "height": 788
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#F5F3EE",
+      "metadata": null,
+      "placeholder": false,
+      "reusable": false,
+      "ref": null
+    },
+    {
+      "id": "WNMsd",
+      "parent": null,
+      "name": "组件 · 打开 12306 App",
+      "type": "frame",
+      "bounds": {
+        "x": 0,
+        "y": 245,
+        "width": 372,
+        "height": 56
+      },
+      "problem": null,
+      "text": null,
+      "fontSize": null,
+      "fill": "#2D5E3A",
+      "metadata": {
+        "type": "interaction",
+        "action": "launch-12306-app",
+        "target": "铁路12306",
+        "webFallback": false,
+        "confirmation": false,
+        "clipboard": false
+      },
+      "placeholder": false,
+      "reusable": true,
+      "ref": null
+    }
+  ]
+}
