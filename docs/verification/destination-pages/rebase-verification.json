@@ -1,0 +1,13 @@
+{
+  "upstream": "69d6f37ce209f01f598f2ac186449b4c719efe46",
+  "rebasedHead": "d79aee710aeedeb88bd1a3c6e0c7d1fbb0911172",
+  "backupBranch": "codex/backup-destination-pages-before-rebase-20260919-1412",
+  "coreTests": 36,
+  "coreFailures": 0,
+  "lintErrors": 0,
+  "lintWarnings": 12,
+  "integratedApkSha256": "c3fa126f5c08482f1e1e2047cd6b39dde6ae088dba510c22f0a21986793ba02e",
+  "phoneInstallThisTurn": false,
+  "uiStatus": "passed",
+  "uiTests": 18
+}

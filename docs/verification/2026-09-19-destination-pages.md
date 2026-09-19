@@ -41,3 +41,10 @@
 2026-09-19 14:10，用户明确要求“安装到手机”。Mate 60 Pro / ALN-AL00 / API 31 已执行保留数据覆盖安装并正常启动；版本为 0.4.0 / code 8。从手机拉回 APK 的 SHA-256 与上述安装包完全一致。安装后、启动后的 `travel-filters.xml` 均与安装前逐字节一致；前台回读为 `cn.traintrip.app/.MainActivity`。见 [真机回读证据](destination-pages/phone-install.json)。
 
 旧 APK、筛选设置与安装日志备份在 `.verification-private/destination-pages/phone-20260919T140930/`。需要回滚时，用其中的 `before.apk` 对同一手机执行 `adb -s FMR0224725012307 install -r`，不卸载或清除数据。此次验证范围为安装、启动、包哈希和设置保留，未宣称完成真机全功能回归。
+
+
+## 推送前同步主线
+
+用户要求推送时，远端已推进至 `69d6f37`，包含整卡标记车次与无需选择即可打开 12306 的改动。保留备份分支 `codex/backup-destination-pages-before-rebase-20260919-1412` 后完成 rebase；唯一冲突为 README，保留双方说明。目的地实现与原提交一致，车次实现与远端一致；返回链路测试改为点击整卡并断言选中。
+
+整合后 36 项核心测试、18 项目的地与车次界面测试全部通过，APK / 测试包构建通过，lint 0 错误、12 条原有警告。见 [构建日志](destination-pages/rebase-build.log)、[界面回归](destination-pages/rebase-ui-tests.log)、[整合摘要](destination-pages/rebase-verification.json)。本次推送没有再次安装手机，前述真机记录对应原安装包。

@@ -74,7 +74,9 @@ class DestinationGuideTest {
         capture("03-two-days")
         compose.onNodeWithTag("guide-trains").performClick()
         compose.onNodeWithText("去天津").assertIsDisplayed()
-        compose.onNodeWithText("二等座 8 张").performScrollTo().performClick()
+        val tripKey = vm.state.value.progress!!.trips.first { it.to.cityId == tianjin }.key
+        compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("trip-$tripKey"))
+        compose.onNodeWithTag("trip-$tripKey").performClick().assertIsSelected()
         compose.onNodeWithText("刷新余票").performScrollTo().performClick()
         compose.waitUntil(5000) { vm.state.value.cityRefresh?.running == false }
         Espresso.pressBack()
