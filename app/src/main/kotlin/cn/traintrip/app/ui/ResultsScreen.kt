@@ -78,12 +78,13 @@ import cn.traintrip.core.*
             }
         }
         item {
+            val actionPadding=PaddingValues(horizontal=16.dp,vertical=12.dp)
             Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-                TextButton(onSort,Modifier.weight(1f),contentPadding=PaddingValues(0.dp)) {
+                TextButton(onSort,Modifier.weight(1f).heightIn(min=48.dp),contentPadding=actionPadding) {
                     Text(if(s.citySortByCount) "省内 · 车次数最多 ↓" else "省内 · 车程最短 ↓",
                         Modifier.fillMaxWidth(),textAlign=TextAlign.Start)
                 }
-                TextButton(onRefresh,enabled=!s.loading && progress?.running!=true) { Text("刷新") }
+                TextButton(onRefresh,Modifier.heightIn(min=48.dp),enabled=!s.loading && progress?.running!=true,contentPadding=actionPadding) { Text("刷新") }
             }
         }
         items(groups,key={"province-${it.province.id}"}) { group ->
