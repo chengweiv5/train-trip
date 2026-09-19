@@ -1,5 +1,11 @@
 # Train Trip V1 UI 设计
 
+## 目的地省市分组 UI（2026-09-19）
+
+[查看三屏预览](reference/destination-ui/review-overview.jpeg) · [同省展开/收起细节](reference/destination-ui/results-clarity-review.jpeg) · [完整结果页](reference/destination-ui/results-accordion-review.jpeg) · [完整设计说明](destination-ui-proposal.md)。结果页以连续省份容器包住城市卡片，明确显示“展开 / 收起”，收起时预览城市名称。默认展开第一个省份，其余收起，各省独立开合。整体 UI 已确认，并在 Android 0.2.0 中实现、验证及覆盖安装至 Mate 60 Pro；详见 [开发与真机验证](../docs/verification/2026-09-19-destination-provinces.md)。
+
+可编辑稿已保存为 [train-trip-destination-ui.pen](train-trip-destination-ui.pen)，[最新图层恢复快照](destination-ui-clarity-recovery.json)和预览均已落盘。原首版设计文件保留。
+
 2026-09-18 完成首版可编辑 UI 设计。源文件为 [train-trip-v1.pen](train-trip-v1.pen)，使用 Pencil 打开与编辑。
 
 本目录保存可编辑 UI 设计稿和交互说明。Android 首版已实现，运行验证见项目 README。画板中的日期、城市、车次、票数及查询时间均为设计示例，不代表实时余票。

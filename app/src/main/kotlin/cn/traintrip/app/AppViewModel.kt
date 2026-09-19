@@ -14,7 +14,7 @@ data class UiState(
     val page:Page=Page.FILTERS, val progress:SearchProgress?=null, val cityId:String?=null,
     val selectedTripKey:String?=null, val selectedSeat:SeatType?=null, val rechecking:Boolean=false,
     val notice:String?=null, val handoffReady:Boolean=false, val handoffText:String?=null,
-    val citySortByCount:Boolean=false
+    val citySortByCount:Boolean=false, val searchSession:Long=0
 )
 class AppViewModel(app:Application):AndroidViewModel(app) {
     private val preferences=Preferences(app)
@@ -40,13 +40,13 @@ class AppViewModel(app:Application):AndroidViewModel(app) {
         checkJob?.cancel()
         mutable.update { it.copy(rechecking=false) }
     }
-    fun search(resume:Boolean=false,retryFailed:Boolean=false) {
+    fun search(resume:Boolean=false,retryFailed:Boolean=false,refresh:Boolean=false) {
         val current=mutable.value
-        val filters=if(resume || retryFailed) current.applied ?: current.filters else current.filters
+        val filters=if(resume || retryFailed || refresh) current.applied ?: current.filters else current.filters
         filters.validate()?.let { error -> mutable.update { it.copy(error=error) };return }
         searchJob?.cancel();checkJob?.cancel()
         val previous=if(resume || retryFailed) current.progress else null
-        mutable.update { it.copy(applied=filters,page=Page.RESULTS,loading=true,error=null,progress=previous,selectedTripKey=null,selectedSeat=null,rechecking=false) }
+        mutable.update { it.copy(searchSession=if(resume || retryFailed || refresh) it.searchSession else it.searchSession+1,applied=filters,page=Page.RESULTS,loading=true,error=null,progress=previous,selectedTripKey=null,selectedSeat=null,rechecking=false) }
         searchJob=viewModelScope.launch {
             try {
                 val info=source.initialize()

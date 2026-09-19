@@ -1,0 +1,10 @@
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:compileKotlin UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :core:processResources UP-TO-DATE
+> Task :core:classes UP-TO-DATE
+
+> Task :core:liveSmoke
+
+> Task :core:liveSmoke FAILED
+3 actionable tasks: 1 executed, 2 up-to-date

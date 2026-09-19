@@ -43,7 +43,7 @@ import cn.traintrip.core.OfficialTicketSource
         Box(Modifier.fillMaxSize().safeDrawingPadding()) {
             screenState.SaveableStateProvider(s.page.name) { when(s.page) {
                 Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()})
-                Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search()},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities)
+                Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search(refresh=true)},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities)
                 Page.DETAIL->DetailScreen(s,vm::showResults,vm::select,vm::recheck,copy)
             } }
         }

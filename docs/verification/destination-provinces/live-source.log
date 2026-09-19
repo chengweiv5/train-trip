@@ -1,0 +1,4 @@
+--------- beginning of main
+09-19 09:33:11.239  2671  2688 I TrainTripLive: date=2026-09-20 options=297 available=297 at=2026-09-19T01:33:11.172Z
+09-19 09:33:12.901  2671  2688 I TrainTripLive: city=石家庄 date=2026-09-20 options=214 available=212 at=2026-09-19T01:33:12.865Z
+09-19 09:33:14.467  2671  2688 I TrainTripLive: city=秦皇岛 date=2026-09-20 options=16 available=16 at=2026-09-19T01:33:14.463Z

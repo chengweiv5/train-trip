@@ -23,12 +23,23 @@ data class SeatAvailability(val raw: String, val kind: AvailabilityKind, val cou
         AvailabilityKind.UNKNOWN -> "状态待确认：$raw"
     }
 }
-data class Station(val code: String, val name: String, val cityId: String, val cityName: String, val pinyin: String, val domestic: Boolean = true)
-data class City(val id: String, val name: String, val stations: List<Station>) {
+data class Station(val code: String, val name: String, val cityId: String, val cityName: String, val pinyin: String, val domestic: Boolean = true,
+    val railwayCityId: String = cityId, val railwayCityName: String = cityName)
+data class Province(val id: String, val name: String, val shortName: String, val pinyin: String, val fullPinyin: String = pinyin) {
+    val municipality get() = id in setOf("11", "12", "31", "50")
+}
+data class City(val id: String, val name: String, val stations: List<Station>, val province: Province, val pinyin: String, val aliases: List<String> = emptyList()) {
+    val supported get() = stations.isNotEmpty()
+    val unavailableReason get() = if (province.id in setOf("71", "82")) "暂不支持 12306 查询" else "暂无可查询车站"
+    val provinceLabel get() = province.name + if (province.municipality) " · 直辖市" else ""
     val representative: Station get() = stations.firstOrNull { it.name == name } ?: stations.first()
+    // Retain a representative for every merged railway group, so coarser UI does not lose routes.
+    val queryStations get() = stations.groupBy { it.railwayCityId }.values.map { list ->
+        list.firstOrNull { it.name == it.railwayCityName } ?: list.first()
+    }
 }
 data class SearchFilters(
-    val originCityId: String = "0357", val originStations: Set<String> = emptySet(),
+    val originCityId: String = "110000", val originStations: Set<String> = emptySet(),
     val startDate: LocalDate = today().plusDays(1), val endDate: LocalDate = startDate,
     val startMinute: Int = 0, val endMinute: Int = 1440,
     val seats: Set<SeatType> = SeatType.entries.toSet(), val people: Int = 1,
@@ -67,7 +78,7 @@ data class Trip(
     fun isSaleable(now: Instant = Instant.now()): Boolean = saleState == SaleState.OPEN && departure != null && durationMinutes != null &&
         date.atTime(departure).atZone(BEIJING_ZONE).toInstant().minusSeconds(stopCheckMinutes.toLong()*60).isAfter(now)
     fun matchesConditions(f: SearchFilters): Boolean = date in f.startDate..f.endDate && from.cityId == f.originCityId &&
-        (f.originStations.isEmpty() || from.code in f.originStations) && to.cityId != f.originCityId &&
+        (f.originStations.isEmpty() || from.code in f.originStations) && to.cityId != f.originCityId && (f.destinationCityIds.isEmpty() || to.cityId in f.destinationCityIds) &&
         departure != null && f.acceptsTime(departure.toSecondOfDay()/60) && durationMinutes != null &&
         (f.maxMinutes == null || durationMinutes <= f.maxMinutes)
     fun confirmed(f: SearchFilters, now: Instant = Instant.now()) = matchesConditions(f) && isSaleable(now) && f.seats.any { seats[it]?.confirmedFor(f.people) == true }

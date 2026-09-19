@@ -16,6 +16,7 @@ import cn.traintrip.app.UiState
 import cn.traintrip.core.*
 
 @Composable fun FilterSheet(kind:String,s:UiState,onDismiss:()->Unit,onApply:(SearchFilters)->Unit) {
+    if(kind=="scope") { DestinationSelector(s,onDismiss,onApply); return }
     if(kind=="dates") {
         DateFilterSheet(s,onDismiss,onApply)
         return
@@ -58,7 +59,7 @@ import cn.traintrip.core.*
                     }
                     "origin" -> {
                         OutlinedTextField(search,{search=it},Modifier.fillMaxWidth(),label={Text("搜索出发城市")},singleLine=true)
-                        if(search.isNotBlank()) s.catalog.cities.filter { it.name.contains(search) || it.representative.pinyin.contains(search,true) }.take(30).forEach { city->
+                        if(search.isNotBlank()) s.catalog.cities.filter { it.supported && (it.matches(search) || it.province.matches(search)) }.take(30).forEach { city->
                             TextButton({draft=draft.copy(originCityId=city.id,originStations=emptySet(),destinationCityIds=draft.destinationCityIds-city.id);search=""},Modifier.fillMaxWidth()) { Text(city.name) }
                         }
                         Text("${s.catalog.byCity[draft.originCityId]?.name} · 出发车站",style=MaterialTheme.typography.titleMedium)
@@ -66,19 +67,7 @@ import cn.traintrip.core.*
                         s.catalog.byCity[draft.originCityId]?.stations?.forEach { station->CheckRow(station.name,station.code in draft.originStations) { selected->draft=draft.copy(originStations=if(selected) draft.originStations+station.code else draft.originStations-station.code) } }
                         Text("车站字典可能包含非当日运营站；是否有班次以实际查询为准。",style=MaterialTheme.typography.bodySmall,color=Muted)
                     }
-                    "scope" -> {
-                        Hint("首版按城市代表站逐个查询，同城覆盖尚未全面验证。这里的列表不是已确认的全国直达目的地全集。")
-                        Text("已选 ${draft.destinationCityIds.size} 个城市",style=MaterialTheme.typography.titleMedium)
-                        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                            TextButton({draft=draft.copy(destinationCityIds=s.catalog.initialDestinations(draft.originCityId))}) { Text("恢复默认范围") }
-                            TextButton({draft=draft.copy(destinationCityIds=emptySet())}) { Text("清空选择") }
-                        }
-                        OutlinedTextField(search,{search=it},Modifier.fillMaxWidth(),label={Text("搜索目的地城市")},singleLine=true)
-                        s.catalog.cities.filter { it.id!=draft.originCityId && (search.isBlank() || it.name.contains(search) || it.representative.pinyin.contains(search,true)) }
-                            .sortedWith(compareBy<City> { it.id !in draft.destinationCityIds }.thenBy { it.name }).forEach { city->
-                                CheckRow(city.name,city.id in draft.destinationCityIds) { selected->draft=draft.copy(destinationCityIds=if(selected) draft.destinationCityIds+city.id else draft.destinationCityIds-city.id) }
-                            }
-                    }
+
                 }
             }
             error?.let { Text(it,color=Amber) }
