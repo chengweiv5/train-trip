@@ -27,12 +27,12 @@ import cn.traintrip.core.SearchFilters
     val valid=start!=end
     val settled=scrolling.values.none { it }
     val fontScale=LocalDensity.current.fontScale
-    ModalBottomSheet(onDismissRequest=onDismiss,sheetState=rememberModalBottomSheetState(skipPartiallyExpanded=true),containerColor=Cream) {
-        Column(Modifier.fillMaxWidth().padding(horizontal=20.dp).padding(bottom=20.dp).testTag("time-sheet"),verticalArrangement=Arrangement.spacedBy(14.dp)) {
+    ModalBottomSheet(onDismissRequest=onDismiss,sheetState=rememberModalBottomSheetState(skipPartiallyExpanded=true),containerColor=PageBackground) {
+        Column(Modifier.fillMaxWidth().padding(horizontal=16.dp).padding(bottom=20.dp).testTag("time-sheet"),verticalArrangement=Arrangement.spacedBy(14.dp)) {
             Text("选择出发时段",style=MaterialTheme.typography.titleLarge)
             Text("北京时间 · 所选日期每天适用",color=Muted,style=MaterialTheme.typography.bodyMedium)
             Column(Modifier.weight(1f,fill=false).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(14.dp)) {
-                Text("${timeText(start)} – ${timeText(end)}",Modifier.testTag("time-summary"),color=Forest,style=MaterialTheme.typography.titleLarge)
+                Text("${timeText(start)} – ${timeText(end)}",Modifier.testTag("time-summary"),color=Primary,style=MaterialTheme.typography.titleLarge)
                 BoxWithConstraints(Modifier.fillMaxWidth()) {
                     val startWheels:@Composable (Modifier)->Unit={m->TimeWheels("开始",start,false,m,{start=it}) { key,moving->scrolling["start-$key"]=moving } }
                     val endWheels:@Composable (Modifier)->Unit={m->TimeWheels("结束",end,true,m,{end=it}) { key,moving->scrolling["end-$key"]=moving } }
@@ -59,7 +59,7 @@ import cn.traintrip.core.SearchFilters
 @Composable private fun TimeWheels(label:String,value:Int,allow24:Boolean,modifier:Modifier,onChange:(Int)->Unit,onScroll:(String,Boolean)->Unit) {
     Surface(modifier,color=MaterialTheme.colorScheme.surface,shape=MaterialTheme.shapes.large) {
         Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(4.dp),horizontalAlignment=Alignment.CenterHorizontally) {
-            Text(label,style=MaterialTheme.typography.titleMedium,color=Forest)
+            Text(label,style=MaterialTheme.typography.titleMedium,color=Primary)
             Row(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
                 Column(Modifier.weight(1f),horizontalAlignment=Alignment.CenterHorizontally) {
                     Text("小时",style=MaterialTheme.typography.bodySmall,color=Muted)
@@ -103,7 +103,7 @@ import cn.traintrip.core.SearchFilters
         picker.alpha=if(enabled) 1f else .45f
         if(picker.value!=value) picker.value=value
         if(Build.VERSION.SDK_INT>=29) {
-            picker.textColor=Forest.toArgb()
+            picker.textColor=Primary.toArgb()
             picker.textSize=22f*picker.resources.displayMetrics.density*fontScale
         }
     })

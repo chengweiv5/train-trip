@@ -62,14 +62,14 @@ class DestinationBrowserState(initialProvince: String = "") {
     Dialog(onDismissRequest={if(selectedOnly) selectedOnly=false else onDismiss()},properties=DialogProperties(usePlatformDefaultWidth=false,decorFitsSystemWindows=false)) {
         CompositionLocalProvider(LocalDensity provides density) {
         BackHandler { if(selectedOnly) selectedOnly=false else onDismiss() }
-        Surface(Modifier.fillMaxSize().testTag("destination-selector"),color=Cream) {
+        Surface(Modifier.fillMaxSize().testTag("destination-selector"),color=PageBackground) {
             Column(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
                 Row(Modifier.fillMaxWidth().padding(horizontal=12.dp),verticalAlignment=Alignment.CenterVertically) {
                     TextButton({if(selectedOnly) selectedOnly=false else onDismiss()}) { Text(if(selectedOnly) "‹ 继续选择" else "取消") }
                     Text(if(selectedOnly) "已选城市" else "选择目的地",Modifier.weight(1f),style=MaterialTheme.typography.titleLarge)
                 }
                 if(!selectedOnly) {
-                    OutlinedTextField(search,{search=it},Modifier.fillMaxWidth().padding(horizontal=20.dp).testTag("destination-search"),
+                    OutlinedTextField(search,{search=it},Modifier.fillMaxWidth().padding(horizontal=16.dp).testTag("destination-search"),
                         label={Text("搜索省份或城市")},singleLine=true,
                         trailingIcon={if(search.isNotEmpty()) TextButton({search=""}) { Text("清除") }})
                     Row(Modifier.fillMaxWidth().padding(horizontal=12.dp),horizontalArrangement=Arrangement.SpaceBetween) {
@@ -81,7 +81,7 @@ class DestinationBrowserState(initialProvince: String = "") {
                     val compact=maxWidth<360.dp || LocalDensity.current.fontScale>1.15f
                     if(selectedOnly || search.isNotBlank()) {
                         val cities=if(selectedOnly) selectedCities else catalog.searchDestinations(search)
-                        LazyColumn(Modifier.fillMaxSize().testTag("destination-search-results"),state=rememberLazyListState(),contentPadding=PaddingValues(start=20.dp,end=20.dp,bottom=12.dp)) {
+                        LazyColumn(Modifier.fillMaxSize().testTag("destination-search-results"),state=rememberLazyListState(),contentPadding=PaddingValues(start=16.dp,end=16.dp,bottom=12.dp)) {
                             if(cities.isEmpty()) item { Hint(if(selectedOnly) "还没有选择城市" else "没有找到匹配的省份或城市") }
                             cities.groupBy { it.province }.forEach { (p,group) ->
                                 item("heading-${p.id}") {
@@ -97,20 +97,20 @@ class DestinationBrowserState(initialProvince: String = "") {
                     } else {
                         val cities=catalog.cities.filter { it.province.id==province.id }
                         Column {
-                            if(compact) Box(Modifier.padding(horizontal=20.dp)) {
-                                OutlinedButton({provinceMenu=true},Modifier.fillMaxWidth().testTag("province-dropdown")) { Text("${province.name}  ▾",Modifier.weight(1f)) }
+                            if(compact) Box(Modifier.padding(horizontal=16.dp)) {
+                                OutlinedButton({provinceMenu=true},Modifier.fillMaxWidth().testTag("province-dropdown")) { Text(province.name,Modifier.weight(1f));UiIcon("down") }
                                 DropdownMenu(provinceMenu,{provinceMenu=false}) {
                                     catalog.provinces.forEach { p -> DropdownMenuItem(text={Text(p.name)},onClick={browser.provinceId=p.id;provinceMenu=false}) }
                                 }
                             }
                             Row(Modifier.weight(1f)) {
-                                if(!compact) LazyColumn(Modifier.width(94.dp).fillMaxHeight().background(Sage.copy(alpha=.45f)).testTag("province-navigation"),state=browser.list("navigation")) {
+                                if(!compact) LazyColumn(Modifier.width(94.dp).fillMaxHeight().background(PrimaryTint.copy(alpha=.45f)).testTag("province-navigation"),state=browser.list("navigation")) {
                                     items(catalog.provinces,key={it.id}) { p ->
                                         val count=selectedCities.count { it.province.id==p.id }
-                                        Row(Modifier.fillMaxWidth().heightIn(min=52.dp).background(if(p==province) Sage else Cream.copy(alpha=0f))
+                                        Row(Modifier.fillMaxWidth().heightIn(min=52.dp).background(if(p==province) PrimaryTint else PageBackground.copy(alpha=0f))
                                             .clickable { browser.provinceId=p.id }.padding(horizontal=12.dp,vertical=12.dp).testTag("province-nav-${p.id}"),verticalAlignment=Alignment.CenterVertically) {
-                                            Text(p.shortName,Modifier.weight(1f),color=if(p==province) Forest else Muted)
-                                            if(count>0) Text("$count",style=MaterialTheme.typography.bodySmall,color=Forest)
+                                            Text(p.shortName,Modifier.weight(1f),color=if(p==province) Primary else Muted)
+                                            if(count>0) Text("$count",style=MaterialTheme.typography.bodySmall,color=Primary)
                                         }
                                     }
                                 }
@@ -124,8 +124,8 @@ class DestinationBrowserState(initialProvince: String = "") {
                         }
                     }
                 }
-                Surface(color=Cream,shadowElevation=3.dp) {
-                    Column(Modifier.fillMaxWidth().padding(horizontal=20.dp,vertical=10.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                Surface(color=androidx.compose.ui.graphics.Color.White) {
+                    Column(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=10.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
                         TextButton({selectedOnly=!selectedOnly},Modifier.fillMaxWidth(),contentPadding=PaddingValues(0.dp)) {
                             Text(if(selected.isEmpty()) "请至少选择一个城市" else "已选 $selectedProvinceCount 个省级地区 · ${selected.size} 个城市  ›",Modifier.weight(1f))
                         }

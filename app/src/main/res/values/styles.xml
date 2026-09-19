@@ -2,9 +2,9 @@
     <style name="Theme.TrainTrip" parent="android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">#F5F3EE</item>
-        <item name="android:navigationBarColor">#F5F3EE</item>
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
         <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowBackground">#F5F3EE</item>
+        <item name="android:windowBackground">#FFFFFF</item>
     </style>
 </resources>

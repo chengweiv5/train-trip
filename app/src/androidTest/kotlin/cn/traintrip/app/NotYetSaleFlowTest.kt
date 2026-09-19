@@ -50,11 +50,11 @@ class NotYetSaleFlowTest {
             assertEquals("12点45分起售", notYet.saleText)
             assertEquals(AvailabilityKind.NOT_YET, notYet.seats.getValue(SeatType.SECOND).kind)
         }
-        compose.onNodeWithText("找到 1 个城市").assertExists()
+        compose.onNodeWithText("1个城市有票").assertExists()
         compose.onNodeWithText("查看原因").assertDoesNotExist()
         compose.onNodeWithText("重试查询").assertDoesNotExist()
         compose.onNodeWithTag("trains-$tianjin").performScrollTo().performClick()
-        compose.onNodeWithText("1 趟车次").assertExists()
+        compose.onNodeWithText("1趟车次",substring=true).assertExists()
         compose.onNodeWithText("G101").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("二等座 8 张").assertExists()
         compose.onNodeWithText("C2551").assertDoesNotExist()

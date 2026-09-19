@@ -52,7 +52,7 @@ import kotlinx.coroutines.withContext
             }.getOrNull()
         }
     }
-    Surface(modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)), color = Sage) {
+    Surface(modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)), color = PrimaryTint) {
         bitmap?.let {
             Image(it, contentDescription = photo.description, contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize())
@@ -66,8 +66,8 @@ import kotlinx.coroutines.withContext
 @Composable fun DestinationTags(guide: DestinationGuide) {
     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         guide.tags.forEach { tag ->
-            Surface(color = Sage, shape = RoundedCornerShape(6.dp)) {
-                Text(tag, Modifier.padding(horizontal = 9.dp, vertical = 5.dp), color = Forest,
+            Surface(color = PrimaryTint, shape = RoundedCornerShape(6.dp)) {
+                Text(tag, Modifier.padding(horizontal = 9.dp, vertical = 5.dp), color = Primary,
                     style = MaterialTheme.typography.labelMedium)
             }
         }
@@ -96,20 +96,19 @@ import kotlinx.coroutines.withContext
     // Use the whole safe viewport, independent of the header's measured height.
     BoxWithConstraints(Modifier.fillMaxSize().testTag("destination-guide")) {
         val scrollOverview = maxHeight < 640.dp || fontScale > 1.15f
-        val showTabIcons = maxWidth >= 360.dp && fontScale <= 1.15f
-        Scaffold(containerColor = Cream, contentWindowInsets = WindowInsets(0, 0, 0, 0), bottomBar = {
-            Surface(color = Cream, shadowElevation = 3.dp) {
-                Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)) {
-                    PrimaryButton("查看车次  →", onTrains, modifier = Modifier.testTag("guide-trains"))
+        Scaffold(containerColor = PageBackground, contentWindowInsets = WindowInsets(0, 0, 0, 0), bottomBar = {
+            Surface(color = Color.White) {
+                Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp)) {
+                    PrimaryButton("查看车次", onTrains, modifier = Modifier.testTag("guide-trains"))
                 }
             }
         }) { padding ->
             Column(Modifier.fillMaxSize().padding(padding)) {
-                Box(Modifier.padding(horizontal = 16.dp)) { BackHeader("目的地灵感", onBack) }
+                AppTopBar("了解目的地",onBack)
                 if (guide == null) {
-                    LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(20.dp),
+                    LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        item { Text(cityName, style = MaterialTheme.typography.headlineLarge) }
+                        item { Text(cityName, style = MaterialTheme.typography.titleLarge) }
                         item {
                             if(runtime==null) Hint("暂无目的地介绍，可先查看车次。")
                             else GuideRuntimeStatus(guide,runtime,onRefresh,onSettings)
@@ -117,16 +116,16 @@ import kotlinx.coroutines.withContext
                     }
                 } else {
                     if (!scrollOverview) {
-                        GuideOverview(cityName, provinceLabel, guide, Modifier.padding(horizontal = 20.dp, vertical = 12.dp))
+                        GuideOverview(cityName, provinceLabel, guide, Modifier.padding(horizontal = 16.dp, vertical = 12.dp))
                     }
-                    GuideTabs(pager.currentPage, showTabIcons) { page ->
+                    GuideTabs(pager.currentPage) { page ->
                         scope.launch { pager.animateScrollToPage(page) }
                     }
                     HorizontalPager(pager, Modifier.fillMaxWidth().weight(1f).testTag("guide-pager"),
                         verticalAlignment = Alignment.Top, key = { GuideSection.entries[it].id }) { page ->
                         val section = GuideSection.entries[page]
                         LazyColumn(Modifier.fillMaxSize().testTag("guide-page-${section.id}"),
-                            state = pageLists[page], contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 6.dp, bottom = 16.dp),
+                            state = pageLists[page], contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 16.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             if (scrollOverview) {
                                 item("overview") { GuideOverview(cityName, provinceLabel, guide, Modifier.padding(bottom = 8.dp)) }
@@ -153,72 +152,31 @@ import kotlinx.coroutines.withContext
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (provinceLabel.isNotBlank()) Text(provinceLabel, style = MaterialTheme.typography.bodySmall, color = Muted)
-                Text(cityName, style = MaterialTheme.typography.headlineLarge)
+                Text(cityName, style = MaterialTheme.typography.titleLarge)
                 Text("建议 ${guide.suggestedDays} · ${guide.pace}", style = MaterialTheme.typography.bodySmall, color = Muted)
             }
-            guide.photo?.let { photo -> Box(Modifier.width(112.dp).height(100.dp)) { DestinationPhoto(photo, Modifier.fillMaxSize()) } }
+            guide.photo?.let { photo -> Box(Modifier.width(72.dp).height(72.dp)) { DestinationPhoto(photo, Modifier.fillMaxSize()) } }
         }
-        Text(guide.tagline, style = MaterialTheme.typography.bodyLarge, color = Forest)
+        Text(guide.tagline, style = MaterialTheme.typography.bodyMedium, color = Muted)
         DestinationTags(guide)
     }
 }
 
-@Composable private fun GuideTabs(selected: Int, showIcons: Boolean, onSelect: (Int) -> Unit) {
-    Surface(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-        shape = RoundedCornerShape(15.dp), color = Line.copy(alpha = .5f)) {
-        Row(Modifier.selectableGroup().padding(4.dp), horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-            GuideSection.entries.forEachIndexed { index, section ->
-                val active = selected == index
-                Surface(Modifier.weight(1f).heightIn(min = 48.dp).testTag("guide-tab-${section.id}")
-                    .selectable(active, role = Role.Tab, onClick = { onSelect(index) }),
-                    shape = RoundedCornerShape(11.dp), color = if (active) Forest else Color.Transparent) {
-                    Row(Modifier.padding(horizontal = 6.dp, vertical = 10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(5.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically) {
-                        if (showIcons) GuideTabIcon(section, if (active) Color.White else Muted)
-                        Text(section.label, color = if (active) Color.White else Muted,
-                            style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+@Composable private fun GuideTabs(selected:Int,onSelect:(Int)->Unit) {
+    Surface(color=Color.White) {
+        Column {
+            Row(Modifier.fillMaxWidth().selectableGroup()) {
+                GuideSection.entries.forEachIndexed { index,section->
+                    val active=selected==index
+                    Column(Modifier.weight(1f).testTag("guide-tab-${section.id}").selectable(active,role=Role.Tab,onClick={onSelect(index)}),horizontalAlignment=Alignment.CenterHorizontally) {
+                        Box(Modifier.heightIn(min=48.dp).padding(vertical=12.dp),contentAlignment=Alignment.Center) {
+                            Text(section.label,color=if(active) Primary else Muted,style=MaterialTheme.typography.bodyLarge,fontWeight=if(active) FontWeight.SemiBold else FontWeight.Normal)
+                        }
+                        Surface(Modifier.width(26.dp).height(3.dp),shape=RoundedCornerShape(2.dp),color=if(active) Primary else Color.Transparent) {}
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable private fun GuideTabIcon(section: GuideSection, color: Color) {
-    Canvas(Modifier.size(15.dp)) {
-        val unit = size.width / 24f
-        val stroke = Stroke(1.5f * unit, cap = StrokeCap.Round)
-        fun line(x1: Float, y1: Float, x2: Float, y2: Float) =
-            drawLine(color, Offset(x1 * unit, y1 * unit), Offset(x2 * unit, y2 * unit), stroke.width, StrokeCap.Round)
-        when (section) {
-            GuideSection.PLACES -> {
-                val outline = Path().apply {
-                    moveTo(12 * unit, 22 * unit)
-                    cubicTo(8 * unit, 17 * unit, 4 * unit, 13 * unit, 4 * unit, 10 * unit)
-                    cubicTo(4 * unit, 0f, 20 * unit, 0f, 20 * unit, 10 * unit)
-                    cubicTo(20 * unit, 13 * unit, 16 * unit, 17 * unit, 12 * unit, 22 * unit)
-                }
-                drawPath(outline, color, style = stroke)
-                drawCircle(color, 2.5f * unit, Offset(12 * unit, 10 * unit), style = stroke)
-            }
-            GuideSection.FOOD -> {
-                line(4f, 3f, 4f, 9f); line(8f, 3f, 8f, 21f); line(12f, 3f, 12f, 9f)
-                line(4f, 9f, 12f, 9f); line(19f, 3f, 16f, 12f); line(16f, 12f, 20f, 12f); line(20f, 3f, 20f, 21f)
-            }
-            GuideSection.PLANS -> {
-                drawCircle(color, 3 * unit, Offset(5 * unit, 5 * unit), style = stroke)
-                drawCircle(color, 3 * unit, Offset(19 * unit, 19 * unit), style = stroke)
-                val route = Path().apply {
-                    moveTo(8 * unit, 5 * unit); lineTo(16 * unit, 5 * unit)
-                    cubicTo(24 * unit, 5 * unit, 24 * unit, 12 * unit, 12 * unit, 12 * unit)
-                    cubicTo(0f, 12 * unit, 0f, 19 * unit, 8 * unit, 19 * unit); lineTo(16 * unit, 19 * unit)
-                }
-                drawPath(route, color, style = stroke)
-            }
-            GuideSection.TIPS -> {
-                drawCircle(color, 9 * unit, Offset(12 * unit, 12 * unit), style = stroke)
-                line(12f, 11f, 12f, 17f); drawCircle(color, unit, Offset(12 * unit, 7 * unit))
-            }
+            HorizontalDivider(color=Line)
         }
     }
 }

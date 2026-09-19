@@ -29,11 +29,10 @@ import cn.traintrip.core.*
     var search by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
     var durationText by remember { mutableStateOf(draft.maxMinutes?.toString() ?: "") }
-    val title=mapOf("origin" to "出发城市与车站","dates" to "选择出发日期","time" to "出发时段","seats" to "可接受的席别","people" to "几个人出发","duration" to "最长车程","scope" to "查询目的地")[kind].orEmpty()
-    ModalBottomSheet(onDismissRequest=onDismiss,sheetState=rememberModalBottomSheetState(skipPartiallyExpanded=true),containerColor=Cream) {
-        Column(Modifier.fillMaxWidth().imePadding().padding(horizontal=20.dp).padding(bottom=20.dp),verticalArrangement=Arrangement.spacedBy(14.dp)) {
-            Text(title,style=MaterialTheme.typography.titleLarge)
-            Column(Modifier.weight(1f,fill=false).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+    val title=mapOf("origin" to "出发城市与车站","dates" to "选择出发日期","time" to "出发时段","seats" to "选择席别","people" to "几个人出发","duration" to "最长车程","scope" to "查询目的地")[kind].orEmpty()
+    FilterPanel(title,onDismiss) {
+        Column(Modifier.fillMaxWidth().weight(1f).padding(16.dp),verticalArrangement=Arrangement.spacedBy(14.dp)) {
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)) {
                 when(kind) {
                     "seats" -> {
                         CheckRow("不限（含无座）",draft.seats.size==SeatType.entries.size) { draft=draft.copy(seats=SeatType.entries.toSet()) }

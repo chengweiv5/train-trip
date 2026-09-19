@@ -42,7 +42,7 @@ class AvailableSeatFlowTest {
             vm.search()
         }
         compose.waitUntil(10000) { vm.state.value.progress?.complete == true }
-        compose.onNodeWithText("找到 1 个城市").assertExists()
+        compose.onNodeWithText("1个城市有票").assertExists()
         compose.onNodeWithText("数量待核验 · 未计入上方城市数").assertDoesNotExist()
         compose.onNodeWithTag("city-card-$tianjin").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("1 趟有票").assertExists()
@@ -80,7 +80,7 @@ class AvailableSeatFlowTest {
             vm.dismissNotice()
             vm.showResults()
         }
-        compose.onNodeWithText("找到 0 个城市").assertExists()
+        compose.onNodeWithText("0个城市有票").assertExists()
         compose.onNodeWithTag("city-card-$tianjin").assertDoesNotExist()
         compose.runOnIdle { vm.pauseForegroundWork() }
     }

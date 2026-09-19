@@ -28,7 +28,7 @@ import org.junit.runner.RunWith
 import java.io.File
 
 internal fun chooseWheel(label:String,target:Int) {
-    onView(withContentDescription(label)).perform(object:ViewAction {
+    onView(withContentDescription(label)).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(object:ViewAction {
         override fun getDescription()="Scroll $label to $target"
         override fun getConstraints():Matcher<View> = isAssignableFrom(NumberPicker::class.java)
         override fun perform(ui:UiController,view:View) {
@@ -50,7 +50,7 @@ class TimeRangePickerTest {
     @Test fun fingerSwipeChangesTimeWithoutOpeningKeyboard() {
         var saved=SearchFilters(startMinute=8*60,endMinute=18*60)
         compose.setContent { TrainTripTheme { TimeFilterSheet(saved,{}, {saved=it}) } }
-        onView(withContentDescription("开始分钟")).perform(swipeUp())
+        onView(withContentDescription("开始分钟")).inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog()).perform(swipeUp())
         compose.waitUntil(5000) { !compose.onNodeWithTag("apply-time").fetchSemanticsNode().config.contains(androidx.compose.ui.semantics.SemanticsProperties.Disabled) }
         compose.onNodeWithTag("apply-time").performClick()
         compose.runOnIdle { assertNotEquals(8*60,saved.startMinute);assertEquals(18*60,saved.endMinute) }
@@ -70,6 +70,7 @@ class TimeRangePickerTest {
         capture("time-range")
         compose.onNodeWithTag("apply-time").performClick()
         compose.runOnIdle { assertEquals(1320,saved.startMinute);assertEquals(390,saved.endMinute);open=true }
+        compose.onNodeWithTag("time-sheet").assertIsDisplayed()
         chooseWheel("开始分钟",1)
         compose.onNodeWithText("取消").performClick()
         compose.runOnIdle { assertEquals(1320,saved.startMinute);assertEquals(390,saved.endMinute) }

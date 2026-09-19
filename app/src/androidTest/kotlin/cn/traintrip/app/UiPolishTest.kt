@@ -108,7 +108,7 @@ class UiPolishTest {
             val pixels=compose.onNodeWithTag("query-progress").captureToImage().toPixelMap()
             val y=pixels.height/2
             for(x in 2 until pixels.width-2) {
-                val expected=if(x<pixels.width*value-1) Forest else if(x>pixels.width*value+1) Line else continue
+                val expected=if(x<pixels.width*value-1) Primary else if(x>pixels.width*value+1) Line else continue
                 val actual=pixels[x,y]
                 assertEquals("progress=$value x=$x",expected.red,actual.red,.015f)
                 assertEquals("progress=$value x=$x",expected.green,actual.green,.015f)
@@ -136,8 +136,8 @@ class UiPolishTest {
                 }
             }
         }
-        compose.onNodeWithText("1小时35分").assertIsDisplayed()
-        compose.onNodeWithText("+1 天到达").assertIsDisplayed()
+        compose.onNodeWithText("1小时35分",substring=true).assertIsDisplayed()
+        compose.onNodeWithText("+1 天到达",substring=true).assertIsDisplayed()
         capture("timing-normal")
         compose.runOnIdle { font=1.3f }
         compose.onNodeWithText("1小时35分 · +1 天到达").assertIsDisplayed()

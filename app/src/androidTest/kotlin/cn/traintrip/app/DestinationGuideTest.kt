@@ -73,7 +73,7 @@ class DestinationGuideTest {
         compose.onNodeWithText("两天多一点津味").assertIsDisplayed()
         capture("03-two-days")
         compose.onNodeWithTag("guide-trains").performClick()
-        compose.onNodeWithText("去天津").assertIsDisplayed()
+        compose.onNodeWithText("北京 → 天津").assertIsDisplayed()
         val tripKey = vm.state.value.progress!!.trips.first { it.to.cityId == tianjin }.key
         compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("trip-$tripKey"))
         compose.onNodeWithTag("trip-$tripKey").performClick().assertIsSelected()
@@ -93,12 +93,12 @@ class DestinationGuideTest {
         val (vm, _) = startResults()
         revealCity(tianjin)
         compose.onNodeWithTag("trains-$tianjin").performScrollTo().performClick()
-        compose.onNodeWithText("去天津").assertIsDisplayed()
+        compose.onNodeWithText("北京 → 天津").assertIsDisplayed()
         Espresso.pressBack()
         compose.runOnIdle { assertEquals(Page.RESULTS, vm.state.value.page) }
         revealCity(shanghai)
         compose.onNodeWithTag("trains-$shanghai").performClick()
-        compose.onNodeWithText("去上海").assertIsDisplayed()
+        compose.onNodeWithText("北京 → 上海").assertIsDisplayed()
         Espresso.pressBack()
         compose.runOnIdle { assertEquals(Page.RESULTS, vm.state.value.page) }
     }

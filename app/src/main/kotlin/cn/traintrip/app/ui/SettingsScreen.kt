@@ -37,24 +37,23 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
     }
     BackHandler { back() }
     SecureSettingsWindow(page != SettingsPage.MENU)
-    Surface(Modifier.fillMaxSize().testTag("settings-screen"), color = Cream) {
+    Surface(Modifier.fillMaxSize().testTag("settings-screen"), color = PageBackground) {
         Column(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
-            Row(Modifier.fillMaxWidth().padding(horizontal=16.dp),verticalAlignment=Alignment.CenterVertically) {
-                TextButton({ back() },enabled=!state.settingsBusy,modifier=Modifier.heightIn(min=48.dp).testTag("settings-back")) { Text("‹ 返回") }
-                Spacer(Modifier.weight(1f))
-                Text("设置",style=MaterialTheme.typography.bodySmall,color=Muted)
-            }
+            AppTopBar(when(page) {SettingsPage.MENU->"设置";SettingsPage.MODEL->"大模型设置";SettingsPage.SEARCH->"搜索引擎设置"},
+                onBack={back()},enabled=!state.settingsBusy,backTag="settings-back")
             key(page) {
                 Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())
-                    .padding(horizontal=24.dp,vertical=16.dp),verticalArrangement=Arrangement.spacedBy(20.dp)) {
+                    .padding(horizontal=16.dp,vertical=16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
                     if (page == SettingsPage.MENU) {
-                        Text("设置",style=MaterialTheme.typography.headlineLarge)
                         Text("管理目的地内容服务",style=MaterialTheme.typography.bodyMedium,color=Muted)
+                        ContentCard(Modifier.fillMaxWidth()) {
                         SettingsRow("大模型","DeepSeek · ${state.modelName}",state.configured,"settings-model") {
                             onClearFeedback();page=SettingsPage.MODEL
                         }
+                        HorizontalDivider(color=Line)
                         SettingsRow("搜索引擎","Tavily · 基础搜索",state.tavilyConfigured,"settings-search") {
                             onClearFeedback();page=SettingsPage.SEARCH
+                        }
                         }
                         state.settingsMessage?.let { Hint(it) }
                         state.settingsError?.let { Hint(it,true) }
@@ -65,18 +64,17 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
                         val configured=if(modelPage) state.configured else state.tavilyConfigured
                         var model by remember { mutableStateOf(state.modelName) }
                         var key by remember { mutableStateOf("") }
-                        Text(if(modelPage) "大模型" else "搜索引擎",style=MaterialTheme.typography.headlineLarge)
                         Text(provider,style=MaterialTheme.typography.titleLarge)
                         Text(if(modelPage) "整理目的地资料，生成中文介绍。" else "检索国内公开的景点与美食资料。",
                             style=MaterialTheme.typography.bodyMedium,color=Muted)
                         if(modelPage) {
-                            OutlinedTextField(model,{model=it},label={Text("模型名称")},singleLine=true,
+                            OutlinedTextField(model,{model=it},label={Text("模型名称")},singleLine=true,shape=androidx.compose.foundation.shape.RoundedCornerShape(8.dp),
                                 modifier=Modifier.fillMaxWidth().testTag("settings-model-name"),enabled=!state.settingsBusy,
                                 keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Ascii,autoCorrectEnabled=false))
                             Text("填写 DeepSeek 账户支持的模型 ID，默认 deepseek-flash。",style=MaterialTheme.typography.bodySmall,color=Muted)
                         } else Text("基础搜索 · 每座新城市通常 2 次",style=MaterialTheme.typography.bodyMedium,color=Muted)
                         Text(if(configured) "密钥已配置；留空保留现有密钥" else "尚未配置密钥",style=MaterialTheme.typography.bodySmall,color=Muted)
-                        OutlinedTextField(key,{key=it},label={Text("API Key")},singleLine=true,
+                        OutlinedTextField(key,{key=it},label={Text("API Key")},singleLine=true,shape=androidx.compose.foundation.shape.RoundedCornerShape(8.dp),
                             modifier=Modifier.fillMaxWidth().testTag(if(modelPage) "deepseek-key" else "tavily-key"),
                             enabled=!state.settingsBusy,visualTransformation=PasswordVisualTransformation(),
                             keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Password,autoCorrectEnabled=false))
@@ -101,17 +99,16 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
     }
 }
 
-@Composable private fun SettingsRow(title: String, detail: String, configured: Boolean, tag: String, onClick: () -> Unit) {
-    Column(Modifier.fillMaxWidth().clickable(onClick=onClick).testTag(tag).padding(vertical=18.dp),
-        verticalArrangement=Arrangement.spacedBy(8.dp)) {
-        Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
-            Text(title,Modifier.weight(1f),style=MaterialTheme.typography.titleMedium)
-            Text("›",color=Muted)
+@Composable private fun SettingsRow(title:String,detail:String,configured:Boolean,tag:String,onClick:()->Unit) {
+    Row(Modifier.fillMaxWidth().heightIn(min=72.dp).clickable(onClick=onClick).testTag(tag).padding(vertical=8.dp),
+        verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+        Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+            Text(title,style=MaterialTheme.typography.titleMedium)
+            Text(detail,style=MaterialTheme.typography.bodySmall,color=Muted)
         }
-        Text(detail,style=MaterialTheme.typography.bodyMedium,color=Muted)
-        Text(if(configured) "已配置" else "未配置",style=MaterialTheme.typography.bodySmall,color=if(configured) Forest else Muted)
+        Text(if(configured) "已配置" else "未配置",style=MaterialTheme.typography.bodySmall,color=if(configured) AvailableGreen else Muted)
+        UiIcon("next",color=Subtle)
     }
-    HorizontalDivider(color=Line)
 }
 
 @Composable private fun SecureSettingsWindow(enabled: Boolean) {

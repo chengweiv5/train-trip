@@ -38,7 +38,7 @@ import cn.traintrip.core.DestinationGuides
     fun openSettings() { destinationVm.cancel(); destinationVm.clearSettingsFeedback(); contentSettings=true }
     fun openRailway() { vm.reportAppLaunch(launcher?.invoke(context) ?: launchRailwayApp(context)) }
     BackHandler(!contentSettings && s.page!=Page.FILTERS) { if(s.page==Page.DETAIL || s.page==Page.DESTINATION) vm.backFromCity() else vm.showFilters() }
-    Surface(Modifier.fillMaxSize(),color=Cream) {
+    Surface(Modifier.fillMaxSize(),color=androidx.compose.ui.graphics.Color.White) {
         Box(Modifier.fillMaxSize().safeDrawingPadding()) {
             if(!contentSettings) screenState.SaveableStateProvider(if(s.page==Page.DETAIL || s.page==Page.DESTINATION) "${s.page.name}/${s.cityId}/${s.searchSession}" else s.page.name) { when(s.page) {
                 Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()},::openSettings)

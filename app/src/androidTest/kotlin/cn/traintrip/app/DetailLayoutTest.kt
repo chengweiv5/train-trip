@@ -64,7 +64,7 @@ class DetailLayoutTest {
         compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("detail-dates"))
         capture("three-dates")
         val labels=listOf("全部日期")+(0L..2L).map { compactDate(date.plusDays(it)) }
-        val bounds=labels.map { compose.onNodeWithText(it).assertIsDisplayed().fetchSemanticsNode().boundsInRoot }
+        val bounds=labels.map { compose.onNode(hasText(it) and hasAnyAncestor(hasTestTag("detail-dates"))).assertIsDisplayed().fetchSemanticsNode().boundsInRoot }
         bounds.forEach { assertEquals(bounds.first().top,it.top,1f) }
         val row=compose.onNodeWithTag("detail-dates").fetchSemanticsNode().boundsInRoot
         bounds.forEach { assertTrue("Date clipped by row",it.left>=row.left && it.right<=row.right) }
@@ -73,7 +73,7 @@ class DetailLayoutTest {
         assertTrue("Card too tall: $cardHeight",cardHeight<=230f)
         selectFirst()
         compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("detail-dates"))
-        compose.onNodeWithText(compactDate(date.plusDays(2))).performScrollTo().performClick()
+        compose.onNodeWithTag("detail-date-${date.plusDays(2)}").performScrollTo().performClick()
         compose.runOnIdle { assertNull(state.selectedTripKey) }
         firstCard().assertDoesNotExist()
         compose.onNodeWithText("全部日期").performClick()
@@ -83,8 +83,8 @@ class DetailLayoutTest {
     @Test fun largeFontCanReachLastDateAndSeatDetails() {
         start(31,large=true)
         compose.onNodeWithTag("detail-list").performScrollToNode(hasTestTag("detail-dates"))
-        compose.onNodeWithText(compactDate(date.plusDays(30))).performScrollTo().performClick()
-        compose.onNodeWithText(compactDate(date.plusDays(30))).assertIsDisplayed()
+        compose.onNodeWithTag("detail-date-${date.plusDays(30)}").performScrollTo().performClick()
+        compose.onNodeWithTag("detail-date-${date.plusDays(30)}").assertIsDisplayed()
         capture("large-last-date")
         assertTextFits()
         compose.onNodeWithText("全部日期").performScrollTo().performClick()

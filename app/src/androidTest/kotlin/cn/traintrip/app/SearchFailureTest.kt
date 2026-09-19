@@ -48,7 +48,7 @@ class SearchFailureTest {
             assertFalse(p.stopped)
             assertFalse(p.complete)
         }
-        compose.onNodeWithText("找到 2 个城市").assertExists()
+        compose.onNodeWithText("2个城市有票").assertExists()
         compose.onNodeWithText("继续查询").assertDoesNotExist()
         compose.onNodeWithText("查看原因").performScrollTo().performClick()
         compose.onNodeWithText("查询未完成的原因").assertIsDisplayed()
@@ -62,6 +62,6 @@ class SearchFailureTest {
             assertEquals(3, vm.state.value.progress!!.successCount)
             vm.pauseForegroundWork()
         }
-        compose.onNodeWithText("找到 3 个城市").assertExists()
+        compose.onNodeWithText("3个城市有票").assertExists()
     }
 }

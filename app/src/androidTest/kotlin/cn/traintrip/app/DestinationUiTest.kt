@@ -165,8 +165,8 @@ class DestinationUiTest {
         } }
         compose.runOnIdle { state=complete.copy(progress=progress.copy(outcomes=mixed)) }
         compose.onNodeWithText("部分查询未完成\n1 项失败 · 1 项未开售").assertExists()
-        compose.onNodeWithTag("results-list").performScrollToNode(hasText("找到 1 个城市"))
-        compose.onNodeWithText("找到 1 个城市").assertIsDisplayed()
+        compose.onNodeWithTag("results-list").performScrollToNode(hasText("1个城市有票"))
+        compose.onNodeWithText("1个城市有票").assertIsDisplayed()
         compose.onNodeWithText("查看原因").performScrollTo().performClick()
         compose.onNodeWithText("测试失败",substring=true).assertIsDisplayed()
         compose.onNodeWithText("明日开售",substring=true).assertIsDisplayed()
@@ -174,7 +174,7 @@ class DestinationUiTest {
         compose.runOnIdle { state=complete }
         compose.onNodeWithText("查询完成").assertExists()
         compose.onNodeWithText("查看原因").assertDoesNotExist()
-        compose.onNodeWithText("找到 3 个城市").assertExists()
+        compose.onNodeWithText("3个城市有票").assertExists()
         compose.onNodeWithTag("results-list").performScrollToIndex(0)
         capture("results-copy-cleanup")
     }

@@ -17,10 +17,16 @@ class AppFlowTest {
     @Before fun resetPreferences() {
         compose.activity.getSharedPreferences("travel-filters",android.content.Context.MODE_PRIVATE).edit().clear().commit()
         compose.activityRule.scenario.recreate()
+        val vm=androidx.lifecycle.ViewModelProvider(compose.activity)[AppViewModel::class.java]
+        compose.runOnIdle {
+            val baseline=SearchFilters()
+            vm.updateFilters(baseline.copy(destinationCityIds=vm.state.value.catalog.initialDestinations(baseline.originCityId)))
+            vm.showFilters()
+        }
     }
 
     @Test fun filtersApplyCancelAndPersist() {
-        compose.onNodeWithText("有票，就出发。").assertIsDisplayed()
+        compose.onNodeWithText("有票就出发").assertIsDisplayed()
         compose.onNodeWithText("乘车人数").performScrollTo().performClick()
         compose.onNodeWithText("＋").performClick()
         compose.onNodeWithText("2 位成人").assertExists()
@@ -46,13 +52,13 @@ class AppFlowTest {
         compose.onNodeWithText("搜索省份或城市").performTextInput("天津")
         compose.onNode(hasText("天津") and !hasSetTextAction()).performClick()
         compose.onNodeWithText("完成").performClick()
-        compose.onNodeWithText("1 个城市 · 1 个省级地区").assertExists()
+        compose.onNodeWithText("1 个城市").assertExists()
     }
 
     @Test fun settingsReturnKeepsFilterSelection() {
         val vm=androidx.lifecycle.ViewModelProvider(compose.activity)[AppViewModel::class.java]
         compose.runOnIdle { vm.updateFilters(vm.state.value.filters.copy(people=4)) }
-        compose.onNodeWithTag("content-settings").performScrollTo().performClick()
+        compose.onNodeWithTag("content-settings").performClick()
         compose.onNodeWithTag("settings-model").assertIsDisplayed()
         compose.onNodeWithTag("settings-search").performClick()
         compose.onNodeWithTag("settings-back").performClick()
@@ -68,7 +74,7 @@ class AppFlowTest {
             vm.updateFilters(SearchFilters(destinationCityIds=setOf(s.catalog.byCode.getValue("TJP").cityId)))
         }
         capture("01-filters")
-        compose.onNodeWithText("找找有票的城市  →").performScrollTo().performClick()
+        compose.onNodeWithText("查询有票城市").performScrollTo().performClick()
         compose.waitUntil(60000) { !vm.state.value.loading && vm.state.value.progress?.running==false }
         compose.runOnIdle {
             assertNull(vm.state.value.error)
@@ -77,7 +83,7 @@ class AppFlowTest {
         compose.onNode(hasText("天津") and !hasSetTextAction()).performScrollTo().assertExists()
         capture("02-cities")
         compose.onNodeWithTag("trains-${vm.state.value.catalog.byCode.getValue("TJP").cityId}").performScrollTo().performClick()
-        compose.onNodeWithText("去天津").assertExists()
+        compose.onNodeWithText("北京 → 天津").assertExists()
         capture("03-trains")
         compose.runOnIdle {
             val s=vm.state.value;val f=s.applied!!
@@ -111,8 +117,8 @@ class AppFlowTest {
         try {
             shell("settings put system font_scale 1.3")
             compose.activityRule.scenario.recreate()
-            compose.onNodeWithText("有票，就出发。").assertIsDisplayed()
-            compose.onNodeWithText("找找有票的城市  →").performScrollTo().assertIsDisplayed()
+            compose.onNodeWithText("有票就出发").assertIsDisplayed()
+            compose.onNodeWithText("查询有票城市").performScrollTo().assertIsDisplayed()
             capture("05-large-font")
         } finally { shell("settings put system font_scale 1.0") }
     }

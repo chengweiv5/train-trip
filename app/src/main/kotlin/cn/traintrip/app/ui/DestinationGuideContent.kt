@@ -2,6 +2,8 @@
 package cn.traintrip.app.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -36,7 +38,7 @@ internal fun LazyListScope.guideSectionContent(
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(section.title, Modifier.weight(1f).semantics { heading() },
-                fontSize = 19.sp, fontWeight = FontWeight.SemiBold)
+                fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
             val count = when (section) {
                 GuideSection.PLACES -> "${guide.experiences.size} 个推荐"
                 GuideSection.FOOD -> "${guide.foods.size} 种风味"
@@ -75,10 +77,10 @@ internal fun LazyListScope.guideSectionContent(
                             val selected = days == plan.days
                             Surface(Modifier.heightIn(min = 48.dp).testTag("plan-${plan.days}")
                                 .selectable(selected, role = Role.RadioButton, onClick = { onDays(plan.days) }),
-                                color = if (selected) Sage else Color.Transparent,
-                                border = BorderStroke(1.dp, if (selected) Forest else Line), shape = RoundedCornerShape(10.dp)) {
+                                color = if (selected) PrimaryTint else Color.Transparent,
+                                border = BorderStroke(1.dp, if (selected) Primary else Line), shape = RoundedCornerShape(10.dp)) {
                                 Box(Modifier.padding(horizontal = 17.dp, vertical = 10.dp), contentAlignment = Alignment.Center) {
-                                    Text("${plan.days} 日玩法", color = if (selected) Forest else Muted,
+                                    Text("${plan.days} 日玩法", color = if (selected) Primary else Muted,
                                         style = MaterialTheme.typography.bodyMedium)
                                 }
                             }
@@ -90,11 +92,19 @@ internal fun LazyListScope.guideSectionContent(
             item("plan-title") {
                 Text(plan.title, Modifier.testTag("selected-plan"), style = MaterialTheme.typography.titleMedium)
             }
-            itemsIndexed(plan.schedule, key = { index, _ -> "plan-day-$index" }) { _, day ->
-                GuideContentCard(day.label) {
-                    Text(day.experienceIds.joinToString(" → ") { id -> guide.experiences.first { it.id == id }.name },
-                        style = MaterialTheme.typography.titleMedium, color = Forest)
-                    Text(day.description, style = MaterialTheme.typography.bodyMedium)
+            itemsIndexed(plan.schedule, key = { index, _ -> "plan-day-$index" }) { index, day ->
+                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+                    Column(Modifier.width(28.dp),horizontalAlignment=Alignment.CenterHorizontally) {
+                        Surface(Modifier.size(28.dp),shape=CircleShape,color=PrimaryTint) {
+                            Box(contentAlignment=Alignment.Center) { Text("${index+1}",color=Primary,style=MaterialTheme.typography.labelMedium) }
+                        }
+                        if(index<plan.schedule.lastIndex) Box(Modifier.width(1.dp).height(80.dp).background(Line))
+                    }
+                    GuideContentCard(day.label,Modifier.weight(1f)) {
+                        Text(day.experienceIds.joinToString(" → ") { id -> guide.experiences.first { it.id == id }.name },
+                            style=MaterialTheme.typography.titleMedium,color=Primary)
+                        Text(day.description,style=MaterialTheme.typography.bodyMedium)
+                    }
                 }
             }
             item("plan-note") { Text(plan.note, style = MaterialTheme.typography.bodySmall, color = Muted) }
@@ -118,15 +128,15 @@ internal fun LazyListScope.guideSectionContent(
     title: String, modifier: Modifier = Modifier, number: Int? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Surface(modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = Color.White,
+    Surface(modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = Color.White,
         border = BorderStroke(1.dp, Line.copy(alpha = .65f))) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(9.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (number != null) {
-                    Surface(color = Sage, shape = RoundedCornerShape(9.dp)) {
+                    Surface(color = PrimaryTint, shape = RoundedCornerShape(9.dp)) {
                         Box(Modifier.defaultMinSize(minWidth = 28.dp, minHeight = 28.dp).padding(4.dp),
                             contentAlignment = Alignment.Center) {
-                            Text(number.toString().padStart(2, '0'), style = MaterialTheme.typography.labelMedium, color = Forest)
+                            Text(number.toString().padStart(2, '0'), style = MaterialTheme.typography.labelMedium, color = Primary)
                         }
                     }
                 }
