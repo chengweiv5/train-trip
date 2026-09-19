@@ -24,5 +24,5 @@ TextButton(onRefresh, Modifier.heightIn(min = 48.dp).testTag("refresh-guide"),
 
 - [x] 使用 JDK 21 执行 `./gradlew :app:assembleDebug :app:lintDebug`，检查构建成功及 lint 错误数；此纯布局修改使用实际 UI 测量验证，不新增镜像实现的测试。
 - [x] 将 APK 保存为 `artifacts/train-trip-guide-alignment-personal-debug.apk`，使用 `adb -s FMR0224725012307 install -r` 更新真机。
-- [ ] 在已有泰安缓存页底部读取 UI 树与截图，确认日期、更新文字、来源文字 x 坐标相同，按钮区域高至少 48dp；比较缓存及两项密文配置校验值。
-- [ ] 写入验收证据和回滚路径，本地提交，发送 punk-12 完成状态并回读确认。
+- [x] 真机缓存及两项密文配置校验值保持一致；最终 UI 树与截图改在专用模拟器完成，日期、更新文字、来源文字 x 坐标均为 55px，按钮区域高 48dp。
+- [x] 写入验收证据和回滚路径，本地提交；上轮状态通知已回读，最终完成通知合并本次排序修复发送。

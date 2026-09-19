@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cn.traintrip.app.*
 import cn.traintrip.core.*
@@ -76,7 +77,15 @@ import cn.traintrip.core.*
                 }
             }
         }
-        item { Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) { TextButton(onSort,Modifier.weight(1f),contentPadding=PaddingValues(0.dp)) { Text(if(s.citySortByCount) "省内 · 车次数最多 ↓" else "省内 · 车程最短 ↓") };TextButton(onRefresh,enabled=!s.loading && progress?.running!=true) { Text("刷新") } } }
+        item {
+            Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
+                TextButton(onSort,Modifier.weight(1f),contentPadding=PaddingValues(0.dp)) {
+                    Text(if(s.citySortByCount) "省内 · 车次数最多 ↓" else "省内 · 车程最短 ↓",
+                        Modifier.fillMaxWidth(),textAlign=TextAlign.Start)
+                }
+                TextButton(onRefresh,enabled=!s.loading && progress?.running!=true) { Text("刷新") }
+            }
+        }
         items(groups,key={"province-${it.province.id}"}) { group ->
             ProvinceResultGroup(group,group.province.id in expanded,{toggle(group.province.id)},{collapse(group.province.id)},content={
                 group.cities.forEach { city -> CityCard(city,f,onCity,onGuide,s.catalog,guides[city.cityId]) }
