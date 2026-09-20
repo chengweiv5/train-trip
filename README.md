@@ -6,11 +6,15 @@
 
 ## 当前状态
 
-“了解目的地”已改为景点 / 美食 / 玩法 / 贴士四个分页，支持点击和横滑，景点与美食统一卡片；切换和返回保留阅读位置。已验证 320dp 大字体与短屏。此次安装包为 `artifacts/train-trip-destination-pages-debug.apk`，版本沿用 0.4.0；已覆盖安装 Mate 60 Pro，包哈希一致且筛选设置保留。见 [目的地分页验收](docs/verification/2026-09-19-destination-pages.md)。
+v0.5.0 已实现用户确认的 A 方案：底部「查票 / 想去」双栏目；想去城市支持批量添加、星标同步、取消与撤销。清单保存在本机，不保存过期余票；从清单查票使用独立的单城条件，不改变首页筛选。
 
-v0.4.0 已实现筛选条件、真实余票查询、目的地城市汇总和车次详情。车次页支持手动刷新当前城市，点击整张卡片可标记意向车次，席别只展示余票；无需选择也可点击“打开 12306 App”。打开 App 不强制查询、不弹二次确认，也不回退官网。
+设置新增「离线内容」和「关于与更新」。离线介绍可查看、手动更新、按城市删除，清理保留收藏和服务密钥；有内置介绍的城市自动回退内置内容。打开新城市不会自动调用 Tavily / DeepSeek，点击整理后才使用已配置的服务，沿用国内简体资料规则。正文保存后图片失败会保留新正文并明确提示。
 
-本地安装包：`artifacts/train-trip-v0.4.0-debug.apk`（构建产物，不随源码提交）。自行构建后可从 `app/build/outputs/apk/debug/app-debug.apk` 获取，将文件传到手机后点击安装。应用名“有票就出发”，包名 `cn.traintrip.app`，版本 `0.4.0`。这是本机调试签名的自用版本，尚未上架。
+版本检查由用户手动发起，从 GitHub 正式 Release 列表比较版本并检查 APK 和校验附件，发现新版本后打开发布页。无需自建服务器，也不会自动下载或安装。
+
+本地正式安装包：`artifacts/train-trip-v0.5.0-release.apk`，校验文件同名 `.sha256`。应用名“有票就出发”，包名 `cn.traintrip.app`，版本 `0.5.0` / versionCode `9`，沿用 v0.4.0 的生产签名。包内不包含个人 API Key；新安装需自行配置内容服务，收藏、内置资料和查票不依赖这些 Key。本轮没有发布或推送到 GitHub，具体验证见 [v0.5.0 验收](docs/verification/2026-09-20-v0.5.0.md)。
+
+车次页仍支持手动刷新当前城市，点击整张卡片标记意向车次，席别只展示余票；无需选择也可点击“打开 12306 App”。详情介绍有景点 / 美食 / 玩法 / 贴士四个分页，支持横滑与阅读位置恢复。
 
 0.4.0 支持整卡选择和可选的车次摘要，适配 320dp / 1.3 倍字体；已移除复制车次入口。局部刷新失败时保留旧车次和原始查询时间，展示未更新范围并支持重试；未安装铁路12306或打开失败时保留选择。验证记录见 [车次页与 App 跳转验收](docs/verification/2026-09-19-v0.4.0-implementation.md) 和 [整卡选择验收](docs/verification/2026-09-19-trip-card-selection.md)。
 
@@ -30,16 +34,18 @@ v0.4.0 已实现筛选条件、真实余票查询、目的地城市汇总和车�
 
 默认选择 24 个明确列出的城市，可在“查询目的地”调整。每个合并前的铁路城市保留一个代表站，仍可能遗漏部分同城站或目的地；界面始终显示覆盖说明，不声称全国完整。票源为 12306 当前网页使用的匿名查询协议，协议变化或访问失败会明确报错。
 
-已通过 Android API 36 临时模拟器验证。2026-09-19 已在 Mate 60 Pro（ALN-AL00，HarmonyOS 4.2.0.221，Android API 31）安装并正常启动；v0.4.0 已覆盖安装，筛选设置保持不变；已实测原生唤起铁路12306并返回。本轮未重复进行真实票源查询，余票刷新行为通过离线可控数据验证。
+已通过 Android API 36 临时模拟器验证。2026-09-19 已在 Mate 60 Pro（ALN-AL00，HarmonyOS 4.2.0.221，Android API 31）安装并正常启动；历史 v0.4.0 已覆盖安装，筛选设置保持不变；当时已实测原生唤起铁路12306并返回。v0.5.0 本轮无真机连接，未安装到真机，未重复进行真实票源查询，余票刷新行为通过离线可控数据验证。
 
 ## 构建与验证
 
 使用 JDK 21、Android SDK 36。首次构建在 `local.properties` 中设置本机 `sdk.dir`。
 
 ```bash
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ./gradlew :core:test :app:assembleDebug :app:lintDebug
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ./gradlew :core:test :app:assembleDebug :app:lintRelease :app:assembleRelease
 ./gradlew :app:connectedDebugAndroidTest
 ```
+
+Release 默认生成未签名包，个人生产签名和密码必须在仓库外配置，签名后再分发。禁止把私钥或服务 Key 提交进源码。
 
 第二条命令需连接测试设备；包含少量真实 12306 查询，不应高频循环。核心测试离线运行，不依赖票数保持不变。
 

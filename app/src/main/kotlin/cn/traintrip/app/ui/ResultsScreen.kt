@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import cn.traintrip.app.*
 import cn.traintrip.core.*
 
-@Composable fun ResultsScreen(s:UiState,onBack:()->Unit,onCity:(String)->Unit,onRefresh:()->Unit,onStop:()->Unit,onResume:()->Unit,onRetry:()->Unit,onSort:()->Unit,onGuide:(String)->Unit=onCity,guides:Map<String,DestinationGuide> = DestinationGuides.all.associateBy { it.cityId }) {
+@Composable fun ResultsScreen(s:UiState,onBack:()->Unit,onCity:(String)->Unit,onRefresh:()->Unit,onStop:()->Unit,onResume:()->Unit,onRetry:()->Unit,onSort:()->Unit,onGuide:(String)->Unit=onCity,guides:Map<String,DestinationGuide> = DestinationGuides.all.associateBy { it.cityId },favorites:Set<String> = emptySet(),onFavorite:(City)->Unit={}) {
     val f=s.applied ?: s.filters
     val progress=s.progress
     val groups=remember(progress,f,s.citySortByCount,s.catalog) { groupResults(s.catalog,f,progress,s.citySortByCount) }
@@ -89,7 +89,7 @@ import cn.traintrip.core.*
         }
         items(groups,key={"province-${it.province.id}"}) { group ->
             ProvinceResultGroup(group,group.province.id in expanded,{toggle(group.province.id)},{collapse(group.province.id)},content={
-                group.cities.forEach { city -> CityCard(city,f,onCity,onGuide,guides[city.cityId]) }
+                group.cities.forEach { city -> CityCard(city,f,onCity,onGuide,guides[city.cityId],s.catalog.byCity[city.cityId],city.cityId in favorites,onFavorite) }
                 if(group.incomplete && progress?.running!=true && progress!=null) TextButton(onRetry) { Text("重试查询") }
             })
         }
@@ -104,7 +104,7 @@ import cn.traintrip.core.*
         } }
     },confirmButton={TextButton({showErrors=false}) { Text("关闭") }})
 }
-@Composable private fun CityCard(city:CityResult,f:SearchFilters,onCity:(String)->Unit,onGuide:(String)->Unit,guide:DestinationGuide?) {
+@Composable private fun CityCard(city:CityResult,f:SearchFilters,onCity:(String)->Unit,onGuide:(String)->Unit,guide:DestinationGuide?,catalogCity:City?,favorite:Boolean,onFavorite:(City)->Unit) {
     ContentCard(Modifier.fillMaxWidth().testTag("city-card-${city.cityId}"),onClick={onGuide(city.cityId)}) {
         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
             guide?.photo?.let { Box(Modifier.size(60.dp)) { DestinationPhoto(it,Modifier.fillMaxSize()) } }
@@ -115,6 +115,7 @@ import cn.traintrip.core.*
                 }
                 guide?.let { Text(it.tagline,style=MaterialTheme.typography.bodyMedium,color=Muted) }
             }
+            if(catalogCity!=null)FavoriteButton(catalogCity,favorite,{onFavorite(catalogCity)})
         }
         Text("最快 ${durationText(city.shortestMinutes)}${guide?.let { " · 建议玩${it.suggestedDays}" }.orEmpty()}",style=MaterialTheme.typography.titleSmall)
         Text(city.trips.flatMap { t->f.seats.filter { t.seats[it]?.confirmedFor(f.people)==true } }.distinct().sortedBy { it.ordinal }.joinToString(" / ") { it.label } +

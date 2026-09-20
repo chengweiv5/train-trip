@@ -28,7 +28,7 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
     onSaveModel: (String, String, () -> Unit) -> Unit,
     onSaveSearch: (String, () -> Unit) -> Unit,
     onRemoveModelKey: (() -> Unit) -> Unit, onRemoveSearchKey: (() -> Unit) -> Unit,
-    onClearFeedback: () -> Unit = {}) {
+    onClearFeedback: () -> Unit = {},onOffline:()->Unit={},onAbout:()->Unit={},offlineBytes:Long=0,offlineCount:Int=0,applySafeInsets:Boolean=true) {
     var page by rememberSaveable { mutableStateOf(SettingsPage.MENU) }
     fun back() {
         if (state.settingsBusy) return
@@ -38,7 +38,7 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
     BackHandler { back() }
     SecureSettingsWindow(page != SettingsPage.MENU)
     Surface(Modifier.fillMaxSize().testTag("settings-screen"), color = PageBackground) {
-        Column(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
+        Column(Modifier.fillMaxSize().then(if(applySafeInsets)Modifier.safeDrawingPadding() else Modifier).imePadding()) {
             AppTopBar(when(page) {SettingsPage.MENU->"设置";SettingsPage.MODEL->"大模型设置";SettingsPage.SEARCH->"搜索引擎设置"},
                 onBack={back()},enabled=!state.settingsBusy,backTag="settings-back")
             key(page) {
@@ -54,6 +54,19 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
                         SettingsRow("搜索引擎","Tavily · 基础搜索",state.tavilyConfigured,"settings-search") {
                             onClearFeedback();page=SettingsPage.SEARCH
                         }
+                        }
+                        Text("本机内容",style=MaterialTheme.typography.bodySmall,color=Muted)
+                        ContentCard(Modifier.fillMaxWidth()) {
+                            TextButton(onOffline,Modifier.fillMaxWidth().heightIn(min=60.dp).testTag("settings-offline")) {
+                                Column(Modifier.weight(1f),horizontalAlignment=Alignment.Start) {
+                                    Text("离线内容");Text("${offlineCount} 个已下载城市",style=MaterialTheme.typography.bodySmall,color=Muted)
+                                };Text(storageSize(offlineBytes),style=MaterialTheme.typography.bodySmall,color=Muted);UiIcon("next")
+                            }
+                        }
+                        ContentCard(Modifier.fillMaxWidth()) {
+                            TextButton(onAbout,Modifier.fillMaxWidth().heightIn(min=48.dp).testTag("settings-about")) {
+                                Text("关于与更新",Modifier.weight(1f),textAlign=androidx.compose.ui.text.style.TextAlign.Start);UiIcon("next")
+                            }
                         }
                         state.settingsMessage?.let { Hint(it) }
                         state.settingsError?.let { Hint(it,true) }

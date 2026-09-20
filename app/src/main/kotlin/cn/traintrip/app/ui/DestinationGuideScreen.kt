@@ -77,15 +77,17 @@ import kotlinx.coroutines.withContext
 @Composable fun DestinationGuideScreen(
     cityName: String, guide: DestinationGuide?, onBack: () -> Unit,
     onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String = "",
-    runtime: DestinationState? = null, onRefresh: () -> Unit = {}, onSettings: () -> Unit = {}
+    runtime: DestinationState? = null, onRefresh: () -> Unit = {}, onSettings: () -> Unit = {},
+    city:City?=null,favorite:Boolean=false,onFavorite:()->Unit={},queryAction:Boolean=false
 ) = key(cityName) {
-    DestinationGuidePage(cityName, guide, onBack, onTrains, onSource, provinceLabel,runtime,onRefresh,onSettings)
+    DestinationGuidePage(cityName, guide, onBack, onTrains, onSource, provinceLabel,runtime,onRefresh,onSettings,city,favorite,onFavorite,queryAction)
 }
 
 @Composable private fun DestinationGuidePage(
     cityName: String, guide: DestinationGuide?, onBack: () -> Unit,
     onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String,
-    runtime: DestinationState?, onRefresh: () -> Unit, onSettings: () -> Unit
+    runtime: DestinationState?, onRefresh: () -> Unit, onSettings: () -> Unit,
+    city:City?,favorite:Boolean,onFavorite:()->Unit,queryAction:Boolean
 ) {
     var days by rememberSaveable { mutableIntStateOf(1) }
     var sourcesOpen by rememberSaveable { mutableStateOf(false) }
@@ -99,19 +101,23 @@ import kotlinx.coroutines.withContext
         Scaffold(containerColor = PageBackground, contentWindowInsets = WindowInsets(0, 0, 0, 0), bottomBar = {
             Surface(color = Color.White) {
                 Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp)) {
-                    PrimaryButton("查看车次", onTrains, modifier = Modifier.testTag("guide-trains"))
+                    PrimaryButton(if(queryAction)"查去${cityName}的车票" else "查看车次", onTrains, enabled=!queryAction || city?.supported!=false, modifier = Modifier.testTag("guide-trains"))
                 }
             }
         }) { padding ->
             Column(Modifier.fillMaxSize().padding(padding)) {
-                AppTopBar("了解目的地",onBack)
+                AppTopBar("了解目的地",onBack,trailing=if(city!=null) { { FavoriteButton(city,favorite,onFavorite) } } else null)
                 if (guide == null) {
                     LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         item { Text(cityName, style = MaterialTheme.typography.titleLarge) }
                         item {
                             if(runtime==null) Hint("暂无目的地介绍，可先查看车次。")
-                            else GuideRuntimeStatus(guide,runtime,onRefresh,onSettings)
+                            else ContentCard(Modifier.fillMaxWidth()) {
+                                Text("还没有保存这座城市的介绍",style=MaterialTheme.typography.titleMedium)
+                                Text("可以先查车票，也可以整理一份景点、美食和玩法介绍。",style=MaterialTheme.typography.bodyMedium,color=Muted)
+                                GuideRuntimeStatus(guide,runtime,onRefresh,onSettings)
+                            }
                         }
                     }
                 } else {
@@ -216,6 +222,7 @@ import kotlinx.coroutines.withContext
             Text(state.stage.ifBlank { "正在读取离线内容…" },style=MaterialTheme.typography.bodySmall,color=Muted)
         }
         state.error?.let { Hint(it,true) }
+        state.contentMessage?.let { Hint(it) }
         guide?.generatedAt?.let { Text("DeepSeek 整理 · ${it.take(10)} · 已保存到本机",style=MaterialTheme.typography.bodySmall,color=Muted) }
         if(!state.loading) {
             if(!state.configured || !state.tavilyConfigured) {
@@ -225,6 +232,7 @@ import kotlinx.coroutines.withContext
                 contentPadding = PaddingValues(vertical = 12.dp)) {
                 Text(if(guide!=null) "更新目的地介绍" else if(state.error!=null) "重试整理" else "整理目的地介绍")
             }
+            Text("手动整理会使用 Tavily 搜索和 DeepSeek 模型额度。",style=MaterialTheme.typography.bodySmall,color=Muted)
         }
     }
 }

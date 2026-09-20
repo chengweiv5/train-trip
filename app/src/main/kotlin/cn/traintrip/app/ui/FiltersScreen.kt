@@ -19,16 +19,16 @@ import cn.traintrip.app.UiState
 import cn.traintrip.core.*
 import java.time.format.DateTimeFormatter
 
-@Composable fun FiltersScreen(s:UiState,onUpdate:(SearchFilters)->Unit,onSearch:()->Unit,onContentSettings:()->Unit={}) {
+@Composable fun FiltersScreen(s:UiState,onUpdate:(SearchFilters)->Unit,onSearch:()->Unit,onContentSettings:()->Unit={},onBack:(()->Unit)?=null) {
     var sheet by remember { mutableStateOf<String?>(null) }
     val destinationBrowser=rememberSaveable(saver=DestinationBrowserState.Saver) { DestinationBrowserState() }
     val f=s.filters
     Column(Modifier.fillMaxSize().background(PageBackground)) {
-        AppTopBar("有票就出发",settings=true,onAction=onContentSettings)
+        AppTopBar(if(s.queryCityId==null) "有票就出发" else "去${s.catalog.byCity[s.queryCityId]?.name.orEmpty()} · 查车票",onBack=onBack,settings=s.queryCityId==null,onAction=onContentSettings)
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
             Column(verticalArrangement=Arrangement.spacedBy(4.dp)) {
-                Text("先看哪里有票，再决定去哪里",style=MaterialTheme.typography.titleMedium)
-                Text("查直达去程，发现周边好去处",style=MaterialTheme.typography.bodyMedium,color=Muted)
+                Text(if(s.queryCityId==null) "先看哪里有票，再决定去哪里" else "确认日期，再查去${s.catalog.byCity[s.queryCityId]?.name.orEmpty()}的车票",style=MaterialTheme.typography.titleMedium)
+                Text(if(s.queryCityId==null) "查直达去程，发现周边好去处" else "仅查询此城市 · 不改变首页的目的地范围",style=MaterialTheme.typography.bodyMedium,color=Muted)
             }
             ContentCard(Modifier.fillMaxWidth()) {
                 Row(Modifier.fillMaxWidth().heightIn(min=64.dp).clickable { sheet="origin" }.testTag("filter-origin"),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
@@ -60,10 +60,11 @@ import java.time.format.DateTimeFormatter
                 HorizontalDivider(color=Line)
                 FilterRow("最长车程",f.maxMinutes?.let { durationText(it) } ?: "不限") { sheet="duration" }
                 HorizontalDivider(color=Line)
-                FilterRow("查询目的地","${f.destinationCityIds.size} 个城市") { sheet="scope" }
+                if(s.queryCityId==null) FilterRow("查询目的地","${f.destinationCityIds.size} 个城市") { sheet="scope" }
+                else Text("查询目的地：${s.catalog.byCity[s.queryCityId]?.name.orEmpty()}",Modifier.padding(vertical=12.dp))
             }
             s.error?.let { Hint(it,true) }
-            PrimaryButton("查询有票城市",onSearch,modifier=Modifier.testTag("search-cities"))
+            PrimaryButton(if(s.queryCityId==null) "查询有票城市" else "查询去${s.catalog.byCity[s.queryCityId]?.name.orEmpty()}的车票",onSearch,modifier=Modifier.testTag("search-cities"))
             Text("只看直达去程 · 购票在12306 App完成",style=MaterialTheme.typography.bodySmall,color=Muted)
         }
     }

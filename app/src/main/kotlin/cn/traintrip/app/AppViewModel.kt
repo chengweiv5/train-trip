@@ -7,14 +7,15 @@ import cn.traintrip.core.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-enum class Page { FILTERS, RESULTS, DESTINATION, DETAIL }
+enum class Page { FILTERS, WISHLIST, ADD_CITY, CITY_QUERY, RESULTS, DESTINATION, DETAIL, SETTINGS, OFFLINE, ABOUT }
 data class UiState(
     val catalog:StationCatalog, val filters:SearchFilters, val applied:SearchFilters?=null,
     val sourceInfo:SourceInfo?=null, val loading:Boolean=false, val error:String?=null,
     val page:Page=Page.FILTERS, val progress:SearchProgress?=null, val cityId:String?=null,
     val selectedTripKey:String?=null,
     val notice:String?=null, val cityRefresh:SearchProgress?=null,
-    val citySortByCount:Boolean=false, val searchSession:Long=0, val detailFromGuide:Boolean=false
+    val citySortByCount:Boolean=false, val searchSession:Long=0, val detailFromGuide:Boolean=false,
+    val queryCityId:String?=null,val cityQueryFilters:SearchFilters?=null,val guideFromResults:Boolean=false,val navigationEntry:Long=0
 )
 class AppViewModel @JvmOverloads constructor(app:Application,private val source:TicketSource=OfficialTicketSource()):AndroidViewModel(app) {
     private val preferences=Preferences(app)
@@ -23,17 +24,51 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
     val state:StateFlow<UiState> = mutable.asStateFlow()
     private var searchJob:Job?=null
     private var refreshJob:Job?=null
-    fun updateFilters(f:SearchFilters) { preferences.save(f);mutable.update { it.copy(filters=f,error=null) } }
-    fun showFilters() { stopSearch();refreshJob?.cancel();mutable.update { it.copy(page=Page.FILTERS,cityRefresh=it.cityRefresh?.copy(running=false,stopped=it.cityRefresh.running || it.cityRefresh.stopped)) } }
-    fun showResults() { refreshJob?.cancel();mutable.update { it.copy(page=Page.RESULTS,cityRefresh=it.cityRefresh?.copy(running=false,stopped=it.cityRefresh.running || it.cityRefresh.stopped),selectedTripKey=null) } }
-    fun showCity(id:String) { mutable.update { it.copy(page=Page.DETAIL,cityId=id,selectedTripKey=null,cityRefresh=null,notice=null,detailFromGuide=false) } }
-    fun showDestination(id:String) { mutable.update { it.copy(page=Page.DESTINATION,cityId=id,selectedTripKey=null,cityRefresh=null,notice=null) } }
-    fun showDestinationTrains() { mutable.update { it.copy(page=Page.DETAIL,detailFromGuide=true,selectedTripKey=null) } }
-    fun backFromCity() {
-        refreshJob?.cancel()
-        mutable.update { it.copy(page=if(it.page==Page.DETAIL && it.detailFromGuide) Page.DESTINATION else Page.RESULTS,
-            cityRefresh=it.cityRefresh?.copy(running=false,stopped=it.cityRefresh.running || it.cityRefresh.stopped),selectedTripKey=null) }
+    private data class Location(val page:Page,val cityId:String?,val fromGuide:Boolean,val guideFromResults:Boolean,val queryCityId:String?,val draft:SearchFilters?,val entry:Long)
+    private val history=java.util.ArrayDeque<Location>()
+    private var nextEntry=0L
+    fun navigate(page:Page,cityId:String?=mutable.value.cityId) {
+        val current=mutable.value
+        history.addLast(Location(current.page,current.cityId,current.detailFromGuide,current.guideFromResults,current.queryCityId,current.cityQueryFilters,current.navigationEntry))
+        mutable.update { it.copy(page=page,cityId=cityId,navigationEntry=++nextEntry,selectedTripKey=null,notice=null,
+            guideFromResults=if(page==Page.DESTINATION)current.page==Page.RESULTS else it.guideFromResults) }
     }
+    fun back() {
+        pauseForegroundWork()
+        val previous=history.pollLast()
+        mutable.update { if(previous==null)it.copy(page=Page.FILTERS,queryCityId=null,cityQueryFilters=null)
+            else it.copy(page=previous.page,cityId=previous.cityId,detailFromGuide=previous.fromGuide,
+                guideFromResults=previous.guideFromResults,queryCityId=previous.queryCityId,cityQueryFilters=previous.draft,navigationEntry=previous.entry,selectedTripKey=null) }
+    }
+    fun selectRoot(page:Page) {
+        require(page==Page.FILTERS || page==Page.WISHLIST)
+        if(mutable.value.page==page)return
+        history.clear();mutable.update { it.copy(page=page,queryCityId=null,cityQueryFilters=null,error=null) }
+    }
+    fun openCityQuery(id:String) {
+        val current=mutable.value
+        val date=current.filters.startDate.takeIf { it>=today() } ?: today().plusDays(1)
+        val end=current.filters.endDate.takeIf { current.filters.startDate>=today() && it>=date } ?: date
+        navigate(Page.CITY_QUERY,id)
+        mutable.update { it.copy(queryCityId=id,cityQueryFilters=current.filters.copy(startDate=date,endDate=end,destinationCityIds=setOf(id)),error=null) }
+    }
+    fun updateFilters(f:SearchFilters) {
+        if(mutable.value.page==Page.CITY_QUERY) mutable.update { it.copy(cityQueryFilters=f.copy(destinationCityIds=setOfNotNull(it.queryCityId)),error=null) }
+        else { preferences.save(f);mutable.update { it.copy(filters=f,error=null) } }
+    }
+    fun showFilters() {
+        if(mutable.value.page==Page.RESULTS) back()
+        else { pauseForegroundWork();mutable.update { it.copy(page=Page.FILTERS) } }
+    }
+    fun showResults() { refreshJob?.cancel();mutable.update { it.copy(page=Page.RESULTS,selectedTripKey=null) } }
+    fun showCity(id:String) { navigate(Page.DETAIL,id);mutable.update { it.copy(cityRefresh=null,detailFromGuide=false) } }
+    fun showDestination(id:String) { navigate(Page.DESTINATION,id);mutable.update { it.copy(cityRefresh=null) } }
+    fun showDestinationTrains() {
+        val current=mutable.value
+        if(current.guideFromResults) { navigate(Page.DETAIL);mutable.update { it.copy(detailFromGuide=true) } }
+        else current.cityId?.let(::openCityQuery)
+    }
+    fun backFromCity() = back()
     fun sortCities() { mutable.update { it.copy(citySortByCount=!it.citySortByCount) } }
     fun dismissNotice() { mutable.update { it.copy(notice=null) } }
     fun clearSelection() { mutable.update { it.copy(selectedTripKey=null,notice=null) } }
@@ -55,9 +90,13 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
     }
     fun search(resume:Boolean=false,retryFailed:Boolean=false,refresh:Boolean=false) {
         val current=mutable.value
-        val filters=if(resume || retryFailed || refresh) current.applied ?: current.filters else current.filters
+        val filters=if(resume || retryFailed || refresh) current.applied ?: current.filters else current.cityQueryFilters ?: current.filters
         filters.validate()?.let { error -> mutable.update { it.copy(error=error) };return }
+        if(current.queryCityId!=null && filters.originCityId==current.queryCityId) {
+            mutable.update { it.copy(error="出发地和目的地不能相同，请修改出发地") };return
+        }
         searchJob?.cancel();refreshJob?.cancel()
+        if(current.page!=Page.RESULTS)navigate(Page.RESULTS)
         val previous=if(resume || retryFailed) current.progress else null
         mutable.update { it.copy(searchSession=if(resume || retryFailed || refresh) it.searchSession else it.searchSession+1,applied=filters,page=Page.RESULTS,loading=true,error=null,progress=previous,selectedTripKey=null,cityRefresh=null,notice=null) }
         searchJob=viewModelScope.launch {

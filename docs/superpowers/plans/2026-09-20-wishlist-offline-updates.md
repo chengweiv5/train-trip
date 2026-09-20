@@ -27,10 +27,10 @@ interface WishlistStore { fun read():List<WishCity>; fun write(items:List<WishCi
 // WishlistRepository: load, add(cities,now), remove(id), restore(record); returns committed lists.
 // AppViewModel: selectRoot(Page), openCityQuery(id), leaveCityQuery(), navigate(page), back().
 ```
-- [ ] 添加核心行为测试：添加去重和稳定顺序、移除后恢复原排序、写入失败不改变快照、读取失败不当作空清单。
-- [ ] 运行 `:core:test --tests '*WishlistTest'` 验证缺失实现；实现原子存储与 ViewModel，重复执行确认通过。
-- [ ] 加入想去列表、多选添加、底栏与星标；单城查询草稿复用表单并固定目的地。
-- [ ] Android 测试验证离线收藏、跨入口同步、取消/撤销、重启与查询草稿返回不污染首页。
+- [x] 添加核心行为测试：添加去重和稳定顺序、移除后恢复原排序、写入失败不改变快照、读取失败不当作空清单。
+- [x] 运行 `:core:test --tests '*WishlistTest'` 验证缺失实现；实现原子存储与 ViewModel，重复执行确认通过。
+- [x] 加入想去列表、多选添加、底栏与星标；单城查询草稿复用表单并固定目的地。
+- [x] Android 测试验证离线收藏、跨入口同步、取消/撤销、重启与查询草稿返回不污染首页。
 
 ## Task 2：离线存储与手动介绍
 
@@ -42,10 +42,10 @@ data class OfflineEntry(val cityId:String,val guide:DestinationGuide?,val bytes:
 // AndroidGuideStore: entries(), delete(cityId), preparePhoto(guide), save(guide).
 // DestinationViewModel: refreshOffline(), deleteOffline(cityId), open(city), retry().
 ```
-- [ ] 更新已有首次自动整理测试，断言 open 不调用 source/generator；显式 retry 才生成。
-- [ ] 正文先原子提交无旧图片引用，再下载独立版本图片并关联；删除前 cancelAndJoin，防止旧回调写回。
-- [ ] 文件扫描包含已知城市残留，失败按实际剩余容量统计；内存列表同步回退内置内容。
-- [ ] 增加离线页面、确认框、空态与失败提示；测试旧内容保留、部分图片成功、删除残留与重新进入不下载。
+- [x] 更新已有首次自动整理测试，断言 open 不调用 source/generator；显式 retry 才生成。
+- [x] 正文先原子提交无旧图片引用，再下载独立版本图片并关联；删除前 cancelAndJoin，防止旧回调写回。
+- [x] 文件扫描包含已知城市残留，失败按实际剩余容量统计；内存列表同步回退内置内容。
+- [x] 增加离线页面、确认框、空态与失败提示；测试旧内容保留、部分图片成功、删除残留与重新进入不下载。
 
 ## Task 3：关于与更新
 
@@ -57,19 +57,27 @@ data class ReleaseVersion(val major:Int,val minor:Int,val patch:Int):Comparable<
 data class AppRelease(val version:ReleaseVersion,val url:String,val summary:String,val downloadable:Boolean)
 interface UpdateSource { suspend fun latest():AppRelease }
 ```
-- [ ] MockWebServer 测试分页、语义比较、草稿/预发布过滤、缺附件、限流、无稳定候选和外部 URL 拒绝。
-- [ ] 实现 GitHub 固定仓库分页请求，取消传播、总超时和响应限制；不传入密钥。
-- [ ] 实现五种状态、明确主操作与打开链接失败重试/复制链接；版本从安装包读取。
+- [x] MockWebServer 测试分页、语义比较、草稿/预发布过滤、缺附件、限流、无稳定候选和外部 URL 拒绝。
+- [x] 实现 GitHub 固定仓库分页请求，取消传播、总超时和响应限制；不传入密钥。
+- [x] 实现五种状态、明确主操作与打开链接失败重试/复制链接；版本从安装包读取。
 
 ## Task 4：集成和交付验证
 
 Files: 新增 Android 流程测试、`docs/verification/2026-09-20-v0.5.0.md`、README、`app/build.gradle.kts`。
 
-- [ ] 版本递增到 0.5.0 / 9，运行 `:core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintRelease :app:assembleRelease`。
-- [ ] 独立模拟器运行新功能和受影响旧流程测试；检查标准/320dp大字体截图，修复实测问题。
-- [ ] Release 构建签名使用宿主已有生产签名；核验包名、版本、debuggable=false、无真实 Key，保留 SHA256。
-- [ ] 更新验证报告与 TASK_STATE，保存已确认设计及实现提交；通知用户结果和限制。发布与推送按用户明确交付指令执行。
+- [x] 版本递增到 0.5.0 / 9，运行 `:core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintRelease :app:assembleRelease`。
+- [x] 独立模拟器运行新功能和受影响旧流程测试；检查标准/320dp大字体截图，修复实测问题。
+- [x] Release 构建签名使用宿主已有生产签名；核验包名、版本、debuggable=false、无真实 Key，保留 SHA256。
+- [x] 更新验证报告与 TASK_STATE，保存已确认设计及实现提交；通知用户结果和限制。发布与推送按用户明确交付指令执行。
 
 ## Self review
 
 规格覆盖：收藏、导航、单城查询→Task1；手动整理、内置回退、删除竞态与图片提交点→Task2；五种更新状态与链接→Task3；无配置与版本升级、安全区、大字体、正式构建→Task4。数据删除测试仅操作专用测试文件/模拟器，禁止清除真机数据。
+
+## 实际验证（2026-09-20）
+
+- 75 项 core 测试通过；62 个不同 Android 用例按各自最新结果均通过，最终离线/目的地组复测见验收报告。
+- 编译 Debug、AndroidTest、Release 和 lintRelease 通过；lint 0 错误 / 19 条既有警告。
+- 窄屏 / 1.3 字号已验证并修复顶部添加动作换行；阅读位置、添加草稿生命周期与更新取消提示的问题均由测试确认后修复。
+- 使用原生产签名，正式包不包含服务 Key；真实 GitHub 匿名请求遇到限流，失败态验证通过，正常返回由 MockWebServer 覆盖。
+- 未调用付费服务、未操作真机，未推送或发布 GitHub Release。完成证据详见 `docs/verification/2026-09-20-v0.5.0.md`。

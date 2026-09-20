@@ -13,7 +13,9 @@ import java.io.File
 import java.io.IOException
 import kotlin.coroutines.coroutineContext
 
-class AndroidGuideStore(context: Context, private val loadPhoto: suspend (String) -> ByteArray = GuideNetwork()::photo) : GuideStore {
+data class OfflineEntry(val cityId:String,val guide:DestinationGuide?,val bytes:Long,val hasPhoto:Boolean)
+
+class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean = { it.delete() }, private val loadPhoto: suspend (String) -> ByteArray = GuideNetwork()::photo) : GuideStore {
     private val directory = File(context.filesDir, "destination-guides").apply { mkdirs() }
     private fun file(cityId: String, suffix: String): File {
         require(cityId.matches(Regex("[0-9]{6}")))
@@ -29,8 +31,9 @@ class AndroidGuideStore(context: Context, private val loadPhoto: suspend (String
     override fun read(cityId: String): DestinationGuide? = runCatching {
         storedGuide(cityId)?.let { DestinationGuides.validateGenerated(it, cityId) }
     }.getOrNull()
-    fun all(): Map<String, DestinationGuide> = directory.listFiles().orEmpty().filter { it.name.matches(Regex("[0-9]{6}\\.json")) }
-        .mapNotNull { read(it.nameWithoutExtension) }.associateBy { it.cityId }
+    fun all(): Map<String, DestinationGuide> = directory.listFiles().orEmpty()
+        .mapNotNull { Regex("^([0-9]{6})\\.json(?:\\.bak)?$").matchEntire(it.name)?.groupValues?.get(1) }
+        .distinct().mapNotNull(::read).associateBy { it.cityId }
     override fun attempted(cityId: String): Boolean {
         if (file(cityId, "simplified-attempt").exists()) return true
         // Old rejected resources may be regenerated once. Keep files for rollback,
@@ -45,6 +48,68 @@ class AndroidGuideStore(context: Context, private val loadPhoto: suspend (String
     override fun save(guide: DestinationGuide) {
         DestinationGuides.validateGenerated(guide, guide.cityId)
         atomic(file(guide.cityId, "json"), Gson().toJson(mapOf("schemaVersion" to 1, "guide" to guide)).toByteArray(Charsets.UTF_8))
+    }
+    private fun ownedImages(cityId:String):Set<String> {
+        val saved=runCatching { AtomicFile(file(cityId,"images")).readFully().toString(Charsets.UTF_8).lines() }.getOrDefault(emptyList())
+        return (saved+listOfNotNull(storedGuide(cityId)?.photo?.assetName))
+            .filter { it.matches(Regex("[a-z0-9_]+\\.jpg")) }.toSet()
+    }
+    private fun sharedImage(cityId:String,name:String):Boolean = directory.listFiles().orEmpty()
+        .mapNotNull { Regex("^([0-9]{6})\\.json(?:\\.bak)?$").matchEntire(it.name)?.groupValues?.get(1) }
+        .distinct().filter { it!=cityId }.any { storedGuide(it)?.photo?.assetName==name }
+    // Keep legacy image ownership after replacing or deleting the JSON, including failed deletions.
+    private fun rememberImages(cityId:String) {
+        val images=ownedImages(cityId).filter { !sharedImage(cityId,it) }
+        if(images.isNotEmpty())atomic(file(cityId,"images"),images.joinToString("\n").toByteArray())
+    }
+    private fun cityFiles(cityId:String):List<File> {
+        file(cityId,"json")
+        val images=ownedImages(cityId).filterNot { sharedImage(cityId,it) }.toSet()
+        return directory.listFiles().orEmpty().filter { f ->
+            f.name.startsWith("$cityId.") || f.name.startsWith("${cityId}_") ||
+                f.name.removeSuffix(".bak").removeSuffix(".new") in images
+        }
+    }
+    fun cleanupUnreferencedImages(cityId:String) {
+        val current=storedGuide(cityId)?.photo?.assetName
+        cityFiles(cityId).filter { it.name.matches(Regex(".*\\.jpg(?:\\.bak|\\.new)?$")) && it.name!=current }
+            .forEach { removeFile(it) }
+        val remaining=ownedImages(cityId).filter { name -> name!=current &&
+            listOf(name,"$name.bak","$name.new").any { File(directory,it).exists() } }
+        if(remaining.isEmpty()) {
+            listOf("images","images.bak","images.new").forEach { removeFile(file(cityId,it)) }
+        } else atomic(file(cityId,"images"),remaining.joinToString("\n").toByteArray())
+    }
+    fun entries():List<OfflineEntry> {
+        val files=directory.listFiles() ?: if(directory.exists())throw IOException("无法读取离线目录") else emptyArray()
+        val ids=files.mapNotNull { Regex("^([0-9]{6})[._]").find(it.name)?.groupValues?.get(1) }.distinct()
+        return ids.mapNotNull { id ->
+            val content=cityFiles(id).filterNot { it.name.endsWith(".attempt") || it.name.endsWith(".simplified-attempt") }
+            if(content.isEmpty())null else {
+                val guide=read(id)
+                OfflineEntry(id,guide,content.sumOf { it.length() },guide?.photo?.let { File(directory,it.assetName).isFile }==true)
+            }
+        }.sortedByDescending { it.guide?.generatedAt.orEmpty() }
+    }
+    fun delete(cityId:String):Boolean {
+        rememberImages(cityId)
+        val manifest=setOf("$cityId.images","$cityId.images.bak","$cityId.images.new")
+        cityFiles(cityId).filterNot { it.name in manifest }.forEach { if(it.exists())removeFile(it) }
+        if(cityFiles(cityId).none { it.name !in manifest }) {
+            manifest.forEach { val target=File(directory,it);if(target.exists())removeFile(target) }
+        }
+        return cityFiles(cityId).isEmpty()
+    }
+    /** Commit text first. A failed image never restores the old text or photo reference. */
+    suspend fun prepareUpdate(guide:DestinationGuide,onCommitted:()->Unit={}):DestinationGuide {
+        coroutineContext.ensureActive()
+        rememberImages(guide.cityId)
+        save(guide.copy(photo=null))
+        onCommitted()
+        cleanupUnreferencedImages(guide.cityId)
+        val photo=guide.photo?.takeIf { it.remoteUrl!=null } ?: return guide.copy(photo=null)
+        val versioned=guide.copy(photo=photo.copy(assetName="${guide.cityId}_${java.util.UUID.randomUUID().toString().replace("-", "")}.jpg"))
+        return preparePhoto(versioned)
     }
     suspend fun preparePhoto(guide: DestinationGuide): DestinationGuide {
         val photo = guide.photo ?: return guide

@@ -38,11 +38,14 @@ class DeepSeekDestinationTest {
         override suspend fun fetch(city:City,stage:(String)->Unit)=GuideMaterial(city.id,city.name,city.province.name,emptyList(),emptyList(),emptyList())
     }
     private fun vm(credentials:Credentials,store:Store,generator:GuideGenerator)=DestinationViewModel(compose.activity.application as Application,credentials,store,source,generator,Credentials("tvly-test-only-123456789"))
-    @Test fun newCityGeneratesOnceAndRestartUsesSavedContent() {
+    @Test fun newCityWaitsForExplicitActionAndRestartUsesSavedContent() {
         val store=Store();var calls=0
         val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide { calls++;return guide() } }
         val model=vm(Credentials(),store,generator)
         compose.runOnIdle { model.open(city) }
+        compose.waitUntil(5000) { !model.state.value.loading }
+        assertEquals(0,calls)
+        compose.runOnIdle { model.retry() }
         compose.waitUntil(5000) { model.state.value.guide?.generatedAt!=null && !model.state.value.loading }
         compose.runOnIdle { model.cancel();model.open(city) }
         assertEquals(1,calls)
@@ -57,10 +60,13 @@ class DeepSeekDestinationTest {
         val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide { calls++;throw IOException("测试失败") } }
         val model=vm(Credentials(),store,generator)
         compose.runOnIdle { model.open(city) }
+        compose.waitUntil(5000) { !model.state.value.loading }
+        compose.runOnIdle { model.retry() }
         compose.waitUntil(5000) { model.state.value.error!=null && !model.state.value.loading }
         val restarted=vm(Credentials(),store,generator)
         compose.runOnIdle { restarted.open(city) }
-        compose.waitUntil(5000) { restarted.state.value.error!=null && !restarted.state.value.loading }
+        compose.waitUntil(5000) { !restarted.state.value.loading }
+        assertNull(restarted.state.value.error)
         assertEquals(1,calls)
         store.save(guide())
         val cached=vm(Credentials(),store,generator)
@@ -123,6 +129,8 @@ class DeepSeekDestinationTest {
         } }
         val model=vm(Credentials(),store,generator)
         compose.runOnIdle { model.open(city) }
+        compose.waitUntil(5000) { !model.state.value.loading }
+        compose.runOnIdle { model.retry() }
         compose.waitUntil(5000) { entered.isCompleted }
         compose.runOnIdle { model.cancel();release.complete(Unit) }
         compose.waitUntil(5000) { returned.isCompleted && !model.state.value.loading }
@@ -141,6 +149,9 @@ class DeepSeekDestinationTest {
         compose.waitUntil(5000) { saved }
         assertEquals(0,calls)
         compose.runOnIdle { model.open(city) }
+        compose.waitUntil(5000) { !model.state.value.loading }
+        assertEquals(0,calls)
+        compose.runOnIdle { model.retry() }
         compose.waitUntil(5000) { model.state.value.guide!=null }
         assertEquals(1,calls)
     }

@@ -6,12 +6,16 @@ import androidx.lifecycle.viewModelScope
 import cn.traintrip.core.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 data class DestinationState(
     val cityId: String? = null, val guide: DestinationGuide? = null, val loading: Boolean = false,
     val stage: String = "", val error: String? = null, val configured: Boolean = false,
     val settingsError: String? = null, val modelName: String = DeepSeekGuideGenerator.MODEL,
-    val settingsBusy: Boolean = false, val settingsMessage: String? = null, val tavilyConfigured: Boolean = false, val guides: Map<String, DestinationGuide> = DestinationGuides.all.associateBy { it.cityId }
+    val settingsBusy: Boolean = false, val settingsMessage: String? = null, val tavilyConfigured: Boolean = false,
+    val offline:List<OfflineEntry> = emptyList(),val offlineLoading:Boolean=false,val offlineError:String?=null,
+    val deleting:String?=null,val offlineMessage:String?=null,val contentMessage:String?=null, val guides: Map<String, DestinationGuide> = DestinationGuides.all.associateBy { it.cityId }
 )
 
 class DestinationViewModel @JvmOverloads constructor(app: Application,
@@ -27,51 +31,93 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
     private var active: City? = null
     private var job: Job? = null
     private var requestId = 0L
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            refreshConfiguration()
-            val cached = (store as? AndroidGuideStore)?.all().orEmpty()
-            mutable.update { it.copy(guides = it.guides + cached) }
+    private val contentLock=Mutex()
+    init { refreshOffline() }
+    fun refreshOffline() {
+        viewModelScope.launch {
+            mutable.update { it.copy(offlineLoading=true,offlineError=null) }
+            try { contentLock.withLock { withContext(Dispatchers.IO) { refreshConfiguration();refreshSnapshot() } } }
+            catch(e:Exception) { if(e is CancellationException)throw e;mutable.update { it.copy(offlineLoading=false,offlineError="无法读取离线内容，请重试") } }
+        }
+    }
+    private fun refreshSnapshot() {
+        val android=store as? AndroidGuideStore
+        val downloaded=android?.all().orEmpty()
+        val entries=android?.entries().orEmpty()
+        mutable.update { old ->
+            val guides=if(android!=null)DestinationGuides.all.associateBy { it.cityId }+downloaded else old.guides
+            old.copy(guides=guides,offline=entries,offlineLoading=false,
+                guide=old.cityId?.let { if(android!=null)guides[it] else repository.cached(it) })
+        }
+    }
+    fun deleteOffline(cityId:String) {
+        if(mutable.value.deleting!=null)return
+        val pending=job
+        cancel()
+        mutable.update { it.copy(deleting=cityId,offlineError=null,offlineMessage=null) }
+        viewModelScope.launch {
+            pending?.join()
+            contentLock.withLock {
+                try {
+                    val complete=withContext(Dispatchers.IO) {
+                        val disk=store as? AndroidGuideStore ?: throw java.io.IOException()
+                        val success=disk.delete(cityId);refreshSnapshot();success
+                    }
+                    mutable.update { it.copy(deleting=null,offlineMessage=if(complete)"已删除离线内容，收藏仍保留" else null,
+                        offlineError=if(complete)null else "部分文件未能清理，可重试。以实际占用为准。",contentMessage=null,error=null) }
+                } catch(e:Exception) { if(e is CancellationException)throw e;mutable.update { it.copy(deleting=null,offlineError="删除未完成，请重试") } }
+            }
         }
     }
     fun open(city: City) {
         if (active?.id == city.id && mutable.value.cityId == city.id) return
         cancel()
         active = city
-        mutable.update { it.copy(cityId = city.id, guide = it.guides[city.id], error = null, stage = "", loading = true) }
+        mutable.update { it.copy(cityId = city.id, guide = it.guides[city.id], error = null, contentMessage=null, stage = "", loading = true) }
         val id = ++requestId
         job = viewModelScope.launch {
-            val cached = withContext(Dispatchers.IO) { repository.cached(city.id) }
-            if (requestId != id) return@launch
-            mutable.update { it.copy(guide = cached, loading = false) }
-            if (cached == null) {
-                val attempted = withContext(Dispatchers.IO) { repository.attempted(city.id) }
+            try {
+                val cached = contentLock.withLock { withContext(Dispatchers.IO) { repository.cached(city.id) } }
                 if (requestId != id) return@launch
-                if (attempted) mutable.update { it.copy(error = "上次整理未完成，可点重试。") }
-                else generate(city)
+                mutable.update { it.copy(guide = cached, loading = false) }
+            } catch(e:Exception) {
+                if(e is CancellationException)throw e
+                if(requestId==id)mutable.update { it.copy(loading=false,error="无法读取本地介绍，请重试") }
             }
+
         }
     }
     fun retry() { active?.let(::generate) }
     private fun generate(city: City) {
-        if (mutable.value.loading || active?.id != city.id) return
+        if (mutable.value.loading || mutable.value.deleting!=null || active?.id != city.id) return
         val id = ++requestId
-        mutable.update { it.copy(loading = true, error = null, stage = "准备获取资料…") }
+        mutable.update { it.copy(loading = true, error = null, contentMessage=null, stage = "准备获取资料…") }
         job = viewModelScope.launch {
+            var committed=false
+            var expectedPhoto=false
             try {
                 val (key, searchKey) = withContext(Dispatchers.IO) { credentials.read() to searchCredentials.read() }
                 if (requestId != id) return@launch
                 mutable.update { it.copy(configured = key != null, tavilyConfigured = searchKey != null) }
                 if (key == null || searchKey == null) { mutable.update { it.copy(loading = false, stage = "") }; return@launch }
-                val guide = withContext(Dispatchers.IO) {
-                    repository.generate(city, key, { stage -> if (requestId == id) mutable.update { it.copy(stage = stage) } }) { guide ->
-                        (store as? AndroidGuideStore)?.preparePhoto(guide) ?: guide
-                    }
+                val guide = contentLock.withLock { withContext(Dispatchers.IO) {
+                    try { repository.generate(city, key, { stage -> if (requestId == id) mutable.update { it.copy(stage = stage) } }) { draft ->
+                        expectedPhoto=draft.photo!=null
+                        (store as? AndroidGuideStore)?.prepareUpdate(draft) { committed=true;refreshSnapshot() } ?: draft
+                    } } finally { (store as? AndroidGuideStore)?.let { runCatching { it.cleanupUnreferencedImages(city.id) } } }
+                } }
+                contentLock.withLock { withContext(Dispatchers.IO) { refreshSnapshot() } }
+                if (requestId == id) mutable.update { it.copy(loading = false, guide = guide, error = null, contentMessage=if(guide.photo==null && expectedPhoto)"介绍已更新，图片未保存" else null, stage = "", guides = it.guides + (city.id to guide)) }
+            } catch (e: CancellationException) {
+                withContext(NonCancellable) {
+                    withContext(Dispatchers.IO) { contentLock.withLock { runCatching { refreshSnapshot() } } }
+                    if(committed && requestId==id+1 && active?.id==city.id)mutable.update { it.copy(error=null,contentMessage="介绍已保存，图片尚未保存") }
                 }
-                if (requestId == id) mutable.update { it.copy(loading = false, guide = guide, error = null, stage = "", guides = it.guides + (city.id to guide)) }
-            } catch (e: CancellationException) { throw e }
-            catch (e: Exception) {
-                if (requestId == id) mutable.update { it.copy(loading = false, stage = "", error = if (e is java.io.IOException) e.message else "整理失败，请检查配置后重试") }
+                throw e
+            } catch (e: Exception) {
+                contentLock.withLock { withContext(Dispatchers.IO) { runCatching { refreshSnapshot() } } }
+                if (requestId == id) mutable.update { it.copy(loading = false, stage = "",contentMessage=if(committed)"介绍已保存，图片未保存" else null,
+                    error=if(committed)null else "整理未完成，请检查配置后重试") }
             }
         }
     }
