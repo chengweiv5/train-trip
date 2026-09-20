@@ -11,16 +11,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cn.traintrip.app.R
 import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable internal fun UiIcon(kind:String,modifier:Modifier=Modifier,color:Color=Primary) {
+    if(kind=="settings") {
+        Icon(painterResource(R.drawable.ic_settings),contentDescription=null,modifier=modifier.size(20.dp),tint=color)
+        return
+    }
     Canvas(modifier.size(20.dp)) {
         val u=size.width/24f
         val stroke=1.8f*u
@@ -44,11 +50,6 @@ import kotlin.math.sin
             "refresh"->{
                 drawArc(color,45f,285f,false,Offset(4*u,4*u),androidx.compose.ui.geometry.Size(16*u,16*u),style=Stroke(stroke,cap=StrokeCap.Round))
                 line(20f,3f,20f,9f);line(20f,9f,14f,9f)
-            }
-            "settings"->{
-                drawCircle(color,7*u,Offset(12*u,12*u),style=Stroke(stroke))
-                drawCircle(color,2.6f*u,Offset(12*u,12*u),style=Stroke(stroke))
-                repeat(8) { i->val a=i*Math.PI/4;line(12+7*cos(a).toFloat(),12+7*sin(a).toFloat(),12+10*cos(a).toFloat(),12+10*sin(a).toFloat()) }
             }
         }
     }
