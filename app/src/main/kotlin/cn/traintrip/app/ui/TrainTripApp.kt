@@ -30,8 +30,12 @@ import kotlinx.coroutines.delay
     val screenState=rememberSaveableStateHolder()
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     val accessibility=LocalAccessibilityManager.current
-    DisposableEffect(lifecycle,vm,destinationVm,updateVm) {
-        val observer=LifecycleEventObserver { _,event->if(event==Lifecycle.Event.ON_STOP) { vm.pauseForegroundWork();destinationVm.cancel();updateVm.leave() } }
+    DisposableEffect(lifecycle,vm,destinationVm,wishlistVm,updateVm) {
+        val observer=LifecycleEventObserver { _,event->when(event) {
+            Lifecycle.Event.ON_START -> wishlistVm.reload()
+            Lifecycle.Event.ON_STOP -> { vm.pauseForegroundWork();destinationVm.cancel();updateVm.leave() }
+            else -> Unit
+        } }
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }
     }
@@ -39,6 +43,7 @@ import kotlinx.coroutines.delay
         if(s.page==Page.DESTINATION) s.catalog.byCity[s.cityId]?.let(destinationVm::open)
         else destinationVm.leave()
         if(s.page==Page.OFFLINE || s.page==Page.WISHLIST || s.page==Page.SETTINGS)destinationVm.refreshOffline()
+        if(s.page==Page.WISHLIST || s.page==Page.ADD_CITY)wishlistVm.reload()
         if(s.page!=Page.ABOUT)updateVm.leave()
     }
     LaunchedEffect(wish.event,wish.notice) {

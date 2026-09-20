@@ -17,21 +17,28 @@ import java.io.IOException
 
 class AndroidWishlistStore(context:Context):WishlistStore {
     private val file=AtomicFile(File(context.filesDir,"wishlist.json"))
-    override fun read():List<WishCity> {
-        if(!file.baseFile.exists() && !File(file.baseFile.path+".bak").exists()) return emptyList()
+    private val fileLock=locks.getOrPut(file.baseFile.canonicalPath) { Any() }
+    override fun read():List<WishCity> = synchronized(fileLock) {
+        if(!file.baseFile.exists() && !File(file.baseFile.path+".bak").exists()) return@synchronized emptyList()
         val bytes=file.readFully();require(bytes.size<=1024*1024)
         val root=JsonParser.parseString(bytes.toString(Charsets.UTF_8)).asJsonObject
         require(root["schemaVersion"].asInt==1)
-        return root["cities"].asJsonArray.map { e -> e.asJsonObject.let { j ->
+        return@synchronized root["cities"].asJsonArray.map { e -> e.asJsonObject.let { j ->
             WishCity(j["cityId"].asString,j["name"].asString,j["province"].asString,j["addedAt"].asLong).also {
                 require(it.cityId.matches(Regex("[0-9]{6}")) && it.name.isNotBlank() && it.province.isNotBlank())
             }
         } }
     }
-    override fun write(items:List<WishCity>) {
+    override fun write(items:List<WishCity>):Unit = synchronized(fileLock) {
         val stream=file.startWrite()
         try { stream.write(Gson().toJson(mapOf("schemaVersion" to 1,"cities" to items)).toByteArray());file.finishWrite(stream) }
         catch(e:Exception) { file.failWrite(stream);throw IOException("想去清单未能保存",e) }
+    }
+    override fun update(change:(List<WishCity>)->List<WishCity>):List<WishCity> = synchronized(fileLock) {
+        super<WishlistStore>.update(change)
+    }
+    companion object {
+        private val locks=java.util.concurrent.ConcurrentHashMap<String,Any>()
     }
 }
 data class WishlistState(val items:List<WishCity> = emptyList(),val loading:Boolean=true,val busy:Boolean=false,
@@ -55,8 +62,8 @@ class WishlistViewModel @JvmOverloads constructor(app:Application,store:Wishlist
     } } }
     fun add(cities:List<City>,done:()->Unit={})=mutate({repository.add(cities,System.currentTimeMillis());"已添加想去城市" to null},done)
     fun toggle(city:City)=mutate({
-        if(repository.items.any { it.cityId==city.id }) { val removed=repository.remove(city.id);"已取消想去「${city.name}」" to removed }
-        else { repository.add(listOf(city),System.currentTimeMillis());"已加入想去「${city.name}」" to null }
+        val removed=repository.toggle(city,System.currentTimeMillis())
+        if(removed!=null) "已取消想去「${city.name}」" to removed else "已加入想去「${city.name}」" to null
     })
     fun undo(record:WishCity)=mutate({repository.restore(record);"已恢复想去「${record.name}」" to null},keepUndoOnFailure=true)
     fun dismiss(event:Long) { mutable.update { if(it.event==event)it.copy(notice=null,undo=null) else it } }

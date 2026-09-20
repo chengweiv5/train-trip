@@ -51,7 +51,7 @@ import cn.traintrip.core.*
     Column(Modifier.fillMaxSize().background(PageBackground)) {
         AppTopBar("想去",action="添加城市",onAction=onAdd)
         LazyColumn(Modifier.weight(1f).testTag("wishlist-list"),state=rememberLazyListState(),contentPadding=PaddingValues(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-            if(state.loading) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
+            if(state.loading && state.items.isEmpty()) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
             else if(state.error!=null) item { Hint(state.error,true);SecondaryButton("重新读取",onRetry) }
             else if(state.items.isEmpty()) item {
                 Column(Modifier.fillMaxWidth().padding(top=72.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(18.dp)) {
