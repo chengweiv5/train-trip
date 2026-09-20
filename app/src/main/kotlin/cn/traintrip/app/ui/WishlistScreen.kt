@@ -1,6 +1,8 @@
 package cn.traintrip.app.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -49,8 +51,13 @@ import cn.traintrip.core.*
 @Composable fun WishlistScreen(state:WishlistState,catalog:StationCatalog,guides:Map<String,DestinationGuide>,offline:List<OfflineEntry>,
     onAdd:()->Unit,onToggle:(City)->Unit,onGuide:(String)->Unit,onQuery:(String)->Unit,onRetry:()->Unit) {
     Column(Modifier.fillMaxSize().background(PageBackground)) {
-        AppTopBar("想去",action="添加城市",onAction=onAdd)
-        LazyColumn(Modifier.weight(1f).testTag("wishlist-list"),state=rememberLazyListState(),contentPadding=PaddingValues(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
+        WishlistBrandHeader(when {
+            state.loading && state.items.isEmpty()->"正在读取想去清单…"
+            state.error!=null->"清单读取失败，请重试"
+            state.items.isEmpty()->"把心动的城市，留给下次出发"
+            else->"${state.items.size} 个想去城市 · 最近收藏优先"
+        },onAdd)
+        LazyColumn(Modifier.weight(1f).testTag("wishlist-list"),state=rememberLazyListState(),contentPadding=PaddingValues(start=16.dp,end=16.dp,bottom=16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
             if(state.loading && state.items.isEmpty()) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
             else if(state.error!=null) item { Hint(state.error,true);SecondaryButton("重新读取",onRetry) }
             else if(state.items.isEmpty()) item {
@@ -61,7 +68,6 @@ import cn.traintrip.core.*
                     PrimaryButton("添加想去城市",onAdd)
                 }
             } else {
-                item { Text("${state.items.size} 个想去城市 · 最近收藏优先",style=MaterialTheme.typography.bodySmall,color=Muted) }
                 items(state.items,key={it.cityId}) { wish ->
                     val city=catalog.byCity[wish.cityId]
                     val guide=guides[wish.cityId]
@@ -74,11 +80,15 @@ import cn.traintrip.core.*
                             if(city!=null) FavoriteButton(city,true,{onToggle(city)},!state.busy)
                         }
                         Text(guide?.tagline ?: "先留在清单里，下次再了解",color=Muted,style=MaterialTheme.typography.bodyMedium)
-                        Text(offlineLabel(wish.cityId,guide,offline),style=MaterialTheme.typography.bodySmall,color=if(guide==null)Muted else AvailableGreen)
+                        Text(offlineLabel(wish.cityId,guide,offline),style=MaterialTheme.typography.bodySmall,color=if(guide==null)Muted else ContentReady)
                         HorizontalDivider(color=Line)
                         Row(verticalAlignment=Alignment.CenterVertically) {
                             TextButton({onGuide(wish.cityId)},Modifier.weight(1f),contentPadding=PaddingValues(vertical=12.dp)) { Text("了解目的地",Modifier.fillMaxWidth()) }
-                            TextButton({onQuery(wish.cityId)},Modifier.heightIn(min=48.dp).testTag("wish-query-${wish.cityId}"),enabled=city?.supported==true) { UiIcon("train");Spacer(Modifier.width(6.dp));Text("查车票") }
+                            OutlinedButton({onQuery(wish.cityId)},Modifier.heightIn(min=48.dp).testTag("wish-query-${wish.cityId}"),
+                                shape=RoundedCornerShape(8.dp),border=BorderStroke(1.dp,ActionBorder),
+                                colors=ButtonDefaults.outlinedButtonColors(containerColor=PrimaryTint),enabled=city?.supported==true) {
+                                UiIcon("train",color=LocalContentColor.current);Spacer(Modifier.width(6.dp));Text("查车票")
+                            }
                         }
                         if(city?.supported!=true)Text(city?.unavailableReason ?: "当前目录暂未收录此城市",style=MaterialTheme.typography.bodySmall,color=Muted)
                     }
@@ -115,7 +125,8 @@ fun offlineLabel(id:String,guide:DestinationGuide?,offline:List<OfflineEntry>):S
             cities.groupBy { it.province }.forEach { (province,group) ->
                 item("province-${province.id}"){Text(province.name,Modifier.padding(top=8.dp),style=MaterialTheme.typography.bodySmall,color=Muted)}
                 items(group,key={it.id}) { city ->
-                    Surface(color=androidx.compose.ui.graphics.Color.White,shape=androidx.compose.foundation.shape.RoundedCornerShape(8.dp)) {
+                    Surface(color=if(city.id in selected)PrimaryTint else CardBackground,shape=RoundedCornerShape(12.dp),
+                        border=BorderStroke(1.dp,if(city.id in selected)Primary else CardBorder)) {
                         Row(Modifier.fillMaxWidth().heightIn(min=64.dp).testTag("add-city-${city.id}")
                             .toggleable(city.id in selected,enabled=city.id !in existing && !state.busy,role=Role.Checkbox,onValueChange={selected=if(it)selected+city.id else selected-city.id})
                             .padding(14.dp),verticalAlignment=Alignment.CenterVertically) {

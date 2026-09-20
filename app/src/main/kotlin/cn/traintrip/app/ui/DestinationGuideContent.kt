@@ -128,8 +128,8 @@ internal fun LazyListScope.guideSectionContent(
     title: String, modifier: Modifier = Modifier, number: Int? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Surface(modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = Color.White,
-        border = BorderStroke(1.dp, Line.copy(alpha = .65f))) {
+    Surface(modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = CardBackground,
+        border = BorderStroke(1.dp, CardBorder)) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(9.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (number != null) {

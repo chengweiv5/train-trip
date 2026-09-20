@@ -119,7 +119,7 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
             Text(title,style=MaterialTheme.typography.titleMedium)
             Text(detail,style=MaterialTheme.typography.bodySmall,color=Muted)
         }
-        Text(if(configured) "已配置" else "未配置",style=MaterialTheme.typography.bodySmall,color=if(configured) AvailableGreen else Muted)
+        Text(if(configured) "已配置" else "未配置",style=MaterialTheme.typography.bodySmall,color=if(configured) ContentReady else Muted)
         UiIcon("next",color=Subtle)
     }
 }

@@ -1,5 +1,9 @@
 # Train Trip V1 UI 设计
 
+## v0.6.0 B4 冰蓝湖蓝
+
+已确认并实现白底浅蓝卡片、首页与想去统一顶部；当前视觉以 [B4 设计说明](surface-contrast.md) 和 [Pencil 源文件](train-trip-surface-contrast.pen) 的07画板为准，以下旧配色记录保留为历史。
+
 ## v0.4.0 设置菜单（2026-09-19）
 
 [可编辑源文件](train-trip-v0.4.0.pen) 已保存四张新画板：设置菜单 `kL4Hp`、大模型设置 `Y1162`、搜索引擎设置 `cqFPn`、首页入口 `w27DL`。首页右上角进入设置，DeepSeek 模型/API Key 与 Tavily API Key 分项管理；保存只更新配置，空 Key 保留现有密钥。

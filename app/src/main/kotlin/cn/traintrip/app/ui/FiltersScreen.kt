@@ -24,11 +24,12 @@ import java.time.format.DateTimeFormatter
     val destinationBrowser=rememberSaveable(saver=DestinationBrowserState.Saver) { DestinationBrowserState() }
     val f=s.filters
     Column(Modifier.fillMaxSize().background(PageBackground)) {
-        AppTopBar(if(s.queryCityId==null) "有票就出发" else "去${s.catalog.byCity[s.queryCityId]?.name.orEmpty()} · 查车票",onBack=onBack,settings=s.queryCityId==null,onAction=onContentSettings)
-        Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
-            Column(verticalArrangement=Arrangement.spacedBy(4.dp)) {
-                Text(if(s.queryCityId==null) "先看哪里有票，再决定去哪里" else "确认日期，再查去${s.catalog.byCity[s.queryCityId]?.name.orEmpty()}的车票",style=MaterialTheme.typography.titleMedium)
-                Text(if(s.queryCityId==null) "查直达去程，发现周边好去处" else "仅查询此城市 · 不改变首页的目的地范围",style=MaterialTheme.typography.bodyMedium,color=Muted)
+        if(s.queryCityId==null) HomeBrandHeader(onContentSettings)
+        else AppTopBar("去${s.catalog.byCity[s.queryCityId]?.name.orEmpty()} · 查车票",onBack=onBack)
+        Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(start=16.dp,end=16.dp,bottom=16.dp,top=if(s.queryCityId==null)0.dp else 16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            if(s.queryCityId!=null) Column(verticalArrangement=Arrangement.spacedBy(4.dp)) {
+                Text("确认日期，再查去${s.catalog.byCity[s.queryCityId]?.name.orEmpty()}的车票",style=MaterialTheme.typography.titleMedium)
+                Text("仅查询此城市 · 不改变首页的目的地范围",style=MaterialTheme.typography.bodyMedium,color=Muted)
             }
             ContentCard(Modifier.fillMaxWidth()) {
                 Row(Modifier.fillMaxWidth().heightIn(min=64.dp).clickable { sheet="origin" }.testTag("filter-origin"),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {

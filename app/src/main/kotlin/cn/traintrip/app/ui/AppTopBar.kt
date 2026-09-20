@@ -36,6 +36,7 @@ import kotlin.math.sin
             }
             "train" -> { drawRoundRect(color,Offset(5*u,2*u),androidx.compose.ui.geometry.Size(14*u,16*u),androidx.compose.ui.geometry.CornerRadius(4*u),style=Stroke(stroke));line(5f,10f,19f,10f);line(8f,18f,5f,22f);line(16f,18f,19f,22f);drawCircle(color,1.2f*u,Offset(8*u,14*u));drawCircle(color,1.2f*u,Offset(16*u,14*u)) }
 
+            "plus"->{line(5f,12f,19f,12f);line(12f,5f,12f,19f)}
             "back"->{line(15f,4f,7f,12f);line(7f,12f,15f,20f)}
             "down"->{line(6f,9f,12f,15f);line(12f,15f,18f,9f)}
             "up"->{line(6f,15f,12f,9f);line(12f,9f,18f,15f)}

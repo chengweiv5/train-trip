@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -56,6 +57,10 @@ import kotlinx.coroutines.delay
     fun openRailway() { vm.reportAppLaunch(launcher?.invoke(context) ?: launchRailwayApp(context)) }
     BackHandler(s.page!=Page.SETTINGS && s.page!=Page.FILTERS && s.page!=Page.WISHLIST) { vm.back() }
     Surface(Modifier.fillMaxSize(),color=androidx.compose.ui.graphics.Color.White) {
+      Box(Modifier.fillMaxSize()) {
+        if(s.page==Page.FILTERS || s.page==Page.WISHLIST) {
+            Box(Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.safeDrawing).background(HeaderTop))
+        }
         Column(Modifier.fillMaxSize().safeDrawingPadding()) {
             Box(Modifier.weight(1f)) {
                 val stateKey=when(s.page) {
@@ -83,5 +88,6 @@ import kotlinx.coroutines.delay
             wish.notice?.let { notice -> Snackbar(action={wish.undo?.let { record->TextButton({wishlistVm.undo(record)},enabled=!wish.busy){Text("撤销")} }}) { Text(notice) } }
             if(s.page==Page.FILTERS || s.page==Page.WISHLIST)RootNavigation(s.page,vm::selectRoot)
         }
+      }
     }
 }

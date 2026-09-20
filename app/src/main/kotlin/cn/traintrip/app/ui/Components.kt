@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter
     OutlinedButton(onClick,modifier.fillMaxWidth().heightIn(min=48.dp),enabled=enabled,shape=RoundedCornerShape(8.dp),border=BorderStroke(1.dp,Line),contentPadding=PaddingValues(14.dp)) { Text(text) }
 }
 @Composable fun ContentCard(modifier:Modifier=Modifier,selected:Boolean=false,onClick:(()->Unit)?=null,content:@Composable ColumnScope.()->Unit) {
-    Surface(modifier.then(if(onClick!=null) Modifier.clickable(onClick=onClick) else Modifier),shape=RoundedCornerShape(12.dp),color=Color.White,border=if(selected) BorderStroke(1.5.dp,Primary) else null) {
+    Surface(modifier.then(if(onClick!=null) Modifier.clickable(onClick=onClick) else Modifier),shape=RoundedCornerShape(12.dp),color=CardBackground,border=if(selected) BorderStroke(1.5.dp,Primary) else BorderStroke(1.dp,CardBorder)) {
         Column(Modifier.padding(14.dp),verticalArrangement=Arrangement.spacedBy(12.dp),content=content)
     }
 }
@@ -39,7 +39,7 @@ import java.time.format.DateTimeFormatter
     Surface(modifier.fillMaxWidth(),color=if(warning) AmberBg else PrimaryTint,shape=RoundedCornerShape(8.dp)) { Text(text,Modifier.padding(14.dp),style=MaterialTheme.typography.bodyMedium,color=if(warning) Amber else Primary) }
 }
 @Composable fun Choice(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier,contentPadding:PaddingValues=PaddingValues(12.dp),maxLines:Int=Int.MAX_VALUE) {
-    Surface(modifier.heightIn(min=48.dp).clickable(onClick=onClick),shape=RoundedCornerShape(8.dp),color=if(selected) PrimaryTint else PageBackground) {
+    Surface(modifier.heightIn(min=48.dp).clickable(onClick=onClick),shape=RoundedCornerShape(8.dp),color=if(selected) PrimaryTint else ControlBackground,border=BorderStroke(1.dp,if(selected) Primary else Line)) {
         Box(Modifier.padding(contentPadding),contentAlignment=Alignment.Center) { Text(text,color=if(selected) Primary else Muted,style=MaterialTheme.typography.bodyMedium,fontWeight=if(selected) FontWeight.SemiBold else FontWeight.Normal,maxLines=maxLines) }
     }
 }

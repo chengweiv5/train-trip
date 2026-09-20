@@ -75,7 +75,7 @@ import java.time.LocalDate
             item { CityRefreshStatus(s,onRefresh,onRetry,all.map { it.trainKey }.distinct().size) }
             if(trips.isEmpty()) item { Hint("当前没有符合筛选条件的车次，请调整日期或到达站。") }
             items(trips,key={it.key}) { t->
-                Surface(Modifier.fillMaxWidth().testTag("trip-${t.key}").clip(RoundedCornerShape(12.dp)).selectable(selected=t.key==s.selectedTripKey,role=Role.RadioButton,onClick={onSelect(t)}),shape=RoundedCornerShape(12.dp),color=Color.White,border=if(t.key==s.selectedTripKey) BorderStroke(1.5.dp,Primary) else BorderStroke(1.dp,Line)) {
+                Surface(Modifier.fillMaxWidth().testTag("trip-${t.key}").clip(RoundedCornerShape(12.dp)).selectable(selected=t.key==s.selectedTripKey,role=Role.RadioButton,onClick={onSelect(t)}),shape=RoundedCornerShape(12.dp),color=CardBackground,border=if(t.key==s.selectedTripKey) BorderStroke(1.5.dp,Primary) else BorderStroke(1.dp,CardBorder)) {
                   Column(Modifier.padding(horizontal=12.dp,vertical=12.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
                     Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
                         Text(t.trainCode,style=MaterialTheme.typography.titleMedium);Text("直达",Modifier.weight(1f),style=MaterialTheme.typography.bodySmall,color=Muted)
