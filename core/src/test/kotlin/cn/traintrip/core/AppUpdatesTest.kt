@@ -7,6 +7,12 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class AppUpdatesTest {
+    @Test fun releaseListIsAllowedWithoutBroadeningTrustedDestinations() {
+        assertTrue(trustedReleaseUrl("$PROJECT_URL/releases"))
+        for(url in listOf("${PROJECT_URL}x/releases","$PROJECT_URL/releases-evil","http://github.com/chengweiv5/train-trip/releases","https://github.com.evil.example/chengweiv5/train-trip/releases")) {
+            assertFalse(url,trustedReleaseUrl(url))
+        }
+    }
     private fun release(version:String,draft:Boolean=false,pre:Boolean=false,assets:Boolean=true,url:String="https://github.com/chengweiv5/train-trip/releases/tag/v$version")="""{"tag_name":"v$version","html_url":"$url","draft":$draft,"prerelease":$pre,"body":"新增收藏\n优化离线","assets":${if(assets)"""[{"name":"train-trip-v$version-release.apk"},{"name":"train-trip-v$version-release.apk.sha256"}]""" else "[]"}}"""
     @Test fun semanticVersionsAndStableReleaseSelection()=runBlocking {
         assertTrue(ReleaseVersion.parse("0.10.0")!!>ReleaseVersion.parse("v0.9.1")!!)

@@ -23,11 +23,12 @@ data class ReleaseVersion(val major:Int,val minor:Int,val patch:Int):Comparable<
 data class AppRelease(val version:ReleaseVersion,val url:String,val summary:String,val downloadable:Boolean)
 fun interface UpdateSource { suspend fun latest():AppRelease }
 const val PROJECT_URL="https://github.com/chengweiv5/train-trip"
+const val RELEASES_URL="$PROJECT_URL/releases"
 fun releaseUrl(version:String)="$PROJECT_URL/releases/tag/v${version.removePrefix("v")}"
 fun trustedReleaseUrl(url:String):Boolean=runCatching {
     val u=url.toHttpUrl()
     u.isHttps && u.host=="github.com" && u.port==443 && u.username.isEmpty() && u.password.isEmpty() &&
-        (u.encodedPath=="/chengweiv5/train-trip" || u.encodedPath.startsWith("/chengweiv5/train-trip/releases/"))
+        (u.encodedPath=="/chengweiv5/train-trip" || u.encodedPath=="/chengweiv5/train-trip/releases" || u.encodedPath.startsWith("/chengweiv5/train-trip/releases/"))
 }.getOrDefault(false)
 class GitHubUpdateSource(private val endpoint:String="https://api.github.com/repos/chengweiv5/train-trip/releases",
     private val client:OkHttpClient=OkHttpClient.Builder().callTimeout(15,TimeUnit.SECONDS).followRedirects(false).build()):UpdateSource {

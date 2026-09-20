@@ -24,6 +24,7 @@ import cn.traintrip.core.*
     var failedUrl by remember { mutableStateOf<String?>(null) }
     fun open(url:String) { if(trustedReleaseUrl(url))runCatching { context.startActivity(Intent(Intent.ACTION_VIEW,url.toUri())) }.onFailure { failedUrl=url } }
     val release=state.release
+    val notesUrl=release?.takeIf { !state.checking && state.error==null && it.version==ReleaseVersion.parse(version) }?.url ?: RELEASES_URL
     val newer=release!=null && ReleaseVersion.parse(version)?.let { release.version>it }==true
     Scaffold(containerColor=PageBackground,contentWindowInsets=WindowInsets(0,0,0,0),topBar={AppTopBar("关于与更新",onBack)}) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
@@ -47,7 +48,7 @@ import cn.traintrip.core.*
                 if(newer)TextButton(onCheck){Text("再次检查")}
             }
             ContentCard(Modifier.fillMaxWidth()) {
-                TextButton({open(releaseUrl(version))},Modifier.fillMaxWidth().heightIn(min=48.dp)){Text("更新说明",Modifier.weight(1f));UiIcon("next")}
+                TextButton({open(notesUrl)},Modifier.fillMaxWidth().heightIn(min=48.dp)){Text("更新说明",Modifier.weight(1f));UiIcon("next")}
                 HorizontalDivider(color=Line)
                 TextButton({open(PROJECT_URL)},Modifier.fillMaxWidth().heightIn(min=48.dp)){Text("GitHub 项目",Modifier.weight(1f));UiIcon("next")}
             }
