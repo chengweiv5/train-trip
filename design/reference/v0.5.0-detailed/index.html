@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A 方案 · 完整交互稿</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#f3f6fa;color:#17233d;font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}header,main{max-width:1180px;margin:auto;padding:28px}header{padding-bottom:12px}small,.note{color:#687589}h1{font-size:30px;margin:6px 0}p{margin:6px 0 16px}nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}button,a{font:inherit}button{cursor:pointer;border:0;background:#e7edf5;color:#344157;border-radius:8px;padding:10px 18px}button.active{background:#1769e8;color:white}button:focus-visible,a:focus-visible{outline:3px solid #1769e8;outline-offset:4px}a{color:#1769e8;text-decoration:none}.links{display:flex;gap:24px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.card{padding:18px;background:white;border:1px solid #e1e7ef;border-radius:14px}.card h2{font-size:18px;margin:0 0 5px}.card p{font-size:13px;min-height:44px;color:#596579}.screen{display:block;padding:0;background:none;width:100%;border-radius:0}.screen img{display:block;width:100%;height:auto;border:1px solid #e6eaf0;border-radius:9px}.number{font-size:12px;color:#1769e8}.hint{padding:16px 20px;border-left:3px solid #1769e8;background:#ebf3ff;margin:0 0 24px}.note{font-size:13px;margin-top:24px}dialog{border:0;border-radius:14px;padding:18px;background:#f3f6fa;max-width:min(96vw,700px);max-height:96vh}dialog::backdrop{background:#17233daa}.dialog-head{display:flex;gap:18px;align-items:center;justify-content:space-between;position:sticky;top:0;background:#f3f6fa;padding-bottom:12px}.dialog-head button{padding:7px 12px}dialog img{max-width:100%;max-height:80vh;display:block;margin:auto;object-fit:contain}.dialog-foot{display:flex;justify-content:space-between;margin-top:12px}@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){header,main{padding:18px 14px}.grid{grid-template-columns:1fr}h1{font-size:25px}.card{max-width:390px;margin:auto;width:100%}.card p{min-height:0}nav button{padding:9px 13px}}</style></head>
+<body><header><small>有票就出发 · v0.5.0 设计评审</small><h1>A 方案 · 查票 / 想去</h1><p>已选定底部双栏目。这次补齐收藏、离线管理与版本更新的完整交互。</p><div class="links"><a href="export.pdf" target="_blank">查看全部 23 页 PDF ↗</a><a href="../../train-trip-v0.5.0-navigation-options.pen" download>下载可编辑 .pen 源文件</a><a href="../navigation-options/">回看 A/B 对比</a></div><nav aria-label="画板分类"></nav></header><main><aside class="hint" id="hint"></aside><section class="grid" id="grid" aria-label="设计画板"></section><p class="note">全部画面为设计示例，版本、日期、容量和内容不代表实时结果。点击画板可放大；此页仅切换设计画板，不执行查票、收藏或下载。实际 App 的正文将滚动，底栏和系统安全区固定。详细交互待确认，尚未开始 Android 开发。</p></main><dialog><div class="dialog-head"><strong id="dialog-title"></strong><button id="close" aria-label="关闭放大画板">关闭 ✕</button></div><img id="large" alt=""><div class="dialog-foot"><button id="prev">上一张</button><button id="next">下一张</button></div></dialog>
+<script>
+const pages=[
+['N72zLt','查票首页','两栏各自保留输入和位置，查询方式延续现有设计。','wish'],
+['C6L3eJ','想去清单','最近收藏优先；介绍状态与查车票入口分开。','wish'],
+['T8rWrA','添加城市','本地搜索、多选；确认添加后一次保存。','wish'],
+['p5xciS','空清单','明确添加入口，收藏不消耗模型或搜索额度。','wish'],
+['rq3Jk','取消与撤销','取消城市收藏后可撤销，离线介绍仍保留。','wish'],
+['EOT72','单城查票条件','先确认日期；不修改首页的目的地范围。','wish'],
+['m2Qx8','介绍中的收藏','星标同步清单；从想去进入时可以查该城市车票。','wish'],
+['WrQnM','暂无本地介绍','手动整理，或直接查票；进入页面不自动下载。','offline'],
+['d7MoI','结果中的收藏','独立星标点击区域，保留车次信息和排序刷新对齐。','wish'],
+['x7mQ7','设置','保留服务配置，新增离线内容、关于与更新。','offline'],
+['J9rf1','离线内容管理','按城市阅读、更新和删除，内置资料单独说明。','offline'],
+['mAsGF','删除确认','明确释放空间、保留收藏和设置、不自动重新整理。','offline'],
+['qPIN3','删除完成','列表与容量同步刷新，天津的收藏仍保留。','offline'],
+['p27cG','尚未检查','真实显示初始状态，用户点击后连接 GitHub。','update'],
+['piniJ','发现新版本','显示新版本与摘要，去 GitHub 下载正式 APK。','update'],
+['uuDc5','检查失败','网络或 GitHub 不可用时保留重试入口。','update'],
+['bgtCV','整理介绍状态','未配置、整理中、首次失败与更新失败互斥显示。','state'],
+['V9VEgA','添加与保存状态','无结果、零选择、保存中和失败都有对应反馈。','state'],
+['oIn1n','正在检查','处理中避免重复请求，离开页面可取消。','update'],
+['vilAM','已是最新正式版','只在请求成功后显示，并带检查时间。','update'],
+['iLZTX','离线管理状态','空态、删除中、部分删除失败和仅文字保存。','state'],
+['E3urrW','320dp / 1.3 倍字体','代表页排版检查；最终还需 Android 真机验证。','state'],
+['P2zyZb','关键交互约定','返回路径、数据边界、小屏与大字体规则。','state']];
+const groups=[['overview','主要页面','收藏记录城市意向，离线管理已下载资料，版本更新直连 GitHub。'],['wish','收藏与查票','添加不联网；取消可撤销；从想去查票时先确认日期。'],['offline','离线内容','清理后不自动重新整理；更新失败保留旧内容，内置资料仍可查看。'],['update','关于与更新','未检查、检查中、新版本、最新版和失败分别呈现。'],['state','状态与规范','这些画板并列展示互斥状态，实际页面只显示当前状态。']];
+const nav=document.querySelector('nav'),grid=document.querySelector('#grid'),dialog=document.querySelector('dialog');let active=0;
+function zoom(i){active=i;const p=pages[i];document.querySelector('#dialog-title').textContent=`D${String(i+1).padStart(2,'0')} · ${p[1]}`;document.querySelector('#large').src=p[0]+'.jpeg';document.querySelector('#large').alt=p[1]+'：'+p[2];if(!dialog.open)dialog.showModal();}
+function render(key){nav.querySelectorAll('button').forEach(b=>{b.classList.toggle('active',b.dataset.key===key);b.setAttribute('aria-pressed',String(b.dataset.key===key))});document.querySelector('#hint').textContent=groups.find(g=>g[0]===key)[2];grid.replaceChildren();pages.forEach((p,i)=>{if(key==='overview'?![1,10,14].includes(i):p[3]!==key)return;const a=document.createElement('article');a.className='card';a.innerHTML=`<span class="number">D${String(i+1).padStart(2,'0')}</span><h2>${p[1]}</h2><p>${p[2]}</p><button class="screen" aria-label="放大${p[1]}"><img loading="lazy" src="${p[0]}.jpeg" alt="${p[1]}设计画板"></button>`;a.querySelector('button').onclick=()=>zoom(i);grid.append(a)})}
+groups.forEach(g=>{const b=document.createElement('button');b.textContent=g[1];b.dataset.key=g[0];b.onclick=()=>render(g[0]);nav.append(b)});document.querySelector('#close').onclick=()=>dialog.close();document.querySelector('#prev').onclick=()=>zoom((active+pages.length-1)%pages.length);document.querySelector('#next').onclick=()=>zoom((active+1)%pages.length);dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});render('overview');
+</script></body></html>
