@@ -175,7 +175,7 @@ private fun provinceAction(cities: List<City>, selected: List<String>) = if(citi
     HorizontalDivider(color=Line.copy(alpha=.5f))
 }
 
-@Composable private fun DestinationNavigationRow(label:String,count:Int,active:Boolean,modifier:Modifier=Modifier,onClick:()->Unit) {
+@Composable internal fun DestinationNavigationRow(label:String,count:Int,active:Boolean,modifier:Modifier=Modifier,onClick:()->Unit) {
     Row(modifier.fillMaxWidth().heightIn(min=52.dp).background(if(active)PrimaryTint else PageBackground.copy(alpha=0f))
         .selectable(active,role=Role.Tab,onClick=onClick).padding(horizontal=12.dp,vertical=12.dp),verticalAlignment=Alignment.CenterVertically) {
         Text(label,Modifier.weight(1f),color=if(active)Primary else Muted)

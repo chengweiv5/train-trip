@@ -53,7 +53,7 @@ class B4UiTest {
         compose.onNodeWithTag("search-cities").performScrollTo().assertIsDisplayed()
         settingsNode.assertIsDisplayed().performClick()
         compose.runOnIdle { assertEquals(1,settings);showWishlist=true }
-        compose.onNodeWithText("1 个想去城市 · 省内最近收藏优先").assertIsDisplayed()
+        compose.onNodeWithText("1 个想去城市 · 1 个省级地区").assertIsDisplayed()
         val add=compose.onNodeWithTag("wishlist-add")
         assertTouchTarget(add);assertSeparate("brand-title","wishlist-add")
         compose.onNodeWithTag("wish-query-${city.id}").assertIsDisplayed()

@@ -80,6 +80,7 @@ class WishlistPersistenceTest {
         compose.runOnIdle { original.startActivity(Intent(original,MainActivity::class.java)) }
         val second=instrumentation.waitForMonitorWithTimeout(monitor,5000) as MainActivity
         try {
+            compose.waitUntil(5000){second.lifecycle.currentState==Lifecycle.State.RESUMED && original.lifecycle.currentState!=Lifecycle.State.RESUMED}
             val model=ViewModelProvider(second)[WishlistViewModel::class.java]
             compose.waitUntil(5000){!model.state.value.loading}
             val cities=StationCatalog.bundled().cities.filter { it.id in expected }

@@ -91,6 +91,7 @@ class WishlistFlowTest {
         compose.waitUntil(5000){wishes.state.value.items.size==2 && vm.state.value.page==Page.WISHLIST}
         assertEquals(0,tickets.calls);capture("wishlist")
         val before=wishes.state.value.items
+        compose.onNodeWithTag("wish-province-江苏省").performClick()
         compose.onNodeWithTag("wishlist-list").performScrollToNode(hasTestTag("favorite-${city.id}"))
         compose.onNodeWithTag("favorite-${city.id}").performClick()
         compose.waitUntil(5000){wishes.state.value.items.size==1}

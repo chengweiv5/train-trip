@@ -33,7 +33,7 @@ import kotlinx.coroutines.delay
     val accessibility=LocalAccessibilityManager.current
     DisposableEffect(lifecycle,vm,destinationVm,wishlistVm,updateVm) {
         val observer=LifecycleEventObserver { _,event->when(event) {
-            Lifecycle.Event.ON_START -> wishlistVm.reload()
+            Lifecycle.Event.ON_RESUME -> wishlistVm.reload()
             Lifecycle.Event.ON_STOP -> { vm.pauseForegroundWork();destinationVm.cancel();updateVm.leave() }
             else -> Unit
         } }
