@@ -1,78 +1,126 @@
 # 有票再出发 · Train Trip
 
-自用 Android 旅行目的地发现工具：输入北京出发的日期、时段等条件，按真实余票找出可去的城市，再到 12306 购票。
+**先看哪里有票，再决定去哪里。**
 
-目标设备：华为 Mate 60 Pro，HarmonyOS 4.2.0。使用 Kotlin + Jetpack Compose，输出 Android APK。
+周末想出去走走，却还没想好目的地？选好出发地、日期和能接受的车程，让有票的直达列车帮你缩小范围。看看城市有什么好玩、好吃的，遇到心动的地方就收进「想去」。
 
-## 当前状态
+**[⬇ 下载 Android 正式版 v0.6.0](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
 
-v0.6.1 应用名更新为“有票再出发”，桌面、首页及关于页使用同一名称资源。实现四项飞书反馈，版本为 `0.6.1` / versionCode `11`：想去城市按省分组，省内最近收藏优先；子页面顶部统一为 B4 渐变与圆角返回入口；目的地相册最多 5 张，可横滑、看大图及来源；上次检查更新时间与结果保存在本机，返回或重启后保留。详细验收见 [v0.6.1](docs/verification/2026-09-21-v0.6.1.md)。生产签名候选包位于 `artifacts/train-trip-v0.6.1-release.apk`，本轮未发布；下方 v0.6.0 仍是最新公开下载。
+Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
-相册继续兼容旧单图缓存；手动更新先保存正文，再逐张保存图片，失败或取消保留已经完成的内容。Tavily 根级搜索图单独注明检索来源，仅采纳含当前城市与已选景点信息的国内简体资源。旧介绍不会自动重新生成或额外调用付费服务。
+> 当前公开版本为 **v0.6.0**，安装后名称仍为「有票就出发」。仓库正在开发 **v0.6.1**，已更名为「有票再出发」；下方展示新版界面，v0.6.1 尚未发布。
 
-v0.6.0 实现已确认的 B4 冰蓝湖蓝方案：白色页面、浅蓝卡片与细描边，首页和想去页采用统一渐变顶部、图标标识和圆角操作入口。选中控件使用浅蓝底与主色边，余票状态保留独立语义。版本为 `0.6.0` / versionCode `10`。
+## 给一次临时起意的旅行，找个目的地
 
-出发时段现支持快捷多选，例如“早上＋晚上”只查两段时刻，选择会保存在本机。点击全天、取消最后一项或选齐四项恢复全天；自定义仍选择一个连续区间，完成后替换快捷多选，取消保留原选择。实现、设计稿与离线验证已完成，见 [时段多选验收](docs/verification/2026-09-21-departure-time-multi-select.md)。已包含在当前 v0.6.0 候选包与真机安装中。
+- **不用逐城试车票**：一次选择多个目的地，按符合条件的直达去程余票发现可去城市。
+- **按自己的时间出发**：日期范围、出发时段多选、席别、人数、3 小时 / 5 小时或自定义车程，都能调整。
+- **先了解，再决定**：在景点、美食、玩法、贴士之间切换，看看这座城市适合怎样玩。
+- **把心动留到下次**：批量添加想去城市；查票时直接从「想去」分组选取，省去重复查找。
+- **准备好，再去购票**：对比发到时刻、车程和席别余票，打开 12306 App 完成后续查询与购票。
 
-最长车程预设为“不限、3小时、5小时”，自定义通过小时/分钟滚轮选择，完成保存、取消保留原值；旧4小时/8小时作为自定义回显。可编辑设计与10项相关界面回归已完成，见 [车程选择器验收](docs/verification/2026-09-21-duration-picker.md)。已包含在当前 v0.6.0 候选包与真机安装中。
+## 界面一览
 
-查询目的地新增置顶的“想去”快捷分组，可直接勾选已收藏城市，与真实省份中的城市选择同步。支持本组全选、加载/失败重试和空清单；已选省份数量仍按城市实际省份计算，不修改收藏本身。12项相关测试与窄屏复测已通过，见 [想去快捷分组验收](docs/verification/2026-09-21-wish-destinations.md)。已包含在当前 v0.6.0 候选包与真机安装中。
+以下为 **v0.6.1 开发版的实际界面截图**，日期、车次和余票使用离线演示数据，不代表实时可购车票。新版的省份收藏分组、统一子页顶部与相册样式尚未包含在 v0.6.0 中。点击图片可查看大图。
 
-v0.5.0 已实现用户确认的 A 方案：底部「查票 / 想去」双栏目；想去城市支持批量添加、星标同步、取消与撤销。清单保存在本机，不保存过期余票；从清单查票使用独立的单城条件，不改变首页筛选。
+<table>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>① 设好条件，发现有票城市</strong><br><br>
+      <a href="docs/images/readme/home.jpg"><img src="docs/images/readme/home.jpg" width="320" alt="查票首页：选择出发地、日期、多段出发时段、席别、人数和最长车程"></a><br>
+      时间、距离和出行人数，都按你的计划来。
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>② 看看哪些城市值得出发</strong><br><br>
+      <a href="docs/images/readme/results.jpg"><img src="docs/images/readme/results.jpg" width="320" alt="有票城市结果页：按省份展示城市、可选车次数、最快车程和目的地亮点"></a><br>
+      车程、车次数与城市亮点放在一起比较。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>③ 选个合适的车次</strong><br><br>
+      <a href="docs/images/readme/trains.jpg"><img src="docs/images/readme/trains.jpg" width="320" alt="北京到天津的演示车次：发到时刻、席别余票、刷新入口与打开 12306 App 按钮"></a><br>
+      看清发到时间和余票，再前往 12306 App。
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>④ 车票之外，也有旅行灵感</strong><br><br>
+      <a href="docs/images/readme/guide.jpg"><img src="docs/images/readme/guide.jpg" width="320" alt="天津目的地介绍：古文化街照片、五大道推荐，以及景点、美食、玩法、贴士分页"></a><br>
+      看景点与当地风味，为一两天的旅行找灵感。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>⑤ 收藏想去的地方</strong><br><br>
+      <a href="docs/images/readme/wishlist.jpg"><img src="docs/images/readme/wishlist.jpg" width="320" alt="想去清单：收藏保定与苏州，从城市卡片进入介绍或单城查票"></a><br>
+      清单保存在本机，有空时再出发。
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>⑥ 下次查票，直接选「想去」</strong><br><br>
+      <a href="docs/images/readme/destinations.jpg"><img src="docs/images/readme/destinations.jpg" width="320" alt="查询目的地选择器：置顶想去分组，快捷勾选保定和承德"></a><br>
+      收藏与查票衔接，不必在省市列表里重新找。
+    </td>
+  </tr>
+</table>
 
-设置新增「离线内容」和「关于与更新」。离线介绍可查看、手动更新、按城市删除，清理保留收藏和服务密钥；有内置介绍的城市自动回退内置内容。打开新城市不会自动调用 Tavily / DeepSeek，点击整理后才使用已配置的服务，沿用国内简体资料规则。正文保存后图片失败会保留新正文并明确提示。
+截图中的天津古文化街照片：胡凌云／天津日报，刊载于[天津市文化和旅游局](https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/t20240419_6605163.html)。[截图来源与版本说明](docs/images/readme/README.md)
 
-版本检查由用户手动发起，从 GitHub 正式 Release 列表比较版本并检查 APK 和校验附件，发现新版本后打开发布页。无需自建服务器，也不会自动下载或安装。
+## 三步开始一次短途旅行
 
-本地正式发布包：`artifacts/train-trip-v0.6.0-release.apk`，校验文件同名 `.sha256`。应用名“有票就出发”，包名 `cn.traintrip.app`，版本 `0.6.0` / versionCode `10`，沿用 v0.4.0 的生产签名。包内不包含个人 API Key；新安装需自行配置内容服务，收藏、内置资料和查票不依赖这些 Key。v0.6.0 正式版已发布，包含出发时段多选、最长车程滚轮和目的地“想去”分组。真机为保留数据沿用历史设备证书，使用独立的 `artifacts/train-trip-v0.6.0-device-release.apk`；两包来自同一 Release 构建，均不可调试。具体验证见 [v0.6.0 验收](docs/verification/2026-09-21-v0.6.0-ui.md) 和 [本次安装交付记录](docs/verification/2026-09-21-v0.6.0-install-push.md)。
+1. **告诉它你什么时候能走。** 选择出发城市、日期、时段和最长车程；想少坐一会儿车，就先试试「3 小时」。
+2. **挑一座有票又心动的城市。** 点击「查询有票城市」，查看结果、了解目的地，也可以先收藏。
+3. **到 12306 App 核验并购票。** 查看合适车次后，点击「打开 12306 App」，手动填写条件完成购票。返程车票需要另行安排。
 
-车次页仍支持手动刷新当前城市，点击整张卡片标记意向车次，席别只展示余票；无需选择也可点击“打开 12306 App”。详情介绍有景点 / 美食 / 玩法 / 贴士四个分页，支持横滑与阅读位置恢复。
+## 下载安装
 
-0.4.0 支持整卡选择和可选的车次摘要，适配 320dp / 1.3 倍字体；已移除复制车次入口。局部刷新失败时保留旧车次和原始查询时间，展示未更新范围并支持重试；未安装铁路12306或打开失败时保留选择。验证记录见 [车次页与 App 跳转验收](docs/verification/2026-09-19-v0.4.0-implementation.md) 和 [整卡选择验收](docs/verification/2026-09-19-trip-card-selection.md)。
+| 下载入口 | 说明 |
+| --- | --- |
+| **[下载 v0.6.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)** | 约 8.5 MB，生产签名 Release 包 |
+| [查看最新正式发布](https://github.com/chengweiv5/train-trip/releases/latest) | 更新说明与安装附件 |
+| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk.sha256) | 用于核对安装包完整性 |
 
-0.2.3 将席别返回“有”直接计入有票城市，支持多人出行；移除“数量待核验”分流。具体数字仍需满足人数，购票前继续重新查询核验。32 项核心测试、12 项离线界面交互通过，已覆盖安装到 Mate 60 Pro 并保留设置。详见 [“有”计入有票城市验收](docs/verification/2026-09-19-available-seat-counting.md)。
+在 Android 手机上下载 APK 后打开，按系统提示允许当前浏览器或文件管理器安装应用，再完成安装。打开应用即可查票，不必先配置大模型或搜索服务。
 
-0.2.2 修复尚未起售车次返回 `*` 导致整项解析失败的问题：保留起售状态与文案，正常有票车次继续参与结果，未起售车次不会误报有票。22 项核心测试、2 项模拟器交互及原始 310 条记录重放通过，已覆盖安装到 Mate 60 Pro 并保留原设置。详见 [尚未起售解析验收](docs/verification/2026-09-19-not-yet-sale-parsing.md)。
+同一生产签名的正式版可以直接覆盖升级。若系统提示签名冲突，通常是曾安装开发测试包；请先确认版本来源，卸载会清除本机收藏、设置和离线介绍。应用内也可通过「设置 → 关于与更新」手动检查新版本。
 
-0.2.1 改为单项失败后继续查询其余项目，保留失败原因和仅重试未成功项，手动停止仍生效。详见 [查询失败隔离验收](docs/verification/2026-09-19-query-failure-isolation.md)。
+## 常见问题
 
-0.2.0 新增天津、济南、青岛、大同、洛阳五城目的地灵感：结果卡片展示实景图与亮点，详情提供景点、美食、一日/两日玩法和来源署名，资料离线可读。其他城市保留查票功能。详见 [五城灵感验收](docs/verification/2026-09-19-destination-inspiration.md)。
+### 能直接买票或抢票吗？
 
-0.2.0 将目的地统一到省下一级行政单位，补充省份搜索和跨省选择；结果按省份放入可独立展开的连续容器。行政目录为 2023 快照，应用中明确标注。详见 [目的地省市分组验证](docs/verification/2026-09-19-destination-provinces.md)。
+应用负责发现目的地与查询余票，不提供购票、抢票或自动下单。「打开 12306 App」会唤起已安装的铁路 12306，仍需在其中手动填写条件。余票随时变化，最终以 12306 App 的查询及下单结果为准。本项目是个人开发的独立工具，与铁路 12306 无隶属关系。
 
-0.1.2 将自定义出发时段改为同窗口设置开始和结束的小时、分钟滚轮，点一次“完成”应用；支持跨午夜、恢复全天和大字体上下布局。Pencil 已同步，Mate 60 Pro 已覆盖安装并确认原有设置保留。详见 [时段选择验证](docs/verification/2026-09-19-time-range-picker.md)。
+### 不配置 DeepSeek、Tavily 也能用吗？
 
-0.1.1 修复同窗口日期范围选择、连续查询进度条和车次耗时/到达日期排版；对应 Pencil 文件同步更新。详见 [界面修复验证](docs/verification/2026-09-19-ui-polish.md)。
+可以。**查票、想去清单和内置城市介绍都不需要 Key。** 天津、济南、青岛、大同、洛阳已有内置资料，可离线阅读。
 
-默认选择 24 个明确列出的城市，可在“查询目的地”调整。每个合并前的铁路城市保留一个代表站，仍可能遗漏部分同城站或目的地；界面始终显示覆盖说明，不声称全国完整。票源为 12306 当前网页使用的匿名查询协议，协议变化或访问失败会明确报错。
+想为其他城市整理介绍时，再到「设置」填写自己的 DeepSeek 与 Tavily API Key。只有手动发起整理或更新，才会调用这些服务并消耗相应额度；打开新城市不会自动生成。资料优先采用国内简体中文来源，保存后可离线查看，也可在「离线内容」中管理。分发的 APK 不包含个人 Key，无需自建服务器。
 
-已通过 Android API 36 临时模拟器验证。2026-09-19 已在 Mate 60 Pro（ALN-AL00，HarmonyOS 4.2.0.221，Android API 31）安装并正常启动；历史 v0.4.0 已覆盖安装，筛选设置保持不变；当时已实测原生唤起铁路12306并返回。v0.5.0 后续已在真机验证收藏持久化。2026-09-21已保留数据覆盖安装包含三项筛选优化的v0.6.0：回拉APK哈希一致，UID和首次安装时间保持不变。本次只验证安装和包状态，未启动App逐项验收真机界面；三项功能已在隔离模拟器通过离线回归，未重复查询真实票源。
+### 可以查任意城市、所有车站吗？
 
-## 正式版本下载
+可以更换出发城市，并在已收录的目的地目录中选择查询范围；默认勾选 24 个城市。目前查询**直达去程**，不规划中转或往返组合。车站映射和代表站策略可能遗漏部分同城站及路线，不保证全国完整覆盖。查询失败会给出提示，未查到结果也不等同于所有路线都无票。
 
-- **[v0.6.0 最新版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.6.0)** · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)
-- [v0.5.0 历史版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.5.0) · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.5.0/train-trip-v0.5.0-release.apk)
+### 需要哪些权限？数据放在哪里？
 
-两版均提供生产签名 Release APK 与 SHA256 校验附件，不包含个人服务 Key。支持 Android 8.0 及以上，可覆盖升级同生产证书的旧正式版。历史设备测试证书与公开生产证书不同，无法互相覆盖；已安装专用设备包的用户应继续使用同证书升级包，保留现有数据。
+应用仅申请网络权限，不读取定位、通讯录。筛选偏好、想去清单、服务配置与已下载介绍保存在本机，没有应用账号或云同步。查票需要联网；手动生成介绍会把城市检索与资料整理请求发送给你配置的搜索和模型服务。卸载应用会删除本机数据。
 
-## 构建与验证
+## 参与与开发
 
-使用 JDK 21、Android SDK 36。首次构建在 `local.properties` 中设置本机 `sdk.dir`。
+遇到问题或有想法，欢迎[提交 Issue](https://github.com/chengweiv5/train-trip/issues)。反馈时附上应用版本、手机系统和复现步骤；如果它帮你找到了下一站，也欢迎点个 Star。
+
+<details>
+<summary>本地构建与项目资料</summary>
+
+技术栈为 Kotlin + Jetpack Compose。构建环境：JDK 21、Android SDK 36；在本机 `local.properties` 中配置 `sdk.dir`。
 
 ```bash
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home ./gradlew :core:test :app:assembleDebug :app:lintRelease :app:assembleRelease
-./gradlew :app:connectedDebugAndroidTest
+./gradlew :core:test :app:assembleDebug :app:lintRelease :app:assembleRelease
 ```
 
-Release 默认生成未签名包，个人生产签名和密码必须在仓库外配置，签名后再分发。禁止把私钥或服务 Key 提交进源码。
+Release 默认生成未签名包，分发前需使用仓库外的私有签名配置。不要提交签名私钥或服务 Key。
 
-第二条命令需连接测试设备；包含少量真实 12306 查询，不应高频循环。核心测试离线运行，不依赖票数保持不变。
+连接专用测试设备后可运行 `./gradlew :app:connectedDebugAndroidTest`。该完整测试集包含少量真实 12306 查询，不应高频循环；核心测试离线运行。
 
-当前仅使用网络权限，无账号、定位、通讯录或存储权限。筛选偏好保存在本机；离开 App 停止查询，当前进程内保留结果并可继续。
+- [开发历史与验收索引](docs/development-history.md)
+- [已确认的 UI 设计](design/README.md)
+- [v0.6.1 实现与验证](docs/verification/2026-09-21-v0.6.1.md)
+- [v0.5.0 / v0.6.0 正式发布记录](docs/verification/2026-09-21-v0.5.0-v0.6.0-releases.md)
 
-- [首版设计](docs/superpowers/specs/2026-09-18-train-trip-design.md)
-- [本轮验证计划](docs/superpowers/plans/2026-09-18-ticket-source-validation.md)
-- [验证报告](docs/verification/2026-09-18-ticket-source.md)
-- [结构化证据](docs/verification/2026-09-18-evidence.json)
-- [已确认 UI 设计](design/README.md)
-- [Android 实现与验收记录](docs/verification/2026-09-19-android-v1.md)
+</details>
