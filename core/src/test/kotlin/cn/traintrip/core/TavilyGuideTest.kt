@@ -21,6 +21,30 @@ class TavilyGuideTest {
         listOf(SourceDocument("s1","泰安岱庙介绍","https://tsgw.taian.gov.cn/art/1.html",quote,"places")))
     private fun content() = """{"tagline":"漫步历史古建","tags":["古建","文化"],"suggestedDays":"1 天","pace":"慢逛","experiences":[{"id":"p1","sourceId":"s1","name":"岱庙","quote":"$quote","duration":"1–2 小时"}],"foods":[],"plans":[]}"""
 
+    @Test fun rootImagesRequireCityAndPlaceAndKeepHonestAttribution() {
+        val images=(1..7).map { mapOf("url" to "https://tsgw.taian.gov.cn/picture/p$it.jpg","description" to "泰安岱庙庭院建筑实景图片") }+
+            listOf(mapOf("url" to "https://tsgw.taian.gov.cn/picture/wrong.jpg","description" to "北京故宫实景图片"),
+                mapOf("url" to "https://tsgw.taian.gov.cn/picture/zh.jpg","description" to "泰安岱廟傳統建築"),
+                mapOf("url" to "https://tsgw.taian.gov.cn/logo.jpg","description" to "泰安岱庙图标说明"))
+        val docs=TavilyGuideSource.parse(Gson().toJson(mapOf("results" to listOf(result()),"images" to images)),city,"places")
+            .map { it.copy(id="s1") }
+        val guide=SearchGuideDecoder.decode(content(),material().copy(documents=docs))
+        assertEquals(5,guide.gallery.size)
+        assertEquals(guide.gallery.first(),guide.photo)
+        assertTrue(guide.gallery.all { it.sourceUrl==it.remoteUrl && it.credit.startsWith("Tavily") })
+        assertEquals(5,guide.gallery.map { it.remoteUrl }.distinct().size)
+    }
+    @Test fun legacySinglePhotoAndNewGalleryRoundTripAndRejectTraditionalCaptions() {
+        val legacy=DestinationGuides.all.first()
+        val raw=JsonParser.parseString(Gson().toJson(legacy)).asJsonObject.apply { remove("photos") }
+        val old=Gson().fromJson(raw,DestinationGuide::class.java)
+        assertEquals(listOf(old.photo),old.gallery)
+        val updated=legacy.copy(generatedAt=java.time.Instant.now().toString(),model="test-model").withPhotos(listOf(
+            legacy.photo!!,legacy.photo!!.copy(assetName="second.jpg")))
+        val restored=Gson().fromJson(Gson().toJson(updated),DestinationGuide::class.java)
+        assertEquals(2,DestinationGuides.validateGenerated(restored,legacy.cityId).gallery.size)
+        assertTrue(runCatching { DestinationGuides.validateGenerated(updated.withPhotos(listOf(legacy.photo!!.copy(description="傳統建築"))),legacy.cityId) }.isFailure)
+    }
     @Test fun basicSearchRestrictsDomainsAndSendsKeyOnlyInHeader() = runBlocking {
         MockWebServer().use { server ->
             server.enqueue(MockResponse().setBody(response(result())))

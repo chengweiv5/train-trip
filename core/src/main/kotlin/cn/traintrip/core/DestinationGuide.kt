@@ -24,8 +24,13 @@ data class DestinationGuide(
     val suggestedDays: String, val pace: String, val season: String, val arrivalAdvice: String,
     val experiences: List<DestinationExperience>, val foods: List<DestinationFood>,
     val plans: List<DayPlan>, val sources: List<GuideSource>, val photo: DestinationPhoto?,
-    val generatedAt: String? = null, val model: String? = null
-)
+    val generatedAt: String? = null, val model: String? = null,
+    val photos: List<DestinationPhoto>? = null
+) {
+    // Nullable because Gson reads older JSON without invoking Kotlin defaults.
+    val gallery: List<DestinationPhoto> get() = photos ?: listOfNotNull(photo)
+    fun withPhotos(images:List<DestinationPhoto>) = copy(photo=images.firstOrNull(),photos=images)
+}
 
 object DestinationGuides {
     val all: List<DestinationGuide> by lazy {
@@ -95,7 +100,10 @@ object DestinationGuides {
         guide.sources.forEach { require(it.title.isNotBlank() && isWebUrl(it.url)); LocalDate.parse(it.checkedOn) }
         java.time.Instant.parse(requireNotNull(guide.generatedAt))
         require(!guide.model.isNullOrBlank())
-        guide.photo?.let { p ->
+        require(guide.gallery.size <= 5)
+        require(guide.gallery.map { it.assetName }.distinct().size == guide.gallery.size)
+        require(guide.gallery.map { it.remoteUrl ?: it.assetName }.distinct().size == guide.gallery.size)
+        guide.gallery.forEach { p ->
             require(p.assetName.matches(Regex("[a-z0-9_]+\\.jpg")) && p.description.isNotBlank() && p.credit.isNotBlank())
             require(isWebUrl(p.sourceUrl))
             require(p.remoteUrl == null || GuideNetwork.isPhotoUrl(p.remoteUrl))

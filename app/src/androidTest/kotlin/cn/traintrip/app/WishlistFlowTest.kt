@@ -158,7 +158,7 @@ class WishlistFlowTest {
         compose.onNodeWithText("前往 GitHub 下载").assertIsDisplayed();capture("update-new")
         fail=true;compose.onNodeWithText("再次检查").performClick();compose.waitUntil(5000){vm.state.value.error!=null}
         compose.onNodeWithText("暂时无法检查更新").assertIsDisplayed();compose.onNodeWithText("已是最新正式版").assertDoesNotExist();capture("update-failed")
-        compose.runOnIdle { vm.leave() };compose.onNodeWithText("尚未检查更新").assertIsDisplayed()
+        compose.runOnIdle { vm.leave() };compose.onNodeWithText("暂时无法检查更新").assertIsDisplayed();assertNotNull(vm.state.value.checkedAt)
     }
     @Test fun lateUpdateAfterLeavingCannotPublishState() {
         val entered=CompletableDeferred<Unit>();val gate=CompletableDeferred<Unit>();val returned=CompletableDeferred<Unit>()

@@ -39,7 +39,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@Composable fun DestinationPhoto(photo: DestinationPhoto, modifier: Modifier = Modifier) {
+@Composable fun DestinationPhoto(photo: DestinationPhoto, modifier: Modifier = Modifier, contentScale:ContentScale=ContentScale.Crop) {
     val context = LocalContext.current.applicationContext
     val bitmap by produceState<ImageBitmap?>(null, photo.assetName) {
         value = withContext(Dispatchers.IO) {
@@ -54,7 +54,7 @@ import kotlinx.coroutines.withContext
     }
     Surface(modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)), color = PrimaryTint) {
         bitmap?.let {
-            Image(it, contentDescription = photo.description, contentScale = ContentScale.Crop,
+            Image(it, contentDescription = photo.description, contentScale = contentScale,
                 modifier = Modifier.fillMaxSize())
         } ?: Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(photo.description, Modifier.padding(16.dp), color = Muted,
@@ -136,6 +136,7 @@ import kotlinx.coroutines.withContext
                             if (scrollOverview) {
                                 item("overview") { GuideOverview(cityName, provinceLabel, guide, Modifier.padding(bottom = 8.dp)) }
                             }
+                            if(guide.gallery.isNotEmpty())item("gallery") { DestinationGallery(guide.gallery,onSource) }
                             guideSectionContent(section, guide, days, onSource) { days = it }
                             if(runtime!=null) item("runtime") { GuideRuntimeStatus(guide,runtime,onRefresh,onSettings) }
                             item("sources") {
@@ -161,7 +162,7 @@ import kotlinx.coroutines.withContext
                 Text(cityName, style = MaterialTheme.typography.titleLarge)
                 Text("建议 ${guide.suggestedDays} · ${guide.pace}", style = MaterialTheme.typography.bodySmall, color = Muted)
             }
-            guide.photo?.let { photo -> Box(Modifier.width(72.dp).height(72.dp)) { DestinationPhoto(photo, Modifier.fillMaxSize()) } }
+
         }
         Text(guide.tagline, style = MaterialTheme.typography.bodyMedium, color = Muted)
         DestinationTags(guide)
@@ -199,18 +200,18 @@ import kotlinx.coroutines.withContext
                 TextButton({ onSource(source.url) }, contentPadding = PaddingValues(0.dp)) { Text(source.title) }
                 Text("${if(guide.generatedAt!=null) "检索" else "核对"} ${source.checkedOn}", style = MaterialTheme.typography.bodySmall, color = Muted)
             }
-            guide.photo?.let { photo -> item {
+            items(guide.gallery) { photo ->
                 HorizontalDivider(color = Line)
                 Text(photo.description, Modifier.padding(top = 12.dp), style = MaterialTheme.typography.titleSmall)
                 Text("${photo.credit}\n已缩放，展示时裁剪",
                     style = MaterialTheme.typography.bodySmall)
                 Text(photo.license ?: "图片仅用于个人离线浏览，权利归原权利人所有。",
                     style = MaterialTheme.typography.bodySmall, color = Muted)
-                TextButton({ onSource(photo.sourceUrl) }, contentPadding = PaddingValues(0.dp)) { Text("查看原图与作者") }
+                TextButton({ onSource(photo.sourceUrl) }, contentPadding = PaddingValues(0.dp)) { Text("查看图片来源") }
                 photo.licenseUrl?.let { url ->
                     TextButton({ onSource(url) }, contentPadding = PaddingValues(0.dp)) { Text("查看图片许可") }
                 }
-            } }
+            }
         }
     }, confirmButton = { TextButton(onClose) { Text("关闭") } })
 }

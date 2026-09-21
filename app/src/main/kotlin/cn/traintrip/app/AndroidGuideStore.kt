@@ -51,12 +51,12 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
     }
     private fun ownedImages(cityId:String):Set<String> {
         val saved=runCatching { AtomicFile(file(cityId,"images")).readFully().toString(Charsets.UTF_8).lines() }.getOrDefault(emptyList())
-        return (saved+listOfNotNull(storedGuide(cityId)?.photo?.assetName))
+        return (saved+storedGuide(cityId)?.gallery.orEmpty().map { it.assetName })
             .filter { it.matches(Regex("[a-z0-9_]+\\.jpg")) }.toSet()
     }
     private fun sharedImage(cityId:String,name:String):Boolean = directory.listFiles().orEmpty()
         .mapNotNull { Regex("^([0-9]{6})\\.json(?:\\.bak)?$").matchEntire(it.name)?.groupValues?.get(1) }
-        .distinct().filter { it!=cityId }.any { storedGuide(it)?.photo?.assetName==name }
+        .distinct().filter { it!=cityId }.any { storedGuide(it)?.gallery.orEmpty().any { image -> image.assetName==name } }
     // Keep legacy image ownership after replacing or deleting the JSON, including failed deletions.
     private fun rememberImages(cityId:String) {
         val images=ownedImages(cityId).filter { !sharedImage(cityId,it) }
@@ -66,15 +66,16 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
         file(cityId,"json")
         val images=ownedImages(cityId).filterNot { sharedImage(cityId,it) }.toSet()
         return directory.listFiles().orEmpty().filter { f ->
-            f.name.startsWith("$cityId.") || f.name.startsWith("${cityId}_") ||
-                f.name.removeSuffix(".bak").removeSuffix(".new") in images
+            val base=f.name.removeSuffix(".bak").removeSuffix(".new")
+            val owned=f.name.startsWith("$cityId.") || f.name.startsWith("${cityId}_") || base in images
+            owned && !(base.endsWith(".jpg") && sharedImage(cityId,base))
         }
     }
     fun cleanupUnreferencedImages(cityId:String) {
-        val current=storedGuide(cityId)?.photo?.assetName
-        cityFiles(cityId).filter { it.name.matches(Regex(".*\\.jpg(?:\\.bak|\\.new)?$")) && it.name!=current }
+        val current=storedGuide(cityId)?.gallery.orEmpty().map { it.assetName }.toSet()
+        cityFiles(cityId).filter { it.name.matches(Regex(".*\\.jpg(?:\\.bak|\\.new)?$")) && it.name !in current }
             .forEach { removeFile(it) }
-        val remaining=ownedImages(cityId).filter { name -> name!=current &&
+        val remaining=ownedImages(cityId).filter { name -> name !in current &&
             listOf(name,"$name.bak","$name.new").any { File(directory,it).exists() } }
         if(remaining.isEmpty()) {
             listOf("images","images.bak","images.new").forEach { removeFile(file(cityId,it)) }
@@ -87,7 +88,7 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
             val content=cityFiles(id).filterNot { it.name.endsWith(".attempt") || it.name.endsWith(".simplified-attempt") }
             if(content.isEmpty())null else {
                 val guide=read(id)
-                OfflineEntry(id,guide,content.sumOf { it.length() },guide?.photo?.let { File(directory,it.assetName).isFile }==true)
+                OfflineEntry(id,guide,content.sumOf { it.length() },guide?.gallery.orEmpty().any { File(directory,it.assetName).isFile })
             }
         }.sortedByDescending { it.guide?.generatedAt.orEmpty() }
     }
@@ -100,20 +101,30 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
         }
         return cityFiles(cityId).isEmpty()
     }
-    /** Commit text first. A failed image never restores the old text or photo reference. */
+    /** Every image reference is committed before starting the next download. */
     suspend fun prepareUpdate(guide:DestinationGuide,onCommitted:()->Unit={}):DestinationGuide {
         coroutineContext.ensureActive()
         rememberImages(guide.cityId)
-        save(guide.copy(photo=null))
+        var saved=guide.withPhotos(emptyList())
+        save(saved)
         onCommitted()
         cleanupUnreferencedImages(guide.cityId)
-        val photo=guide.photo?.takeIf { it.remoteUrl!=null } ?: return guide.copy(photo=null)
-        val versioned=guide.copy(photo=photo.copy(assetName="${guide.cityId}_${java.util.UUID.randomUUID().toString().replace("-", "")}.jpg"))
-        return preparePhoto(versioned)
+        for(candidate in guide.gallery) {
+            coroutineContext.ensureActive()
+            if(candidate.remoteUrl==null)continue
+            val photo=candidate.copy(assetName="${guide.cityId}_${java.util.UUID.randomUUID().toString().replace("-", "")}.jpg")
+            if(downloadPhoto(photo)) {
+                coroutineContext.ensureActive()
+                val next=saved.withPhotos(saved.gallery+photo)
+                save(next)
+                saved=next
+                onCommitted()
+            }
+        }
+        return saved
     }
-    suspend fun preparePhoto(guide: DestinationGuide): DestinationGuide {
-        val photo = guide.photo ?: return guide
-        val url = photo.remoteUrl ?: return guide
+    private suspend fun downloadPhoto(photo:DestinationPhoto):Boolean {
+        val url=photo.remoteUrl ?: return false
         return try {
             val bytes = loadPhoto(url)
             coroutineContext.ensureActive()
@@ -135,8 +146,8 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
                     atomic(File(directory, photo.assetName), output.toByteArray())
                 } finally { if (scaled !== original) scaled.recycle() }
             } finally { original.recycle() }
-            guide
-        } catch (e: CancellationException) { throw e } catch (_: Exception) { guide.copy(photo = null) }
+            true
+        } catch (e: CancellationException) { throw e } catch (_: Exception) { false }
     }
     private fun atomic(target: File, bytes: ByteArray) {
         val atomic = AtomicFile(target)

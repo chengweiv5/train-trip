@@ -38,8 +38,8 @@ object SimplifiedGuidePolicy {
             foods.all { f -> listOfNotNull(f.name, f.description, f.evidence).all(::textAllowed) && f.sourceUrl?.let(::urlAllowed) != false } &&
             plans.all { p -> listOf(p.title, p.note).all(::textAllowed) && p.schedule.all { d -> listOf(d.label, d.description).all(::textAllowed) } } &&
             sources.all { textAllowed(it.title) && urlAllowed(it.url) } &&
-            (photo?.let { p -> listOfNotNull(p.description, p.credit, p.license).all(::textAllowed) &&
-                listOfNotNull(p.sourceUrl, p.licenseUrl, p.remoteUrl).all(::urlAllowed) } != false)
+            gallery.all { p -> listOfNotNull(p.description, p.credit, p.license).all(::textAllowed) &&
+                listOfNotNull(p.sourceUrl, p.licenseUrl, p.remoteUrl).all(::urlAllowed) }
     }
 
     fun requireMaterial(material: GuideMaterial) {

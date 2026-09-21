@@ -19,13 +19,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable internal fun HomeBrandHeader(onSettings:()->Unit) {
     BrandHeader("train","有票就出发",false,action={
-        IconButton(onSettings,Modifier.size(48.dp).testTag("content-settings")
-            .semantics { contentDescription="设置" }) {
-            Surface(Modifier.size(36.dp),shape=RoundedCornerShape(12.dp),color=HeaderControl,
-                border=BorderStroke(1.dp,HeaderBorder)) {
-                Box(contentAlignment=Alignment.Center) { UiIcon("settings",Modifier.size(19.dp)) }
-            }
-        }
+        HeaderIconButton("settings","设置",onSettings,Modifier.testTag("content-settings"))
     }) {
         Column(Modifier.fillMaxWidth().heightIn(min=68.dp).padding(start=16.dp,end=16.dp,top=4.dp,bottom=14.dp),
             verticalArrangement=Arrangement.spacedBy(2.dp)) {
@@ -66,5 +60,14 @@ import androidx.compose.ui.unit.sp
             action()
         }
         content()
+    }
+}
+
+@Composable internal fun HeaderIconButton(icon:String,label:String,onClick:()->Unit,modifier:Modifier=Modifier,enabled:Boolean=true) {
+    IconButton(onClick,modifier.size(48.dp).semantics { contentDescription=label },enabled=enabled) {
+        Surface(Modifier.size(36.dp),shape=RoundedCornerShape(12.dp),color=HeaderControl,
+            border=BorderStroke(1.dp,HeaderBorder)) {
+            Box(contentAlignment=Alignment.Center) { UiIcon(icon,Modifier.size(19.dp),if(enabled)Primary else Muted) }
+        }
     }
 }

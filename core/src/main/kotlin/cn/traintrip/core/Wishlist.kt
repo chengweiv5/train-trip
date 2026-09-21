@@ -44,3 +44,13 @@ class WishlistRepository(private val store:WishlistStore) {
     }
     fun restore(record:WishCity) = change { current -> if(current.any { it.cityId==record.cityId })current else current+record }
 }
+
+/** Display grouping never rewrites saved city identity or collection timestamps. */
+data class WishProvince(val name:String,val cities:List<WishCity>)
+fun wishlistGroups(items:List<WishCity>,catalog:StationCatalog):List<WishProvince> {
+    val order=catalog.provinces.mapIndexed { index,p -> p.name to index }.toMap()
+    return items.sortedByDescending { it.addedAt }
+        .groupBy { catalog.byCity[it.cityId]?.province?.name ?: it.province.ifBlank { "其它城市" } }
+        .entries.sortedWith(compareBy({order[it.key] ?: Int.MAX_VALUE},{it.key}))
+        .map { WishProvince(it.key,it.value) }
+}

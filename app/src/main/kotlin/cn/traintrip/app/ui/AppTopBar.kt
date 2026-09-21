@@ -1,6 +1,10 @@
 package cn.traintrip.app.ui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -57,19 +61,19 @@ import kotlin.math.sin
 
 @Composable internal fun AppTopBar(title:String,onBack:(()->Unit)?=null,action:String?=null,
     onAction:()->Unit={},settings:Boolean=false,enabled:Boolean=true,backTag:String="navigate-back",trailing:(@Composable ()->Unit)?=null) {
-    Surface(color=Color.White) {
-        val slotWidth=if(action!=null) (action.length*16*androidx.compose.ui.platform.LocalDensity.current.fontScale+16).dp.coerceAtLeast(64.dp) else 48.dp
-        Row(Modifier.fillMaxWidth().heightIn(min=56.dp).padding(horizontal=8.dp),verticalAlignment=Alignment.CenterVertically) {
-            if(onBack!=null) Box(Modifier.width(slotWidth)) {
-                IconButton(onBack,Modifier.size(48.dp).testTag(backTag).semantics { contentDescription="返回" },enabled=enabled) { UiIcon("back",color=Ink) }
-            }
-            Text(title,Modifier.weight(1f).padding(start=if(onBack==null) 8.dp else 0.dp),
-                fontSize=18.sp,lineHeight=26.sp,fontWeight=FontWeight.SemiBold,textAlign=if(onBack==null) TextAlign.Start else TextAlign.Center)
-            when {
-                trailing!=null->Box(Modifier.width(48.dp),contentAlignment=Alignment.Center) { trailing() }
-                settings->IconButton(onAction,Modifier.size(48.dp).testTag("content-settings").semantics { contentDescription="设置" }) { UiIcon("settings",color=Muted) }
-                action!=null->TextButton(onAction,Modifier.width(slotWidth).heightIn(min=48.dp),contentPadding=PaddingValues(4.dp),enabled=enabled) { Text(action,style=MaterialTheme.typography.bodyMedium) }
-                onBack!=null->Spacer(Modifier.width(48.dp))
+    Row(Modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(HeaderTop,PageBackground)))
+        .heightIn(min=64.dp).padding(start=10.dp,end=16.dp,top=4.dp,bottom=4.dp),
+        verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+        if(onBack!=null)HeaderIconButton("back","返回",onBack,Modifier.testTag(backTag),enabled)
+        Text(title,Modifier.weight(1f).padding(start=if(onBack==null)6.dp else 0.dp).testTag("page-title"),
+            color=Ink,fontSize=20.sp,lineHeight=28.sp,fontWeight=FontWeight.Bold,textAlign=TextAlign.Start)
+        when {
+            trailing!=null->Box(contentAlignment=Alignment.Center) { trailing() }
+            settings->HeaderIconButton("settings","设置",onAction,Modifier.testTag("content-settings"),enabled)
+            action!=null->TextButton(onAction,Modifier.heightIn(min=48.dp),contentPadding=PaddingValues(0.dp),enabled=enabled) {
+                Surface(shape=RoundedCornerShape(12.dp),color=HeaderControl,border=BorderStroke(1.dp,HeaderBorder)) {
+                    Text(action,Modifier.padding(horizontal=10.dp,vertical=8.dp),style=MaterialTheme.typography.bodyMedium,color=if(enabled)Primary else Muted)
+                }
             }
         }
     }

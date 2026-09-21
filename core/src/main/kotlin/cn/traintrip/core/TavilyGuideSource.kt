@@ -10,7 +10,7 @@ import java.io.IOException
 import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 
-data class SourceImage(val url: String, val description: String)
+data class SourceImage(val url: String, val description: String, val fromSearch:Boolean=false)
 data class SourceDocument(val id: String, val title: String, val url: String, val content: String,
     val kind: String, val images: List<SourceImage> = emptyList())
 
@@ -65,18 +65,22 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
             val root = JsonParser.parseString(raw).asJsonObject
             require(root["results"]?.isJsonArray == true)
             val cityName = city.name.removeSuffix("市")
+            fun images(parent:com.google.gson.JsonObject,fromSearch:Boolean):List<SourceImage> = parent.objects("images").mapNotNull { image ->
+                val description=image.text("description")
+                val url=image.text("url")
+                if(description.length in 5..300 && (!fromSearch || description.contains(cityName)) &&
+                    SimplifiedGuidePolicy.textAllowed(description) && SimplifiedGuidePolicy.urlAllowed(url) &&
+                    GuideNetwork.isPhotoUrl(url) && !DECORATION.containsMatchIn(url)) SourceImage(url,description,fromSearch) else null
+            }.distinctBy { it.url }.take(12)
+            val searched=if(kind=="places")images(root,true) else emptyList()
             return root.objects("results").take(6).mapNotNull { r ->
                 if (!SimplifiedGuidePolicy.textAllowed(r.text("title")) || !SimplifiedGuidePolicy.textAllowed(r.text("content"))) return@mapNotNull null
                 val title = r.text("title").take(180)
                 val content = r.text("content").take(2400).trim()
                 val url = r.text("url")
                 if (!sourceUrl(url) || title.isBlank() || content.length < 30 || !(title+content).contains(cityName)) return@mapNotNull null
-                val images = r.objects("images").mapNotNull { image ->
-                    val description = image.text("description")
-                    val imageUrl = image.text("url")
-                    if (description.length in 5..300 && SimplifiedGuidePolicy.textAllowed(description) && SimplifiedGuidePolicy.urlAllowed(imageUrl) && GuideNetwork.isPhotoUrl(imageUrl) && !DECORATION.containsMatchIn(imageUrl))
-                        SourceImage(imageUrl,description) else null
-                }.take(5)
+                val images = (images(r,false)+searched).distinctBy { it.url }
+
                 SourceDocument("",title,url,content,kind,images)
             }.distinctBy { it.url }
         }

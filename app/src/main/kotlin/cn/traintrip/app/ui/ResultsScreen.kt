@@ -107,7 +107,7 @@ import cn.traintrip.core.*
 @Composable private fun CityCard(city:CityResult,f:SearchFilters,onCity:(String)->Unit,onGuide:(String)->Unit,guide:DestinationGuide?,catalogCity:City?,favorite:Boolean,onFavorite:(City)->Unit) {
     ContentCard(Modifier.fillMaxWidth().testTag("city-card-${city.cityId}"),onClick={onGuide(city.cityId)}) {
         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
-            guide?.photo?.let { Box(Modifier.size(60.dp)) { DestinationPhoto(it,Modifier.fillMaxSize()) } }
+            guide?.gallery?.firstOrNull()?.let { Box(Modifier.size(60.dp)) { DestinationPhoto(it,Modifier.fillMaxSize()) } }
             Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(4.dp)) {
                 Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
                     Text(city.cityName,Modifier.weight(1f),style=MaterialTheme.typography.titleLarge)

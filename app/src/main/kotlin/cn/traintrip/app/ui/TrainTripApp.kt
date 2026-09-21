@@ -22,7 +22,7 @@ import cn.traintrip.app.*
 import kotlinx.coroutines.delay
 
 @Composable fun TrainTripApp(vm:AppViewModel,destinationVm:DestinationViewModel = viewModel(),
-    wishlistVm:WishlistViewModel=viewModel(),updateVm:UpdateViewModel=viewModel(),launcher:((Context)->AppLaunchResult)?=null) {
+    wishlistVm:WishlistViewModel=viewModel(),updateVm:UpdateViewModel=viewModel(factory=UpdateViewModel.factory(LocalContext.current)),launcher:((Context)->AppLaunchResult)?=null) {
     val s by vm.state.collectAsStateWithLifecycle()
     val destination by destinationVm.state.collectAsStateWithLifecycle()
     val wish by wishlistVm.state.collectAsStateWithLifecycle()
@@ -58,9 +58,7 @@ import kotlinx.coroutines.delay
     BackHandler(s.page!=Page.SETTINGS && s.page!=Page.FILTERS && s.page!=Page.WISHLIST) { vm.back() }
     Surface(Modifier.fillMaxSize(),color=androidx.compose.ui.graphics.Color.White) {
       Box(Modifier.fillMaxSize()) {
-        if(s.page==Page.FILTERS || s.page==Page.WISHLIST) {
-            Box(Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.safeDrawing).background(HeaderTop))
-        }
+        Box(Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.safeDrawing).background(HeaderTop))
         Column(Modifier.fillMaxSize().safeDrawingPadding()) {
             Box(Modifier.weight(1f)) {
                 val stateKey=when(s.page) {

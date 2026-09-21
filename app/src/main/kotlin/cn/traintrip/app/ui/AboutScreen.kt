@@ -34,18 +34,20 @@ import cn.traintrip.core.*
                 Text("当前版本 v$version",style=MaterialTheme.typography.bodySmall,color=Muted)
             }
             ContentCard(Modifier.fillMaxWidth()) {
-                Text(when {state.checking->"正在检查更新";state.error!=null->"暂时无法检查更新";release==null->"尚未检查更新";newer->"发现新版本 ${release.version}";else->"已是最新正式版"},
+                Text(when {state.checking->"正在检查更新";state.error!=null->"暂时无法检查更新";release==null->"尚未检查更新";newer->"${if(state.historical)"上次发现" else "发现"}新版本 ${release.version}";state.historical->"上次检查未发现更新";else->"已是最新正式版"},
                     Modifier.testTag("update-status"),style=MaterialTheme.typography.titleMedium,color=if(state.error!=null)Amber else Ink)
                 if(state.checking)LinearProgressIndicator(Modifier.fillMaxWidth())
                 state.error?.let { Text(it,style=MaterialTheme.typography.bodySmall,color=Muted) }
-                if(newer) {
+                state.historyError?.let { Text(it,style=MaterialTheme.typography.bodySmall,color=Amber) }
+                if(newer && !state.checking) {
                     if(release.summary.isNotBlank())Text(release.summary,style=MaterialTheme.typography.bodyMedium)
                     if(!release.downloadable)Hint("新版本暂未提供完整安装包")
                 }
+                if(state.error!=null)state.completedAt?.let { Text("上次检查 ${formatTime(it)} · 未成功",style=MaterialTheme.typography.bodySmall,color=Muted) }
                 state.checkedAt?.let { Text("上次成功检查 ${formatTime(it)}",style=MaterialTheme.typography.bodySmall,color=Muted) }
-                PrimaryButton(when {state.checking->"检查中…";newer&&release?.downloadable==true->"前往 GitHub 下载";newer->"查看发布说明";state.error!=null->"重新检查";else->"检查更新"},
-                    {if(newer)open(release.url) else onCheck()},!state.checking,Modifier.testTag("check-update"))
-                if(newer)TextButton(onCheck){Text("再次检查")}
+                PrimaryButton(when {state.checking->"检查中…";state.error!=null->"重新检查";newer&&release?.downloadable==true->"前往 GitHub 下载";newer->"查看发布说明";else->"检查更新"},
+                    {if(newer && state.error==null)open(release.url) else onCheck()},!state.checking,Modifier.testTag("check-update"))
+                if(newer && state.error==null)TextButton(onCheck,enabled=!state.checking){Text("再次检查")}
             }
             ContentCard(Modifier.fillMaxWidth()) {
                 TextButton({open(notesUrl)},Modifier.fillMaxWidth().heightIn(min=48.dp)){Text("更新说明",Modifier.weight(1f));UiIcon("next")}

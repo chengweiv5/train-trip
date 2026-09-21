@@ -223,12 +223,13 @@ class DeepSeekDestinationTest {
         val photo=DestinationPhoto("remote_test_photo.jpg","苏州测试配图","测试资料","https://you.ctrip.com/place/suzhou11.html",remoteUrl="https://dimg04.c-ctrip.com/images/test.jpg")
         val original=guide().copy(photo=photo)
         val store=AndroidGuideStore(compose.activity) { bytes }
-        assertNotNull(store.preparePhoto(original).photo)
-        val saved=java.io.File(compose.activity.filesDir,"destination-guides/${photo.assetName}")
+        val prepared=store.prepareUpdate(original)
+        assertNotNull(prepared.photo)
+        val saved=java.io.File(compose.activity.filesDir,"destination-guides/${prepared.photo!!.assetName}")
         val decoded=android.graphics.BitmapFactory.decodeFile(saved.path)
         assertNotNull(decoded)
         assertTrue(decoded.width<=1200)
         decoded.recycle()
-        assertNull(AndroidGuideStore(compose.activity) { byteArrayOf(1,2) }.preparePhoto(original).photo)
+        assertNull(AndroidGuideStore(compose.activity) { byteArrayOf(1,2) }.prepareUpdate(original).photo)
     }
 }

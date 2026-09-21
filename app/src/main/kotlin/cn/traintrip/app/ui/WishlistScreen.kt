@@ -55,7 +55,7 @@ import cn.traintrip.core.*
             state.loading && state.items.isEmpty()->"正在读取想去清单…"
             state.error!=null->"清单读取失败，请重试"
             state.items.isEmpty()->"把心动的城市，留给下次出发"
-            else->"${state.items.size} 个想去城市 · 最近收藏优先"
+            else->"${state.items.size} 个想去城市 · 省内最近收藏优先"
         },onAdd)
         LazyColumn(Modifier.weight(1f).testTag("wishlist-list"),state=rememberLazyListState(),contentPadding=PaddingValues(start=16.dp,end=16.dp,bottom=16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
             if(state.loading && state.items.isEmpty()) item { LinearProgressIndicator(Modifier.fillMaxWidth()) }
@@ -68,7 +68,14 @@ import cn.traintrip.core.*
                     PrimaryButton("添加想去城市",onAdd)
                 }
             } else {
-                items(state.items,key={it.cityId}) { wish ->
+                wishlistGroups(state.items,catalog).forEach { group ->
+                item("province-${group.name}") {
+                    Row(Modifier.fillMaxWidth().padding(top=4.dp).testTag("wish-province-${group.name}"),verticalAlignment=Alignment.CenterVertically) {
+                        Text(group.name,Modifier.weight(1f),style=MaterialTheme.typography.titleSmall,color=Primary)
+                        Text("${group.cities.size} 个城市",style=MaterialTheme.typography.bodySmall,color=Muted)
+                    }
+                }
+                items(group.cities,key={it.cityId}) { wish ->
                     val city=catalog.byCity[wish.cityId]
                     val guide=guides[wish.cityId]
                     ContentCard(Modifier.fillMaxWidth().testTag("wish-${wish.cityId}"),onClick={onGuide(wish.cityId)}) {
@@ -92,6 +99,7 @@ import cn.traintrip.core.*
                         }
                         if(city?.supported!=true)Text(city?.unavailableReason ?: "当前目录暂未收录此城市",style=MaterialTheme.typography.bodySmall,color=Muted)
                     }
+                }
                 }
                 item { Text("想去清单保存在本机",style=MaterialTheme.typography.bodySmall,color=Muted) }
             }

@@ -13,6 +13,18 @@ class WishlistTest {
     private val catalog=StationCatalog.bundled()
     private val a=catalog.byCity.getValue("120000")
     private val b=catalog.byCity.getValue("370100")
+    @Test fun provinceGroupsUseCatalogAndPreserveTimestampOrderAndUnknownCities() {
+        val old=WishCity("130600","保定","过时省份",10)
+        val recent=WishCity("130800","承德","河北",30)
+        val unknown=WishCity("999999","旧城市","旧省份",100)
+        val other=WishCity("120000","天津","天津",20)
+        val input=listOf(old,unknown,recent,other)
+        val groups=wishlistGroups(input,catalog)
+        assertEquals(listOf("河北省","天津市","旧省份"),groups.map { it.name })
+        assertEquals(listOf("130800","130600"),groups[0].cities.map { it.cityId })
+        assertEquals(unknown,groups.last().cities.single())
+        assertEquals("过时省份",old.province)
+    }
     @Test fun duplicateAddsAndUndoKeepOriginalOrder() {
         val store=Store();val repo=WishlistRepository(store);repo.load()
         repo.add(listOf(a,b,a),100)

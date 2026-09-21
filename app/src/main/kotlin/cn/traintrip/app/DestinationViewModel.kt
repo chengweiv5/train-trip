@@ -94,7 +94,7 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
         mutable.update { it.copy(loading = true, error = null, contentMessage=null, stage = "准备获取资料…") }
         job = viewModelScope.launch {
             var committed=false
-            var expectedPhoto=false
+            var expectedPhotos=0
             try {
                 val (key, searchKey) = withContext(Dispatchers.IO) { credentials.read() to searchCredentials.read() }
                 if (requestId != id) return@launch
@@ -102,21 +102,21 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
                 if (key == null || searchKey == null) { mutable.update { it.copy(loading = false, stage = "") }; return@launch }
                 val guide = contentLock.withLock { withContext(Dispatchers.IO) {
                     try { repository.generate(city, key, { stage -> if (requestId == id) mutable.update { it.copy(stage = stage) } }) { draft ->
-                        expectedPhoto=draft.photo!=null
+                        expectedPhotos=draft.gallery.size
                         (store as? AndroidGuideStore)?.prepareUpdate(draft) { committed=true;refreshSnapshot() } ?: draft
                     } } finally { (store as? AndroidGuideStore)?.let { runCatching { it.cleanupUnreferencedImages(city.id) } } }
                 } }
                 contentLock.withLock { withContext(Dispatchers.IO) { refreshSnapshot() } }
-                if (requestId == id) mutable.update { it.copy(loading = false, guide = guide, error = null, contentMessage=if(guide.photo==null && expectedPhoto)"介绍已更新，图片未保存" else null, stage = "", guides = it.guides + (city.id to guide)) }
+                if (requestId == id) mutable.update { it.copy(loading = false, guide = guide, error = null, contentMessage=if(guide.gallery.size < expectedPhotos)"介绍已更新，图片已保存 ${guide.gallery.size}/$expectedPhotos 张" else null, stage = "", guides = it.guides + (city.id to guide)) }
             } catch (e: CancellationException) {
                 withContext(NonCancellable) {
                     withContext(Dispatchers.IO) { contentLock.withLock { runCatching { refreshSnapshot() } } }
-                    if(committed && requestId==id+1 && active?.id==city.id)mutable.update { it.copy(error=null,contentMessage="介绍已保存，图片尚未保存") }
+                    if(committed && requestId==id+1 && active?.id==city.id)mutable.update { it.copy(error=null,contentMessage="介绍已保存，已完成的图片已保留") }
                 }
                 throw e
             } catch (e: Exception) {
                 contentLock.withLock { withContext(Dispatchers.IO) { runCatching { refreshSnapshot() } } }
-                if (requestId == id) mutable.update { it.copy(loading = false, stage = "",contentMessage=if(committed)"介绍已保存，图片未保存" else null,
+                if (requestId == id) mutable.update { it.copy(loading = false, stage = "",contentMessage=if(committed)"介绍已保存，已完成的图片已保留" else null,
                     error=if(committed)null else "整理未完成，请检查配置后重试") }
             }
         }

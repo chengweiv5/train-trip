@@ -99,19 +99,21 @@ internal object SearchGuideDecoder {
         }
         val selectedMaterial = material.copy(places=places,foods=foods,sources=material.sources.filter { source -> places.any { it.url==source.url } || foods.any { it.url==source.url } },documents=emptyList())
         val guide = DeepSeekGuideGenerator.decode(root.toString(),selectedMaterial,model)
-        val photo = places.firstNotNullOfOrNull { place ->
-            material.documents.filter { it.kind == "places" && it.url == place.url }.flatMap { it.images }.firstOrNull {
-                it.description.length in 5..300 && it.description.contains(place.name) && GuideNetwork.isPhotoUrl(it.url) &&
+        val photos = places.flatMap { place ->
+            material.documents.filter { it.kind == "places" && it.url == place.url }.flatMap { it.images }.filter {
+                it.description.length in 5..300 && it.description.contains(place.name) &&
+                    (!it.fromSearch || it.description.contains(material.name.removeSuffix("市"))) && GuideNetwork.isPhotoUrl(it.url) &&
                     !TavilyGuideSource.DECORATION.containsMatchIn(it.url)
-            }?.let { image ->
+            }.map { image ->
                 val hash = MessageDigest.getInstance("SHA-256").digest(image.url.toByteArray()).joinToString("") { "%02x".format(it) }.take(24)
                 DestinationPhoto("remote_$hash.jpg","${material.name} · ${place.name}",
-                    "原文页面刊载；检索资料未提供摄影者署名",place.url,remoteUrl=image.url)
+                    if(image.fromSearch) "Tavily 检索图片；未提供摄影者署名" else "原文页面刊载；检索资料未提供摄影者署名",
+                    if(image.fromSearch)image.url else place.url,remoteUrl=image.url)
             }
-        }
+        }.distinctBy { it.remoteUrl }.take(5)
         return DestinationGuides.validateGenerated(guide.copy(
             experiences=guide.experiences.map { e -> val p=places.first { it.id==e.id }; e.copy(sourceUrl=p.url,evidence=p.introduction) },
-            foods=guide.foods.map { f -> val p=foods.first { it.name==f.name }; f.copy(sourceUrl=p.url,evidence=p.description) },photo=photo),material.cityId)
+            foods=guide.foods.map { f -> val p=foods.first { it.name==f.name }; f.copy(sourceUrl=p.url,evidence=p.description) }).withPhotos(photos),material.cityId)
     }
     private fun normalized(value: String) = value.replace(Regex("\\s+"),"")
 }
