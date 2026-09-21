@@ -58094,6 +58094,1546 @@
           "fontWeight": "normal"
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "F8QcC",
+      "x": 11450,
+      "y": 0,
+      "name": "10 · 查询目的地 · 想去快捷分组",
+      "width": 900,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "gap": 16,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "hE4iF",
+          "name": "想去分组设计标题",
+          "fill": "$palette-c1-ink",
+          "content": "选择目的地 · 从想去清单快速勾选",
+          "fontFamily": "$cn-font",
+          "fontSize": 24,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "UI8Mx",
+          "name": "想去分组交互说明",
+          "fill": "$palette-c1-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "左侧首位固定“想去”，右侧显示收藏城市；与各省的勾选同步，完成后用于查询。",
+          "lineHeight": 1.5,
+          "fontFamily": "$cn-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "f0Vpt",
+          "name": "选择与空状态对照",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "DJi6f",
+              "name": "想去分组 · 跨省城市",
+              "clip": true,
+              "width": 390,
+              "height": 900,
+              "fill": "#FFFFFF",
+              "stroke": "$palette-c1-border",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "WiyrJ",
+                  "name": "系统状态栏",
+                  "width": "fill_container",
+                  "height": 40,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rhQXy",
+                      "name": "时间",
+                      "fill": "$palette-c1-ink",
+                      "content": "9:41",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "q6Y3WX",
+                      "name": "电池图标",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "battery-full",
+                      "library": "lucide",
+                      "fill": "$palette-c1-ink"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "bibsy",
+                  "name": "页面导航",
+                  "width": "fill_container",
+                  "height": 56,
+                  "gap": 12,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "qhqUU",
+                      "name": "取消入口",
+                      "fill": "$palette-c1-primary",
+                      "content": "取消",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "MJBXk",
+                      "name": "选择目的地标题",
+                      "fill": "$palette-c1-ink",
+                      "content": "选择目的地",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 20,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "aLIAD",
+                  "name": "搜索区域",
+                  "width": "fill_container",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "VvXTM",
+                      "name": "搜索省份或城市输入",
+                      "width": "fill_container",
+                      "height": 52,
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": 1,
+                      "gap": 8,
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "aUSqs",
+                          "name": "搜索图标",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "search",
+                          "library": "lucide",
+                          "fill": "$palette-c1-muted"
+                        },
+                        {
+                          "type": "text",
+                          "id": "v4GHII",
+                          "name": "搜索提示",
+                          "fill": "$palette-c1-muted",
+                          "content": "搜索省份或城市",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "zC2Mx",
+                  "name": "恢复与清空",
+                  "width": "fill_container",
+                  "height": 48,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "K4RlUA",
+                      "name": "恢复默认",
+                      "fill": "$palette-c1-primary",
+                      "content": "恢复默认",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Gbkhj",
+                      "name": "清空选择",
+                      "fill": "$palette-c1-primary",
+                      "content": "清空选择",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "fHy9M",
+                  "name": "分组与城市两栏",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "UW5AJ",
+                      "name": "省份导航 · 想去固定首位",
+                      "width": 94,
+                      "height": "fill_container",
+                      "fill": "#F0F8FD",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "Uzpv1",
+                          "name": "分组 · 想去",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "$palette-c1-tint",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "lZfWp",
+                              "name": "想去标签",
+                              "fill": "$palette-c1-primary",
+                              "content": "想去",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "VtX0a",
+                          "name": "分组 · 北京",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "oFzfP",
+                              "name": "北京标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "北京",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "AlphF",
+                          "name": "分组 · 天津",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "wyk0D",
+                              "name": "天津标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "天津",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "gC083",
+                          "name": "分组 · 河北",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "s774CE",
+                              "name": "河北标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "河北",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "N7l9R1",
+                          "name": "分组 · 山西",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "a8a8Fg",
+                              "name": "山西标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "山西",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "uHXze",
+                          "name": "分组 · 内蒙古",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Sj6xC",
+                              "name": "内蒙古标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "内蒙古",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "qr2x3",
+                          "name": "分组 · 辽宁",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "qTeq7",
+                              "name": "辽宁标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "辽宁",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "b30UQ",
+                          "name": "分组 · 吉林",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Rl0Hv",
+                              "name": "吉林标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "吉林",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "JLqON",
+                          "name": "分组 · 黑龙江",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "zMjAB",
+                              "name": "黑龙江标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "黑龙江",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "w2Wa7",
+                          "name": "分组 · 江苏",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "UlqGO",
+                              "name": "江苏标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "江苏",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qxkjA",
+                      "name": "想去城市内容",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "XDii0",
+                          "name": "分组标题",
+                          "fill": "$palette-c1-ink",
+                          "content": "想去的城市",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "RehFU",
+                          "name": "收藏数量和全选",
+                          "width": "fill_container",
+                          "height": 48,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Pb1cW",
+                              "name": "想去城市数量",
+                              "fill": "$palette-c1-muted",
+                              "content": "4 个城市",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "tpiGY",
+                              "name": "全选动作",
+                              "fill": "$palette-c1-primary",
+                              "content": "全选",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "xzZHT",
+                          "name": "保定选择行",
+                          "width": "fill_container",
+                          "height": 72,
+                          "gap": 8,
+                          "padding": [
+                            8,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "F7wN4",
+                              "name": "保定名称和省份",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Yt9tG",
+                                  "name": "保定名称",
+                                  "fill": "$palette-c1-ink",
+                                  "content": "保定",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 15,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "WbT9h",
+                                  "name": "保定省份",
+                                  "fill": "$palette-c1-muted",
+                                  "content": "河北省",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "H6lsd",
+                              "name": "保定勾选框",
+                              "width": 22,
+                              "height": 22,
+                              "fill": "$palette-c1-primary",
+                              "cornerRadius": 3,
+                              "stroke": "$palette-c1-primary",
+                              "strokeWidth": 1.5,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "Vaksi",
+                                  "name": "保定已选",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "check",
+                                  "library": "lucide",
+                                  "fill": "#FFFFFF"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "gtuWv",
+                          "name": "保定分隔线",
+                          "fill": "$palette-c1-line",
+                          "width": "fill_container",
+                          "height": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MZfGM",
+                          "name": "承德选择行",
+                          "width": "fill_container",
+                          "height": 72,
+                          "gap": 8,
+                          "padding": [
+                            8,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "UkPpQ",
+                              "name": "承德名称和省份",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "G4BIvH",
+                                  "name": "承德名称",
+                                  "fill": "$palette-c1-ink",
+                                  "content": "承德",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 15,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "wuJoH",
+                                  "name": "承德省份",
+                                  "fill": "$palette-c1-muted",
+                                  "content": "河北省",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "VuaPB",
+                              "name": "承德勾选框",
+                              "width": 22,
+                              "height": 22,
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 3,
+                              "stroke": "$palette-c1-primary",
+                              "strokeWidth": 1.5,
+                              "justifyContent": "center",
+                              "alignItems": "center"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "LPIed",
+                          "name": "承德分隔线",
+                          "fill": "$palette-c1-line",
+                          "width": "fill_container",
+                          "height": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SPNdQ",
+                          "name": "苏州选择行",
+                          "width": "fill_container",
+                          "height": 72,
+                          "gap": 8,
+                          "padding": [
+                            8,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "pnPlZ",
+                              "name": "苏州名称和省份",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "o6abg",
+                                  "name": "苏州名称",
+                                  "fill": "$palette-c1-ink",
+                                  "content": "苏州",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 15,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "CfulF",
+                                  "name": "苏州省份",
+                                  "fill": "$palette-c1-muted",
+                                  "content": "江苏省",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "nBFYW",
+                              "name": "苏州勾选框",
+                              "width": 22,
+                              "height": 22,
+                              "fill": "$palette-c1-primary",
+                              "cornerRadius": 3,
+                              "stroke": "$palette-c1-primary",
+                              "strokeWidth": 1.5,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "B4OOxG",
+                                  "name": "苏州已选",
+                                  "width": 16,
+                                  "height": 16,
+                                  "icon": "check",
+                                  "library": "lucide",
+                                  "fill": "#FFFFFF"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "H1IrUk",
+                          "name": "苏州分隔线",
+                          "fill": "$palette-c1-line",
+                          "width": "fill_container",
+                          "height": 1
+                        },
+                        {
+                          "type": "frame",
+                          "id": "x964lJ",
+                          "name": "北京选择行",
+                          "width": "fill_container",
+                          "height": 90,
+                          "gap": 8,
+                          "padding": [
+                            8,
+                            0
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "eVSVe",
+                              "name": "北京名称和省份",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "R4bZTr",
+                                  "name": "北京名称",
+                                  "fill": "$palette-c1-ink",
+                                  "content": "北京",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 15,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "m8ISM",
+                                  "name": "北京省份",
+                                  "fill": "$palette-c1-muted",
+                                  "content": "北京市",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "xMGlH",
+                                  "name": "禁选原因",
+                                  "fill": "$palette-c1-muted",
+                                  "content": "当前出发城市",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "q6itAJ",
+                              "name": "北京勾选框",
+                              "width": 22,
+                              "height": 22,
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 3,
+                              "stroke": "#A7B6C0",
+                              "strokeWidth": 1.5,
+                              "justifyContent": "center",
+                              "alignItems": "center"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "V4xdBr",
+                          "name": "北京分隔线",
+                          "fill": "$palette-c1-line",
+                          "width": "fill_container",
+                          "height": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "gc0Ua",
+                  "name": "已选概况与完成",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    10,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "uWVl1",
+                      "name": "查看已选",
+                      "width": "fill_container",
+                      "height": 48,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WiSUq",
+                          "name": "已选真实省份计数",
+                          "fill": "$palette-c1-primary",
+                          "content": "已选 2 个省级地区 · 2 个城市  ›",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fyRHp",
+                      "name": "完成按钮",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-primary",
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "woEw2",
+                          "name": "完成文字",
+                          "fill": "#FFFFFF",
+                          "content": "完成",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 15,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ZF1bF",
+                  "name": "底部安全区域",
+                  "width": "fill_container",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "erXgl",
+                      "name": "系统手势条",
+                      "fill": "#B9C1CC",
+                      "width": 110,
+                      "height": 4
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "KQDys",
+              "name": "想去分组 · 暂无收藏",
+              "clip": true,
+              "width": 390,
+              "height": 900,
+              "fill": "#FFFFFF",
+              "stroke": "$palette-c1-border",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Ct1HI",
+                  "name": "系统状态栏",
+                  "width": "fill_container",
+                  "height": 40,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "K0ar8i",
+                      "name": "时间",
+                      "fill": "$palette-c1-ink",
+                      "content": "9:41",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "K5J8p",
+                      "name": "电池图标",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "battery-full",
+                      "library": "lucide",
+                      "fill": "$palette-c1-ink"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "dpLLc",
+                  "name": "页面导航",
+                  "width": "fill_container",
+                  "height": 56,
+                  "gap": 12,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dCB6v",
+                      "name": "取消入口",
+                      "fill": "$palette-c1-primary",
+                      "content": "取消",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "sebYV",
+                      "name": "选择目的地标题",
+                      "fill": "$palette-c1-ink",
+                      "content": "选择目的地",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 20,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SIXDx",
+                  "name": "搜索区域",
+                  "width": "fill_container",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "lS6Uf",
+                      "name": "搜索省份或城市输入",
+                      "width": "fill_container",
+                      "height": 52,
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": 1,
+                      "gap": 8,
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "e5iwj",
+                          "name": "搜索图标",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "search",
+                          "library": "lucide",
+                          "fill": "$palette-c1-muted"
+                        },
+                        {
+                          "type": "text",
+                          "id": "bcOIx",
+                          "name": "搜索提示",
+                          "fill": "$palette-c1-muted",
+                          "content": "搜索省份或城市",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hvktf",
+                  "name": "恢复与清空",
+                  "width": "fill_container",
+                  "height": 48,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "G8Ldw",
+                      "name": "恢复默认",
+                      "fill": "$palette-c1-primary",
+                      "content": "恢复默认",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "VAdsB",
+                      "name": "清空选择",
+                      "fill": "$palette-c1-primary",
+                      "content": "清空选择",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "l39bWh",
+                  "name": "分组与城市两栏",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "szC5e",
+                      "name": "省份导航 · 想去固定首位",
+                      "width": 94,
+                      "height": "fill_container",
+                      "fill": "#F0F8FD",
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "n6FAK",
+                          "name": "分组 · 想去",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "$palette-c1-tint",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "a2s1p",
+                              "name": "想去标签",
+                              "fill": "$palette-c1-primary",
+                              "content": "想去",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Bekbd",
+                          "name": "分组 · 北京",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "m9NyWJ",
+                              "name": "北京标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "北京",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dLaHA",
+                          "name": "分组 · 天津",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "cyQex",
+                              "name": "天津标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "天津",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "TJHsm",
+                          "name": "分组 · 河北",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "H9lzm",
+                              "name": "河北标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "河北",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "JHlRE",
+                          "name": "分组 · 山西",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Cd1g6",
+                              "name": "山西标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "山西",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "U9TUN",
+                          "name": "分组 · 内蒙古",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "yqvii",
+                              "name": "内蒙古标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "内蒙古",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "t3S8S3",
+                          "name": "分组 · 辽宁",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "EfxV3",
+                              "name": "辽宁标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "辽宁",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "NUFey",
+                          "name": "分组 · 吉林",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "VrjEN",
+                              "name": "吉林标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "吉林",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Q0YyTI",
+                          "name": "分组 · 黑龙江",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "RvbT1",
+                              "name": "黑龙江标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "黑龙江",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "tYa3l",
+                          "name": "分组 · 江苏",
+                          "width": "fill_container",
+                          "height": 52,
+                          "fill": "#FFFFFF00",
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nGLGj",
+                              "name": "江苏标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "江苏",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "a6Z6Aq",
+                      "name": "想去城市内容",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        10,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "x7JesJ",
+                          "name": "分组标题",
+                          "fill": "$palette-c1-ink",
+                          "content": "想去的城市",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "O4HKp",
+                          "name": "收藏数量和全选",
+                          "width": "fill_container",
+                          "height": 48,
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "EtATZ",
+                              "name": "想去城市数量",
+                              "fill": "$palette-c1-muted",
+                              "content": "0 个城市",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "xyI9I",
+                              "name": "全选动作",
+                              "fill": "#84949F",
+                              "content": "全选",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "WbIuZ",
+                          "name": "空清单说明",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": [
+                            24,
+                            0
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "LjvAJ",
+                              "name": "空清单标题",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "还没有想去的城市",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 16,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "wB7cd",
+                              "name": "空清单提示",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "可在首页的「想去」中添加城市",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "gHLpZ",
+                  "name": "已选概况与完成",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    10,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "U8vjm",
+                      "name": "查看已选",
+                      "width": "fill_container",
+                      "height": 48,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "J76qQ",
+                          "name": "已选真实省份计数",
+                          "fill": "$palette-c1-primary",
+                          "content": "已选 1 个省级地区 · 1 个城市  ›",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jNOcu",
+                      "name": "完成按钮",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-primary",
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Ukel7",
+                          "name": "完成文字",
+                          "fill": "#FFFFFF",
+                          "content": "完成",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 15,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "HTqHP",
+                  "name": "底部安全区域",
+                  "width": "fill_container",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "zzVTu",
+                      "name": "系统手势条",
+                      "fill": "#B9C1CC",
+                      "width": 110,
+                      "height": 4
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "ZZYWc",
+          "name": "分组规则与适配",
+          "fill": "$palette-c1-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "想去不是实际省份，已选数量按城市真实省份计算。全选只影响可查询的收藏，保留其它选择；大字体下拉首项同样为想去。加载与失败独立提示，并支持重新读取。",
+          "lineHeight": 1.5,
+          "fontFamily": "$cn-font",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        }
+      ]
     }
   ],
   "variables": {

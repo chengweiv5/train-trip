@@ -16,10 +16,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.traintrip.app.UiState
+import cn.traintrip.app.WishlistState
 import cn.traintrip.core.*
 import java.time.format.DateTimeFormatter
 
-@Composable fun FiltersScreen(s:UiState,onUpdate:(SearchFilters)->Unit,onSearch:()->Unit,onContentSettings:()->Unit={},onBack:(()->Unit)?=null) {
+@Composable fun FiltersScreen(s:UiState,onUpdate:(SearchFilters)->Unit,onSearch:()->Unit,onContentSettings:()->Unit={},onBack:(()->Unit)?=null,wishlist:WishlistState=WishlistState(loading=false),onReloadWishlist:()->Unit={}) {
     var sheet by remember { mutableStateOf<String?>(null) }
     val destinationBrowser=rememberSaveable(saver=DestinationBrowserState.Saver) { DestinationBrowserState() }
     val f=s.filters
@@ -71,7 +72,7 @@ import java.time.format.DateTimeFormatter
         }
     }
     sheet?.let { key ->
-        if(key=="scope") DestinationSelector(s,{sheet=null},{onUpdate(it);sheet=null},destinationBrowser)
+        if(key=="scope") DestinationSelector(s,{sheet=null},{onUpdate(it);sheet=null},destinationBrowser,wishlist,onReloadWishlist)
         else FilterSheet(key,s,onDismiss={sheet=null},onApply={onUpdate(it);sheet=null})
     }
 }

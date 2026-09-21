@@ -69,8 +69,8 @@ import kotlinx.coroutines.delay
                     else -> s.page.name
                 }
                 screenState.SaveableStateProvider(stateKey) { when(s.page) {
-                    Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()},::openSettings)
-                    Page.CITY_QUERY->FiltersScreen(s.copy(filters=s.cityQueryFilters ?: s.filters),vm::updateFilters,{vm.search()},onBack=vm::back)
+                    Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()},::openSettings,wishlist=wish,onReloadWishlist=wishlistVm::reload)
+                    Page.CITY_QUERY->FiltersScreen(s.copy(filters=s.cityQueryFilters ?: s.filters),vm::updateFilters,{vm.search()},onBack=vm::back,wishlist=wish,onReloadWishlist=wishlistVm::reload)
                     Page.WISHLIST->WishlistScreen(wish,s.catalog,destination.guides,destination.offline,{vm.navigate(Page.ADD_CITY)},wishlistVm::toggle,vm::showDestination,vm::openCityQuery,wishlistVm::reload)
                     Page.ADD_CITY->AddCityScreen(s.catalog,wish,vm::back,wishlistVm::add)
                     Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search(refresh=true)},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities,vm::showDestination,destination.guides,wish.items.map { it.cityId }.toSet(),wishlistVm::toggle)

@@ -61,6 +61,24 @@ class WishlistFlowTest {
         val file=File(compose.activity.getExternalFilesDir(null),"v05-$name.png")
         file.outputStream().use { compose.onRoot().captureToImage().asAndroidBitmap().compress(Bitmap.CompressFormat.PNG,100,it) }
     }
+    @Test fun homeDestinationSelectorReadsWishlistAndSavesOnlyQuerySelection() {
+        val (vm,wishes,tickets)=app()
+        val home=SearchFilters(destinationCityIds=setOf("120000"),people=2)
+        compose.runOnIdle { vm.updateFilters(home);wishes.add(listOf(catalog.byCity.getValue("130600"),catalog.byCity.getValue("130800"))) }
+        compose.waitUntil(5000) { wishes.state.value.items.size==2 && !wishes.state.value.busy }
+        val original=wishes.state.value.items
+        compose.onNodeWithText("查询目的地").performScrollTo().performClick()
+        compose.onNodeWithTag("province-nav-wishlist").performClick()
+        compose.waitUntil(5000) { !wishes.state.value.loading }
+        compose.onNodeWithTag("destination-130600").assertIsDisplayed().performClick()
+        compose.onNodeWithTag("destination-130800").assertIsOff()
+        compose.onNodeWithTag("apply-destinations").performClick()
+        compose.runOnIdle {
+            assertEquals(home.copy(destinationCityIds=setOf("120000","130600")),vm.state.value.filters)
+            assertEquals(original,wishes.state.value.items);assertEquals(0,tickets.calls)
+        }
+        assertEquals(vm.state.value.filters,Preferences(compose.activity).load(catalog))
+    }
     @Test fun multiSelectPersistsAcrossSearchAndUndoRestoresOriginalOrder() {
         val (vm,wishes,tickets)=app()
         compose.onNodeWithTag("tab-WISHLIST").performClick();capture("empty")

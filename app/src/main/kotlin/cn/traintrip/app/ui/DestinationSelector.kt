@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
@@ -19,7 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import cn.traintrip.app.UiState
+import cn.traintrip.app.WishlistState
 import cn.traintrip.core.*
+
+internal const val WISH_DESTINATION_GROUP="wishlist"
 
 class DestinationBrowserState(initialProvince: String = "") {
     var provinceId by mutableStateOf(initialProvince)
@@ -36,7 +40,8 @@ class DestinationBrowserState(initialProvince: String = "") {
 }
 
 @Composable fun DestinationSelector(s: UiState, onDismiss: () -> Unit, onApply: (SearchFilters) -> Unit,
-    browser: DestinationBrowserState = rememberSaveable(saver=DestinationBrowserState.Saver) { DestinationBrowserState() }) {
+    browser: DestinationBrowserState = rememberSaveable(saver=DestinationBrowserState.Saver) { DestinationBrowserState() },
+    wishlist:WishlistState=WishlistState(loading=false),onReloadWishlist:()->Unit={}) {
     val density=LocalDensity.current
     val catalog=s.catalog
     var selected by rememberSaveable { mutableStateOf(s.filters.destinationCityIds.toList()) }
@@ -45,7 +50,10 @@ class DestinationBrowserState(initialProvince: String = "") {
     var provinceMenu by remember { mutableStateOf(false) }
     val province=catalog.provinces.firstOrNull { it.id==browser.provinceId }
         ?: catalog.cities.firstOrNull { it.id in selected }?.province ?: catalog.provinces.first()
+    val showWishes=browser.provinceId==WISH_DESTINATION_GROUP
+    val wishes=wishlist.items.distinctBy { it.cityId }.sortedByDescending { it.addedAt }
     LaunchedEffect(Unit) {
+        onReloadWishlist()
         if(browser.provinceId.isBlank()) {
             browser.provinceId=province.id
             browser.list("navigation").scrollToItem(catalog.provinces.indexOf(province))
@@ -98,24 +106,27 @@ class DestinationBrowserState(initialProvince: String = "") {
                         val cities=catalog.cities.filter { it.province.id==province.id }
                         Column {
                             if(compact) Box(Modifier.padding(horizontal=16.dp)) {
-                                OutlinedButton({provinceMenu=true},Modifier.fillMaxWidth().testTag("province-dropdown")) { Text(province.name,Modifier.weight(1f));UiIcon("down") }
+                                OutlinedButton({provinceMenu=true},Modifier.fillMaxWidth().testTag("province-dropdown")) { Text(if(showWishes)"想去" else province.name,Modifier.weight(1f));UiIcon("down") }
                                 DropdownMenu(provinceMenu,{provinceMenu=false}) {
+                                    DropdownMenuItem(text={Text("想去")},modifier=Modifier.testTag("province-menu-wishlist"),onClick={browser.provinceId=WISH_DESTINATION_GROUP;provinceMenu=false})
                                     catalog.provinces.forEach { p -> DropdownMenuItem(text={Text(p.name)},onClick={browser.provinceId=p.id;provinceMenu=false}) }
                                 }
                             }
                             Row(Modifier.weight(1f)) {
-                                if(!compact) LazyColumn(Modifier.width(94.dp).fillMaxHeight().background(PrimaryTint.copy(alpha=.45f)).testTag("province-navigation"),state=browser.list("navigation")) {
-                                    items(catalog.provinces,key={it.id}) { p ->
-                                        val count=selectedCities.count { it.province.id==p.id }
-                                        Row(Modifier.fillMaxWidth().heightIn(min=52.dp).background(if(p==province) PrimaryTint else PageBackground.copy(alpha=0f))
-                                            .clickable { browser.provinceId=p.id }.padding(horizontal=12.dp,vertical=12.dp).testTag("province-nav-${p.id}"),verticalAlignment=Alignment.CenterVertically) {
-                                            Text(p.shortName,Modifier.weight(1f),color=if(p==province) Primary else Muted)
-                                            if(count>0) Text("$count",style=MaterialTheme.typography.bodySmall,color=Primary)
+                                if(!compact) Column(Modifier.width(94.dp).fillMaxHeight().background(PrimaryTint.copy(alpha=.45f))) {
+                                    DestinationNavigationRow("想去",selected.count { id->wishes.any { it.cityId==id } },showWishes,Modifier.testTag("province-nav-wishlist")) { browser.provinceId=WISH_DESTINATION_GROUP }
+                                    HorizontalDivider(color=Line)
+                                    LazyColumn(Modifier.weight(1f).testTag("province-navigation"),state=browser.list("navigation")) {
+                                        items(catalog.provinces,key={it.id}) { p ->
+                                            DestinationNavigationRow(p.shortName,selectedCities.count { it.province.id==p.id },!showWishes && p==province,Modifier.testTag("province-nav-${p.id}")) { browser.provinceId=p.id }
                                         }
                                     }
                                 }
-                                key(province.id) {
-                                    LazyColumn(Modifier.weight(1f).fillMaxHeight().padding(horizontal=12.dp).testTag("destination-city-list"),state=browser.list(province.id),contentPadding=PaddingValues(bottom=12.dp)) {
+                                key(if(showWishes)WISH_DESTINATION_GROUP else province.id) {
+                                    if(showWishes) DestinationWishList(wishlist,wishes,catalog,selected,s.filters.originCityId,browser.list(WISH_DESTINATION_GROUP),
+                                        onReloadWishlist,{toggleProvince(wishes.mapNotNull { catalog.byCity[it.cityId] })},::toggle,
+                                        Modifier.weight(1f).fillMaxHeight())
+                                    else LazyColumn(Modifier.weight(1f).fillMaxHeight().padding(horizontal=12.dp).testTag("destination-city-list"),state=browser.list(province.id),contentPadding=PaddingValues(bottom=12.dp)) {
                                         item { DestinationProvinceHeader(province,cities.size,provinceAction(cities.filter(::selectable),selected),{toggleProvince(cities)}) }
                                         items(cities,key={it.id}) { city -> DestinationCityRow(city,city.id in selected,selectable(city),s.filters.originCityId) { toggle(city) } }
                                     }
@@ -150,15 +161,24 @@ private fun provinceAction(cities: List<City>, selected: List<String>) = if(citi
     }
 }
 
-@Composable private fun DestinationCityRow(city: City,checked: Boolean,enabled: Boolean,origin: String,onClick: () -> Unit) {
+@Composable internal fun DestinationCityRow(city: City,checked: Boolean,enabled: Boolean,origin: String,showProvince:Boolean=false,interactionEnabled:Boolean=true,onClick: () -> Unit) {
     Row(Modifier.fillMaxWidth().heightIn(min=54.dp).testTag("destination-${city.id}")
-        .toggleable(value=checked,enabled=enabled,role=Role.Checkbox,onValueChange={onClick()}).padding(vertical=8.dp),verticalAlignment=Alignment.CenterVertically) {
+        .toggleable(value=checked,enabled=enabled && interactionEnabled,role=Role.Checkbox,onValueChange={onClick()}).padding(vertical=8.dp),verticalAlignment=Alignment.CenterVertically) {
         Column(Modifier.weight(1f).padding(end=6.dp)) {
             Text(city.name,color=if(enabled) Ink else Muted)
+            if(showProvince) Text(city.province.name,style=MaterialTheme.typography.bodySmall,color=Muted)
             if(!enabled) Text(if(city.id==origin) "当前出发城市" else city.unavailableReason,style=MaterialTheme.typography.bodySmall,color=Muted)
-            else if(city.province.municipality) Text("直辖市",style=MaterialTheme.typography.bodySmall,color=Muted)
+            else if(!showProvince && city.province.municipality) Text("直辖市",style=MaterialTheme.typography.bodySmall,color=Muted)
         }
-        Checkbox(checked,onCheckedChange=null,enabled=enabled)
+        Checkbox(checked,onCheckedChange=null,enabled=enabled && interactionEnabled)
     }
     HorizontalDivider(color=Line.copy(alpha=.5f))
+}
+
+@Composable private fun DestinationNavigationRow(label:String,count:Int,active:Boolean,modifier:Modifier=Modifier,onClick:()->Unit) {
+    Row(modifier.fillMaxWidth().heightIn(min=52.dp).background(if(active)PrimaryTint else PageBackground.copy(alpha=0f))
+        .selectable(active,role=Role.Tab,onClick=onClick).padding(horizontal=12.dp,vertical=12.dp),verticalAlignment=Alignment.CenterVertically) {
+        Text(label,Modifier.weight(1f),color=if(active)Primary else Muted)
+        if(count>0)Text("$count",style=MaterialTheme.typography.bodySmall,color=Primary)
+    }
 }
