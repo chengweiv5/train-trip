@@ -48,6 +48,28 @@ class WishlistSidebarTest {
         }
     }
 
+    @Test fun allIsPinnedAndCombinesProvincesByCollectionTimeWithLiveCount() {
+        val original=listOf(wish("130600",1),wish("320500",3),wish("130800",2))
+        var state by mutableStateOf(WishlistState(original,loading=false))
+        compose.setContent { Screen(state,onToggle={city->state=state.copy(items=state.items.filterNot { it.cityId==city.id })}) }
+        compose.onNodeWithTag("wish-province-all").assertIsSelected().assertTextContains("3")
+        compose.onNodeWithText("3 个想去城市 · 2 个省级地区").assertIsDisplayed()
+        compose.onNodeWithText("全部城市 · 3 个城市").assertIsDisplayed()
+        val suzhou=compose.onNodeWithTag("wish-320500").fetchSemanticsNode().boundsInRoot
+        val chengde=compose.onNodeWithTag("wish-130800").fetchSemanticsNode().boundsInRoot
+        assertTrue(suzhou.top<chengde.top)
+        compose.onNodeWithTag("wish-320500").assertTextContains("江苏省")
+        assertTextFits();capture("all")
+        compose.onNodeWithTag("favorite-320500").performClick()
+        compose.onNodeWithTag("wish-province-all").assertIsSelected().assertTextContains("2")
+        compose.runOnIdle { state=state.copy(items=original) }
+        compose.onNodeWithTag("wish-province-all").assertIsSelected().assertTextContains("3")
+        select("130600")
+        compose.onNodeWithTag("wish-320500").assertDoesNotExist()
+        compose.onNodeWithTag("wish-province-all").performClick()
+        compose.onNodeWithTag("wish-320500").assertIsDisplayed()
+    }
+
     @Test fun onlySavedProvincesShowTheirOwnCitiesInCollectionOrder() {
         var guide="";var query=""
         compose.setContent { Screen(WishlistState(sample,loading=false),onGuide={guide=it},onQuery={query=it}) }
@@ -101,6 +123,9 @@ class WishlistSidebarTest {
                 Screen(WishlistState(entries,loading=false),browser=browser)
             }
         }
+        compose.onNodeWithTag("wish-province-all").assertIsSelected()
+        compose.onNodeWithTag("wishlist-list").performScrollToIndex(8)
+        val all=compose.runOnIdle { browser.list("").let { it.firstVisibleItemIndex to it.firstVisibleItemScrollOffset } }
         select("130800")
         compose.onNodeWithTag("wishlist-list").performScrollToIndex(4)
         val hb=compose.runOnIdle { browser.list(province("130800")).let { it.firstVisibleItemIndex to it.firstVisibleItemScrollOffset } }
@@ -117,6 +142,11 @@ class WishlistSidebarTest {
         compose.runOnIdle { assertEquals(hb,browser.list(province("130800")).let { it.firstVisibleItemIndex to it.firstVisibleItemScrollOffset }) }
         select("370200")
         compose.runOnIdle { assertEquals(sd,browser.list(province("370200")).let { it.firstVisibleItemIndex to it.firstVisibleItemScrollOffset }) }
+        compose.onNodeWithTag("wish-province-all").performClick()
+        compose.runOnIdle { assertEquals(all,browser.list("").let { it.firstVisibleItemIndex to it.firstVisibleItemScrollOffset }) }
+        restoration.emulateSavedInstanceStateRestore()
+        compose.onNodeWithTag("wish-province-all").assertIsSelected()
+        compose.runOnIdle { assertEquals(all,browser.list("").let { it.firstVisibleItemIndex to it.firstVisibleItemScrollOffset }) }
     }
 
     @Test fun provinceRailScrollSurvivesStateRestoration() {
@@ -128,6 +158,7 @@ class WishlistSidebarTest {
             Screen(WishlistState(entries,loading=false),browser=browser)
         }
         compose.onNodeWithTag("wish-province-navigation").performScrollToIndex(20)
+        compose.onNodeWithTag("wish-province-all").assertIsDisplayed()
         val position=compose.runOnIdle { browser.navigation.let { it.firstVisibleItemIndex to it.firstVisibleItemScrollOffset } }
         restoration.emulateSavedInstanceStateRestore()
         compose.runOnIdle { assertEquals(position,browser.navigation.let { it.firstVisibleItemIndex to it.firstVisibleItemScrollOffset }) }
@@ -150,6 +181,8 @@ class WishlistSidebarTest {
         var state by mutableStateOf(WishlistState(sample,loading=false));var guide=""
         compose.setContent { Screen(state,large=true,onGuide={guide=it}) }
         compose.onNodeWithTag("wish-province-navigation").assertDoesNotExist()
+        compose.onNodeWithTag("wish-province-dropdown").assertTextContains("全部城市 · 11 个城市")
+        assertTextFits();capture("all-compact")
         compose.onNodeWithTag("wish-province-dropdown").performClick()
         compose.onNodeWithTag("wish-province-menu-${province("370200")}").performClick()
         for(tag in listOf("favorite-370200","wish-guide-370200","wish-query-370200")) {
@@ -158,6 +191,10 @@ class WishlistSidebarTest {
             assertTrue("Touch target $tag",bounds.width>=min-1 && bounds.height>=min-1)
         }
         assertTextFits();capture("compact")
+        compose.onNodeWithTag("wish-province-dropdown").performClick()
+        compose.onNodeWithTag("wish-province-menu-all").performClick()
+        compose.onNodeWithTag("wish-province-dropdown").assertTextContains("全部城市 · 11 个城市")
+        compose.onNodeWithTag("wish-130800").assertIsDisplayed()
         compose.runOnIdle { state=WishlistState(listOf(WishCity("999999","旧城市","旧省份",1)),loading=false) }
         compose.onNodeWithTag("wish-query-999999").assertIsNotEnabled()
         compose.onNodeWithText("当前目录暂未收录此城市").assertIsDisplayed()

@@ -58,8 +58,12 @@ import java.time.format.DateTimeFormatter
     browser:WishlistBrowserState=rememberSaveable(saver=WishlistBrowserState.Saver) { WishlistBrowserState() }) {
     val groups=remember(state.items,catalog) { wishlistGroups(state.items,catalog) }
     val group=browser.current(groups)
+    val allCities=remember(state.items) { state.items.sortedByDescending { it.addedAt } }
+    val cities=if(browser.showAll) allCities else group?.cities.orEmpty()
+    val heading=if(browser.showAll) "全部城市" else group?.name.orEmpty()
+    val listKey=if(browser.showAll) "" else group?.name.orEmpty()
     // Only reconcile after a successful read. A transient reload must preserve browsing state.
-    SideEffect { if(!state.loading && state.error==null && group!=null) browser.select(group,groups) }
+    SideEffect { if(!browser.showAll && !state.loading && state.error==null && group!=null) browser.select(group,groups) }
     Column(Modifier.fillMaxSize().background(PageBackground)) {
         WishlistBrandHeader(when {
             state.loading && state.items.isEmpty()->"正在读取想去清单…"
@@ -69,7 +73,7 @@ import java.time.format.DateTimeFormatter
         },onAdd)
         if(state.loading && state.items.isEmpty()) LinearProgressIndicator(Modifier.fillMaxWidth().padding(horizontal=16.dp))
         else if(state.error!=null) Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(16.dp)) { Hint(state.error,true);SecondaryButton("重新读取",onRetry) }
-        else if(group==null) {
+        else if(state.items.isEmpty()) {
             Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState()).padding(horizontal=16.dp,vertical=72.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(18.dp)) {
                 UiIcon("star",Modifier.size(38.dp))
                 Text("先收藏一座想去的城市",style=MaterialTheme.typography.titleLarge)
@@ -82,33 +86,38 @@ import java.time.format.DateTimeFormatter
             Column {
                 if(compact) Box(Modifier.padding(horizontal=16.dp)) {
                     OutlinedButton({provinceMenu=true},Modifier.fillMaxWidth().heightIn(min=48.dp).testTag("wish-province-dropdown")) {
-                        Text("${group.name} · ${group.cities.size} 个城市",Modifier.weight(1f));UiIcon("down")
+                        Text("$heading · ${cities.size} 个城市",Modifier.weight(1f));UiIcon("down")
                     }
                     DropdownMenu(provinceMenu,{provinceMenu=false}) {
+                        DropdownMenuItem(text={Text("全部 · ${allCities.size}")},modifier=Modifier.testTag("wish-province-menu-all"),
+                            onClick={browser.selectAll();provinceMenu=false})
                         groups.forEach { p -> DropdownMenuItem(text={Text("${p.name} · ${p.cities.size}")},
                             modifier=Modifier.testTag("wish-province-menu-${p.name}"),
                             onClick={browser.select(p,groups);provinceMenu=false}) }
                     }
                 }
                 Row(Modifier.weight(1f)) {
-                    if(!compact) LazyColumn(Modifier.width(94.dp).fillMaxHeight().background(PrimaryTint.copy(alpha=.45f))
-                        .selectableGroup().testTag("wish-province-navigation"),state=browser.navigation) {
-                        items(groups,key={it.name}) { p ->
-                            val label=catalog.provinces.firstOrNull { it.name==p.name }?.shortName ?: p.name
-                            DestinationNavigationRow(label,p.cities.size,p==group,Modifier.testTag("wish-province-${p.name}")) { browser.select(p,groups) }
+                    if(!compact) Column(Modifier.width(94.dp).fillMaxHeight().background(PrimaryTint.copy(alpha=.45f)).selectableGroup()) {
+                        DestinationNavigationRow("全部",allCities.size,browser.showAll,Modifier.testTag("wish-province-all"),browser::selectAll)
+                        HorizontalDivider(color=Line)
+                        LazyColumn(Modifier.weight(1f).testTag("wish-province-navigation"),state=browser.navigation) {
+                            items(groups,key={it.name}) { p ->
+                                val label=catalog.provinces.firstOrNull { it.name==p.name }?.shortName ?: p.name
+                                DestinationNavigationRow(label,p.cities.size,!browser.showAll && p==group,Modifier.testTag("wish-province-${p.name}")) { browser.select(p,groups) }
+                            }
                         }
                     }
-                    key(group.name) {
-                        LazyColumn(Modifier.weight(1f).fillMaxHeight().testTag("wishlist-list"),state=browser.list(group.name),
+                    key(listKey) {
+                        LazyColumn(Modifier.weight(1f).fillMaxHeight().testTag("wishlist-list"),state=browser.list(listKey),
                             contentPadding=PaddingValues(start=12.dp,end=12.dp,top=12.dp,bottom=16.dp),verticalArrangement=Arrangement.spacedBy(10.dp)) {
                             item("heading") {
                                 Column(verticalArrangement=Arrangement.spacedBy(4.dp)) {
-                                    Text("${group.name} · ${group.cities.size} 个城市",style=MaterialTheme.typography.titleMedium)
+                                    Text("$heading · ${cities.size} 个城市",style=MaterialTheme.typography.titleMedium)
                                     Text("最近收藏优先",style=MaterialTheme.typography.bodySmall,color=Muted)
                                 }
                             }
-                            items(group.cities,key={it.cityId}) { wish ->
-                                WishlistCityCard(wish,catalog.byCity[wish.cityId],guides[wish.cityId],offline,!state.busy,onToggle,onGuide,onQuery)
+                            items(cities,key={it.cityId}) { wish ->
+                                WishlistCityCard(wish,catalog.byCity[wish.cityId],guides[wish.cityId],offline,!state.busy,browser.showAll,onToggle,onGuide,onQuery)
                             }
                             item("footer") { Text("想去清单保存在本机",style=MaterialTheme.typography.bodySmall,color=Muted) }
                         }
@@ -120,13 +129,14 @@ import java.time.format.DateTimeFormatter
 }
 
 @Composable private fun WishlistCityCard(wish:WishCity,city:City?,guide:DestinationGuide?,offline:List<OfflineEntry>,
-    enabled:Boolean,onToggle:(City)->Unit,onGuide:(String)->Unit,onQuery:(String)->Unit) {
+    enabled:Boolean,showProvince:Boolean,onToggle:(City)->Unit,onGuide:(String)->Unit,onQuery:(String)->Unit) {
     Surface(onClick={onGuide(wish.cityId)},modifier=Modifier.fillMaxWidth().testTag("wish-${wish.cityId}"),
         color=CardBackground,contentColor=Ink,shape=RoundedCornerShape(14.dp),border=BorderStroke(1.dp,CardBorder)) {
         Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
             Row(verticalAlignment=Alignment.CenterVertically) {
                 Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(4.dp)) {
                     Text(city?.name ?: wish.name,style=MaterialTheme.typography.titleLarge)
+                    if(showProvince) Text(city?.province?.name ?: wish.province.ifBlank { "其它城市" },style=MaterialTheme.typography.bodySmall,color=Muted)
                     Text(collectionDate(wish.addedAt),style=MaterialTheme.typography.bodySmall,color=Muted)
                 }
                 if(city!=null) FavoriteButton(city,true,{onToggle(city)},enabled)

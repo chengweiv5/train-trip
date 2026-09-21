@@ -17,6 +17,10 @@ class WishlistBrowserState {
         private set
     private val lists = mutableMapOf<String, LazyListState>()
 
+    val showAll: Boolean get() = provinceName.isEmpty()
+
+    fun selectAll() { provinceName = "" }
+
     fun list(province: String) = lists.getOrPut(province) { LazyListState() }
 
     fun current(groups: List<WishProvince>): WishProvince? =
