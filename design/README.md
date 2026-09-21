@@ -6,6 +6,8 @@
 
 出发时段四个快捷段可多选，自定义完成后替换为一个连续区间。08画板 `ghTAc` 中的首页 `JnJJH` 展示“早上＋晚上”，保留B4顶部与卡片样式；已完成保存、独立副本回读、结构及运行界面验证，见 [时段多选验收](../docs/verification/2026-09-21-departure-time-multi-select.md)。
 
+09画板 `SapWP` 补充最长车程预设与自定义时长滚轮，包含3小时预设 `TIQkt`、5小时30分自定义 `QebZA`；已保存并核对可编辑节点、布局与运行截图，见 [车程选择器验收](../docs/verification/2026-09-21-duration-picker.md)。
+
 ## v0.4.0 设置菜单（2026-09-19）
 
 [可编辑源文件](train-trip-v0.4.0.pen) 已保存四张新画板：设置菜单 `kL4Hp`、大模型设置 `Y1162`、搜索引擎设置 `cqFPn`、首页入口 `w27DL`。首页右上角进入设置，DeepSeek 模型/API Key 与 Tavily API Key 分项管理；保存只更新配置，空 Key 保留现有密钥。

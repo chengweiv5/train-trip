@@ -57353,6 +57353,747 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "SapWP",
+      "x": 10470,
+      "y": 0,
+      "name": "09 · 最长车程 · 3小时 / 5小时与自定义",
+      "width": 900,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "gap": 16,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "rXs0o",
+          "name": "车程设计标题",
+          "fill": "$palette-c1-ink",
+          "content": "最长车程 · 更直接的时长选择",
+          "fontFamily": "$cn-font",
+          "fontSize": 24,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "Pl0wU",
+          "name": "车程交互说明",
+          "fill": "$palette-c1-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "常用选 3 小时、5 小时；自定义滑动小时和分钟。点击完成保存，取消保留原值。",
+          "lineHeight": 1.5,
+          "fontFamily": "$cn-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "kRiUn",
+          "name": "预设与自定义对照",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "TIQkt",
+              "name": "快捷车程 · 3小时",
+              "clip": true,
+              "width": 390,
+              "height": 600,
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "stroke": "$palette-c1-border",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "FCAU9",
+                  "name": "拖动手柄区",
+                  "width": "fill_container",
+                  "height": 16,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "vWVyk",
+                      "name": "拖动手柄",
+                      "fill": "$palette-c1-line",
+                      "width": 32,
+                      "height": 4
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "Z6Ois0",
+                  "name": "最长车程标题",
+                  "fill": "$palette-c1-ink",
+                  "content": "最长车程",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "ADsHK",
+                  "name": "车程解释",
+                  "fill": "$palette-c1-muted",
+                  "content": "按单程列车运行时长筛选",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "E2fS4V",
+                  "name": "车程选项",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "OGI2K",
+                      "name": "选项 · 不限",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-control",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Tr4EI",
+                          "name": "不限文字",
+                          "fill": "$palette-c1-muted",
+                          "content": "不限",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "uFcvU",
+                      "name": "选项 · 3 小时",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-tint",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-primary",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "xgmsz",
+                          "name": "3 小时文字",
+                          "fill": "$palette-c1-primary",
+                          "content": "3 小时",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "JQhwM",
+                      "name": "选项 · 5 小时",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-control",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "BGT4Y",
+                          "name": "5 小时文字",
+                          "fill": "$palette-c1-muted",
+                          "content": "5 小时",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "B2sMJm",
+                      "name": "选项 · 自定义",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-control",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "zcQ3k",
+                          "name": "自定义文字",
+                          "fill": "$palette-c1-muted",
+                          "content": "自定义",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "fSO09",
+                  "name": "当前时长摘要",
+                  "fill": "$palette-c1-primary",
+                  "content": "最多 3 小时",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "UsBjN",
+                  "name": "内容自适应留白",
+                  "width": "fill_container",
+                  "height": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "ZSuWR",
+                  "name": "取消与完成",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "yRHCB",
+                      "name": "取消按钮",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-primary",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mfeE4",
+                          "name": "取消文字",
+                          "fill": "$palette-c1-primary",
+                          "content": "取消",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ayHPJ",
+                      "name": "完成按钮",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-primary",
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Q6SFZR",
+                          "name": "完成文字",
+                          "fill": "#FFFFFF",
+                          "content": "完成",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 15,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "QebZA",
+              "name": "自定义车程 · 5小时30分",
+              "clip": true,
+              "width": 390,
+              "height": 600,
+              "fill": "#FFFFFF",
+              "cornerRadius": 16,
+              "stroke": "$palette-c1-border",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 14,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "c9w43",
+                  "name": "拖动手柄区",
+                  "width": "fill_container",
+                  "height": 16,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "gNaK7",
+                      "name": "拖动手柄",
+                      "fill": "$palette-c1-line",
+                      "width": 32,
+                      "height": 4
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "BuMBB",
+                  "name": "最长车程标题",
+                  "fill": "$palette-c1-ink",
+                  "content": "最长车程",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "qGAAQ",
+                  "name": "车程解释",
+                  "fill": "$palette-c1-muted",
+                  "content": "按单程列车运行时长筛选",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "lOdoV",
+                  "name": "车程选项",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "o5nFy0",
+                      "name": "选项 · 不限",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-control",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Qmtnm",
+                          "name": "不限文字",
+                          "fill": "$palette-c1-muted",
+                          "content": "不限",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "b7Any",
+                      "name": "选项 · 3 小时",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-control",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "wJqry",
+                          "name": "3 小时文字",
+                          "fill": "$palette-c1-muted",
+                          "content": "3 小时",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ZUIDn",
+                      "name": "选项 · 5 小时",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-control",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "zrQLp",
+                          "name": "5 小时文字",
+                          "fill": "$palette-c1-muted",
+                          "content": "5 小时",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "FfuLV",
+                      "name": "选项 · 自定义",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-tint",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-primary",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "A1IfZW",
+                          "name": "自定义文字",
+                          "fill": "$palette-c1-primary",
+                          "content": "自定义",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "NRTqz",
+                  "name": "当前时长摘要",
+                  "fill": "$palette-c1-primary",
+                  "content": "最多 5 小时 30 分",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 20,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "NK7aW",
+                  "name": "时长双滚轮",
+                  "width": "fill_container",
+                  "fill": "$palette-c1-card",
+                  "cornerRadius": 12,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "gap": 12,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "GAgAA",
+                      "name": "小时滚轮",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "gorF8",
+                          "name": "小时单位",
+                          "fill": "$palette-c1-muted",
+                          "content": "小时",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "AIdLy",
+                          "name": "小时刻度04",
+                          "width": "fill_container",
+                          "height": 38,
+                          "fill": "#FFFFFF00",
+                          "cornerRadius": 6,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "KYzJl",
+                              "name": "小时值04",
+                              "fill": "$palette-c1-muted",
+                              "content": "04",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "ChgQB",
+                          "name": "小时刻度05",
+                          "width": "fill_container",
+                          "height": 38,
+                          "fill": "$palette-c1-tint",
+                          "cornerRadius": 6,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "s35sK",
+                              "name": "小时值05",
+                              "fill": "$palette-c1-primary",
+                              "content": "05",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 22,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "UhEE7",
+                          "name": "小时刻度06",
+                          "width": "fill_container",
+                          "height": 38,
+                          "fill": "#FFFFFF00",
+                          "cornerRadius": 6,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "E7lyP",
+                              "name": "小时值06",
+                              "fill": "$palette-c1-muted",
+                              "content": "06",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "FwVT2",
+                      "name": "分钟滚轮",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "hy4jr",
+                          "name": "分钟单位",
+                          "fill": "$palette-c1-muted",
+                          "content": "分钟",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "UAWxn",
+                          "name": "分钟刻度29",
+                          "width": "fill_container",
+                          "height": 38,
+                          "fill": "#FFFFFF00",
+                          "cornerRadius": 6,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "V0Irp",
+                              "name": "分钟值29",
+                              "fill": "$palette-c1-muted",
+                              "content": "29",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "jT18O",
+                          "name": "分钟刻度30",
+                          "width": "fill_container",
+                          "height": 38,
+                          "fill": "$palette-c1-tint",
+                          "cornerRadius": 6,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Zr2a8",
+                              "name": "分钟值30",
+                              "fill": "$palette-c1-primary",
+                              "content": "30",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 22,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "vCuSi",
+                          "name": "分钟刻度31",
+                          "width": "fill_container",
+                          "height": 38,
+                          "fill": "#FFFFFF00",
+                          "cornerRadius": 6,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "qzDpW",
+                              "name": "分钟值31",
+                              "fill": "$palette-c1-muted",
+                              "content": "31",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "KHiXa",
+                  "name": "滚轮操作提示",
+                  "fill": "$palette-c1-muted",
+                  "content": "滑动选择小时和分钟",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "IoJ6Y",
+                  "name": "内容自适应留白",
+                  "width": "fill_container",
+                  "height": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "sthXn",
+                  "name": "取消与完成",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "SwZGp",
+                      "name": "取消按钮",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "#FFFFFF",
+                      "cornerRadius": 8,
+                      "stroke": "$palette-c1-primary",
+                      "strokeWidth": 1,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "p9zKo",
+                          "name": "取消文字",
+                          "fill": "$palette-c1-primary",
+                          "content": "取消",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "J1YYj",
+                      "name": "完成按钮",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "$palette-c1-primary",
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GU0k0",
+                          "name": "完成文字",
+                          "fill": "#FFFFFF",
+                          "content": "完成",
+                          "fontFamily": "$cn-font",
+                          "fontSize": 15,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "eKWYV",
+          "name": "适配与边界规则",
+          "fill": "$palette-c1-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "大字号 / 窄屏：选项排为两列，正文可滚动，底部操作保持可达。自定义范围 1 分钟—100 小时；0 分钟时不能完成，100 小时分钟固定为 00。旧的 4 小时、8 小时作为自定义回显。",
+          "lineHeight": 1.5,
+          "fontFamily": "$cn-font",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        }
+      ]
     }
   ],
   "variables": {

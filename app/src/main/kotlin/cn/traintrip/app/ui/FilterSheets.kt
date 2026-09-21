@@ -9,8 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.unit.dp
 import cn.traintrip.app.UiState
 import cn.traintrip.core.*
@@ -25,10 +23,13 @@ import cn.traintrip.core.*
         TimeFilterSheet(s.filters,onDismiss,onApply)
         return
     }
+    if(kind=="duration") {
+        DurationFilterSheet(s.filters,onDismiss,onApply)
+        return
+    }
     var draft by remember(kind) { mutableStateOf(s.filters) }
     var search by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
-    var durationText by remember { mutableStateOf(draft.maxMinutes?.toString() ?: "") }
     val title=mapOf("origin" to "出发城市与车站","dates" to "选择出发日期","time" to "出发时段","seats" to "选择席别","people" to "几个人出发","duration" to "最长车程","scope" to "查询目的地")[kind].orEmpty()
     FilterPanel(title,onDismiss) {
         Column(Modifier.fillMaxWidth().weight(1f).padding(16.dp),verticalArrangement=Arrangement.spacedBy(14.dp)) {
@@ -50,12 +51,6 @@ import cn.traintrip.core.*
                         }
                         Text("多人出行按同一车次、同一席别匹配。",style=MaterialTheme.typography.bodySmall,color=Muted)
                     }
-                    "duration" -> {
-                        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                            listOf("不限" to "","4 小时" to "240","8 小时" to "480").forEach { (label,value)->Choice(label,durationText==value,{durationText=value},Modifier.weight(1f)) }
-                        }
-                        OutlinedTextField(durationText,{durationText=it},Modifier.fillMaxWidth(),label={Text("自定义分钟数，留空为不限")},keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Number),singleLine=true)
-                    }
                     "origin" -> {
                         OutlinedTextField(search,{search=it},Modifier.fillMaxWidth(),label={Text("搜索出发城市")},singleLine=true)
                         if(search.isNotBlank()) s.catalog.cities.filter { it.supported && (it.matches(search) || it.province.matches(search)) }.take(30).forEach { city->
@@ -70,12 +65,7 @@ import cn.traintrip.core.*
             }
             error?.let { Text(it,color=Amber) }
             PrimaryButton("完成",{
-                var candidate=draft
-                if(kind=="duration") {
-                    val n=durationText.toIntOrNull()
-                    if(durationText.isNotBlank() && (n==null || n<=0 || n>6000)) {error="请填写 1–6000 分钟，或留空为不限";return@PrimaryButton}
-                    candidate=candidate.copy(maxMinutes=n)
-                }
+                val candidate=draft
                 val validation=candidate.validate() ?: if(candidate.destinationCityIds.isEmpty()) "请至少选择一个目的地城市" else null
                 if(validation!=null) error=validation else onApply(candidate)
             })
