@@ -15,10 +15,12 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import cn.traintrip.app.R
 import androidx.compose.ui.unit.sp
 
 @Composable internal fun HomeBrandHeader(onSettings:()->Unit) {
-    BrandHeader("train","有票就出发",false,action={
+    BrandHeader("train",stringResource(R.string.app_name),false,action={
         HeaderIconButton("settings","设置",onSettings,Modifier.testTag("content-settings"))
     }) {
         Column(Modifier.fillMaxWidth().heightIn(min=68.dp).padding(start=16.dp,end=16.dp,top=4.dp,bottom=14.dp),

@@ -26,7 +26,7 @@ class AppFlowTest {
     }
 
     @Test fun filtersApplyCancelAndPersist() {
-        compose.onNodeWithText("有票就出发").assertIsDisplayed()
+        compose.onNodeWithText("有票再出发").assertIsDisplayed()
         compose.onNodeWithText("乘车人数").performScrollTo().performClick()
         compose.onNodeWithText("＋").performClick()
         compose.onNodeWithText("2 位成人").assertExists()
@@ -117,7 +117,7 @@ class AppFlowTest {
         try {
             shell("settings put system font_scale 1.3")
             compose.activityRule.scenario.recreate()
-            compose.onNodeWithText("有票就出发").assertIsDisplayed()
+            compose.onNodeWithText("有票再出发").assertIsDisplayed()
             compose.onNodeWithText("查询有票城市").performScrollTo().assertIsDisplayed()
             capture("05-large-font")
         } finally { shell("settings put system font_scale 1.0") }

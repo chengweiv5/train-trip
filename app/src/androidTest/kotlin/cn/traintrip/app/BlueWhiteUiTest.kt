@@ -41,7 +41,7 @@ class BlueWhiteUiTest {
             if(settings) SettingsScreen(DestinationState(configured=true,tavilyConfigured=true),{settings=false},{_,_,done->done()},{_,done->done()},{done->done()},{done->done()})
             else FiltersScreen(UiState(catalog,filters),{filters=it},{},{settings=true})
         } } }
-        compose.onNodeWithText("有票就出发").assertIsDisplayed()
+        compose.onNodeWithText("有票再出发").assertIsDisplayed()
         assertTextFits();capture("home-top")
         compose.onNodeWithTag("search-cities").performScrollTo().assertIsDisplayed()
         assertTextFits();capture("home-bottom")

@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import cn.traintrip.app.R
 import cn.traintrip.app.*
 import cn.traintrip.core.*
 
@@ -29,7 +31,7 @@ import cn.traintrip.core.*
     Scaffold(containerColor=PageBackground,contentWindowInsets=WindowInsets(0,0,0,0),topBar={AppTopBar("关于与更新",onBack)}) { padding ->
         Column(Modifier.fillMaxSize().padding(padding).verticalScroll(rememberScrollState()).padding(16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
             Column(Modifier.fillMaxWidth().padding(vertical=28.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Text("有票就出发",style=MaterialTheme.typography.headlineSmall)
+                Text(stringResource(R.string.app_name),style=MaterialTheme.typography.headlineSmall)
                 Text("先看哪里有票，再决定去哪里",style=MaterialTheme.typography.bodySmall,color=Muted)
                 Text("当前版本 v$version",style=MaterialTheme.typography.bodySmall,color=Muted)
             }
