@@ -2,7 +2,9 @@
 
 ## v0.6.0 B4 冰蓝湖蓝
 
-已确认并实现白底浅蓝卡片、首页与想去统一顶部；当前视觉以 [B4 设计说明](surface-contrast.md) 和 [Pencil 源文件](train-trip-surface-contrast.pen) 的07画板为准，以下旧配色记录保留为历史。
+已确认并实现白底浅蓝卡片、首页与想去统一顶部；当前视觉以 [B4 设计说明](surface-contrast.md) 和 [Pencil 源文件](train-trip-surface-contrast.pen) 的07画板为准，08画板补充出发时段多选状态和交互规则。以下旧配色记录保留为历史。
+
+出发时段四个快捷段可多选，自定义完成后替换为一个连续区间。08画板 `ghTAc` 中的首页 `JnJJH` 展示“早上＋晚上”，保留B4顶部与卡片样式；已完成保存、独立副本回读、结构及运行界面验证，见 [时段多选验收](../docs/verification/2026-09-21-departure-time-multi-select.md)。
 
 ## v0.4.0 设置菜单（2026-09-19）
 

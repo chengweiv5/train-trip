@@ -46,13 +46,14 @@ import java.time.format.DateTimeFormatter
                     HomeDateRange(f)
                 }
                 HorizontalDivider(color=Line)
-                SectionTitle("出发时段","自定义") { sheet="time" }
+                SectionTitle("出发时段 · 可多选","自定义") { sheet="time" }
                 Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
-                    listOf(Triple("全天",0,1440),Triple("凌晨",0,360),Triple("早上",360,720),Triple("下午",720,1080),Triple("晚上",1080,1440)).forEach { (name,start,end) ->
-                        Choice(name,f.startMinute==start && f.endMinute==end,{onUpdate(f.copy(startMinute=start,endMinute=end))},Modifier.weight(1f),contentPadding=PaddingValues(horizontal=2.dp,vertical=10.dp))
+                    Choice("全天",f.isAllDay,{onUpdate(f.withCustomTime(0,1440))},Modifier.weight(1f).testTag("time-all"),contentPadding=PaddingValues(horizontal=2.dp,vertical=10.dp),toggle=true)
+                    DeparturePeriod.entries.forEach { period ->
+                        Choice(period.label,period in f.selectedDeparturePeriods,{onUpdate(f.toggleDeparturePeriod(period))},Modifier.weight(1f).testTag("time-${period.name}"),contentPadding=PaddingValues(horizontal=2.dp,vertical=10.dp),toggle=true)
                     }
                 }
-                Text("${timeText(f.startMinute)}–${timeText(f.endMinute)} · 所选日期每天适用",style=MaterialTheme.typography.bodySmall,color=Muted)
+                Text("${timeIntervalsText(f)} · 所选日期每天适用",Modifier.testTag("time-intervals"),style=MaterialTheme.typography.bodySmall,color=Muted)
             }
             ContentCard(Modifier.fillMaxWidth()) {
                 FilterRow("席别",seatSummary(f)) { sheet="seats" }

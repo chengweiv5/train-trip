@@ -2,6 +2,7 @@ package cn.traintrip.app.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.Role
 import cn.traintrip.core.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -38,8 +40,8 @@ import java.time.format.DateTimeFormatter
 @Composable fun Hint(text:String,warning:Boolean=false,modifier:Modifier=Modifier) {
     Surface(modifier.fillMaxWidth(),color=if(warning) AmberBg else PrimaryTint,shape=RoundedCornerShape(8.dp)) { Text(text,Modifier.padding(14.dp),style=MaterialTheme.typography.bodyMedium,color=if(warning) Amber else Primary) }
 }
-@Composable fun Choice(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier,contentPadding:PaddingValues=PaddingValues(12.dp),maxLines:Int=Int.MAX_VALUE) {
-    Surface(modifier.heightIn(min=48.dp).clickable(onClick=onClick),shape=RoundedCornerShape(8.dp),color=if(selected) PrimaryTint else ControlBackground,border=BorderStroke(1.dp,if(selected) Primary else Line)) {
+@Composable fun Choice(text:String,selected:Boolean,onClick:()->Unit,modifier:Modifier=Modifier,contentPadding:PaddingValues=PaddingValues(12.dp),maxLines:Int=Int.MAX_VALUE,toggle:Boolean=false) {
+    Surface(modifier.heightIn(min=48.dp).then(if(toggle)Modifier.toggleable(selected,role=Role.Checkbox,onValueChange={onClick()}) else Modifier.clickable(onClick=onClick)),shape=RoundedCornerShape(8.dp),color=if(selected) PrimaryTint else ControlBackground,border=BorderStroke(1.dp,if(selected) Primary else Line)) {
         Box(Modifier.padding(contentPadding),contentAlignment=Alignment.Center) { Text(text,color=if(selected) Primary else Muted,style=MaterialTheme.typography.bodyMedium,fontWeight=if(selected) FontWeight.SemiBold else FontWeight.Normal,maxLines=maxLines) }
     }
 }
@@ -48,7 +50,16 @@ import java.time.format.DateTimeFormatter
 fun dateLabel(d:LocalDate):String=d.format(DateTimeFormatter.ofPattern("M月d日"))
 fun dateRange(f:SearchFilters):String=if(f.startDate==f.endDate) dateLabel(f.startDate) else "${dateLabel(f.startDate)}–${dateLabel(f.endDate)}"
 fun timeText(m:Int):String="%02d:%02d".format(m/60,m%60)
-fun timeRange(f:SearchFilters):String=if(f.startMinute==0 && f.endMinute==1440) "全天出发" else "${timeText(f.startMinute)}–${timeText(f.endMinute)}"
+fun timeRange(f:SearchFilters):String=when {
+    f.isAllDay->"全天出发"
+    f.departurePeriods.isNotEmpty()->f.departurePeriods.sortedBy { it.startMinute }.joinToString("、") { it.label }
+    else->timeIntervalsText(f)
+}
+fun timeIntervalsText(f:SearchFilters):String=when {
+    f.isAllDay->"00:00–24:00"
+    f.departurePeriods.isEmpty()->"${timeText(f.startMinute)}–${timeText(f.endMinute)}"
+    else->f.departurePeriods.sortedBy { it.startMinute }.joinToString("、") { "${timeText(it.startMinute)}–${timeText(it.endMinute)}" }
+}
 fun durationText(minutes:Int?):String=if(minutes==null) "时刻待定" else if(minutes<60) "$minutes 分钟" else "${minutes/60} 小时${if(minutes%60==0) "" else " ${minutes%60} 分"}"
 fun seatSummary(f:SearchFilters):String=if(f.seats.size==SeatType.entries.size) "不限，含无座" else f.seats.sortedBy { it.ordinal }.joinToString("、") { it.label }
 

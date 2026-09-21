@@ -43,9 +43,12 @@ data class SearchFilters(
     val startDate: LocalDate = today().plusDays(1), val endDate: LocalDate = startDate,
     val startMinute: Int = 0, val endMinute: Int = 1440,
     val seats: Set<SeatType> = SeatType.entries.toSet(), val people: Int = 1,
-    val maxMinutes: Int? = null, val destinationCityIds: Set<String> = emptySet()
+    val maxMinutes: Int? = null, val destinationCityIds: Set<String> = emptySet(),
+    val departurePeriods: Set<DeparturePeriod> = emptySet()
 ) {
     fun acceptsTime(minute: Int): Boolean = when {
+        minute !in 0..1439 -> false
+        departurePeriods.isNotEmpty() -> departurePeriods.any { minute in it.startMinute until it.endMinute }
         startMinute == 0 && endMinute == 1440 -> true
         startMinute < endMinute -> minute >= startMinute && minute < endMinute
         else -> minute >= startMinute || minute < endMinute
@@ -56,7 +59,7 @@ data class SearchFilters(
         endDate < startDate -> "结束日期不能早于开始日期"
         java.time.temporal.ChronoUnit.DAYS.between(startDate,endDate) > 30 -> "一次最多查询 31 天，请缩短日期范围"
         people !in 1..20 -> "乘车人数需为 1–20 人"
-        startMinute !in 0..1439 || endMinute !in 0..1440 || startMinute == endMinute -> "请设置有效的出发时段"
+        departurePeriods.isEmpty() && (startMinute !in 0..1439 || endMinute !in 0..1440 || startMinute == endMinute) -> "请设置有效的出发时段"
         seats.isEmpty() -> "请至少选择一种席别"
         maxMinutes != null && maxMinutes <= 0 -> "最长车程需大于零"
         else -> null

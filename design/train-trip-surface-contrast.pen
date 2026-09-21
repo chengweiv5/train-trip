@@ -56289,6 +56289,1070 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "ghTAc",
+      "x": 9740,
+      "y": 0,
+      "name": "08 · 出发时段多选 · 已确认",
+      "width": 650,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "gap": 16,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "r8Kwj",
+          "name": "多选标题",
+          "fill": "$palette-c1-ink",
+          "content": "出发时段 · 支持多选",
+          "fontFamily": "$cn-font",
+          "fontSize": 24,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "uPyIL",
+          "name": "多选交互规则",
+          "fill": "$palette-c1-muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "早上 + 晚上：只查询两个时段的并集。点全天、取消最后一项或四项全选均恢复全天；自定义完成后替换，取消保留原选择。",
+          "lineHeight": 1.5,
+          "fontFamily": "$cn-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "JnJJH",
+          "name": "首页 · 早上和晚上已选",
+          "clip": true,
+          "width": 390,
+          "height": 920,
+          "fill": "$contrast-page-b",
+          "stroke": "#D0D7E2",
+          "strokeWidth": 1,
+          "strokeAlignment": "inner",
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "VGhMw",
+              "name": "首页品牌区 · 冰蓝渐变",
+              "width": "fill_container",
+              "height": 164,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "$b4-header-top",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FFFFFF",
+                    "position": 1
+                  }
+                ]
+              },
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "LudYF",
+                  "name": "系统状态栏",
+                  "width": "fill_container",
+                  "height": 40,
+                  "fill": "#FFFFFF00",
+                  "padding": [
+                    0,
+                    20
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "AW8ky",
+                      "name": "时间",
+                      "fill": "$palette-c1-ink",
+                      "content": "9:41",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nz50n",
+                      "name": "系统图标",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "X0knD",
+                          "name": "移动信号",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "signal",
+                          "library": "lucide",
+                          "fill": "$palette-c1-ink"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "aW080",
+                          "name": "无线网络",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "wifi",
+                          "library": "lucide",
+                          "fill": "$palette-c1-ink"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "dFnZr",
+                          "name": "电量",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "battery-full",
+                          "library": "lucide",
+                          "fill": "$palette-c1-ink"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Strvd",
+                  "name": "首页导航",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "#FFFFFF00",
+                  "gap": 12,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "AexBP",
+                      "name": "火车标识与应用名",
+                      "height": 48,
+                      "gap": 9,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "VTUcI",
+                          "name": "湖蓝火车标识",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "$palette-c1-primary",
+                          "cornerRadius": 10,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "omHUY",
+                              "name": "火车品牌图形",
+                              "width": 20,
+                              "height": 20,
+                              "icon": "train-front",
+                              "library": "lucide",
+                              "fill": "#FFFFFF"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "NWnBM",
+                          "name": "应用名",
+                          "fill": "$palette-c1-ink",
+                          "content": "有票就出发",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SCVn1",
+                      "name": "设置入口 · 48dp",
+                      "width": 48,
+                      "height": 48,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nNzGD",
+                          "name": "设置圆角底",
+                          "width": 36,
+                          "height": 36,
+                          "fill": "$b4-header-control",
+                          "cornerRadius": 12,
+                          "stroke": "$b4-header-line",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "HNcmR",
+                              "name": "设置",
+                              "width": 19,
+                              "height": 19,
+                              "icon": "settings",
+                              "library": "lucide",
+                              "fill": "$palette-c1-primary"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sVEa0",
+                  "name": "查询引导",
+                  "width": "fill_container",
+                  "height": 68,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    2,
+                    16,
+                    10,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "L0tp5K",
+                      "name": "首页简介",
+                      "fill": "$palette-c1-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "先看有票，再选目的地",
+                      "lineHeight": 1.3,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "vteis",
+                      "name": "行程说明",
+                      "fill": "$palette-c1-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "查直达去程，发现周边好去处",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VhKym",
+              "name": "首页内容",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "padding": [
+                0,
+                16,
+                16,
+                16
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "yyzGn",
+                  "name": "出行条件表单",
+                  "width": "fill_container",
+                  "fill": "$palette-c1-card",
+                  "cornerRadius": 12,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "aOgod",
+                      "name": "出发城市",
+                      "width": "fill_container",
+                      "height": 68,
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "b8yOBR",
+                          "name": "出发地信息",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 2,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "B7WDd6",
+                              "name": "出发地标签",
+                              "fill": "$palette-c1-muted",
+                              "content": "出发地",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "TOFYl",
+                              "name": "出发城市",
+                              "fill": "$palette-c1-ink",
+                              "content": "北京",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 26,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "OrLAT",
+                          "name": "同城车站入口",
+                          "gap": 4,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "dFkFW",
+                              "name": "同城车站",
+                              "fill": "$palette-c1-muted",
+                              "content": "同城各站",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "GbGNx",
+                              "name": "选择出发地",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "chevron-right",
+                              "library": "lucide",
+                              "fill": "$palette-c1-muted"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SwFLS",
+                      "name": "细分隔线",
+                      "width": "fill_container",
+                      "height": 1,
+                      "fill": "$palette-c1-line",
+                      "layout": "vertical"
+                    },
+                    {
+                      "type": "text",
+                      "id": "uXzW1",
+                      "name": "日期标签",
+                      "fill": "$palette-c1-muted",
+                      "content": "出发日期",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "kYyWz",
+                      "name": "日期范围选择",
+                      "width": "fill_container",
+                      "height": 52,
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "L36EO2",
+                          "name": "日期 · 10月2日",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "p59dS",
+                              "name": "日期值",
+                              "fill": "$palette-c1-ink",
+                              "content": "10月2日",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 22,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "OT8hk",
+                              "name": "星期",
+                              "fill": "$palette-c1-muted",
+                              "content": "周五",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "Y7aKP",
+                          "name": "日期范围",
+                          "fill": "$palette-c1-muted",
+                          "content": "—  共2天  —",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "rLOKv",
+                          "name": "日期 · 10月3日",
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "zfhAP",
+                              "name": "日期值",
+                              "fill": "$palette-c1-ink",
+                              "content": "10月3日",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 22,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "Ldqkv",
+                              "name": "星期",
+                              "fill": "$palette-c1-muted",
+                              "content": "周六",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "m4l8IL",
+                      "name": "细分隔线",
+                      "width": "fill_container",
+                      "height": 1,
+                      "fill": "$palette-c1-line",
+                      "layout": "vertical"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "T0T7r",
+                      "name": "出发时段标签",
+                      "width": "fill_container",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "FrXHI",
+                          "name": "出发时段",
+                          "fill": "$palette-c1-ink",
+                          "content": "出发时段 · 可多选",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "text",
+                          "id": "FILsi",
+                          "name": "自定义时段",
+                          "fill": "$palette-c1-primary",
+                          "content": "自定义  ›",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "XtFIM",
+                      "name": "时间预设",
+                      "width": "fill_container",
+                      "height": 48,
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "PaHYa",
+                          "name": "筛选 · 全天",
+                          "width": "fill_container",
+                          "height": 36,
+                          "fill": "$palette-c1-control",
+                          "cornerRadius": 6,
+                          "stroke": "$palette-c1-border",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "i2LGp",
+                              "name": "全天",
+                              "fill": "$palette-c1-muted",
+                              "content": "全天",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "umcsR",
+                          "name": "筛选 · 凌晨",
+                          "width": "fill_container",
+                          "height": 36,
+                          "fill": "$palette-c1-control",
+                          "cornerRadius": 6,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "NwvHG",
+                              "name": "凌晨",
+                              "fill": "$palette-c1-muted",
+                              "content": "凌晨",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "VEJCj",
+                          "name": "筛选 · 早上",
+                          "width": "fill_container",
+                          "height": 36,
+                          "fill": "$palette-c1-tint",
+                          "cornerRadius": 6,
+                          "stroke": "$palette-c1-primary",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ShJk5",
+                              "name": "早上",
+                              "fill": "$palette-c1-primary",
+                              "content": "早上",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "dX1aj",
+                          "name": "筛选 · 下午",
+                          "width": "fill_container",
+                          "height": 36,
+                          "fill": "$palette-c1-control",
+                          "cornerRadius": 6,
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "U303uf",
+                              "name": "下午",
+                              "fill": "$palette-c1-muted",
+                              "content": "下午",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "MnyJo",
+                          "name": "筛选 · 晚上",
+                          "width": "fill_container",
+                          "height": 36,
+                          "fill": "$palette-c1-tint",
+                          "cornerRadius": 6,
+                          "stroke": "$palette-c1-primary",
+                          "strokeWidth": 1,
+                          "strokeAlignment": "inner",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "rCNRJ",
+                              "name": "晚上",
+                              "fill": "$palette-c1-primary",
+                              "content": "晚上",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "U0nz4",
+                      "name": "时段说明",
+                      "fill": "$palette-c1-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "06:00–12:00、18:00–24:00\n所选日期每天适用",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "KKGxy",
+                  "name": "更多出行条件",
+                  "width": "fill_container",
+                  "fill": "$palette-c1-card",
+                  "cornerRadius": 12,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "strokeAlignment": "inner",
+                  "layout": "vertical",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "iTKQh",
+                      "name": "席别选择",
+                      "width": "fill_container",
+                      "height": 48,
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Y2PGSG",
+                          "name": "席别",
+                          "fill": "$palette-c1-ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "席别",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "QEBU6",
+                          "name": "席别当前值",
+                          "fill": "$palette-c1-muted",
+                          "content": "二等座、一等座",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "T98wte",
+                          "name": "席别箭头",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "chevron-right",
+                          "library": "lucide",
+                          "fill": "$palette-c1-muted"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Bw4Ym",
+                      "name": "细分隔线",
+                      "width": "fill_container",
+                      "height": 1,
+                      "fill": "$palette-c1-line",
+                      "layout": "vertical"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Plqjr",
+                      "name": "乘车人数选择",
+                      "width": "fill_container",
+                      "height": 48,
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "VhNtr",
+                          "name": "乘车人数",
+                          "fill": "$palette-c1-ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "乘车人数",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Ltu7P",
+                          "name": "乘车人数当前值",
+                          "fill": "$palette-c1-muted",
+                          "content": "1人",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "UDeIq",
+                          "name": "乘车人数箭头",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "chevron-right",
+                          "library": "lucide",
+                          "fill": "$palette-c1-muted"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "RjcbZ",
+                      "name": "细分隔线",
+                      "width": "fill_container",
+                      "height": 1,
+                      "fill": "$palette-c1-line",
+                      "layout": "vertical"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "sqOg7",
+                      "name": "最长车程选择",
+                      "width": "fill_container",
+                      "height": 48,
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "GOYKF",
+                          "name": "最长车程",
+                          "fill": "$palette-c1-ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "最长车程",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "iEzRo",
+                          "name": "最长车程当前值",
+                          "fill": "$palette-c1-muted",
+                          "content": "3小时以内",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "s7jwh",
+                          "name": "最长车程箭头",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "chevron-right",
+                          "library": "lucide",
+                          "fill": "$palette-c1-muted"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "NAcTd",
+                      "name": "细分隔线",
+                      "width": "fill_container",
+                      "height": 1,
+                      "fill": "$palette-c1-line",
+                      "layout": "vertical"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "d6OMm",
+                      "name": "查询目的地选择",
+                      "width": "fill_container",
+                      "height": 48,
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QR9ji",
+                          "name": "查询目的地",
+                          "fill": "$palette-c1-ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "查询目的地",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qzEIt",
+                          "name": "查询目的地当前值",
+                          "fill": "$palette-c1-muted",
+                          "content": "8 个城市 · 3 个省份",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "icon",
+                          "id": "PwpuP",
+                          "name": "查询目的地箭头",
+                          "width": 16,
+                          "height": 16,
+                          "icon": "chevron-right",
+                          "library": "lucide",
+                          "fill": "$palette-c1-muted"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "HV5Xc",
+                  "name": "按钮 · 查询有票城市",
+                  "width": "fill_container",
+                  "height": 48,
+                  "fill": "$palette-c1-primary",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PnQGu",
+                      "name": "查询有票城市",
+                      "fill": "#FFFFFF",
+                      "content": "查询有票城市",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "pb3dU",
+                  "name": "购买说明",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "只看直达去程 · 购票在12306 App完成",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gRkf5",
+              "name": "一级导航 · 查票与想去",
+              "width": "fill_container",
+              "height": 56,
+              "fill": "$cn-surface",
+              "stroke": "$palette-c1-line",
+              "strokeWidth": {
+                "top": 1
+              },
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "l39EI",
+                  "name": "查票标签 · 48dp",
+                  "width": "fill_container",
+                  "height": 56,
+                  "layout": "vertical",
+                  "gap": 3,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "JfHFR",
+                      "name": "查票图标",
+                      "width": 22,
+                      "height": 22,
+                      "icon": "train-front",
+                      "library": "lucide",
+                      "fill": "$palette-c1-primary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Uq3Zt",
+                      "name": "查票文字",
+                      "fill": "$palette-c1-primary",
+                      "content": "查票",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "kUiyY",
+                  "name": "想去标签 · 48dp",
+                  "width": "fill_container",
+                  "height": 56,
+                  "layout": "vertical",
+                  "gap": 3,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "hX3dp",
+                      "name": "想去图标",
+                      "width": 22,
+                      "height": 22,
+                      "icon": "star",
+                      "library": "lucide",
+                      "fill": "$palette-c1-muted"
+                    },
+                    {
+                      "type": "text",
+                      "id": "JzEfn",
+                      "name": "想去文字",
+                      "fill": "$palette-c1-muted",
+                      "content": "想去",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "QGdeN",
+              "name": "系统手势安全区",
+              "width": "fill_container",
+              "height": 28,
+              "fill": "$cn-surface",
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 2,
+                  "id": "xRvTF",
+                  "name": "系统手势条",
+                  "fill": "#B9C1CC",
+                  "width": 110,
+                  "height": 4
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "variables": {

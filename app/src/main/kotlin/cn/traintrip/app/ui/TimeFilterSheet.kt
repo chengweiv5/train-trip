@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import cn.traintrip.core.SearchFilters
+import cn.traintrip.core.withCustomTime
 
 @Composable fun TimeFilterSheet(filters:SearchFilters,onDismiss:()->Unit,onApply:(SearchFilters)->Unit) {
     var start by rememberSaveable { mutableIntStateOf(filters.startMinute) }
@@ -32,6 +33,7 @@ import cn.traintrip.core.SearchFilters
             Text("选择出发时段",style=MaterialTheme.typography.titleLarge)
             Text("北京时间 · 所选日期每天适用",color=Muted,style=MaterialTheme.typography.bodyMedium)
             Column(Modifier.weight(1f,fill=false).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(14.dp)) {
+                if(filters.departurePeriods.size>1) Text("完成后将替换已选快捷时段",style=MaterialTheme.typography.bodySmall,color=Muted)
                 Text("${timeText(start)} – ${timeText(end)}",Modifier.testTag("time-summary"),color=Primary,style=MaterialTheme.typography.titleLarge)
                 BoxWithConstraints(Modifier.fillMaxWidth()) {
                     val startWheels:@Composable (Modifier)->Unit={m->TimeWheels("开始",start,false,m,{start=it}) { key,moving->scrolling["start-$key"]=moving } }
@@ -50,7 +52,7 @@ import cn.traintrip.core.SearchFilters
             }
             Row(horizontalArrangement=Arrangement.spacedBy(12.dp)) {
                 SecondaryButton("取消",onDismiss,Modifier.weight(1f))
-                PrimaryButton("完成",{onApply(filters.copy(startMinute=start,endMinute=end))},valid && settled,Modifier.weight(1f).testTag("apply-time"))
+                PrimaryButton("完成",{onApply(filters.withCustomTime(start,end))},valid && settled,Modifier.weight(1f).testTag("apply-time"))
             }
         }
     }
