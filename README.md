@@ -20,7 +20,7 @@ v0.5.0 已实现用户确认的 A 方案：底部「查票 / 想去」双栏目�
 
 版本检查由用户手动发起，从 GitHub 正式 Release 列表比较版本并检查 APK 和校验附件，发现新版本后打开发布页。无需自建服务器，也不会自动下载或安装。
 
-本地正式候选包：`artifacts/train-trip-v0.6.0-release.apk`，校验文件同名 `.sha256`。应用名“有票就出发”，包名 `cn.traintrip.app`，版本 `0.6.0` / versionCode `10`，沿用 v0.4.0 的生产签名。包内不包含个人 API Key；新安装需自行配置内容服务，收藏、内置资料和查票不依赖这些 Key。当前候选包已包含出发时段多选、最长车程滚轮和目的地“想去”分组，尚未创建 v0.6.0 GitHub Release。真机为保留数据沿用历史设备证书，使用独立的 `artifacts/train-trip-v0.6.0-device-release.apk`；两包来自同一 Release 构建，均不可调试。具体验证见 [v0.6.0 验收](docs/verification/2026-09-21-v0.6.0-ui.md) 和 [本次安装交付记录](docs/verification/2026-09-21-v0.6.0-install-push.md)。
+本地正式发布包：`artifacts/train-trip-v0.6.0-release.apk`，校验文件同名 `.sha256`。应用名“有票就出发”，包名 `cn.traintrip.app`，版本 `0.6.0` / versionCode `10`，沿用 v0.4.0 的生产签名。包内不包含个人 API Key；新安装需自行配置内容服务，收藏、内置资料和查票不依赖这些 Key。v0.6.0 正式版已发布，包含出发时段多选、最长车程滚轮和目的地“想去”分组。真机为保留数据沿用历史设备证书，使用独立的 `artifacts/train-trip-v0.6.0-device-release.apk`；两包来自同一 Release 构建，均不可调试。具体验证见 [v0.6.0 验收](docs/verification/2026-09-21-v0.6.0-ui.md) 和 [本次安装交付记录](docs/verification/2026-09-21-v0.6.0-install-push.md)。
 
 车次页仍支持手动刷新当前城市，点击整张卡片标记意向车次，席别只展示余票；无需选择也可点击“打开 12306 App”。详情介绍有景点 / 美食 / 玩法 / 贴士四个分页，支持横滑与阅读位置恢复。
 
@@ -43,6 +43,13 @@ v0.5.0 已实现用户确认的 A 方案：底部「查票 / 想去」双栏目�
 默认选择 24 个明确列出的城市，可在“查询目的地”调整。每个合并前的铁路城市保留一个代表站，仍可能遗漏部分同城站或目的地；界面始终显示覆盖说明，不声称全国完整。票源为 12306 当前网页使用的匿名查询协议，协议变化或访问失败会明确报错。
 
 已通过 Android API 36 临时模拟器验证。2026-09-19 已在 Mate 60 Pro（ALN-AL00，HarmonyOS 4.2.0.221，Android API 31）安装并正常启动；历史 v0.4.0 已覆盖安装，筛选设置保持不变；当时已实测原生唤起铁路12306并返回。v0.5.0 后续已在真机验证收藏持久化。2026-09-21已保留数据覆盖安装包含三项筛选优化的v0.6.0：回拉APK哈希一致，UID和首次安装时间保持不变。本次只验证安装和包状态，未启动App逐项验收真机界面；三项功能已在隔离模拟器通过离线回归，未重复查询真实票源。
+
+## 正式版本下载
+
+- **[v0.6.0 最新版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.6.0)** · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)
+- [v0.5.0 历史版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.5.0) · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.5.0/train-trip-v0.5.0-release.apk)
+
+两版均提供生产签名 Release APK 与 SHA256 校验附件，不包含个人服务 Key。支持 Android 8.0 及以上，可覆盖升级同生产证书的旧正式版。历史设备测试证书与公开生产证书不同，无法互相覆盖；已安装专用设备包的用户应继续使用同证书升级包，保留现有数据。
 
 ## 构建与验证
 
