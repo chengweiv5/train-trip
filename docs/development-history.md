@@ -1,14 +1,16 @@
 # 开发历史与验收索引
 
-本文保留 README 改版前的开发与交付记录，内容截至 2026-09-21。产品介绍和下载入口见[项目首页](../README.md)。
+本文保留 README 改版前的开发与交付记录，内容截至 2026-09-22。产品介绍和下载入口见[项目首页](../README.md)。
 
 自用 Android 旅行目的地发现工具：输入北京出发的日期、时段等条件，按真实余票找出可去的城市，再到 12306 购票。
 
 目标设备：华为 Mate 60 Pro，HarmonyOS 4.2.0。使用 Kotlin + Jetpack Compose，输出 Android APK。
 
-## 版本进展（截至 2026-09-21）
+## 版本进展（截至 2026-09-22）
 
-v0.6.1 应用名更新为“有票再出发”，桌面、首页及关于页使用同一名称资源。实现四项飞书反馈，版本为 `0.6.1` / versionCode `11`：想去城市按省分组，省内最近收藏优先；子页面顶部统一为 B4 渐变与圆角返回入口；目的地相册最多 5 张，可横滑、看大图及来源；上次检查更新时间与结果保存在本机，返回或重启后保留。详细验收见 [v0.6.1](verification/2026-09-21-v0.6.1.md)。生产签名候选包位于 `artifacts/train-trip-v0.6.1-release.apk`，本轮未发布；下方 v0.6.0 仍是最新公开下载。
+v0.7.0 正式版（versionCode `12`）汇总 v0.6.1 开发功能及想去清单双栏优化：左侧按省份浏览，顶部固定「全部」，右侧按收藏时间从新到旧排列；全部与各省分别保留浏览位置，窄屏使用下拉选择。新名称、多图相册、统一子页顶部和更新检查记录一并发布。见 [更新说明](releases/v0.7.0.md) 与 [发布验证](verification/2026-09-22-v0.7.0-release.md)。
+
+v0.6.1 应用名更新为“有票再出发”，桌面、首页及关于页使用同一名称资源。实现四项飞书反馈，版本为 `0.6.1` / versionCode `11`：想去城市按省分组，省内最近收藏优先；子页面顶部统一为 B4 渐变与圆角返回入口；目的地相册最多 5 张，可横滑、看大图及来源；上次检查更新时间与结果保存在本机，返回或重启后保留。详细验收见 [v0.6.1](verification/2026-09-21-v0.6.1.md)。生产签名候选包位于 `artifacts/train-trip-v0.6.1-release.apk`，当时未单独发布，现已纳入 v0.7.0 正式版。
 
 相册继续兼容旧单图缓存；手动更新先保存正文，再逐张保存图片，失败或取消保留已经完成的内容。Tavily 根级搜索图单独注明检索来源，仅采纳含当前城市与已选景点信息的国内简体资源。旧介绍不会自动重新生成或额外调用付费服务。
 
@@ -52,10 +54,11 @@ v0.5.0 已实现用户确认的 A 方案：底部「查票 / 想去」双栏目�
 
 ## 正式版本下载
 
-- **[v0.6.0 最新版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.6.0)** · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)
+- **[v0.7.0 最新版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.7.0)** · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.7.0/train-trip-v0.7.0-release.apk)
+- [v0.6.0 历史版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.6.0) · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)
 - [v0.5.0 历史版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.5.0) · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.5.0/train-trip-v0.5.0-release.apk)
 
-两版均提供生产签名 Release APK 与 SHA256 校验附件，不包含个人服务 Key。支持 Android 8.0 及以上，可覆盖升级同生产证书的旧正式版。历史设备测试证书与公开生产证书不同，无法互相覆盖；已安装专用设备包的用户应继续使用同证书升级包，保留现有数据。
+以上正式版本均提供生产签名 Release APK 与 SHA256 校验附件，不包含个人服务 Key。支持 Android 8.0 及以上，可覆盖升级同生产证书的旧正式版。历史设备测试证书与公开生产证书不同，无法互相覆盖；已安装专用设备包的用户应继续使用同证书升级包，保留现有数据。
 
 ## 构建与验证
 

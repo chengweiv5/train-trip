@@ -13,23 +13,23 @@
 >
 > **少一点“没票就算了”的遗憾，多一次发现小众冷门城市的旅行。先看有票，再选目的地～**
 
-**[⬇ 下载 Android 正式版 v0.6.0](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
+**[⬇ 下载 Android 正式版 v0.7.0](https://github.com/chengweiv5/train-trip/releases/download/v0.7.0/train-trip-v0.7.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
 
 Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
-> 当前公开版本为 **v0.6.0**，安装后名称仍为「有票就出发」。仓库正在开发 **v0.6.1**，已更名为「有票再出发」；下方展示新版界面，v0.6.1 尚未发布。
+> 当前正式版为 **v0.7.0**，应用名称已统一为「有票再出发」。本次新增想去清单的省份侧栏与「全部」入口，支持多图相册，并保留上次检查更新的记录。
 
 ## 给一次临时起意的旅行，找个目的地
 
 - **不用逐城试车票**：一次选择多个目的地，按符合条件的直达去程余票发现可去城市。
 - **按自己的时间出发**：日期范围、出发时段多选、席别、人数、3 小时 / 5 小时或自定义车程，都能调整。
 - **先了解，再决定**：在景点、美食、玩法、贴士之间切换，看看这座城市适合怎样玩。
-- **把心动留到下次**：批量添加想去城市；查票时直接从「想去」分组选取，省去重复查找。
+- **把心动留到下次**：批量收藏城市，按省份查看或通过「全部」浏览；最近收藏排在前面，查票时可直接从「想去」分组选取。
 - **准备好，再去购票**：对比发到时刻、车程和席别余票，打开 12306 App 完成后续查询与购票。
 
 ## 界面一览
 
-以下为 **v0.6.1 开发版的实际界面截图**，日期、车次和余票使用离线演示数据，不代表实时可购车票。新版的省份收藏分组、统一子页顶部与相册样式尚未包含在 v0.6.0 中。点击图片可查看大图。
+以下为开发过程中采集的实际界面截图，相关功能已包含在 **v0.7.0** 中。日期、车次、余票与收藏使用离线演示数据，不代表实时可购车票；想去页截图为加入「全部」入口前的省份视图。点击图片可查看大图。
 
 <table>
   <tr>
@@ -59,7 +59,7 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
   <tr>
     <td width="50%" align="center" valign="top">
       <strong>⑤ 收藏想去的地方</strong><br><br>
-      <a href="docs/images/readme/wishlist.jpg"><img src="docs/images/readme/wishlist.jpg" width="320" alt="想去清单：收藏保定与苏州，从城市卡片进入介绍或单城查票"></a><br>
+      <a href="docs/images/readme/wishlist.jpg"><img src="docs/images/readme/wishlist.jpg" width="320" alt="想去清单：左侧选择河北，右侧按收藏时间展示承德、保定与秦皇岛"></a><br>
       清单保存在本机，有空时再出发。
     </td>
     <td width="50%" align="center" valign="top">
@@ -82,9 +82,9 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
 | 下载入口 | 说明 |
 | --- | --- |
-| **[下载 v0.6.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)** | 约 8.5 MB，生产签名 Release 包 |
+| **[下载 v0.7.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.7.0/train-trip-v0.7.0-release.apk)** | 约 8.5 MB，生产签名 Release 包 |
 | [查看最新正式发布](https://github.com/chengweiv5/train-trip/releases/latest) | 更新说明与安装附件 |
-| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk.sha256) | 用于核对安装包完整性 |
+| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v0.7.0/train-trip-v0.7.0-release.apk.sha256) | 用于核对安装包完整性 |
 
 在 Android 手机上下载 APK 后打开，按系统提示允许当前浏览器或文件管理器安装应用，再完成安装。打开应用即可查票，不必先配置大模型或搜索服务。
 
@@ -129,7 +129,9 @@ Release 默认生成未签名包，分发前需使用仓库外的私有签名配
 
 - [开发历史与验收索引](docs/development-history.md)
 - [已确认的 UI 设计](design/README.md)
-- [v0.6.1 实现与验证](docs/verification/2026-09-21-v0.6.1.md)
+- [v0.7.0 更新说明](docs/releases/v0.7.0.md)
+- [v0.7.0 发布验证](docs/verification/2026-09-22-v0.7.0-release.md)
+- [v0.6.1 开发实现与验证](docs/verification/2026-09-21-v0.6.1.md)
 - [v0.5.0 / v0.6.0 正式发布记录](docs/verification/2026-09-21-v0.5.0-v0.6.0-releases.md)
 
 </details>
