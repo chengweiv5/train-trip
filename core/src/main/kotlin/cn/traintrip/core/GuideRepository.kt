@@ -11,7 +11,8 @@ interface GuideStore {
 }
 
 class GuideRepository(private val source: GuideMaterialSource, private val generator: GuideGenerator, private val store: GuideStore) {
-    fun cached(cityId: String): DestinationGuide? = store.read(cityId)?.takeIf(SimplifiedGuidePolicy::guideAllowed) ?: DestinationGuides.find(cityId)
+    fun cached(cityId: String): DestinationGuide? = store.read(cityId)?.takeIf(SimplifiedGuidePolicy::guideAllowed)
+        ?.let(GuideItemPolicy::limit) ?: DestinationGuides.find(cityId)
     fun attempted(cityId: String): Boolean = store.attempted(cityId)
     suspend fun generate(city: City, key: String, stage: (String) -> Unit, prepare: suspend (DestinationGuide) -> DestinationGuide = { it }): DestinationGuide {
         store.markAttempted(city.id)

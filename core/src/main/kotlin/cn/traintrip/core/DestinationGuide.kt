@@ -80,19 +80,18 @@ object DestinationGuides {
     }.getOrElse { emptyList() }
 
     fun validateGenerated(guide: DestinationGuide, cityId: String): DestinationGuide {
-        require(guide.experiences.size in 1..5 && guide.foods.size <= 6)
         require(guide.sources.size in 1..10)
         return validateCached(guide, cityId)
     }
 
-    /** A cache may contain the union of multiple individually bounded generations. */
+    /** Refreshed and legacy caches must obey the same item limits as new generations. */
     fun validateCached(guide: DestinationGuide, cityId: String): DestinationGuide {
         SimplifiedGuidePolicy.requireGuide(guide)
         require(cityId.matches(Regex("[0-9]{6}")) && guide.cityId == cityId)
         require(listOf(guide.name, guide.tagline, guide.suggestedDays, guide.pace, guide.season, guide.arrivalAdvice)
             .all { it.isNotBlank() && it.length <= 1800 })
         require(guide.tags.size in 2..3 && guide.tags.all { it.isNotBlank() && it.length <= 20 })
-        require(guide.experiences.isNotEmpty())
+        require(guide.experiences.size in 1..GuideItemPolicy.MAX_PLACES && guide.foods.size <= GuideItemPolicy.MAX_FOODS)
         val ids = guide.experiences.map { it.id }.toSet()
         require(ids.size == guide.experiences.size)
         guide.experiences.forEach { require(listOf(it.id, it.name, it.reason, it.duration, it.location).all { s -> s.isNotBlank() && s.length <= 1800 }) }

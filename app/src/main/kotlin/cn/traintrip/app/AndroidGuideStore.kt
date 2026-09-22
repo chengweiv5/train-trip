@@ -36,7 +36,9 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
             val counts = legacy.gallery.mapNotNull { GuidePhotoPolicy.subject(legacy, it) }.groupingBy { it }.eachCount()
             val readable = if (legacy.gallery.all { it.subject == null } && counts.values.any { it > GuidePhotoPolicy.PER_ITEM })
                 legacy.withPhotos(GuidePhotoPolicy.select(legacy)) else legacy
-            DestinationGuides.validateCached(readable, cityId)
+            // Read old unlimited caches through the new bound without destroying their original bytes.
+            // The next explicit refresh persists the bounded guide through the normal atomic save.
+            DestinationGuides.validateCached(GuideItemPolicy.limit(readable), cityId)
         }
     }.getOrNull()
     fun all(): Map<String, DestinationGuide> = directory.listFiles().orEmpty()

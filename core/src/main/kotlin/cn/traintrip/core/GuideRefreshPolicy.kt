@@ -1,6 +1,6 @@
 package cn.traintrip.core
 
-/** A partial search can update known items, but cannot delete cached ones by omission. */
+/** Update known items first, then append new items while preserving the first ten of each kind. */
 object GuideRefreshPolicy {
     fun merge(previous: DestinationGuide?, fresh: DestinationGuide): DestinationGuide {
         DestinationGuides.validateGenerated(fresh, fresh.cityId)
@@ -35,13 +35,20 @@ object GuideRefreshPolicy {
                 foods[match] = item.copy(name = old.name, sourceUrl = item.sourceUrl ?: old.sourceUrl, evidence = item.evidence ?: old.evidence)
             }
         }
-        val plans = previous.plans.associateBy { it.days }.toMutableMap()
-        fresh.plans.forEach { plan -> plans[plan.days] = plan.copy(schedule = plan.schedule.map { day ->
-            day.copy(experienceIds = day.experienceIds.map { requireNotNull(idMapping[it]) })
-        }) }
         val sources = previous.sources.associateBy { it.url }.toMutableMap()
         fresh.sources.forEach { sources[it.url] = it }
-        val merged = fresh.copy(experiences = places, foods = foods, plans = plans.values.sortedBy { it.days }, sources = sources.values.toList())
+        val bounded = GuideItemPolicy.limit(fresh.copy(experiences = places, foods = foods,
+            plans = emptyList(), sources = sources.values.toList()))
+        val retainedIds = bounded.experiences.map { it.id }.toSet()
+        fun retained(plan: DayPlan) = plan.schedule.all { day -> day.experienceIds.all { it in retainedIds } }
+        val plans = previous.plans.filter(::retained).associateBy { it.days }.toMutableMap()
+        fresh.plans.forEach { plan ->
+            val mapped = plan.copy(schedule = plan.schedule.map { day ->
+                day.copy(experienceIds = day.experienceIds.map { requireNotNull(idMapping[it]) })
+            })
+            if (retained(mapped)) plans[plan.days] = mapped
+        }
+        val merged = bounded.copy(plans = plans.values.sortedBy { it.days })
         // Storage retains usable old images separately; carry only candidates from this generation here.
         val photos = fresh.gallery.mapNotNull { photo ->
             val subject = GuidePhotoPolicy.subject(fresh, photo) ?: return@mapNotNull null

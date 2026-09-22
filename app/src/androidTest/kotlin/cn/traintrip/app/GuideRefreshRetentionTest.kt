@@ -59,21 +59,39 @@ class GuideRefreshRetentionTest {
         assertArrayEquals(before, image.readBytes())
         compose.runOnIdle { model.leave() }
     }
-    @Test fun cumulativeItemsAboveOldLimitsPersistAndReopen() = runBlocking {
-        val old = guide((1..5).map { DestinationExperience("p$it", "缓存景点$it", "已有介绍", "1小时", "邯郸") })
-            .copy(foods = (1..6).map { DestinationFood("缓存美食$it", "已有美食介绍") })
+    @Test fun cumulativeItemsStayWithinTenAfterPersistAndReopen() = runBlocking {
+        val old = guide((1..10).map { DestinationExperience("p$it", "缓存景点$it", "已有介绍", "1小时", "邯郸") })
+            .copy(foods = (1..10).map { DestinationFood("缓存美食$it", "已有美食介绍") })
         val fresh = guide(listOf(DestinationExperience("p1", "新增景点", "新介绍", "1小时", "邯郸")))
             .copy(foods = listOf(DestinationFood("新增美食", "新美食介绍")))
         val store = AndroidGuideStore(context); store.save(old)
         val merged = GuideRefreshPolicy.merge(old, fresh)
         store.saveTextKeepingPhotos(merged, old)
         val reopened = AndroidGuideStore(context).read(city.id)!!
-        assertEquals(6, reopened.experiences.size); assertEquals(7, reopened.foods.size)
-        assertEquals(6, reopened.experiences.map { it.id }.distinct().size)
+        assertEquals(10, reopened.experiences.size); assertEquals(10, reopened.foods.size)
+        assertEquals(old.experiences, reopened.experiences); assertEquals(old.foods, reopened.foods)
         assertEquals(merged, reopened)
     }
+    @Test fun legacyUnlimitedCacheReadsAsTenWithoutOverwritingOriginalFile() {
+        val legacy = guide((1..12).map { DestinationExperience("p$it", "缓存景点$it", "已有介绍", "1小时", "邯郸") })
+            .copy(foods = (1..12).map { DestinationFood("缓存美食$it", "已有美食介绍") })
+        AndroidGuideStore(context)
+        val file = File(folder, "destination-guides/${city.id}.json")
+        val bytes = com.google.gson.Gson().toJson(mapOf("schemaVersion" to 1, "guide" to legacy)).toByteArray()
+        file.writeBytes(bytes)
+        val store = AndroidGuideStore(context)
+        val bounded = store.read(city.id)!!
+        assertEquals(legacy.experiences.take(10), bounded.experiences)
+        assertEquals(legacy.foods.take(10), bounded.foods)
+        assertArrayEquals(bytes, file.readBytes())
+        assertTrue(runCatching { store.save(legacy) }.isFailure)
+        assertArrayEquals(bytes, file.readBytes())
+        store.save(bounded)
+        assertEquals(bounded, AndroidGuideStore(context).read(city.id))
+    }
     @Test fun cacheAboveHalfMegabyteReopensAndOversizeWritePreservesPreviousBytes() {
-        val data = guide((1..120).map { DestinationExperience("p$it", "缓存景点$it", "字".repeat(1700), "1小时", "邯郸") })
+        val data = guide((1..10).map { DestinationExperience("p$it", "缓存景点$it", "字".repeat(1700), "1小时", "邯郸") })
+            .copy(sources = listOf(GuideSource("资料".repeat(100_000), "https://you.ctrip.com/a", "2026-09-22")))
         val store = AndroidGuideStore(context); store.save(data)
         val file = File(folder, "destination-guides/${city.id}.json")
         val before = file.readBytes()

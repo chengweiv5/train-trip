@@ -7,6 +7,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert.*
 import org.junit.Test
 import com.google.gson.Gson
+import com.google.gson.JsonParser
 import java.io.IOException
 
 class DeepSeekGuideTest {
@@ -51,6 +52,10 @@ class DeepSeekGuideTest {
             assertTrue(body.contains("\"model\":\"deepseek-flash\""))
             assertTrue(body.contains("\"thinking\":{\"type\":\"disabled\"}"))
             assertFalse(body.contains("web_search"))
+            val payload = JsonParser.parseString(body).asJsonObject
+            assertEquals(8192, payload["max_tokens"].asInt)
+            val prompt = payload["messages"].asJsonArray[0].asJsonObject["content"].asString
+            assertTrue(prompt.contains("1-10 个景点")); assertTrue(prompt.contains("0-10 种美食"))
             for(code in listOf(401,402,429,503)) {
                 server.enqueue(MockResponse().setResponseCode(code).setBody("secret-service-detail test-key"))
                 val failure = runCatching { generator.generate(material,"test-key") }.exceptionOrNull()
@@ -59,6 +64,42 @@ class DeepSeekGuideTest {
                 assertFalse(failure.message.orEmpty().contains("secret-service-detail"))
             }
         }
+    }
+    @Test fun documentGenerationKeepsTenGroundedPlacesAndFoodsIncludingP10() = runBlocking {
+        val url = "https://www.suzhou.gov.cn/travel.html"
+        val placeQuotes = (1..11).map { "苏州景点$it 位于苏州市区，是了解当地历史文化与古代建筑的游览地点。" }
+        val foodQuotes = (1..11).map { "苏州美食$it 是本地资料介绍的特色菜品，可结合个人口味选择。" }
+        val input = material.copy(places = emptyList(), foods = emptyList(),
+            sources = listOf(GuideSource("苏州旅游", url, "2026-09-22")),
+            documents = listOf(SourceDocument("s1", "苏州景点", url, placeQuotes.joinToString(""), "places", emptyList()),
+                SourceDocument("s2", "苏州美食", url, foodQuotes.joinToString(""), "food", emptyList())))
+        val raw = JsonParser.parseString(content).asJsonObject.apply {
+            add("experiences", Gson().toJsonTree((1..11).map { mapOf("id" to "p$it", "sourceId" to "s1", "name" to "苏州景点$it",
+                "quote" to placeQuotes[it - 1], "location" to "", "duration" to "1小时") }))
+            add("foods", Gson().toJsonTree((1..11).map { mapOf("sourceId" to "s2", "name" to "苏州美食$it", "quote" to foodQuotes[it - 1]) }))
+        }
+        MockWebServer().use { server ->
+            server.enqueue(MockResponse().setBody(response(body = raw.toString())))
+            val guide = DeepSeekGuideGenerator(server.url("/chat/completions").toString(), OkHttpClient()).generate(input, "test-key")
+            assertEquals((1..10).map { "p$it" }, guide.experiences.map { it.id })
+            assertEquals(placeQuotes.take(10), guide.experiences.map { it.evidence })
+            assertEquals(foodQuotes.take(10), guide.foods.map { it.evidence })
+            val request = JsonParser.parseString(server.takeRequest().body.readUtf8()).asJsonObject
+            val prompt = request["messages"].asJsonArray[0].asJsonObject["content"].asString
+            assertTrue(prompt.contains("1-10 个景点")); assertTrue(prompt.contains("0-10 种具体美食"))
+            assertTrue(prompt.contains("p1..p10"))
+        }
+    }
+    @Test fun structuredMaterialsAlsoAllowTenPlacesAndTenFoods() {
+        val input = material.copy(places = (1..10).map { material.places.single().copy(id = "p$it", name = "园林$it") },
+            foods = (1..10).map { SourceFood("f$it", "美食$it", "原文介绍", material.sources.single().url) })
+        val raw = JsonParser.parseString(content).asJsonObject.apply {
+            add("experiences", Gson().toJsonTree((1..10).map { mapOf("id" to "p$it", "reason" to "原文中的园林介绍", "duration" to "1小时") }))
+            add("foods", Gson().toJsonTree((1..10).map { mapOf("id" to "f$it") }))
+        }
+        val guide = DeepSeekGuideGenerator.decode(raw.toString(), input)
+        assertEquals(input.places.map { it.name }, guide.experiences.map { it.name })
+        assertEquals(input.foods.map { it.name }, guide.foods.map { it.name })
     }
     @Test fun configuredModelSnapshotIsUsedForRequestAndCache() = runBlocking {
         MockWebServer().use { server ->
