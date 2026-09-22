@@ -1,0 +1,2305 @@
+{
+  "version": "2.18",
+  "children": [
+    {
+      "type": "frame",
+      "id": "Sb8qr",
+      "x": 0,
+      "y": 0,
+      "name": "目的地逐条相册 · 已确认3/100",
+      "width": 1240,
+      "fill": "#F3F7FA",
+      "layout": "vertical",
+      "gap": 24,
+      "padding": 32,
+      "children": [
+        {
+          "type": "text",
+          "id": "gQYbo",
+          "name": "设计稿标题",
+          "fill": "$palette-c1-ink",
+          "content": "目的地介绍 · 图片跟着条目走",
+          "fontFamily": "$cn-font",
+          "fontSize": 28,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "rVcvk",
+          "name": "设计稿说明",
+          "fill": "$palette-c1-muted",
+          "content": "保定示例  /  条目内相册已确认  /  每项最多 3 张 · 每城最多 100 张",
+          "fontFamily": "$cn-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "biNqP",
+          "name": "景点和美食页面对照",
+          "width": "fill_container",
+          "gap": 28,
+          "children": [
+            {
+              "type": "frame",
+              "id": "t8nUM",
+              "name": "景点设计列",
+              "width": 390,
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "C0qd0t",
+                  "name": "景点稿标题",
+                  "fill": "$palette-c1-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "01  景点 · 条目配图",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$cn-font",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "RxgVz",
+                  "name": "景点页面",
+                  "clip": true,
+                  "width": 390,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 20,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "y79CuX",
+                      "name": "景点页头",
+                      "width": "fill_container",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 180,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#DDF2FF",
+                            "position": 0
+                          },
+                          {
+                            "color": "#FFFFFF",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "zcTNB",
+                          "name": "系统状态栏",
+                          "width": "fill_container",
+                          "height": 30,
+                          "padding": [
+                            4,
+                            22
+                          ],
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ezTgg",
+                              "name": "时间",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": 60,
+                              "content": "9:41",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ISFRv",
+                              "name": "系统图标",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "lM1PZ",
+                                  "name": "signal",
+                                  "width": 15,
+                                  "height": 15,
+                                  "icon": "signal",
+                                  "library": "lucide",
+                                  "fill": "$palette-c1-ink"
+                                },
+                                {
+                                  "type": "icon",
+                                  "id": "epp66",
+                                  "name": "wifi",
+                                  "width": 15,
+                                  "height": 15,
+                                  "icon": "wifi",
+                                  "library": "lucide",
+                                  "fill": "$palette-c1-ink"
+                                },
+                                {
+                                  "type": "icon",
+                                  "id": "Meej1",
+                                  "name": "battery-full",
+                                  "width": 15,
+                                  "height": 15,
+                                  "icon": "battery-full",
+                                  "library": "lucide",
+                                  "fill": "$palette-c1-ink"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "C4iSl",
+                          "name": "导航栏",
+                          "width": "fill_container",
+                          "height": 52,
+                          "gap": 16,
+                          "padding": [
+                            0,
+                            20
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "rfOm8",
+                              "name": "返回",
+                              "width": 22,
+                              "height": 22,
+                              "icon": "arrow-left",
+                              "library": "lucide",
+                              "fill": "$palette-c1-ink"
+                            },
+                            {
+                              "type": "text",
+                              "id": "l8P5U",
+                              "name": "页面标题",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "了解目的地",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 20,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "D2ORHL",
+                              "name": "收藏",
+                              "width": 22,
+                              "height": 22,
+                              "icon": "heart",
+                              "library": "lucide",
+                              "fill": "$palette-c1-primary"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "b1tJSB",
+                          "name": "保定概览",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 9,
+                          "padding": [
+                            12,
+                            20,
+                            16,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "LozOS",
+                              "name": "城市名称与行程",
+                              "width": "fill_container",
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "EDGgM",
+                                  "name": "城市名",
+                                  "fill": "$palette-c1-ink",
+                                  "textGrowth": "fixed-width",
+                                  "width": 95,
+                                  "content": "保定",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 26,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "ptyRj",
+                                  "name": "游玩建议",
+                                  "fill": "$palette-c1-muted",
+                                  "textGrowth": "fixed-width",
+                                  "width": 180,
+                                  "content": "建议 1–2 天 · 慢慢逛",
+                                  "lineHeight": 1.5,
+                                  "textAlign": "right",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "JtqXN",
+                              "name": "城市一句话",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "逛古城、看老院，尝一口热乎的驴肉火烧。",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "otVYZ",
+                              "name": "城市标签",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ZdcJN",
+                                  "name": "历史古城标签",
+                                  "fill": "#FFFFFFCC",
+                                  "cornerRadius": 6,
+                                  "padding": [
+                                    4,
+                                    9
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "ZDFUD",
+                                      "name": "历史古城",
+                                      "fill": "$palette-c1-muted",
+                                      "content": "历史古城",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "uMNJI",
+                                  "name": "周末慢游标签",
+                                  "fill": "#FFFFFFCC",
+                                  "cornerRadius": 6,
+                                  "padding": [
+                                    4,
+                                    9
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "KJVJ8",
+                                      "name": "周末慢游",
+                                      "fill": "$palette-c1-muted",
+                                      "content": "周末慢游",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "mmlpv",
+                                  "name": "地方风味标签",
+                                  "fill": "#FFFFFFCC",
+                                  "cornerRadius": 6,
+                                  "padding": [
+                                    4,
+                                    9
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "U119Uz",
+                                      "name": "地方风味",
+                                      "fill": "$palette-c1-muted",
+                                      "content": "地方风味",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "c42fuJ",
+                      "name": "目的地四分页",
+                      "width": "fill_container",
+                      "height": 48,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "padding": [
+                        0,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "y3xv0",
+                          "name": "景点标签页",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "$palette-c1-primary",
+                          "strokeWidth": {
+                            "bottom": 3
+                          },
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "dT534",
+                              "name": "景点分页标题",
+                              "fill": "$palette-c1-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "景点",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "VsVP5",
+                          "name": "美食标签页",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#00000000",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "IQiCu",
+                              "name": "美食分页标题",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "美食",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "rFM5v",
+                          "name": "玩法标签页",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#00000000",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "rqVUp",
+                              "name": "玩法分页标题",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "玩法",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "EG5WN",
+                          "name": "贴士标签页",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#00000000",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "EfApx",
+                              "name": "贴士分页标题",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "贴士",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qk7eN",
+                      "name": "景点列表内容",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "eVQ1i",
+                          "name": "直隶总督署卡片",
+                          "width": "fill_container",
+                          "fill": "$palette-c1-card",
+                          "cornerRadius": 12,
+                          "stroke": "$palette-c1-border",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 10,
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "JvDDk",
+                              "name": "直隶总督署标题行",
+                              "width": "fill_container",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "FRgqy",
+                                  "name": "条目序号",
+                                  "width": 28,
+                                  "height": 28,
+                                  "fill": "$palette-c1-tint",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "SgKlh",
+                                      "name": "序号1",
+                                      "fill": "$palette-c1-primary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "1",
+                                      "lineHeight": 1.5,
+                                      "textAlign": "center",
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "lzmyE",
+                                  "name": "直隶总督署名称",
+                                  "fill": "$palette-c1-ink",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "直隶总督署",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 16,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "otcKH",
+                              "name": "景点相册",
+                              "width": "fill_container",
+                              "height": 183,
+                              "layout": "none",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "K965wi",
+                                  "x": 0,
+                                  "y": 0,
+                                  "name": "直隶总督署对应照片",
+                                  "width": 326,
+                                  "height": 183,
+                                  "fill": {
+                                    "type": "image",
+                                    "enabled": true,
+                                    "url": "train-trip-item-photos-v2-assets/zhili-governor-office.jpg",
+                                    "mode": "fill"
+                                  },
+                                  "cornerRadius": 8,
+                                  "layout": "none"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "DSFTH",
+                                  "layoutPosition": "absolute",
+                                  "x": 281,
+                                  "y": 8,
+                                  "name": "多图页码背景",
+                                  "fill": "#FFFFFFE6",
+                                  "cornerRadius": 12,
+                                  "padding": [
+                                    4,
+                                    9
+                                  ],
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "p2odgj",
+                                      "name": "第一张共三张",
+                                      "fill": "$palette-c1-ink",
+                                      "content": "1/3",
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "svXEo",
+                              "name": "直隶总督署图片来源",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "图片来源 · 携程  ↗",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ennbv",
+                              "name": "直隶总督署介绍",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "沿着中轴线走过大堂与院落，看看清代直隶总督的办公场所，感受老保定的历史。",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "OEYr8",
+                              "name": "直隶总督署原文链接",
+                              "fill": "$palette-c1-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "查看原文  ↗",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "YNhR8",
+                              "name": "条目信息分隔线",
+                              "fill": "$palette-c1-line",
+                              "width": "fill_container",
+                              "height": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "yQvs4",
+                              "name": "直隶总督署游玩信息",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "建议 1–2 小时 · 老城区",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "pMYDc",
+                          "name": "古莲花池卡片",
+                          "width": "fill_container",
+                          "fill": "$palette-c1-card",
+                          "cornerRadius": 12,
+                          "stroke": "$palette-c1-border",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 10,
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "XiXYt",
+                              "name": "古莲花池标题行",
+                              "width": "fill_container",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "PJSl7",
+                                  "name": "条目序号",
+                                  "width": 28,
+                                  "height": 28,
+                                  "fill": "$palette-c1-tint",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "Rajgm",
+                                      "name": "序号2",
+                                      "fill": "$palette-c1-primary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "2",
+                                      "lineHeight": 1.5,
+                                      "textAlign": "center",
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "vBvL6",
+                                  "name": "古莲花池名称",
+                                  "fill": "$palette-c1-ink",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "古莲花池",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 16,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "w2Tj8",
+                              "name": "古莲花池介绍",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "亭台、书院与池水相映，适合慢慢散步；可与直隶总督署安排在同一天。",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "hiOsQ",
+                              "name": "古莲花池原文链接",
+                              "fill": "$palette-c1-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "查看原文  ↗",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "JxClo",
+                              "name": "条目信息分隔线",
+                              "fill": "$palette-c1-line",
+                              "width": "fill_container",
+                              "height": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "JVlHu",
+                              "name": "古莲花池游玩信息",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "建议 1 小时 · 老城区",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Ci5ZX",
+                          "name": "唯一全量更新入口",
+                          "width": "fill_container",
+                          "height": 44,
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 10,
+                          "stroke": "$palette-c1-border",
+                          "strokeWidth": 1,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "KcHNU",
+                              "name": "全量更新图标",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "refresh-cw",
+                              "library": "lucide",
+                              "fill": "$palette-c1-primary"
+                            },
+                            {
+                              "type": "text",
+                              "id": "nwg8g",
+                              "name": "全量更新按钮文案",
+                              "fill": "$palette-c1-primary",
+                              "content": "更新目的地介绍",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "DWOrs",
+                          "name": "内容参考来源",
+                          "fill": "$palette-c1-muted",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "内容仅供行前参考，开放时间以现场为准。",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "d4rsR",
+                      "name": "底部固定车票入口",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": {
+                        "top": 1
+                      },
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": [
+                        12,
+                        16,
+                        8,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "wf0S7",
+                          "name": "查去保定的车票",
+                          "width": "fill_container",
+                          "height": 48,
+                          "fill": "$palette-c1-primary",
+                          "cornerRadius": 12,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "YcCWF",
+                              "name": "查票按钮文字",
+                              "fill": "#FFFFFF",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "查去保定的车票",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 16,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nKDUT",
+                          "name": "系统手势区域",
+                          "width": "fill_container",
+                          "height": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "R5laky",
+                              "name": "系统手势条",
+                              "fill": "$palette-c1-ink",
+                              "width": 120,
+                              "height": 4
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "RnOjS",
+              "name": "美食设计列",
+              "width": 390,
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QthcV",
+                  "name": "美食稿标题",
+                  "fill": "$palette-c1-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "02  美食 · 条目配图",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$cn-font",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "puMch",
+                  "name": "美食页面",
+                  "clip": true,
+                  "width": 390,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 20,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "kQT9Y",
+                      "name": "美食页头",
+                      "width": "fill_container",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 180,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#DDF2FF",
+                            "position": 0
+                          },
+                          {
+                            "color": "#FFFFFF",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "layout": "vertical",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "xlClK",
+                          "name": "系统状态栏",
+                          "width": "fill_container",
+                          "height": 30,
+                          "padding": [
+                            4,
+                            22
+                          ],
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "fbTdm",
+                              "name": "时间",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": 60,
+                              "content": "9:41",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "I5nCTH",
+                              "name": "系统图标",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon",
+                                  "id": "p6a424",
+                                  "name": "signal",
+                                  "width": 15,
+                                  "height": 15,
+                                  "icon": "signal",
+                                  "library": "lucide",
+                                  "fill": "$palette-c1-ink"
+                                },
+                                {
+                                  "type": "icon",
+                                  "id": "v9m50",
+                                  "name": "wifi",
+                                  "width": 15,
+                                  "height": 15,
+                                  "icon": "wifi",
+                                  "library": "lucide",
+                                  "fill": "$palette-c1-ink"
+                                },
+                                {
+                                  "type": "icon",
+                                  "id": "Gye3X",
+                                  "name": "battery-full",
+                                  "width": 15,
+                                  "height": 15,
+                                  "icon": "battery-full",
+                                  "library": "lucide",
+                                  "fill": "$palette-c1-ink"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "pJIy1",
+                          "name": "导航栏",
+                          "width": "fill_container",
+                          "height": 52,
+                          "gap": 16,
+                          "padding": [
+                            0,
+                            20
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "Y7YBu",
+                              "name": "返回",
+                              "width": 22,
+                              "height": 22,
+                              "icon": "arrow-left",
+                              "library": "lucide",
+                              "fill": "$palette-c1-ink"
+                            },
+                            {
+                              "type": "text",
+                              "id": "WEM8E",
+                              "name": "页面标题",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "了解目的地",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 20,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "lvUaO",
+                              "name": "收藏",
+                              "width": 22,
+                              "height": 22,
+                              "icon": "heart",
+                              "library": "lucide",
+                              "fill": "$palette-c1-primary"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "fPZ3Z",
+                          "name": "保定概览",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 9,
+                          "padding": [
+                            12,
+                            20,
+                            16,
+                            20
+                          ],
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "JqI2J",
+                              "name": "城市名称与行程",
+                              "width": "fill_container",
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "uog3c",
+                                  "name": "城市名",
+                                  "fill": "$palette-c1-ink",
+                                  "textGrowth": "fixed-width",
+                                  "width": 95,
+                                  "content": "保定",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 26,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "weN02",
+                                  "name": "游玩建议",
+                                  "fill": "$palette-c1-muted",
+                                  "textGrowth": "fixed-width",
+                                  "width": 180,
+                                  "content": "建议 1–2 天 · 慢慢逛",
+                                  "lineHeight": 1.5,
+                                  "textAlign": "right",
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "LQfWQ",
+                              "name": "城市一句话",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "逛古城、看老院，尝一口热乎的驴肉火烧。",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "D4pjcL",
+                              "name": "城市标签",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "Vmx0m",
+                                  "name": "历史古城标签",
+                                  "fill": "#FFFFFFCC",
+                                  "cornerRadius": 6,
+                                  "padding": [
+                                    4,
+                                    9
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "O31aF",
+                                      "name": "历史古城",
+                                      "fill": "$palette-c1-muted",
+                                      "content": "历史古城",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Jpp8a",
+                                  "name": "周末慢游标签",
+                                  "fill": "#FFFFFFCC",
+                                  "cornerRadius": 6,
+                                  "padding": [
+                                    4,
+                                    9
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "Z3WrXW",
+                                      "name": "周末慢游",
+                                      "fill": "$palette-c1-muted",
+                                      "content": "周末慢游",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "S9sZxy",
+                                  "name": "地方风味标签",
+                                  "fill": "#FFFFFFCC",
+                                  "cornerRadius": 6,
+                                  "padding": [
+                                    4,
+                                    9
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "xb7Z4",
+                                      "name": "地方风味",
+                                      "fill": "$palette-c1-muted",
+                                      "content": "地方风味",
+                                      "lineHeight": 1.5,
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "DOVsl",
+                      "name": "目的地四分页",
+                      "width": "fill_container",
+                      "height": 48,
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": {
+                        "bottom": 1
+                      },
+                      "padding": [
+                        0,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "sZtgB",
+                          "name": "景点标签页",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#00000000",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ASQGm",
+                              "name": "景点分页标题",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "景点",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "b8ATq",
+                          "name": "美食标签页",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "$palette-c1-primary",
+                          "strokeWidth": {
+                            "bottom": 3
+                          },
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "OwcPn",
+                              "name": "美食分页标题",
+                              "fill": "$palette-c1-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "美食",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 15,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "PVsRT",
+                          "name": "玩法标签页",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#00000000",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "L42bS",
+                              "name": "玩法分页标题",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "玩法",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "hr2KO",
+                          "name": "贴士标签页",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#00000000",
+                          "layout": "vertical",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "AQwtu",
+                              "name": "贴士分页标题",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "贴士",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 15,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Y62tv",
+                      "name": "美食列表内容",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "vCxmX",
+                          "name": "驴肉火烧卡片",
+                          "width": "fill_container",
+                          "fill": "$palette-c1-card",
+                          "cornerRadius": 12,
+                          "stroke": "$palette-c1-border",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 10,
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "j2SIv",
+                              "name": "驴肉火烧标题行",
+                              "width": "fill_container",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "AnKVD",
+                                  "name": "条目序号",
+                                  "width": 28,
+                                  "height": 28,
+                                  "fill": "$palette-c1-tint",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "u6BjX",
+                                      "name": "序号1",
+                                      "fill": "$palette-c1-primary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "1",
+                                      "lineHeight": 1.5,
+                                      "textAlign": "center",
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "W2IXq9",
+                                  "name": "驴肉火烧名称",
+                                  "fill": "$palette-c1-ink",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "驴肉火烧",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 16,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "b5Wvw1",
+                              "name": "驴肉火烧对应照片",
+                              "width": "fill_container",
+                              "height": 183,
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "train-trip-item-photos-v2-assets/donkey-burger-baoding.jpg",
+                                "mode": "fill"
+                              },
+                              "cornerRadius": 8
+                            },
+                            {
+                              "type": "text",
+                              "id": "PhKvn",
+                              "name": "驴肉火烧图片来源",
+                              "fill": "$palette-c1-muted",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "图片 · N509FZ / CC BY-SA 4.0  ↗",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "KTNVj",
+                              "name": "驴肉火烧介绍",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "圆火烧外皮酥脆，夹上切碎的驴肉，趁热吃更香。逛古城时可以顺路尝一份。",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "E7wfWT",
+                              "name": "驴肉火烧原文链接",
+                              "fill": "$palette-c1-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "查看原文  ↗",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "NRlI3",
+                          "name": "白运章包子卡片",
+                          "width": "fill_container",
+                          "fill": "$palette-c1-card",
+                          "cornerRadius": 12,
+                          "stroke": "$palette-c1-border",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 10,
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "y3qeu",
+                              "name": "白运章包子标题行",
+                              "width": "fill_container",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "IVkMy",
+                                  "name": "条目序号",
+                                  "width": 28,
+                                  "height": 28,
+                                  "fill": "$palette-c1-tint",
+                                  "cornerRadius": 8,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "h2XZ9p",
+                                      "name": "序号2",
+                                      "fill": "$palette-c1-primary",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "2",
+                                      "lineHeight": 1.5,
+                                      "textAlign": "center",
+                                      "fontFamily": "$cn-font",
+                                      "fontSize": 13,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Dqaz9",
+                                  "name": "白运章包子名称",
+                                  "fill": "$palette-c1-ink",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "白运章包子",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "$cn-font",
+                                  "fontSize": 16,
+                                  "fontWeight": "600"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "DPJ4k",
+                              "name": "白运章包子介绍",
+                              "fill": "$palette-c1-ink",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "皮薄馅足的保定传统风味，适合作为早餐或简餐，搭一碗热汤。",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "TOb5F",
+                              "name": "白运章包子原文链接",
+                              "fill": "$palette-c1-primary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "查看原文  ↗",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "G0EkyR",
+                          "name": "唯一全量更新入口",
+                          "width": "fill_container",
+                          "height": 44,
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 10,
+                          "stroke": "$palette-c1-border",
+                          "strokeWidth": 1,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "cs9sr",
+                              "name": "全量更新图标",
+                              "width": 16,
+                              "height": 16,
+                              "icon": "refresh-cw",
+                              "library": "lucide",
+                              "fill": "$palette-c1-primary"
+                            },
+                            {
+                              "type": "text",
+                              "id": "xNCy4",
+                              "name": "全量更新按钮文案",
+                              "fill": "$palette-c1-primary",
+                              "content": "更新目的地介绍",
+                              "lineHeight": 1.5,
+                              "fontFamily": "$cn-font",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "xIzSl",
+                          "name": "内容参考来源",
+                          "fill": "$palette-c1-muted",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "内容仅供行前参考，开放时间以现场为准。",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$cn-font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UVv4o",
+                      "name": "底部固定车票入口",
+                      "width": "fill_container",
+                      "fill": "#FFFFFF",
+                      "stroke": "$palette-c1-line",
+                      "strokeWidth": {
+                        "top": 1
+                      },
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": [
+                        12,
+                        16,
+                        8,
+                        16
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "fkvG0",
+                          "name": "查去保定的车票",
+                          "width": "fill_container",
+                          "height": 48,
+                          "fill": "$palette-c1-primary",
+                          "cornerRadius": 12,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "j63Ud",
+                              "name": "查票按钮文字",
+                              "fill": "#FFFFFF",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "查去保定的车票",
+                              "lineHeight": 1.5,
+                              "textAlign": "center",
+                              "fontFamily": "$cn-font",
+                              "fontSize": 16,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "zVBtE",
+                          "name": "系统手势区域",
+                          "width": "fill_container",
+                          "height": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 2,
+                              "id": "pDMyr",
+                              "name": "系统手势条",
+                              "fill": "$palette-c1-ink",
+                              "width": 120,
+                              "height": 4
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Ncftv",
+              "name": "设计说明",
+              "width": 340,
+              "layout": "vertical",
+              "gap": 20,
+              "padding": [
+                36,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "o4naLx",
+                  "name": "说明标题",
+                  "fill": "$palette-c1-ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "图片各有所属",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$cn-font",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "wAYch",
+                  "name": "1  图文在同一张卡片",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "umIhA",
+                      "name": "1  图文在同一张卡片标题",
+                      "fill": "$palette-c1-ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "1  图文在同一张卡片",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "x0Srx0",
+                      "name": "1  图文在同一张卡片说明",
+                      "fill": "$palette-c1-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "名称下方是本条目的相册。左右滑动看图，点击看大图，来源随当前照片切换。",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "wEyo6",
+                  "name": "2  没有图，照常读",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "H9i4o",
+                      "name": "2  没有图，照常读标题",
+                      "fill": "$palette-c1-ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "2  没有图，照常读",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "aJmxJ",
+                      "name": "2  没有图，照常读说明",
+                      "fill": "$palette-c1-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "1 张不显示页码；2–3 张显示 1/N。没有图时保留文字卡片，不留空白占位。",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "CCSH4",
+                  "name": "3  全量更新时按需补图",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NVAHR",
+                      "name": "3  全量更新时按需补图标题",
+                      "fill": "$palette-c1-ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "3  每项 3 张 · 每城 100 张",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "MPKlM",
+                      "name": "3  全量更新时按需补图说明",
+                      "fill": "$palette-c1-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "每个景点或美食最多 3 张，每个城市总计最多 100 张。已有图保留，仅缺图条目再补。",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "dr0Zb",
+                  "name": "4  对不上，就不放",
+                  "width": "fill_container",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": "$palette-c1-border",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "B74ehg",
+                      "name": "4  对不上，就不放标题",
+                      "fill": "$palette-c1-ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "4  对不上，就不放",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "X3uVPO",
+                      "name": "4  对不上，就不放说明",
+                      "fill": "$palette-c1-muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "不使用无明确归属的城市图，也不把一个景点的照片放到另一条目。",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "P6I3Em",
+                  "name": "画板状态说明",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "这是长页面展开稿，方便检查完整内容。实际手机上下滚动，底部查票入口固定。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$cn-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "gl3Ea",
+                  "name": "示例素材边界",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "多图示例：直隶总督署。单图示例：驴肉火烧。下方第二条为无图状态示例。\n仅展示规则，不为凑满数量重复检索。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$cn-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "tt-bg": {
+      "type": "color",
+      "value": "#F5F3EE"
+    },
+    "tt-surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "tt-ink": {
+      "type": "color",
+      "value": "#20392C"
+    },
+    "tt-muted": {
+      "type": "color",
+      "value": "#617065"
+    },
+    "tt-primary": {
+      "type": "color",
+      "value": "#2D5E3A"
+    },
+    "tt-tint": {
+      "type": "color",
+      "value": "#E6EFDF"
+    },
+    "tt-line": {
+      "type": "color",
+      "value": "#D8DED3"
+    },
+    "tt-warning": {
+      "type": "color",
+      "value": "#87531F"
+    },
+    "tt-warning-bg": {
+      "type": "color",
+      "value": "#FBF0DE"
+    },
+    "tt-font": {
+      "type": "string",
+      "value": "Noto Sans SC"
+    },
+    "cn-bg": {
+      "type": "color",
+      "value": "#F5F7FA"
+    },
+    "cn-surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "cn-text": {
+      "type": "color",
+      "value": "#17233D"
+    },
+    "cn-secondary": {
+      "type": "color",
+      "value": "#596579"
+    },
+    "cn-muted": {
+      "type": "color",
+      "value": "#687589"
+    },
+    "cn-primary": {
+      "type": "color",
+      "value": "#1769E8"
+    },
+    "cn-tint": {
+      "type": "color",
+      "value": "#EBF3FF"
+    },
+    "cn-line": {
+      "type": "color",
+      "value": "#E6EAF0"
+    },
+    "cn-green": {
+      "type": "color",
+      "value": "#12845B"
+    },
+    "cn-green-bg": {
+      "type": "color",
+      "value": "#EAF7F0"
+    },
+    "cn-orange": {
+      "type": "color",
+      "value": "#A8500C"
+    },
+    "cn-orange-bg": {
+      "type": "color",
+      "value": "#FFF4E5"
+    },
+    "cn-font": {
+      "type": "string",
+      "value": "Noto Sans SC"
+    },
+    "contrast-page-a": {
+      "type": "color",
+      "value": "#EBF0F7"
+    },
+    "contrast-card-a": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "contrast-border-a": {
+      "type": "color",
+      "value": "#CFD9E7"
+    },
+    "contrast-page-b": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "contrast-card-b": {
+      "type": "color",
+      "value": "#EDF2F8"
+    },
+    "contrast-border-b": {
+      "type": "color",
+      "value": "#DCE5EF"
+    },
+    "palette-b1-card": {
+      "type": "color",
+      "value": "#F4ECDF"
+    },
+    "palette-b1-border": {
+      "type": "color",
+      "value": "#E7DCCB"
+    },
+    "palette-b1-primary": {
+      "type": "color",
+      "value": "#AD452D"
+    },
+    "palette-b1-tint": {
+      "type": "color",
+      "value": "#FAE5D9"
+    },
+    "palette-b1-ink": {
+      "type": "color",
+      "value": "#302B27"
+    },
+    "palette-b1-muted": {
+      "type": "color",
+      "value": "#6F6256"
+    },
+    "palette-b1-line": {
+      "type": "color",
+      "value": "#E3D8C9"
+    },
+    "palette-b1-control": {
+      "type": "color",
+      "value": "#FFFCF7"
+    },
+    "palette-b1-positive": {
+      "type": "color",
+      "value": "#726536"
+    },
+    "palette-b1-accentBorder": {
+      "type": "color",
+      "value": "#DAB29F"
+    },
+    "palette-b2-card": {
+      "type": "color",
+      "value": "#F1EDF8"
+    },
+    "palette-b2-border": {
+      "type": "color",
+      "value": "#E1D8ED"
+    },
+    "palette-b2-primary": {
+      "type": "color",
+      "value": "#7150B5"
+    },
+    "palette-b2-tint": {
+      "type": "color",
+      "value": "#E8DFF7"
+    },
+    "palette-b2-ink": {
+      "type": "color",
+      "value": "#2E2938"
+    },
+    "palette-b2-muted": {
+      "type": "color",
+      "value": "#6D6579"
+    },
+    "palette-b2-line": {
+      "type": "color",
+      "value": "#E0D8EB"
+    },
+    "palette-b2-control": {
+      "type": "color",
+      "value": "#FCFAFF"
+    },
+    "palette-b2-positive": {
+      "type": "color",
+      "value": "#5F6679"
+    },
+    "palette-b2-accentBorder": {
+      "type": "color",
+      "value": "#C8B5E4"
+    },
+    "palette-b3-card": {
+      "type": "color",
+      "value": "#F2EEE6"
+    },
+    "palette-b3-border": {
+      "type": "color",
+      "value": "#E1DBCF"
+    },
+    "palette-b3-primary": {
+      "type": "color",
+      "value": "#226B69"
+    },
+    "palette-b3-tint": {
+      "type": "color",
+      "value": "#E0EFEB"
+    },
+    "palette-b3-ink": {
+      "type": "color",
+      "value": "#263332"
+    },
+    "palette-b3-muted": {
+      "type": "color",
+      "value": "#5B6B67"
+    },
+    "palette-b3-line": {
+      "type": "color",
+      "value": "#DFDAD0"
+    },
+    "palette-b3-control": {
+      "type": "color",
+      "value": "#FFFDF9"
+    },
+    "palette-b3-positive": {
+      "type": "color",
+      "value": "#576A56"
+    },
+    "palette-b3-accentBorder": {
+      "type": "color",
+      "value": "#AACDC3"
+    },
+    "palette-c1-card": {
+      "type": "color",
+      "value": "#EAF5FC"
+    },
+    "palette-c1-border": {
+      "type": "color",
+      "value": "#D5EAF6"
+    },
+    "palette-c1-primary": {
+      "type": "color",
+      "value": "#0073AA"
+    },
+    "palette-c1-tint": {
+      "type": "color",
+      "value": "#DDF2FF"
+    },
+    "palette-c1-ink": {
+      "type": "color",
+      "value": "#1E3443"
+    },
+    "palette-c1-muted": {
+      "type": "color",
+      "value": "#516774"
+    },
+    "palette-c1-line": {
+      "type": "color",
+      "value": "#D5E5EE"
+    },
+    "palette-c1-control": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "palette-c1-positive": {
+      "type": "color",
+      "value": "#446874"
+    },
+    "palette-c1-accentBorder": {
+      "type": "color",
+      "value": "#93CFE9"
+    },
+    "palette-c2-card": {
+      "type": "color",
+      "value": "#FFF1E3"
+    },
+    "palette-c2-border": {
+      "type": "color",
+      "value": "#F0DFCC"
+    },
+    "palette-c2-primary": {
+      "type": "color",
+      "value": "#BE401D"
+    },
+    "palette-c2-tint": {
+      "type": "color",
+      "value": "#FFECDD"
+    },
+    "palette-c2-ink": {
+      "type": "color",
+      "value": "#382C24"
+    },
+    "palette-c2-muted": {
+      "type": "color",
+      "value": "#78614F"
+    },
+    "palette-c2-line": {
+      "type": "color",
+      "value": "#ECDCCC"
+    },
+    "palette-c2-control": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "palette-c2-positive": {
+      "type": "color",
+      "value": "#78613C"
+    },
+    "palette-c2-accentBorder": {
+      "type": "color",
+      "value": "#EFBC9C"
+    },
+    "palette-c3-card": {
+      "type": "color",
+      "value": "#F6F0F5"
+    },
+    "palette-c3-border": {
+      "type": "color",
+      "value": "#E9DEE6"
+    },
+    "palette-c3-primary": {
+      "type": "color",
+      "value": "#C22A50"
+    },
+    "palette-c3-tint": {
+      "type": "color",
+      "value": "#FFE6ED"
+    },
+    "palette-c3-ink": {
+      "type": "color",
+      "value": "#302930"
+    },
+    "palette-c3-muted": {
+      "type": "color",
+      "value": "#75616B"
+    },
+    "palette-c3-line": {
+      "type": "color",
+      "value": "#E8DEE4"
+    },
+    "palette-c3-control": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "palette-c3-positive": {
+      "type": "color",
+      "value": "#736176"
+    },
+    "palette-c3-accentBorder": {
+      "type": "color",
+      "value": "#E9AEC1"
+    },
+    "b4-header-top": {
+      "type": "color",
+      "value": "#DDF2FF"
+    },
+    "b4-header-control": {
+      "type": "color",
+      "value": "#FFFFFFCC"
+    },
+    "b4-header-line": {
+      "type": "color",
+      "value": "#BFDFEE"
+    }
+  },
+  "fileToken": "947cf031-fc73-4bdb-b151-d4a84be3fb90"
+}

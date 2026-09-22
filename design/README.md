@@ -1,3 +1,7 @@
+## 目的地条目相册（2026-09-22）
+
+[已确认设计与规则](train-trip-item-photos.md) · [Pencil 源文件](train-trip-item-photos-v2.pen) · [设计预览](item-photos-v2.html) · [实现验收](../docs/verification/2026-09-22-destination-item-photos.md)。景点和美食各自展示最多 3 张照片，城市合计最多 100 张；多图横滑、点击大图，仅在全量更新时为零图条目补图。已有 1–3 张可用图片的条目保留。
+
 # Train Trip V1 UI 设计
 
 ## 目的地全量更新按需补图（2026-09-22）
