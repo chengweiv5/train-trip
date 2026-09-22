@@ -13,11 +13,11 @@
 >
 > **少一点“没票就算了”的遗憾，多一次发现小众冷门城市的旅行。先看有票，再选目的地～**
 
-**[⬇ 下载 Android 正式版 v0.8.0](https://github.com/chengweiv5/train-trip/releases/download/v0.8.0/train-trip-v0.8.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
+**[⬇ 下载 Android 正式版 v0.9.0](https://github.com/chengweiv5/train-trip/releases/download/v0.9.0/train-trip-v0.9.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
 
 Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
-> 当前正式版为 **v0.8.0**，应用名称已统一为「有票再出发」。景点与美食各有独立相册，每条目最多 3 张、每城市最多 100 张；全量更新保留旧条目，只为零图条目补图。
+> 当前正式版为 **v0.9.0**。豆包负责网页与图片搜索，优先整理民间游记、美食体验和原文路线；景点与美食单次及累计各最多 10 项，每项最多 3 张图。
 
 ## 给一次临时起意的旅行，找个目的地
 
@@ -82,9 +82,9 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
 | 下载入口 | 说明 |
 | --- | --- |
-| **[下载 v0.8.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.8.0/train-trip-v0.8.0-release.apk)** | 生产签名 Release 包 |
+| **[下载 v0.9.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.9.0/train-trip-v0.9.0-release.apk)** | 生产签名 Release 包 |
 | [查看最新正式发布](https://github.com/chengweiv5/train-trip/releases/latest) | 更新说明与安装附件 |
-| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v0.8.0/train-trip-v0.8.0-release.apk.sha256) | 用于核对安装包完整性 |
+| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v0.9.0/train-trip-v0.9.0-release.apk.sha256) | 用于核对安装包完整性 |
 
 在 Android 手机上下载 APK 后打开，按系统提示允许当前浏览器或文件管理器安装应用，再完成安装。打开应用即可查票，不必先配置大模型或搜索服务。
 
@@ -97,8 +97,6 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 应用负责发现目的地与查询余票，不提供购票、抢票或自动下单。「打开 12306 App」会唤起已安装的铁路 12306，仍需在其中手动填写条件。余票随时变化，最终以 12306 App 的查询及下单结果为准。本项目是个人开发的独立工具，与铁路 12306 无隶属关系。
 
 ### 不配置 DeepSeek、豆包搜索也能用吗？
-
-以下目的地服务说明对应当前开发分支；已发布的 v0.8.0 仍使用 Tavily 搜索。
 
 可以。**查票、想去清单和内置城市介绍都不需要 Key。** 天津、济南、青岛、大同、洛阳已有内置资料，可离线阅读。
 
@@ -131,8 +129,8 @@ Release 默认生成未签名包，分发前需使用仓库外的私有签名配
 
 - [开发历史与验收索引](docs/development-history.md)
 - [已确认的 UI 设计](design/README.md)
-- [v0.8.0 更新说明](docs/releases/v0.8.0.md)
-- [v0.8.0 发布验证](docs/verification/2026-09-22-v0.8.0-release.md)
+- [v0.9.0 更新说明](docs/releases/v0.9.0.md)
+- [v0.9.0 发布验证](docs/verification/2026-09-23-v0.9.0-release.md)
 - [v0.6.1 开发实现与验证](docs/verification/2026-09-21-v0.6.1.md)
 - [v0.5.0 / v0.6.0 正式发布记录](docs/verification/2026-09-21-v0.5.0-v0.6.0-releases.md)
 
