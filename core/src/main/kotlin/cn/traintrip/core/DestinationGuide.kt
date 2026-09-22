@@ -80,12 +80,19 @@ object DestinationGuides {
     }.getOrElse { emptyList() }
 
     fun validateGenerated(guide: DestinationGuide, cityId: String): DestinationGuide {
+        require(guide.experiences.size in 1..5 && guide.foods.size <= 6)
+        require(guide.sources.size in 1..10)
+        return validateCached(guide, cityId)
+    }
+
+    /** A cache may contain the union of multiple individually bounded generations. */
+    fun validateCached(guide: DestinationGuide, cityId: String): DestinationGuide {
         SimplifiedGuidePolicy.requireGuide(guide)
         require(cityId.matches(Regex("[0-9]{6}")) && guide.cityId == cityId)
         require(listOf(guide.name, guide.tagline, guide.suggestedDays, guide.pace, guide.season, guide.arrivalAdvice)
             .all { it.isNotBlank() && it.length <= 1800 })
         require(guide.tags.size in 2..3 && guide.tags.all { it.isNotBlank() && it.length <= 20 })
-        require(guide.experiences.size in 1..5 && guide.foods.size <= 6)
+        require(guide.experiences.isNotEmpty())
         val ids = guide.experiences.map { it.id }.toSet()
         require(ids.size == guide.experiences.size)
         guide.experiences.forEach { require(listOf(it.id, it.name, it.reason, it.duration, it.location).all { s -> s.isNotBlank() && s.length <= 1800 }) }
@@ -96,7 +103,7 @@ object DestinationGuides {
             require(p.days in 1..2 && p.schedule.size == p.days && p.title.isNotBlank() && p.note.isNotBlank())
             p.schedule.forEach { d -> require(d.label.isNotBlank() && d.description.isNotBlank() && d.experienceIds.isNotEmpty() && d.experienceIds.all { it in ids }) }
         }
-        require(guide.sources.size in 1..10)
+        require(guide.sources.isNotEmpty())
         guide.sources.forEach { require(it.title.isNotBlank() && isWebUrl(it.url)); LocalDate.parse(it.checkedOn) }
         java.time.Instant.parse(requireNotNull(guide.generatedAt))
         require(!guide.model.isNullOrBlank())

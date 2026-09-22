@@ -14,16 +14,15 @@ object GuidePhotoPolicy {
 
     fun subject(guide: DestinationGuide, photo: DestinationPhoto): PhotoSubject? {
         val assigned = photo.subject
-        val candidates = if (assigned != null) {
+        return if (assigned != null) {
             if (assigned.kind !in listOf("place", "food") || assigned.name.isNullOrBlank()) return null
-            subjects(guide).filter { it.kind == assigned.kind && CtripPhotoSource.samePlace(it.name, assigned.name) }
+            GuideItemIdentity.unique(assigned.name, subjects(guide).filter { it.kind == assigned.kind }) { it.name }
         } else {
             // Only the old source-generated, complete city/item label carries enough ownership evidence.
             val name = photo.description.removePrefix("${guide.name} · ")
             if (name == photo.description) return null
-            subjects(guide).filter { CtripPhotoSource.samePlace(it.name, name) }
+            GuideItemIdentity.unique(name, subjects(guide)) { it.name }
         }
-        return candidates.singleOrNull()
     }
 
     /** Round-robin selection gives each subject a first photo before a second or third. */

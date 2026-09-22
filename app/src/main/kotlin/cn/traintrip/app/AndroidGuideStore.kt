@@ -18,6 +18,7 @@ data class PhotoSaveResult(val guide:DestinationGuide,val saved:Int,val failed:I
 data class OfflineEntry(val cityId:String,val guide:DestinationGuide?,val bytes:Long,val hasPhoto:Boolean)
 
 class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean = { it.delete() }, private val loadPhoto: suspend (String) -> ByteArray = GuideNetwork()::photo) : GuideStore {
+    private companion object { const val MAX_CACHE_BYTES = 16 * 1024 * 1024 }
     private val directory = File(context.filesDir, "destination-guides").apply { mkdirs() }
     private fun file(cityId: String, suffix: String): File {
         require(cityId.matches(Regex("[0-9]{6}")))
@@ -25,7 +26,7 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
     }
     private fun storedGuide(cityId: String): DestinationGuide? = runCatching {
         val raw = AtomicFile(file(cityId, "json")).readFully()
-        require(raw.size <= 512 * 1024)
+        require(raw.size <= MAX_CACHE_BYTES)
         val root = JsonParser.parseString(String(raw, Charsets.UTF_8)).asJsonObject
         require(root["schemaVersion"].asInt == 1)
         Gson().fromJson(root["guide"], DestinationGuide::class.java)
@@ -35,7 +36,7 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
             val counts = legacy.gallery.mapNotNull { GuidePhotoPolicy.subject(legacy, it) }.groupingBy { it }.eachCount()
             val readable = if (legacy.gallery.all { it.subject == null } && counts.values.any { it > GuidePhotoPolicy.PER_ITEM })
                 legacy.withPhotos(GuidePhotoPolicy.select(legacy)) else legacy
-            DestinationGuides.validateGenerated(readable, cityId)
+            DestinationGuides.validateCached(readable, cityId)
         }
     }.getOrNull()
     fun all(): Map<String, DestinationGuide> = directory.listFiles().orEmpty()
@@ -53,8 +54,10 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
         atomic(file(cityId, "attempt"), byteArrayOf(1))
     }
     override fun save(guide: DestinationGuide) {
-        DestinationGuides.validateGenerated(guide, guide.cityId)
-        atomic(file(guide.cityId, "json"), Gson().toJson(mapOf("schemaVersion" to 1, "guide" to guide)).toByteArray(Charsets.UTF_8))
+        DestinationGuides.validateCached(guide, guide.cityId)
+        val bytes = Gson().toJson(mapOf("schemaVersion" to 1, "guide" to guide)).toByteArray(Charsets.UTF_8)
+        require(bytes.size <= MAX_CACHE_BYTES) { "离线介绍超出可保存大小，原缓存已保留" }
+        atomic(file(guide.cityId, "json"), bytes)
     }
     private fun ownedImages(cityId:String):Set<String> {
         val saved=runCatching { AtomicFile(file(cityId,"images")).readFully().toString(Charsets.UTF_8).lines() }.getOrDefault(emptyList())
@@ -148,7 +151,7 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
 
     /** A batch only fills subjects that were empty when it started. Existing albums stay untouched. */
     suspend fun refreshPhotos(guide:DestinationGuide,candidates:List<DestinationPhoto>,onCommitted:()->Unit={}):PhotoSaveResult {
-        DestinationGuides.validateGenerated(guide,guide.cityId)
+        DestinationGuides.validateCached(guide,guide.cityId)
         var saved = guide.withPhotos(usablePhotos(guide))
         val missing = GuidePhotoPolicy.missing(saved).toSet()
         var downloaded = 0
