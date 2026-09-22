@@ -13,15 +13,15 @@ class CtripPhotoSource(private val load: suspend (String) -> String = GuideNetwo
 
     private suspend fun read(city: City, guide: DestinationGuide, stage: (String) -> Unit): PhotoCandidates {
         require(city.id == guide.cityId && city.name == guide.name)
+        if (GuidePhotoPolicy.missing(guide).none { it.kind == "place" }) return PhotoCandidates(emptyList())
         stage("正在查找${city.name}的图片…")
         val directoryHtml = directory ?: load("https://you.ctrip.com/place").also { directory = it }
         var cityPage: JsonObject? = null
-        var cityUrl = ""
         var failed = false
         for (url in CtripGuideSource.cityLinks(directoryHtml, city.name).take(3)) {
             val page = optional { CtripGuideSource.state(load(url)) }
             if (page == null) { failed = true; continue }
-            if (CtripGuideSource.matchesCity(page.obj("districtInfo"), city)) { cityPage = page; cityUrl = url; break }
+            if (CtripGuideSource.matchesCity(page.obj("districtInfo"), city)) { cityPage = page; break }
         }
         val page = cityPage ?: return PhotoCandidates(emptyList(), failed)
         val district = page.obj("districtInfo")
@@ -29,7 +29,8 @@ class CtripPhotoSource(private val load: suspend (String) -> String = GuideNetwo
             ?.obj("mustDoModule")?.objects("mustDoTabList")?.firstOrNull { it.text("tabType") == "SIGHT" }
             ?.objects("poiList").orEmpty()
         val photos = mutableListOf<DestinationPhoto>()
-        for (place in guide.experiences.take(5)) {
+        for (subject in GuidePhotoPolicy.missing(guide).filter { it.kind == "place" }) {
+            val place = guide.experiences.first { it.name == subject.name }
             val candidate = pois.firstOrNull { samePlace(place.name, it.text("name")) } ?: continue
             val url = CtripGuideSource.pageUrl(candidate.text("jumpUrl")) ?: continue
             stage("正在读取${place.name}的图片…")
@@ -38,14 +39,11 @@ class CtripPhotoSource(private val load: suspend (String) -> String = GuideNetwo
             if (detail.text("poiId").isBlank() || detail.text("poiId") != candidate.text("poiId") ||
                 !samePlace(place.name, detail.text("poiName")) || !belongsToCity(detail, district, city)) continue
             val images = detail.obj("imageInfo").objects("poiPhotoImageList").map { it.text("imageUrl") } + candidate.text("coverImage")
-            images.filter(::supportedPhoto).distinct().take(3).forEach { image ->
-                photos += sourcedPhoto(image, "${city.name} · ${place.name}", url, "携程景点页刊载；页面未提供摄影者署名")
+            images.filter(::supportedPhoto).distinct().take(GuidePhotoPolicy.CANDIDATES_PER_ITEM).forEach { image ->
+                photos += sourcedPhoto(image, "${city.name} · ${place.name}", url, "携程景点页刊载；页面未提供摄影者署名", subject)
             }
         }
-        district.text("coverImage").takeIf(::supportedPhoto)?.let { image ->
-            photos += sourcedPhoto(image, "${city.name} · 城市资料页配图", cityUrl, "携程城市页刊载；页面未提供摄影者署名")
-        }
-        return PhotoCandidates(photos.distinctBy { it.remoteUrl }.take(12), failed)
+        return PhotoCandidates(GuidePhotoPolicy.candidates(guide, photos), failed)
     }
 
     companion object {

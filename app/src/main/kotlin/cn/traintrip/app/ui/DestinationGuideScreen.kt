@@ -39,7 +39,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@Composable fun DestinationPhoto(photo: DestinationPhoto, modifier: Modifier = Modifier, contentScale:ContentScale=ContentScale.Crop) {
+@Composable fun DestinationPhoto(photo: DestinationPhoto, modifier: Modifier = Modifier, contentScale:ContentScale=ContentScale.Crop, onUnavailable: (() -> Unit)? = null) {
     val context = LocalContext.current.applicationContext
     val bitmap by produceState<ImageBitmap?>(null, photo.assetName) {
         value = withContext(Dispatchers.IO) {
@@ -51,7 +51,9 @@ import kotlinx.coroutines.withContext
                 }
             }.getOrNull()
         }
+        if (value == null) onUnavailable?.invoke()
     }
+    if (bitmap == null && onUnavailable != null) return
     Surface(modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)), color = PrimaryTint) {
         bitmap?.let {
             Image(it, contentDescription = photo.description, contentScale = contentScale,
@@ -136,7 +138,6 @@ import kotlinx.coroutines.withContext
                             if (scrollOverview) {
                                 item("overview") { GuideOverview(cityName, provinceLabel, guide, Modifier.padding(bottom = 8.dp)) }
                             }
-                            if(guide.gallery.isNotEmpty())item("gallery") { DestinationGallery(guide.gallery,onSource) }
                             guideSectionContent(section, guide, days, onSource) { days = it }
                             if(runtime!=null) item("runtime") { GuideRuntimeStatus(guide,runtime,onRefresh,onSettings) }
                             item("sources") {
@@ -200,7 +201,7 @@ import kotlinx.coroutines.withContext
                 TextButton({ onSource(source.url) }, contentPadding = PaddingValues(0.dp)) { Text(source.title) }
                 Text("${if(guide.generatedAt!=null) "检索" else "核对"} ${source.checkedOn}", style = MaterialTheme.typography.bodySmall, color = Muted)
             }
-            items(guide.gallery) { photo ->
+            items(GuidePhotoPolicy.select(guide)) { photo ->
                 HorizontalDivider(color = Line)
                 Text(photo.description, Modifier.padding(top = 12.dp), style = MaterialTheme.typography.titleSmall)
                 Text("${photo.credit}\n已缩放，展示时裁剪",

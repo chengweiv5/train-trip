@@ -23,7 +23,7 @@ object LivePhotoSmoke {
             val result=source.fetch(city,guide) { println(it) }
             check(result.photos.isNotEmpty()) { "$name no photos" }
             val dimensions=mutableListOf<String>()
-            for((index,photo) in result.photos.take(5).withIndex()) {
+            for((index,photo) in GuidePhotoPolicy.select(guide,result.photos).withIndex()) {
                 val bytes=GuideNetwork().photo(requireNotNull(photo.remoteUrl))
                 val bitmap=requireNotNull(ImageIO.read(bytes.inputStream()))
                 check(bitmap.width>100 && bitmap.height>100)

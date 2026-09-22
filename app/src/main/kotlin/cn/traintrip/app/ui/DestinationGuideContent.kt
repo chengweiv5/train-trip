@@ -23,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.traintrip.core.DestinationGuide
+import cn.traintrip.core.GuidePhotoPolicy
+import androidx.compose.runtime.key
 
 internal enum class GuideSection(val id: String, val label: String, val title: String) {
     PLACES("places", "景点", "值得去的地方"),
@@ -50,6 +52,7 @@ internal fun LazyListScope.guideSectionContent(
     when (section) {
         GuideSection.PLACES -> itemsIndexed(guide.experiences, key = { _, e -> e.id }) { index, experience ->
             GuideContentCard(experience.name, Modifier.testTag("guide-experience-${experience.id}"), index + 1) {
+                key(guide.cityId, "place", experience.name) { DestinationGallery(GuidePhotoPolicy.forItem(guide,"place",experience.name),onSource) }
                 Text(experience.reason, style = MaterialTheme.typography.bodyMedium)
                 experience.sourceUrl?.let { url -> TextButton({ onSource(url) }, contentPadding=PaddingValues(0.dp)) { Text("查看原文",style=MaterialTheme.typography.bodySmall) } }
                 HorizontalDivider(Modifier.padding(top = 3.dp), color = Line.copy(alpha = .55f))
@@ -62,6 +65,7 @@ internal fun LazyListScope.guideSectionContent(
         GuideSection.FOOD -> { if(guide.foods.isEmpty()) item { Hint("暂未取得可靠的美食资料。") }
             itemsIndexed(guide.foods, key = { _, food -> food.name }) { index, food ->
             GuideContentCard(food.name, Modifier.testTag("guide-food-$index"), index + 1) {
+                key(guide.cityId, "food", food.name) { DestinationGallery(GuidePhotoPolicy.forItem(guide,"food",food.name),onSource) }
                 Text(food.description, style = MaterialTheme.typography.bodyMedium)
                 food.sourceUrl?.let { url -> TextButton({ onSource(url) }, contentPadding=PaddingValues(0.dp)) { Text("查看原文",style=MaterialTheme.typography.bodySmall) } }
             }

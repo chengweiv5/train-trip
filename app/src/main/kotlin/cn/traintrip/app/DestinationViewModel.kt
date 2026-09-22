@@ -105,7 +105,7 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
                         val disk=store as? AndroidGuideStore
                         if(disk==null)draft else {
                             val text=disk.saveTextKeepingPhotos(draft,repository.cached(city.id)) { committed=true;refreshSnapshot() }
-                            if(text.gallery.isNotEmpty())text else updatePhotos(city,text,id,draft.gallery).guide
+                            if(GuidePhotoPolicy.missing(text).isEmpty())text else updatePhotos(city,text,id,draft.gallery).guide
                         }
                     } } finally { (store as? AndroidGuideStore)?.let { runCatching { it.cleanupUnreferencedImages(city.id) } } }
                 } }
@@ -129,24 +129,26 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
         if(requestId==id)mutable.update { it.copy(stage="正在补充目的地图片…") }
         val found=optionalPhotos(city,guide) { stage -> if(requestId==id)mutable.update { it.copy(stage=stage) } }
         currentCoroutineContext().ensureActive()
-        val candidates=(found.photos+initial).distinctBy { it.remoteUrl }.take(12)
+        val candidates=GuidePhotoPolicy.candidates(guide, found.photos + initial)
         if(requestId==id)mutable.update { it.copy(stage="正在保存图片…") }
         var result=disk.refreshPhotos(guide,candidates) { refreshSnapshot() }
-        if(result.saved==0 && result.failed>0 && found.fallbackAvailable) {
-            val fallback=try { photoSource.fetchFallback(city,guide) { stage ->
+        var sourceFailed=found.failed
+        if(GuidePhotoPolicy.missing(result.guide).isNotEmpty() && found.fallbackAvailable) {
+            val fallback=try { photoSource.fetchFallback(city,result.guide) { stage ->
                 if(requestId==id)mutable.update { it.copy(stage=stage) }
             } } catch(e:CancellationException) { throw e } catch(_:Exception) { PhotoCandidates(emptyList(),true) }
+            sourceFailed=sourceFailed || fallback.failed
             currentCoroutineContext().ensureActive()
             val attempted=candidates.mapNotNull { it.remoteUrl }.toSet()
             if(requestId==id)mutable.update { it.copy(stage="正在保存备用来源图片…") }
-            val recovered=disk.refreshPhotos(guide,fallback.photos.filter { it.remoteUrl !in attempted }) { refreshSnapshot() }
-            result=recovered.copy(failed=result.failed+recovered.failed)
+            val recovered=disk.refreshPhotos(result.guide,fallback.photos.filter { it.remoteUrl !in attempted }) { refreshSnapshot() }
+            result=recovered.copy(saved=result.saved+recovered.saved,failed=result.failed+recovered.failed)
         }
         val message=when {
-            result.saved>0 -> "介绍已更新，已保存 ${result.guide.gallery.size} 张图片" + if(result.failed>0)"；部分图片未能下载，可重试。" else "。"
+            result.saved>0 -> "介绍已更新，已保存 ${result.guide.gallery.size} 张图片" + if(GuidePhotoPolicy.missing(result.guide).isNotEmpty())"；部分条目暂未取得图片。" else "。"
             result.failed>0 -> "介绍已更新，图片暂未取得，可稍后更新重试。"
             candidates.isNotEmpty() -> "介绍已更新。"
-            found.failed -> "介绍已更新，图片来源暂时无法读取。"
+            sourceFailed -> "介绍已更新，图片来源暂时无法读取。"
             else -> "介绍已更新，暂未找到合适图片。"
         }
         if(requestId==id)mutable.update { it.copy(contentMessage=message) }

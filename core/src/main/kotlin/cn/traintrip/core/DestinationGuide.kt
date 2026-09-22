@@ -10,7 +10,7 @@ data class GuideSource(val title: String, val url: String, val checkedOn: String
 data class DestinationPhoto(
     val assetName: String, val description: String, val credit: String,
     val sourceUrl: String, val license: String? = null, val licenseUrl: String? = null,
-    val remoteUrl: String? = null
+    val remoteUrl: String? = null, val subject: PhotoSubject? = null
 )
 data class DestinationExperience(
     val id: String, val name: String, val reason: String, val duration: String, val location: String,
@@ -100,7 +100,10 @@ object DestinationGuides {
         guide.sources.forEach { require(it.title.isNotBlank() && isWebUrl(it.url)); LocalDate.parse(it.checkedOn) }
         java.time.Instant.parse(requireNotNull(guide.generatedAt))
         require(!guide.model.isNullOrBlank())
-        require(guide.gallery.size <= 5)
+        require(guide.gallery.size <= GuidePhotoPolicy.PER_CITY)
+        val assigned = guide.gallery.mapNotNull { GuidePhotoPolicy.subject(guide, it) }
+        require(assigned.groupingBy { it }.eachCount().values.all { it <= GuidePhotoPolicy.PER_ITEM })
+        require(guide.gallery.all { it.subject == null || GuidePhotoPolicy.subject(guide, it) != null })
         require(guide.gallery.map { it.assetName }.distinct().size == guide.gallery.size)
         require(guide.gallery.map { it.remoteUrl ?: it.assetName }.distinct().size == guide.gallery.size)
         guide.gallery.forEach { p ->

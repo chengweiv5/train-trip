@@ -25,7 +25,7 @@ class OfflineManagementTest {
     private lateinit var context:ContextWrapper
     private val city=StationCatalog.bundled().cities.first { it.name=="苏州" }
     private fun guide()=DestinationGuides.all.first().copy(cityId=city.id,name=city.name,photo=null,foods=emptyList(),plans=emptyList(),generatedAt=Instant.now().toString(),model=DeepSeekGuideGenerator.MODEL)
-    private fun photoGuide()=guide().copy(photo=DestinationGuides.all.first { it.photo!=null }.photo!!.copy(assetName="remote_test.jpg",remoteUrl="https://dimg04.c-ctrip.com/images/test.jpg"))
+    private fun photoGuide()=guide().copy(photo=DestinationGuides.all.first { it.photo!=null }.photo!!.copy(assetName="remote_test.jpg",description="苏州 · ${guide().experiences.first().name}",remoteUrl="https://dimg04.c-ctrip.com/images/test.jpg"))
     private class Credentials(var key:String?="test-only"):GuideCredentials {
         override fun read()=key
         override fun save(value:String) { key=value }

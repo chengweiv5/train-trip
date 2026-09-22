@@ -21,20 +21,21 @@ class TavilyGuideTest {
         listOf(SourceDocument("s1","泰安岱庙介绍","https://tsgw.taian.gov.cn/art/1.html",quote,"places")))
     private fun content() = """{"tagline":"漫步历史古建","tags":["古建","文化"],"suggestedDays":"1 天","pace":"慢逛","experiences":[{"id":"p1","sourceId":"s1","name":"岱庙","quote":"$quote","duration":"1–2 小时"}],"foods":[],"plans":[]}"""
 
-    @Test fun photoSearchTargetsExistingPlacesAtMostTwiceAndKeepsAttribution() = runBlocking {
+    @Test fun photoSearchTargetsEachMissingPlaceAndKeepsAttribution() = runBlocking {
         val guide = SearchGuideDecoder.decode(content(), material()).let { original ->
             original.copy(experiences = listOf("岱庙", "泰山", "天外村").map { original.experiences.single().copy(name = it) })
         }
         MockWebServer().use { server ->
             val doc = result() + ("images" to listOf(
-                mapOf("url" to "https://tsgw.taian.gov.cn/picture/local.jpg", "description" to "岱庙庭院建筑照片")))
+                mapOf("url" to "https://tsgw.taian.gov.cn/picture/local.jpg", "description" to "泰安岱庙庭院建筑照片")))
             server.enqueue(MockResponse().setBody(Gson().toJson(mapOf("results" to listOf(doc), "images" to listOf(
                 mapOf("url" to "https://tsgw.taian.gov.cn/picture/root.jpg", "description" to "泰安岱庙庭院照片"),
                 mapOf("url" to "https://tsgw.taian.gov.cn/picture/wrong.jpg", "description" to "北京岱庙庭院照片"))))))
             server.enqueue(MockResponse().setResponseCode(503).setBody("private upstream detail"))
+            server.enqueue(MockResponse().setBody(response()))
             val photos = source(server).fetch(city, guide) {}
             assertEquals(2, photos.photos.size); assertTrue(photos.failed)
-            assertEquals(2, server.requestCount)
+            assertEquals(3, server.requestCount)
             assertTrue(photos.photos.first().sourceUrl.endsWith("art/1.html"))
             assertEquals(photos.photos.last().remoteUrl, photos.photos.last().sourceUrl)
             for (place in listOf("岱庙", "泰山")) {
@@ -57,10 +58,10 @@ class TavilyGuideTest {
         val docs=TavilyGuideSource.parse(Gson().toJson(mapOf("results" to listOf(result()),"images" to images)),city,"places")
             .map { it.copy(id="s1") }
         val guide=SearchGuideDecoder.decode(content(),material().copy(documents=docs))
-        assertEquals(5,guide.gallery.size)
+        assertEquals(3,guide.gallery.size)
         assertEquals(guide.gallery.first(),guide.photo)
         assertTrue(guide.gallery.all { it.sourceUrl==it.remoteUrl && it.credit.startsWith("Tavily") })
-        assertEquals(5,guide.gallery.map { it.remoteUrl }.distinct().size)
+        assertEquals(3,guide.gallery.map { it.remoteUrl }.distinct().size)
     }
     @Test fun legacySinglePhotoAndNewGalleryRoundTripAndRejectTraditionalCaptions() {
         val legacy=DestinationGuides.all.first()
@@ -188,7 +189,7 @@ class TavilyGuideTest {
         val doc = material().documents.single()
         val withLogo = material().copy(documents=listOf(doc.copy(images=listOf(SourceImage("https://tsgw.taian.gov.cn/logo.jpg","岱庙建筑标志照片")))))
         assertNull(SearchGuideDecoder.decode(content(),withLogo).photo)
-        val withPhoto = material().copy(documents=listOf(doc.copy(images=listOf(SourceImage("https://tsgw.taian.gov.cn/picture/1.jpg","岱庙庭院及其传统建筑")))))
+        val withPhoto = material().copy(documents=listOf(doc.copy(images=listOf(SourceImage("https://tsgw.taian.gov.cn/picture/1.jpg","泰安岱庙庭院及其传统建筑")))))
         assertNotNull(SearchGuideDecoder.decode(content(),withPhoto).photo)
     }
 }

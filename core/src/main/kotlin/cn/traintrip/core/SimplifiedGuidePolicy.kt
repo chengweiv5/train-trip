@@ -38,7 +38,7 @@ object SimplifiedGuidePolicy {
             foods.all { f -> listOfNotNull(f.name, f.description, f.evidence).all(::textAllowed) && f.sourceUrl?.let(::urlAllowed) != false } &&
             plans.all { p -> listOf(p.title, p.note).all(::textAllowed) && p.schedule.all { d -> listOf(d.label, d.description).all(::textAllowed) } } &&
             sources.all { textAllowed(it.title) && urlAllowed(it.url) } &&
-            gallery.all { p -> listOfNotNull(p.description, p.credit, p.license).all(::textAllowed) &&
+            gallery.all { p -> listOfNotNull(p.description, p.credit, p.license, p.subject?.name).all(::textAllowed) &&
                 listOfNotNull(p.sourceUrl, p.licenseUrl, p.remoteUrl).all(::urlAllowed) }
     }
 

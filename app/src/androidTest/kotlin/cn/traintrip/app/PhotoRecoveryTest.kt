@@ -29,8 +29,8 @@ class PhotoRecoveryTest {
         context=object:ContextWrapper(compose.activity) { override fun getFilesDir()=folder }
     }
     @After fun cleanup() { folder.deleteRecursively() }
-    private fun photo(index:Int)=DestinationPhoto("test_$index.jpg","保定 · 直隶总督署","测试资料","https://you.ctrip.com/place/baoding459.html",remoteUrl="https://dimg04.c-ctrip.com/images/$index.jpg")
-    private fun guide()=DestinationGuides.all.first().copy(cityId=city.id,name=city.name,generatedAt="2026-09-22T00:00:00Z",model="test").withPhotos(emptyList())
+    private fun photo(index:Int)=DestinationPhoto("test_$index.jpg","保定 · 直隶总督署","测试资料","https://you.ctrip.com/place/baoding459.html",remoteUrl="https://dimg04.c-ctrip.com/images/$index.jpg",subject=PhotoSubject("place",if(index==9)"古莲花池" else "直隶总督署"))
+    private fun guide()=DestinationGuides.all.first().copy(cityId=city.id,name=city.name,experiences=listOf(DestinationExperience("p1","直隶总督署","保定景点介绍","1小时","保定"),DestinationExperience("p2","古莲花池","保定景点介绍","1小时","保定")),foods=emptyList(),plans=emptyList(),generatedAt="2026-09-22T00:00:00Z",model="test").withPhotos(emptyList())
     private fun image():ByteArray {
         val bitmap=Bitmap.createBitmap(60,30,Bitmap.Config.ARGB_8888)
         return java.io.ByteArrayOutputStream().also { bitmap.compress(Bitmap.CompressFormat.PNG,100,it);bitmap.recycle() }.toByteArray()
@@ -45,7 +45,7 @@ class PhotoRecoveryTest {
         val result=store.refreshPhotos(old,listOf(photo(1),photo(2),photo(3))) { checkpoints+=store.read(city.id)!!.gallery.size }
         assertEquals(2,result.saved);assertEquals(1,result.failed);assertEquals(listOf(2,3),checkpoints)
         assertEquals(old.withPhotos(emptyList()),result.guide.withPhotos(emptyList()))
-        assertEquals(photo(9),result.guide.gallery.last());assertEquals(result.guide,AndroidGuideStore(context).read(city.id))
+        assertEquals(photo(9),result.guide.gallery.first());assertEquals(result.guide,AndroidGuideStore(context).read(city.id))
         assertTrue(store.entries().single().hasPhoto)
     }
     @Test fun noCandidatesAndAllDownloadsFailLeaveOriginalBytesUntouched()=runBlocking {
@@ -69,8 +69,38 @@ class PhotoRecoveryTest {
         val store=AndroidGuideStore(context) { url -> if(url.endsWith("1.jpg"))throw IOException();image() }
         val old=guide().withPhotos(listOf(photo(9)));store.save(old)
         val result=store.refreshPhotos(old,listOf(photo(1),photo(9))+ (2..7).map(::photo))
-        assertEquals(5,result.saved);assertEquals(5,result.guide.gallery.size);assertEquals(1,result.failed)
+        assertEquals(4,result.saved);assertEquals(4,result.guide.gallery.size);assertEquals(1,result.failed)
         assertTrue(result.guide.gallery.any { it.remoteUrl==photo(9).remoteUrl })
+    }
+    @Test fun illustratedItemsNeverDownloadAgainAndCorruptImageDoesNotBlockReplacement()=runBlocking {
+        var downloads=0
+        val store=AndroidGuideStore(context) { downloads++;image() }
+        val old=addOld(store)
+        val unchanged=store.refreshPhotos(old,listOf(photo(9),photo(10).copy(subject=photo(9).subject)))
+        assertEquals(0,unchanged.saved);assertEquals(0,downloads)
+        File(folder,"destination-guides/${photo(9).assetName}").writeText("not an image")
+        val replaced=store.refreshPhotos(old,listOf(photo(9)))
+        assertEquals(1,replaced.saved);assertEquals(1,downloads)
+        assertEquals(1,store.usablePhotos(replaced.guide).size)
+    }
+    @Test fun twoSubjectsCanSaveSixImagesAndASecondBatchDoesNotTopThemUp()=runBlocking {
+        var downloads=0
+        val store=AndroidGuideStore(context) { downloads++;image() }
+        val input=guide();store.save(input)
+        val subjects=listOf(PhotoSubject("place","直隶总督署"),PhotoSubject("place","古莲花池"))
+        val candidates=subjects.flatMapIndexed { index,subject -> (1..4).map { n -> photo(index*10+n).copy(subject=subject) } }
+        val result=store.refreshPhotos(input,candidates)
+        assertEquals(6,result.saved);assertEquals(6,downloads)
+        assertEquals(listOf(3,3),result.guide.gallery.groupingBy { it.subject }.eachCount().values.toList())
+        assertEquals(6,AndroidGuideStore(context).read(city.id)!!.gallery.size)
+        assertEquals(0,store.refreshPhotos(result.guide,candidates).saved);assertEquals(6,downloads)
+    }
+    @Test fun oldCityGalleryWithFiveOfOnePlaceIsReadAsThreeWithoutLosingText() {
+        val store=AndroidGuideStore(context)
+        val legacy=guide().withPhotos((1..5).map { photo(it).copy(subject=null) })
+        File(folder,"destination-guides/${city.id}.json").writeText(com.google.gson.Gson().toJson(mapOf("schemaVersion" to 1,"guide" to legacy)))
+        val read=store.read(city.id)!!
+        assertEquals(3,read.gallery.size);assertEquals(legacy.withPhotos(emptyList()),read.withPhotos(emptyList()))
     }
     private class Credentials:GuideCredentials {
         override fun read()="test-only"
@@ -100,16 +130,27 @@ class PhotoRecoveryTest {
         val restarted=vm(AndroidGuideStore(context),GuidePhotoSource { _,_,_ -> error("must use cache") })
         open(restarted);assertEquals(1,restarted.state.value.guide!!.gallery.size)
     }
-    @Test fun fullUpdateWithExistingPicturesKeepsBytesAndSkipsPhotoSource() {
+    @Test fun fullUpdateKeepsExistingSubjectAndFetchesMissingSubject() {
         var downloads=0
         var searches=0
         val store=AndroidGuideStore(context) { downloads++;image() };val old=addOld(store)
         val file=File(folder,"destination-guides/${photo(9).assetName}");val bytes=file.readBytes()
-        val model=vm(store,GuidePhotoSource { _,_,_ -> searches++;PhotoCandidates(emptyList()) })
+        val model=vm(store,GuidePhotoSource { _,draft,_ -> searches++;assertEquals(listOf(PhotoSubject("place","直隶总督署")),GuidePhotoPolicy.missing(draft));PhotoCandidates(listOf(photo(1))) })
         open(model);compose.runOnIdle { model.retry() }
         compose.waitUntil(5000) { !model.state.value.loading && model.state.value.guide?.tagline==updated().tagline }
-        assertEquals(updated().withPhotos(old.gallery),store.read(city.id));assertEquals(0,downloads);assertEquals(0,searches)
+        assertEquals(updated(),store.read(city.id)!!.withPhotos(emptyList()));assertEquals(1,downloads);assertEquals(1,searches)
+        assertEquals(photo(9),store.read(city.id)!!.gallery.first());assertEquals(2,store.read(city.id)!!.gallery.size)
         assertArrayEquals(bytes,file.readBytes());assertNull(model.state.value.error)
+    }
+    @Test fun fullUpdateWhenEverySubjectHasOnePhotoSkipsSearchAndDownload() {
+        var searches=0;var downloads=0
+        val store=AndroidGuideStore(context) { downloads++;image() }
+        val old=guide().withPhotos(listOf(photo(1),photo(9)));store.save(old)
+        old.gallery.forEach { File(folder,"destination-guides/${it.assetName}").writeBytes(image()) }
+        val model=vm(store,GuidePhotoSource { _,_,_ -> searches++;error("must not fetch") })
+        open(model);compose.runOnIdle { model.retry() }
+        compose.waitUntil(5000) { !model.state.value.loading && model.state.value.guide?.tagline==updated().tagline }
+        assertEquals(0,searches);assertEquals(0,downloads);assertEquals(updated().withPhotos(old.gallery),store.read(city.id))
     }
     @Test fun fullUpdateWithOnlyMissingImageFetchesReplacement() {
         val store=AndroidGuideStore(context) { image() };store.save(guide().withPhotos(listOf(photo(9))));var calls=0
@@ -142,7 +183,7 @@ class PhotoRecoveryTest {
                 image()
             }
             store.save(guide())
-            val photos = FallbackPhotoSource(GuidePhotoSource { _,_,_ -> PhotoCandidates((1..5).map(::photo)) },
+            val photos = FallbackPhotoSource(GuidePhotoSource { _,_,_ -> PhotoCandidates((1..5).map(::photo)+photo(9)) },
                 GuidePhotoSource { _,_,_ -> fallbackCalls++; PhotoCandidates(listOf(photo(8))) })
             val model = vm(store, photos)
             compose.runOnIdle { model.open(city) }
@@ -150,7 +191,7 @@ class PhotoRecoveryTest {
             compose.runOnIdle { model.retry() }
             compose.waitUntil(5000) { !model.state.value.loading && model.state.value.contentMessage!=null }
             assertEquals(if (broken) 1 else 0, fallbackCalls)
-            assertEquals(if (broken) 1 else 5, store.read(city.id)!!.gallery.size)
+            assertEquals(if (broken) 1 else 4, store.read(city.id)!!.gallery.size)
             assertEquals(updated(), store.read(city.id)!!.withPhotos(emptyList()))
             compose.runOnIdle { model.leave() }
         }
@@ -162,7 +203,7 @@ class PhotoRecoveryTest {
         val other = StationCatalog.bundled().cities.first { it.name=="邯郸" }
         store.save(old.copy(cityId=other.id, name=other.name))
         val updated = store.refreshPhotos(old, (1..5).map(::photo))
-        assertEquals(5, updated.saved)
+        assertEquals(3, updated.saved)
         assertTrue(File(folder,"destination-guides/${photo(9).assetName}").isFile)
         assertEquals(photo(9), store.read(other.id)!!.gallery.single())
     }

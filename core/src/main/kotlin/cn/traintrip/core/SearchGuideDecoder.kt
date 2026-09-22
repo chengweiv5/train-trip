@@ -2,7 +2,6 @@ package cn.traintrip.core
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import java.security.MessageDigest
 
 /** Extractive evidence stays separate from model-written, explicitly labelled travel suggestions. */
 internal object SearchGuideDecoder {
@@ -99,21 +98,23 @@ internal object SearchGuideDecoder {
         }
         val selectedMaterial = material.copy(places=places,foods=foods,sources=material.sources.filter { source -> places.any { it.url==source.url } || foods.any { it.url==source.url } },documents=emptyList())
         val guide = DeepSeekGuideGenerator.decode(root.toString(),selectedMaterial,model)
-        val photos = places.flatMap { place ->
-            material.documents.filter { it.kind == "places" && it.url == place.url }.flatMap { it.images }.filter {
-                it.description.length in 5..300 && it.description.contains(place.name) &&
-                    (!it.fromSearch || it.description.contains(material.name.removeSuffix("市"))) && GuideNetwork.isPhotoUrl(it.url) &&
-                    !TavilyGuideSource.DECORATION.containsMatchIn(it.url)
-            }.map { image ->
-                val hash = MessageDigest.getInstance("SHA-256").digest(image.url.toByteArray()).joinToString("") { "%02x".format(it) }.take(24)
-                DestinationPhoto("remote_$hash.jpg","${material.name} · ${place.name}",
-                    if(image.fromSearch) "Tavily 检索图片；未提供摄影者署名" else "原文页面刊载；检索资料未提供摄影者署名",
-                    if(image.fromSearch)image.url else place.url,remoteUrl=image.url)
-            }
-        }.distinctBy { it.remoteUrl }.take(5)
+        val photos = GuidePhotoPolicy.subjects(guide).flatMap { subject ->
+            val source = if (subject.kind == "place") places.first { it.name == subject.name }.url
+                else foods.first { it.name == subject.name }.url
+            material.documents.filter { it.kind == (if (subject.kind == "place") "places" else "food") && it.url == source }
+                .flatMap { it.images }.filter { image ->
+                    image.description.length in 5..300 && image.description.contains(subject.name) &&
+                        image.description.contains(material.name.removeSuffix("市")) && supportedPhoto(image.url) &&
+                        (subject.kind != "food" || !Regex("店面|门店|门头|环境|菜单|招牌|大厅|餐厅外观").containsMatchIn(image.description))
+                }.map { image ->
+                    sourcedPhoto(image.url, "${material.name} · ${subject.name}", if (image.fromSearch) image.url else source,
+                        if (image.fromSearch) "Tavily 检索图片；未提供摄影者署名" else "原文页面刊载；检索资料未提供摄影者署名", subject)
+                }
+        }
+
         return DestinationGuides.validateGenerated(guide.copy(
             experiences=guide.experiences.map { e -> val p=places.first { it.id==e.id }; e.copy(sourceUrl=p.url,evidence=p.introduction) },
-            foods=guide.foods.map { f -> val p=foods.first { it.name==f.name }; f.copy(sourceUrl=p.url,evidence=p.description) }).withPhotos(photos),material.cityId)
+            foods=guide.foods.map { f -> val p=foods.first { it.name==f.name }; f.copy(sourceUrl=p.url,evidence=p.description) }).withPhotos(GuidePhotoPolicy.select(guide, photos)),material.cityId)
     }
     private fun normalized(value: String) = value.replace(Regex("\\s+"),"")
 }

@@ -67,11 +67,11 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
             require(j["tags"].asJsonArray.all { it.isJsonPrimitive && it.asJsonPrimitive.isString })
             val chosen = j.objects("experiences").map { e ->
                 val original = requireNotNull(material.places.find { it.id == e.text("id") })
-                DestinationExperience(original.id, original.name, e.text("reason"), e.text("duration"), original.address)
+                DestinationExperience(original.id, original.name, e.text("reason"), e.text("duration"), original.address, original.url)
             }
             val foods = j.objects("foods").map { f ->
                 val original = requireNotNull(material.foods.find { it.id == f.text("id") })
-                DestinationFood(original.name, original.description)
+                DestinationFood(original.name, original.description, original.url)
             }
             val plans = j.objects("plans").map { p ->
                 require(p["schedule"]?.isJsonArray == true && p["schedule"].asJsonArray.all { it.isJsonObject })
@@ -81,9 +81,9 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
                         PlanDay(d.text("label"), d.strings("experienceIds"), d.text("description"))
                     }, p.text("note"))
             }
-            val photos = material.places.filter { p -> chosen.any { it.id == p.id } && p.imageUrl != null }.distinctBy { it.imageUrl }.take(5).map { p ->
+            val photos = material.places.filter { p -> chosen.any { it.id == p.id } && p.imageUrl != null }.distinctBy { it.imageUrl }.map { p ->
                 val hash = java.security.MessageDigest.getInstance("SHA-256").digest(p.imageUrl!!.toByteArray()).joinToString("") { "%02x".format(it) }.take(24)
-                DestinationPhoto("remote_$hash.jpg", "${material.name} · ${p.name}", "携程景点页面刊载；所取图片字段未提供摄影者署名", p.url, remoteUrl = p.imageUrl)
+                DestinationPhoto("remote_$hash.jpg", "${material.name} · ${p.name}", "携程景点页面刊载；所取图片字段未提供摄影者署名", p.url, remoteUrl = p.imageUrl, subject = PhotoSubject("place", p.name))
             }
             return DestinationGuides.validateGenerated(DestinationGuide(material.cityId, material.name, j.text("tagline"), j.strings("tags"),
                 j.text("suggestedDays"), j.text("pace"), j.text("season"), j.text("arrivalAdvice"), chosen, foods, plans,

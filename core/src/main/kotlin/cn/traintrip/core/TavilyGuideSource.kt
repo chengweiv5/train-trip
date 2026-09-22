@@ -42,19 +42,21 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
         require(city.id == guide.cityId && city.name == guide.name)
         val photos = mutableListOf<DestinationPhoto>()
         var failed = false
-        for (place in guide.experiences.take(2)) {
-            stage("正在搜索${place.name}的图片…")
-            val documents = optional { search(city, "places", "${place.name} 景区 实景 图片", apiKey) }
+        for (subject in GuidePhotoPolicy.missing(guide)) {
+            stage("正在搜索${subject.name}的图片…")
+            val food = subject.kind == "food"
+            val terms = if (food) "${subject.name} 美食 成品 实拍 图片" else "${subject.name} 景区 实景 图片"
+            val documents = optional { search(city, if (food) "food" else "places", terms, apiKey) }
             if (documents == null) { failed = true; continue }
             for (doc in documents) for (image in doc.images) {
-                if (!image.description.contains(place.name) || (image.fromSearch && !image.description.contains(city.name.removeSuffix("市")))) continue
-                photos += sourcedPhoto(image.url, "${city.name} · ${place.name}",
+                if (!image.description.contains(subject.name) || !image.description.contains(city.name.removeSuffix("市"))) continue
+                if (food && Regex("店面|门店|门头|环境|菜单|招牌|大厅|餐厅外观").containsMatchIn(image.description)) continue
+                photos += sourcedPhoto(image.url, "${city.name} · ${subject.name}",
                     if (image.fromSearch) image.url else doc.url,
-                    if (image.fromSearch) "Tavily 检索图片；未提供摄影者署名" else "原文页面刊载；未提供摄影者署名")
+                    if (image.fromSearch) "Tavily 检索图片；未提供摄影者署名" else "原文页面刊载；未提供摄影者署名", subject)
             }
-            if (photos.distinctBy { it.remoteUrl }.size >= 5) break
         }
-        return PhotoCandidates(photos.distinctBy { it.remoteUrl }.take(12), failed)
+        return PhotoCandidates(GuidePhotoPolicy.candidates(guide, photos), failed)
     }
 
     private suspend fun search(city: City, kind: String, terms: String, apiKey: String): List<SourceDocument> {
@@ -93,7 +95,7 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
                     SimplifiedGuidePolicy.textAllowed(description) && SimplifiedGuidePolicy.urlAllowed(url) &&
                     GuideNetwork.isPhotoUrl(url) && !DECORATION.containsMatchIn(url)) SourceImage(url,description,fromSearch) else null
             }.distinctBy { it.url }.take(12)
-            val searched=if(kind=="places")images(root,true) else emptyList()
+            val searched=images(root,true)
             return root.objects("results").take(6).mapNotNull { r ->
                 if (!SimplifiedGuidePolicy.textAllowed(r.text("title")) || !SimplifiedGuidePolicy.textAllowed(r.text("content"))) return@mapNotNull null
                 val title = r.text("title").take(180)

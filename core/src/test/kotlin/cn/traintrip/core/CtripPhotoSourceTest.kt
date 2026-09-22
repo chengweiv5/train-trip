@@ -36,10 +36,9 @@ class CtripPhotoSourceTest {
         assertFalse(CtripPhotoSource.samePlace("山", "白石山"))
         assertFalse(CtripPhotoSource.samePlace("故宫", "故宫博物院附近餐厅"))
     }
-    @Test fun cityCoverIsHonestFallbackWhenNoPlaceMatches()=runBlocking {
+    @Test fun cityCoverIsExcludedWhenNoPlaceMatches()=runBlocking {
         val pages=pages(cover=photo);val result=CtripPhotoSource { pages.getValue(it) }.fetch(city,guide("不在此页的景点")) {}
-        assertEquals(1,result.photos.size);assertEquals(page,result.photos.single().sourceUrl)
-        assertTrue(result.photos.single().description.contains("城市资料页配图"))
+        assertTrue(result.photos.isEmpty())
     }
     @Test fun failuresReportAndCancellationPropagates()=runBlocking {
         assertTrue(CtripPhotoSource { throw java.io.IOException() }.fetch(city,guide()) {}.failed)

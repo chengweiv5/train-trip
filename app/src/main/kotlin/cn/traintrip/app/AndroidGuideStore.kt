@@ -31,7 +31,12 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
         Gson().fromJson(root["guide"], DestinationGuide::class.java)
     }.getOrNull()
     override fun read(cityId: String): DestinationGuide? = runCatching {
-        storedGuide(cityId)?.let { DestinationGuides.validateGenerated(it, cityId) }
+        storedGuide(cityId)?.let { legacy ->
+            val counts = legacy.gallery.mapNotNull { GuidePhotoPolicy.subject(legacy, it) }.groupingBy { it }.eachCount()
+            val readable = if (legacy.gallery.all { it.subject == null } && counts.values.any { it > GuidePhotoPolicy.PER_ITEM })
+                legacy.withPhotos(GuidePhotoPolicy.select(legacy)) else legacy
+            DestinationGuides.validateGenerated(readable, cityId)
+        }
     }.getOrNull()
     fun all(): Map<String, DestinationGuide> = directory.listFiles().orEmpty()
         .mapNotNull { Regex("^([0-9]{6})\\.json(?:\\.bak)?$").matchEntire(it.name)?.groupValues?.get(1) }
@@ -111,26 +116,14 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
         save(saved)
         onCommitted()
         cleanupUnreferencedImages(guide.cityId)
-        for(candidate in guide.gallery) {
-            coroutineContext.ensureActive()
-            if(candidate.remoteUrl==null)continue
-            val photo=candidate.copy(assetName="${guide.cityId}_${java.util.UUID.randomUUID().toString().replace("-", "")}.jpg")
-            if(downloadPhoto(photo)) {
-                coroutineContext.ensureActive()
-                val next=saved.withPhotos(saved.gallery+photo)
-                save(next)
-                saved=next
-                onCommitted()
-            }
-        }
+        saved = refreshPhotos(saved, guide.gallery, onCommitted).guide
         return saved
     }
     /** Full refresh keeps usable saved photos; missing files do not count as an album. */
     suspend fun saveTextKeepingPhotos(draft:DestinationGuide,previous:DestinationGuide?,onCommitted:()->Unit={}):DestinationGuide {
         coroutineContext.ensureActive()
         require(previous==null || previous.cityId==draft.cityId)
-        val photos=previous?.gallery.orEmpty().filter { it.remoteUrl==null ||
-            File(directory,it.assetName).let { file -> file.isFile && file.length()>0 } }
+        val photos = if (previous == null) emptyList() else GuidePhotoPolicy.select(draft, usablePhotos(previous))
         val text=draft.withPhotos(photos)
         rememberImages(draft.cityId)
         save(text)
@@ -139,30 +132,45 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
         return text
     }
 
-    /** Save verified candidates after the text has been committed. */
+    fun usablePhotos(guide: DestinationGuide): List<DestinationPhoto> = GuidePhotoPolicy.select(guide, guide.gallery.filter { photo ->
+        if (photo.remoteUrl == null) true else runCatching {
+            val file = File(directory, photo.assetName)
+            if (!file.isFile || file.length() == 0L) false else {
+                val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                BitmapFactory.decodeFile(file.path, bounds)
+                if (bounds.outWidth !in 1..20000 || bounds.outHeight !in 1..20000) false else {
+                    val options = BitmapFactory.Options().apply { inSampleSize = 16 }
+                    BitmapFactory.decodeFile(file.path, options)?.let { it.recycle(); true } ?: false
+                }
+            }
+        }.getOrDefault(false)
+    })
+
+    /** A batch only fills subjects that were empty when it started. Existing albums stay untouched. */
     suspend fun refreshPhotos(guide:DestinationGuide,candidates:List<DestinationPhoto>,onCommitted:()->Unit={}):PhotoSaveResult {
         DestinationGuides.validateGenerated(guide,guide.cityId)
-        var saved=guide
-        val downloaded=mutableListOf<DestinationPhoto>()
-        var failed=0
-        val retained=guide.gallery.filter { it.remoteUrl==null || File(directory,it.assetName).isFile }
-        val existing=retained.mapNotNull { it.remoteUrl }.toSet()
-        for(candidate in candidates.distinctBy { it.remoteUrl }.take(12)) {
+        var saved = guide.withPhotos(usablePhotos(guide))
+        val missing = GuidePhotoPolicy.missing(saved).toSet()
+        var downloaded = 0
+        var failed = 0
+        for (candidate in GuidePhotoPolicy.candidates(guide, candidates)) {
             coroutineContext.ensureActive()
-            if(downloaded.size>=5)break
-            if(candidate.remoteUrl==null || candidate.remoteUrl in existing)continue
+            if (saved.gallery.size >= GuidePhotoPolicy.PER_CITY) break
+            val subject = candidate.subject ?: continue
+            if (subject !in missing || saved.gallery.count { it.subject == subject } >= GuidePhotoPolicy.PER_ITEM) continue
+            if (candidate.remoteUrl == null || saved.gallery.any { it.remoteUrl == candidate.remoteUrl || it.assetName == candidate.assetName }) continue
             val photo=candidate.copy(assetName="${guide.cityId}_${java.util.UUID.randomUUID().toString().replace("-", "")}.jpg")
             if(!downloadPhoto(photo)) { failed++;continue }
             coroutineContext.ensureActive()
-            val next=guide.withPhotos((downloaded+photo+retained).distinctBy { it.remoteUrl ?: it.assetName }.take(5))
+            val next = saved.withPhotos(saved.gallery + photo)
             rememberImages(guide.cityId)
             save(next)
-            downloaded+=photo
+            downloaded++
             saved=next
             onCommitted()
             cleanupUnreferencedImages(guide.cityId)
         }
-        return PhotoSaveResult(saved,downloaded.size,failed)
+        return PhotoSaveResult(saved,downloaded,failed)
     }
 
     private suspend fun downloadPhoto(photo:DestinationPhoto):Boolean {

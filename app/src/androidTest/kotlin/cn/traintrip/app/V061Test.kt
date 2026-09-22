@@ -32,7 +32,7 @@ class V061Test {
         context=object:ContextWrapper(compose.activity) { override fun getFilesDir()=folder }
     }
     @After fun cleanup() { folder.deleteRecursively() }
-    private fun photo(index:Int)=DestinationPhoto("test_$index.jpg","天津 · 测试景点 $index","测试来源","https://you.ctrip.com/place/tianjin154.html",remoteUrl="https://dimg04.c-ctrip.com/images/$index.jpg")
+    private fun photo(index:Int)=DestinationPhoto("test_$index.jpg","天津 · 五大道","测试来源","https://you.ctrip.com/place/tianjin154.html",remoteUrl="https://dimg04.c-ctrip.com/images/$index.jpg")
     private fun guide()=DestinationGuides.all.first().copy(generatedAt=time.toString(),model="test-model").withPhotos((1..3).map(::photo))
     private fun image():ByteArray {
         val bitmap=Bitmap.createBitmap(60,30,Bitmap.Config.ARGB_8888)
@@ -127,16 +127,18 @@ class V061Test {
         compose.onNodeWithTag("gallery-pager").performTouchInput { swipeLeft() }
         compose.onNodeWithTag("gallery-count").assertTextEquals("2/2")
         compose.onNodeWithText("图片来源").performClick();assertEquals(photos[1].sourceUrl,source)
-        compose.onNodeWithTag("gallery-pager").performClick()
+        compose.onNodeWithContentDescription(photos[1].description).performClick()
         compose.onNodeWithText("图片 2/2").assertIsDisplayed();capture("gallery-full")
         compose.onNodeWithTag("close-gallery").performClick();compose.onNodeWithTag("gallery-count").assertIsDisplayed()
     }
     @Test fun galleryInsideGuideSwipesWithoutChangingContentTab() {
         val base=DestinationGuides.all.first()
         val other=DestinationGuides.all.first { it.photo!!.assetName!=base.photo!!.assetName }.photo!!
-        val data=base.withPhotos(listOf(base.photo!!,other))
+        val target=PhotoSubject("place",base.experiences.first().name)
+        val data=base.withPhotos(listOf(base.photo!!.copy(subject=target),other.copy(subject=target)))
         compose.setContent { TrainTripTheme { DestinationGuideScreen(data.name,data,{}, {}, {}) } }
         compose.onNodeWithTag("guide-tab-places").assertIsSelected()
+        compose.onNodeWithTag("guide-page-places").performScrollToNode(hasTestTag("gallery-pager"))
         compose.onNodeWithTag("gallery-pager").performTouchInput { swipeLeft() }
         compose.onNodeWithTag("gallery-count").assertTextEquals("2/2")
         compose.onNodeWithTag("guide-tab-places").assertIsSelected()
