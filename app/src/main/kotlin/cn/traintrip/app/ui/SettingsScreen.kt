@@ -85,7 +85,7 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
                                 modifier=Modifier.fillMaxWidth().testTag("settings-model-name"),enabled=!state.settingsBusy,
                                 keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Ascii,autoCorrectEnabled=false))
                             Text("填写 DeepSeek 账户支持的模型 ID，默认 deepseek-flash。",style=MaterialTheme.typography.bodySmall,color=Muted)
-                        } else Text("每次整理通常 2 次网页搜索，缺图条目另行搜图",style=MaterialTheme.typography.bodyMedium,color=Muted)
+                        } else Text("分别检索景点、美食和路线攻略，缺图时按条目补查",style=MaterialTheme.typography.bodyMedium,color=Muted)
                         Text(if(configured) "密钥已配置；留空保留现有密钥" else "尚未配置密钥",style=MaterialTheme.typography.bodySmall,color=Muted)
                         OutlinedTextField(key,{key=it},label={Text("API Key")},singleLine=true,shape=androidx.compose.foundation.shape.RoundedCornerShape(8.dp),
                             modifier=Modifier.fillMaxWidth().testTag(if(modelPage) "deepseek-key" else "doubao-search-key"),

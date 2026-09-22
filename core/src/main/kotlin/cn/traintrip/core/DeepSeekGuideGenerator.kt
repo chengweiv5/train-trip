@@ -78,7 +78,8 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
                 DayPlan(p.text("days").toInt(), p.text("title"),
                     p.objects("schedule").map { d ->
                         require(d["experienceIds"]?.isJsonArray == true && d["experienceIds"].asJsonArray.all { it.isJsonPrimitive && it.asJsonPrimitive.isString })
-                        PlanDay(d.text("label"), d.strings("experienceIds"), d.text("description"))
+                        PlanDay(d.text("label"), d.strings("experienceIds"), d.text("description"),
+                            d.text("sourceUrl").takeIf { it.isNotBlank() },d.text("evidence").takeIf { it.isNotBlank() })
                     }, p.text("note"))
             }
             val photos = material.places.filter { p -> chosen.any { it.id == p.id } && p.imageUrl != null }.distinctBy { it.imageUrl }.map { p ->

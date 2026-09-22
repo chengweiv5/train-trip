@@ -108,6 +108,7 @@ internal fun LazyListScope.guideSectionContent(
                         Text(day.experienceIds.joinToString(" → ") { id -> guide.experiences.first { it.id == id }.name },
                             style=MaterialTheme.typography.titleMedium,color=Primary)
                         Text(day.description,style=MaterialTheme.typography.bodyMedium)
+                        day.sourceUrl?.let { url -> TextButton({ onSource(url) },contentPadding=PaddingValues(0.dp)) { Text("查看攻略原文",style=MaterialTheme.typography.bodySmall) } }
                     }
                 }
             }

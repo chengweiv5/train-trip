@@ -119,7 +119,7 @@ class DestinationGuideTest {
         compose.onNodeWithText("资料来源与图片署名").performClick()
         compose.onNodeWithText(guide.sources.first().title).performScrollTo().performClick()
         compose.runOnIdle { assertEquals(guide.sources.first().url, opened) }
-        compose.onNodeWithText("查看原图与作者").performScrollTo().performClick()
+        compose.onNodeWithText("查看图片来源").performScrollTo().performClick()
         compose.runOnIdle { assertEquals(guide.photo!!.sourceUrl, opened) }
         compose.onNodeWithText("图片仅用于个人离线浏览，权利归原权利人所有。").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("查看图片许可").assertDoesNotExist()

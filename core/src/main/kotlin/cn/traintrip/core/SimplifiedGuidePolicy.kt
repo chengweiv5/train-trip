@@ -36,7 +36,7 @@ object SimplifiedGuidePolicy {
         listOf(name, tagline, suggestedDays, pace, season, arrivalAdvice).all(::textAllowed) && tags.all(::textAllowed) &&
             experiences.all { e -> listOfNotNull(e.name, e.reason, e.duration, e.location, e.evidence).all(::textAllowed) && e.sourceUrl?.let(::urlAllowed) != false } &&
             foods.all { f -> listOfNotNull(f.name, f.description, f.evidence).all(::textAllowed) && f.sourceUrl?.let(::urlAllowed) != false } &&
-            plans.all { p -> listOf(p.title, p.note).all(::textAllowed) && p.schedule.all { d -> listOf(d.label, d.description).all(::textAllowed) } } &&
+            plans.all { p -> listOf(p.title, p.note).all(::textAllowed) && p.schedule.all { d -> listOfNotNull(d.label, d.description, d.evidence).all(::textAllowed) && d.sourceUrl?.let(::urlAllowed) != false } } &&
             sources.all { textAllowed(it.title) && urlAllowed(it.url) } &&
             gallery.all { p -> listOfNotNull(p.description, p.credit, p.license, p.subject?.name).all(::textAllowed) &&
                 listOfNotNull(p.sourceUrl, p.licenseUrl, p.remoteUrl).all(::urlAllowed) }

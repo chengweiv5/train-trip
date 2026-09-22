@@ -17,7 +17,8 @@ data class DestinationExperience(
     val sourceUrl: String? = null, val evidence: String? = null
 )
 data class DestinationFood(val name: String, val description: String, val sourceUrl: String? = null, val evidence: String? = null)
-data class PlanDay(val label: String, val experienceIds: List<String>, val description: String)
+data class PlanDay(val label: String, val experienceIds: List<String>, val description: String,
+    val sourceUrl: String? = null, val evidence: String? = null)
 data class DayPlan(val days: Int, val title: String, val schedule: List<PlanDay>, val note: String)
 data class DestinationGuide(
     val cityId: String, val name: String, val tagline: String, val tags: List<String>,
@@ -100,7 +101,10 @@ object DestinationGuides {
         require(guide.plans.size <= 2 && guide.plans.map { it.days }.distinct().size == guide.plans.size)
         guide.plans.forEach { p ->
             require(p.days in 1..2 && p.schedule.size == p.days && p.title.isNotBlank() && p.note.isNotBlank())
-            p.schedule.forEach { d -> require(d.label.isNotBlank() && d.description.isNotBlank() && d.experienceIds.isNotEmpty() && d.experienceIds.all { it in ids }) }
+            p.schedule.forEach { d ->
+                require(d.sourceUrl == null || (GuideSearchPolicy.sourceUrl(d.sourceUrl) && !d.evidence.isNullOrBlank()))
+                require(d.evidence == null || (d.evidence.length in 10..1200 && d.sourceUrl != null))
+                require(d.label.isNotBlank() && d.description.isNotBlank() && d.experienceIds.isNotEmpty() && d.experienceIds.all { it in ids }) }
         }
         require(guide.sources.isNotEmpty())
         guide.sources.forEach { require(it.title.isNotBlank() && isWebUrl(it.url)); LocalDate.parse(it.checkedOn) }

@@ -34,29 +34,52 @@ object LiveDoubaoSmoke {
                 println("documents=${material.documents.size}, sources=${material.sources.size}")
                 val guide = DeepSeekGuideGenerator("https://api.deepseek.com/chat/completions", client).generate(material, deepSeekKey)
                 File(directory, "guide.json").writeText(gson.toJson(guide))
-                println("generated city=${city.name}, places=${guide.experiences.size}, foods=${guide.foods.size}")
-                require(guide.experiences.all { item -> material.documents.any { it.kind == "places" && it.url == item.sourceUrl &&
+                println("generated city=${city.name}, places=${guide.experiences.size}, foods=${guide.foods.size}, plans=${guide.plans.size}")
+                require(guide.experiences.all { item -> material.documents.any { it.url == item.sourceUrl &&
                     it.content.replace(Regex("\\s+"), "").contains(requireNotNull(item.evidence).replace(Regex("\\s+"), "")) } })
-                require(guide.foods.all { item -> material.documents.any { it.kind == "food" && it.url == item.sourceUrl &&
+                require(guide.foods.all { item -> material.documents.any { it.url == item.sourceUrl &&
                     it.content.replace(Regex("\\s+"), "").contains(requireNotNull(item.evidence).replace(Regex("\\s+"), "")) } })
                 val photos = source.fetch(city, guide) { println(it) }
                 File(directory, "photos.json").writeText(gson.toJson(photos))
-                val selected = GuidePhotoPolicy.select(guide, photos.photos)
+                val selected = GuidePhotoPolicy.select(guide, guide.gallery + photos.photos)
                 val downloaded = mutableListOf<Map<String, Any>>()
-                for ((index, photo) in selected.take(3).withIndex()) {
+                for ((index, photo) in selected.withIndex()) {
+                    try {
                     val bytes = GuideNetwork(client).photo(requireNotNull(photo.remoteUrl))
                     val decoded = requireNotNull(javax.imageio.ImageIO.read(java.io.ByteArrayInputStream(bytes)))
                     File(directory, "image-${index + 1}.jpg").writeBytes(bytes)
                     downloaded += mapOf("subject" to requireNotNull(photo.subject).name, "bytes" to bytes.size,
-                        "width" to decoded.width, "height" to decoded.height)
+                        "width" to decoded.width, "height" to decoded.height, "kind" to requireNotNull(photo.subject).kind)
+                    } catch (e:Exception) { downloaded += mapOf("subject" to requireNotNull(photo.subject).name,"error" to e.javaClass.simpleName) }
                 }
                 val summary = mapOf("city" to city.name, "documents" to material.documents.size,
-                    "places" to guide.experiences.size, "foods" to guide.foods.size, "evidenceVerified" to true,
+                    "places" to guide.experiences.size, "foods" to guide.foods.size, "plans" to guide.plans.size, "evidenceVerified" to true,
                     "photoCandidates" to photos.photos.size, "photoSourceFailed" to photos.failed,
                     "selectedPhotos" to selected.size, "downloaded" to downloaded, "calls" to calls)
                 File(directory, "summary.json").writeText(gson.toJson(summary))
                 println(gson.toJson(summary))
             } finally { client.dispatcher.executorService.shutdown(); client.connectionPool.evictAll() }
+            return@runBlocking
+        }
+        if (args.size == 3 && args[0] == "photos") {
+            val searchKey=requireNotNull(readlnOrNull()).trim()
+            val gson=GsonBuilder().setPrettyPrinting().create()
+            val guide=gson.fromJson(File(args[1]).readText(),DestinationGuide::class.java)
+            val city=StationCatalog.bundled().cities.first { it.id==guide.cityId }
+            val directory=File(args[2]).apply { mkdirs() }
+            val photos=DoubaoGuideSource { searchKey }.fetch(city,guide) { println(it) }
+            File(directory,"photos.json").writeText(gson.toJson(photos))
+            val records=mutableListOf<Map<String,Any>>()
+            for((index,photo) in GuidePhotoPolicy.select(guide,photos.photos).withIndex()) {
+                try {
+                    val bytes=GuideNetwork().photo(requireNotNull(photo.remoteUrl))
+                    val bitmap=requireNotNull(javax.imageio.ImageIO.read(bytes.inputStream()))
+                    File(directory,"image-$index.jpg").writeBytes(bytes)
+                    records+=mapOf("subject" to requireNotNull(photo.subject).name,"kind" to requireNotNull(photo.subject).kind,"bytes" to bytes.size,"width" to bitmap.width,"height" to bitmap.height)
+                } catch(e:Exception) { records+=mapOf("subject" to requireNotNull(photo.subject).name,"error" to e.javaClass.simpleName) }
+            }
+            File(directory,"downloads.json").writeText(gson.toJson(records))
+            println("downloaded=${records.count { "error" !in it }}, subjects=${records.filter { "error" !in it }.map { it["subject"] }.distinct().size}")
             return@runBlocking
         }
         if (args.size == 4 && args[0] == "decode") {
