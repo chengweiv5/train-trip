@@ -12,7 +12,7 @@
 
 - 基线 `8817acd`；功能分支开发，版本 0.7.0 / code12 不变，不安装用户手机或发布版本。
 - 原始来源及下载证据保存在 `.verification-private/photo-recovery/`，不得公开服务密钥或个人缓存。
-- 图片最多 5 张，候选最多 12 张，取消必须传播，正文与旧相册按规格保留。
+- 图片最多 5 张，每批候选最多 12 张（全失败备用补救最多再尝试 12 张），取消必须传播，正文与旧相册按规格保留。
 
 ## Task 1: 独立图源
 
@@ -20,11 +20,11 @@
 
 **Interfaces:** `GuidePhotoSource.fetch(city: City, guide: DestinationGuide, stage: (String)->Unit): PhotoCandidates`；`PhotoCandidates(photos: List<DestinationPhoto>, failed: Boolean)`；`TavilyGuideSource` 实现备用图源。
 
-- [ ] 先构造三城城市页/景点页夹具，断言完整归属图像无 description 也可采用；同名异地、附近景点、错误 ID 被丢弃。
-- [ ] 执行 `./gradlew :core:test --tests '*PhotoSourceTest' --offline`，确认新增能力缺失时失败。
-- [ ] 实现目录缓存、城市匹配、名称括号别名匹配、景点详情核验、城市封面兜底及来源标注。
-- [ ] 实现最多两次 Tavily 备用查询，复用现有解析和图片筛选规则；没有 key 时只读免费公开图源。
-- [ ] 同样命令测试通过，并用只读 live smoke 对三个城市下载图片、ImageIO 解码和记录结果。
+- [x] 先构造城市页/景点页夹具，并以真实请求验证三城，断言完整归属图像无 description 也可采用；同名异地、附近景点、错误 ID 被丢弃。
+- [x] 执行 `./gradlew :core:test --tests '*PhotoSourceTest' --offline`，确认新增能力缺失时失败。
+- [x] 实现目录缓存、城市匹配、名称括号别名匹配、景点详情核验、城市封面兜底及来源标注。
+- [x] 实现最多两次 Tavily 备用查询，复用现有解析和图片筛选规则；没有 key 时只读免费公开图源。
+- [x] 同样命令测试通过，并用只读 live smoke 对三个城市下载图片、ImageIO 解码和记录结果。
 
 ## Task 2: 图片持久化与状态
 
@@ -32,18 +32,18 @@
 
 **Interfaces:** `refreshPhotos(guide,candidates,onCommitted): PhotoSaveResult` 仅改变相册；`DestinationViewModel.refreshPhotos()` 为单独操作；状态增加 `photoLoading`、`photoStage`、`photoMessage`。
 
-- [ ] 测试完整正文值相等、全部失败无写、部分成功逐张提交、取消保留首图、共享文件保留。
-- [ ] 保存方法将成功新图置前、原图补足，去重上限5，成功保存后清理无引用图片；错误不覆盖原介绍。
-- [ ] ViewModel 从现有介绍调用图源，不读 DeepSeek key；使用现有 requestId/contentLock，离开/删除取消，阻止过期结果。
-- [ ] 手动生成完成正文后调用同一补图过程；无图给明确状态，错误不破坏正文。
-- [ ] Android 测试覆盖无 DeepSeek key、退出城市、重新读取和无图重试；回归既有 V061Test/DeepSeekDestinationTest。
+- [x] 测试完整正文值相等、全部失败无写、部分成功逐张提交、取消保留首图、共享文件保留。
+- [x] 保存方法将成功新图置前、原图补足，去重上限5，成功保存后清理无引用图片；错误不覆盖原介绍。
+- [x] ViewModel 从现有介绍调用图源，不读 DeepSeek key；使用现有 requestId/contentLock，离开/删除取消，阻止过期结果。
+- [x] 手动生成完成正文后调用同一补图过程；无图给明确状态，错误不破坏正文。
+- [x] Android 测试覆盖无 DeepSeek key、退出城市、重新读取和无图重试；回归既有 V061Test/DeepSeekDestinationTest。
 
 ## Task 3: 手动入口与交付
 
 **Files:** `DestinationGuideScreen.kt`、`TrainTripApp.kt`、可编辑设计补充、`docs/verification/2026-09-22-destination-photo-recovery.md`。
 
-- [ ] 相册下方增加48dp文本按钮及紧凑状态：补充图片、只更新图片、取消补图；旧四分页与顶部保留。
-- [ ] 验证320dp/1.3字体可见/可点；保存并回读Pencil补充状态，运行截图比对。
-- [ ] `./gradlew :core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --offline`。
-- [ ] 专用模拟器安装测试包，执行 PhotoRecoveryTest、V061Test、DeepSeekDestinationTest；不操作用户真机。
-- [ ] 检查 diff、提交代码，记录基线/验证/回滚，发送 punk-12 完成通知并读回。
+- [x] 相册下方增加48dp文本按钮及紧凑状态：补充图片、只更新图片、取消补图；旧四分页与顶部保留。
+- [x] 验证320dp/1.3字体可见/可点；保存并回读Pencil补充状态，运行截图比对。
+- [x] `./gradlew :core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --offline`。
+- [x] 专用模拟器安装测试包，执行 PhotoRecoveryTest、V061Test、DeepSeekDestinationTest；不操作用户真机。
+- [x] 检查 diff、提交代码，记录基线/验证/回滚，发送 punk-12 完成通知并读回。

@@ -75,7 +75,7 @@ import kotlinx.coroutines.delay
                     Page.DESTINATION->DestinationGuideScreen(s.catalog.byCity[s.cityId]?.name.orEmpty(),destination.guide.takeIf { destination.cityId==s.cityId } ?: destination.guides[s.cityId],vm::backFromCity,vm::showDestinationTrains,onSource={url->
                         runCatching { context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(url))) }.onFailure { Toast.makeText(context,"未找到浏览器",Toast.LENGTH_SHORT).show() }
                     },provinceLabel=s.catalog.byCity[s.cityId]?.provinceLabel.orEmpty(),runtime=destination.takeIf { destination.cityId==s.cityId },onRefresh=destinationVm::retry,onSettings=::openSettings,
-                        city=s.catalog.byCity[s.cityId],favorite=wish.items.any { it.cityId==s.cityId },onFavorite={s.catalog.byCity[s.cityId]?.let(wishlistVm::toggle)},queryAction=!s.guideFromResults)
+                        city=s.catalog.byCity[s.cityId],favorite=wish.items.any { it.cityId==s.cityId },onFavorite={s.catalog.byCity[s.cityId]?.let(wishlistVm::toggle)},queryAction=!s.guideFromResults,onPhotos=destinationVm::refreshPhotos,onCancelPhotos=destinationVm::cancel)
                     Page.DETAIL->DetailScreen(s,vm::backFromCity,vm::select,{vm.refreshCity()},{vm.refreshCity(retryFailed=true)},vm::clearSelection,::openRailway)
                     Page.SETTINGS->SettingsScreen(destination,vm::back,destinationVm::saveModelSettings,destinationVm::saveSearchSettings,destinationVm::removeKey,destinationVm::removeTavilyKey,destinationVm::clearSettingsFeedback,
                         onOffline={vm.navigate(Page.OFFLINE)},onAbout={vm.navigate(Page.ABOUT)},offlineBytes=destination.offline.sumOf { it.bytes },offlineCount=destination.offline.size,applySafeInsets=false)

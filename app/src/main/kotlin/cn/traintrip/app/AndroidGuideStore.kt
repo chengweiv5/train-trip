@@ -13,6 +13,8 @@ import java.io.File
 import java.io.IOException
 import kotlin.coroutines.coroutineContext
 
+data class PhotoSaveResult(val guide:DestinationGuide,val saved:Int,val failed:Int)
+
 data class OfflineEntry(val cityId:String,val guide:DestinationGuide?,val bytes:Long,val hasPhoto:Boolean)
 
 class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean = { it.delete() }, private val loadPhoto: suspend (String) -> ByteArray = GuideNetwork()::photo) : GuideStore {
@@ -123,6 +125,32 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
         }
         return saved
     }
+    /** Keep the original text and album until each replacement image is safely on disk. */
+    suspend fun refreshPhotos(guide:DestinationGuide,candidates:List<DestinationPhoto>,onCommitted:()->Unit={}):PhotoSaveResult {
+        DestinationGuides.validateGenerated(guide,guide.cityId)
+        var saved=guide
+        val downloaded=mutableListOf<DestinationPhoto>()
+        var failed=0
+        val retained=guide.gallery.filter { it.remoteUrl==null || File(directory,it.assetName).isFile }
+        val existing=retained.mapNotNull { it.remoteUrl }.toSet()
+        for(candidate in candidates.distinctBy { it.remoteUrl }.take(12)) {
+            coroutineContext.ensureActive()
+            if(downloaded.size>=5)break
+            if(candidate.remoteUrl==null || candidate.remoteUrl in existing)continue
+            val photo=candidate.copy(assetName="${guide.cityId}_${java.util.UUID.randomUUID().toString().replace("-", "")}.jpg")
+            if(!downloadPhoto(photo)) { failed++;continue }
+            coroutineContext.ensureActive()
+            val next=guide.withPhotos((downloaded+photo+retained).distinctBy { it.remoteUrl ?: it.assetName }.take(5))
+            rememberImages(guide.cityId)
+            save(next)
+            downloaded+=photo
+            saved=next
+            onCommitted()
+            cleanupUnreferencedImages(guide.cityId)
+        }
+        return PhotoSaveResult(saved,downloaded.size,failed)
+    }
+
     private suspend fun downloadPhoto(photo:DestinationPhoto):Boolean {
         val url=photo.remoteUrl ?: return false
         return try {

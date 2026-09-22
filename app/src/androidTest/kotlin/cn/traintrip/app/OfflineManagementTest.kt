@@ -100,7 +100,7 @@ class OfflineManagementTest {
         val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide {
             calls++;entered.complete(Unit);withContext(NonCancellable){release.await()};return guide()
         } }
-        val vm=DestinationViewModel(compose.activity.application,creds,store,source,generator,Credentials())
+        val vm=DestinationViewModel(compose.activity.application,creds,store,source,generator,Credentials(),photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
         compose.runOnIdle { vm.open(city) };compose.waitUntil(5000){!vm.state.value.loading}
         compose.runOnIdle { vm.retry() };compose.waitUntil(5000){entered.isCompleted}
         compose.runOnIdle { vm.deleteOffline(city.id);release.complete(Unit) }
@@ -112,7 +112,7 @@ class OfflineManagementTest {
     @Test fun deletingDownloadedBundledCityRestoresBundledVersion() {
         val bundled=DestinationGuides.all.first()
         val store=AndroidGuideStore(context);store.save(bundled.copy(generatedAt=Instant.now().toString(),model=DeepSeekGuideGenerator.MODEL,photo=null))
-        val vm=DestinationViewModel(compose.activity.application,Credentials(null),store,source,object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide=error("must not call") },Credentials(null))
+        val vm=DestinationViewModel(compose.activity.application,Credentials(null),store,source,object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide=error("must not call") },Credentials(null),photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
         compose.waitUntil(5000){!vm.state.value.offlineLoading}
         compose.runOnIdle { vm.deleteOffline(bundled.cityId) }
         compose.waitUntil(5000){vm.state.value.deleting==null && vm.state.value.offlineMessage!=null}
@@ -128,7 +128,7 @@ class OfflineManagementTest {
     @Test fun offlineUiCancelKeepsContentAndConfirmRemovesOnlyDownloadedContent() {
         val store=AndroidGuideStore(context);store.save(guide())
         val vm=DestinationViewModel(compose.activity.application,Credentials(null),store,source,
-            object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide=error("must not call") },Credentials(null))
+            object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide=error("must not call") },Credentials(null),photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
         compose.setContent { val state by vm.state.collectAsState();TrainTripTheme { OfflineContentScreen(state,StationCatalog.bundled(),{}, {},vm::deleteOffline,vm::refreshOffline) } }
         compose.waitUntil(5000){vm.state.value.offline.size==1}
         fun capture(name:String) {
@@ -153,7 +153,7 @@ class OfflineManagementTest {
         val store=AndroidGuideStore(context) { downloading.complete(Unit);awaitCancellation() }
         store.save(guide())
         val vm=DestinationViewModel(compose.activity.application,Credentials(),store,source,
-            object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String)=photoGuide().copy(tagline="正文已更新") },Credentials())
+            object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String)=photoGuide().copy(tagline="正文已更新") },Credentials(),photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
         compose.runOnIdle { vm.open(city) };compose.waitUntil(5000){!vm.state.value.loading}
         compose.runOnIdle { vm.retry() };compose.waitUntil(5000){downloading.isCompleted}
         assertEquals("正文已更新",vm.state.value.guide?.tagline);assertNull(vm.state.value.guide?.photo)

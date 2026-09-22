@@ -46,7 +46,7 @@ class WishlistFlowTest {
     private fun app(large:Boolean=false):Triple<AppViewModel,WishlistViewModel,Tickets> {
         val tickets=Tickets(catalog);val vm=AppViewModel(compose.activity.application,tickets)
         val wishes=WishlistViewModel(compose.activity.application,Store())
-        val destination=DestinationViewModel(compose.activity.application,EmptyCredentials(),searchCredentials=EmptyCredentials())
+        val destination=DestinationViewModel(compose.activity.application,EmptyCredentials(),searchCredentials=EmptyCredentials(),photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
         val updates=UpdateViewModel(UpdateSource { error("should not call") })
         compose.setContent {
             val density=LocalDensity.current

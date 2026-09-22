@@ -76,7 +76,7 @@ class SettingsMenuTest {
         val model=Model();val deep=Credentials("sk-existing-test-123456");val search=Credentials("tvly-existing-test-123456")
         var calls=0
         val source=object:GuideMaterialSource {override suspend fun fetch(city:City,stage:(String)->Unit):GuideMaterial {calls++;error("unexpected search")}}
-        val vm=DestinationViewModel(compose.activity.application as Application,deep,source=source,searchCredentials=search,modelPreference=model)
+        val vm=DestinationViewModel(compose.activity.application as Application,deep,source=source,searchCredentials=search,modelPreference=model,photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
         var saved=false
         compose.runOnIdle { vm.saveModelSettings("deepseek-new"," "){saved=true} }
         compose.waitUntil(5000){saved}

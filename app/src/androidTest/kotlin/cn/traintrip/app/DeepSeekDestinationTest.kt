@@ -37,7 +37,7 @@ class DeepSeekDestinationTest {
     private val source=object:GuideMaterialSource {
         override suspend fun fetch(city:City,stage:(String)->Unit)=GuideMaterial(city.id,city.name,city.province.name,emptyList(),emptyList(),emptyList())
     }
-    private fun vm(credentials:Credentials,store:Store,generator:GuideGenerator)=DestinationViewModel(compose.activity.application as Application,credentials,store,source,generator,Credentials("tvly-test-only-123456789"))
+    private fun vm(credentials:Credentials,store:Store,generator:GuideGenerator)=DestinationViewModel(compose.activity.application as Application,credentials,store,source,generator,Credentials("tvly-test-only-123456789"),photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
     @Test fun newCityWaitsForExplicitActionAndRestartUsesSavedContent() {
         val store=Store();var calls=0
         val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide { calls++;return guide() } }
@@ -99,7 +99,7 @@ class DeepSeekDestinationTest {
             override suspend fun fetch(city:City,stage:(String)->Unit):GuideMaterial { calls++;return source.fetch(city,stage) }
         }
         val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String)=guide() }
-        val model=DestinationViewModel(compose.activity.application as Application,deep,store,countingSource,generator,search)
+        val model=DestinationViewModel(compose.activity.application as Application,deep,store,countingSource,generator,search,photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
         compose.runOnIdle { model.open(city) }
         compose.waitUntil(5000) { model.state.value.cityId!=null && !model.state.value.loading }
         assertEquals(0,calls);assertFalse(store.attempted(city.id))

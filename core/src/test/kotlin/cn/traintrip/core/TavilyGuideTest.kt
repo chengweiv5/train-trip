@@ -21,6 +21,34 @@ class TavilyGuideTest {
         listOf(SourceDocument("s1","泰安岱庙介绍","https://tsgw.taian.gov.cn/art/1.html",quote,"places")))
     private fun content() = """{"tagline":"漫步历史古建","tags":["古建","文化"],"suggestedDays":"1 天","pace":"慢逛","experiences":[{"id":"p1","sourceId":"s1","name":"岱庙","quote":"$quote","duration":"1–2 小时"}],"foods":[],"plans":[]}"""
 
+    @Test fun photoSearchTargetsExistingPlacesAtMostTwiceAndKeepsAttribution() = runBlocking {
+        val guide = SearchGuideDecoder.decode(content(), material()).let { original ->
+            original.copy(experiences = listOf("岱庙", "泰山", "天外村").map { original.experiences.single().copy(name = it) })
+        }
+        MockWebServer().use { server ->
+            val doc = result() + ("images" to listOf(
+                mapOf("url" to "https://tsgw.taian.gov.cn/picture/local.jpg", "description" to "岱庙庭院建筑照片")))
+            server.enqueue(MockResponse().setBody(Gson().toJson(mapOf("results" to listOf(doc), "images" to listOf(
+                mapOf("url" to "https://tsgw.taian.gov.cn/picture/root.jpg", "description" to "泰安岱庙庭院照片"),
+                mapOf("url" to "https://tsgw.taian.gov.cn/picture/wrong.jpg", "description" to "北京岱庙庭院照片"))))))
+            server.enqueue(MockResponse().setResponseCode(503).setBody("private upstream detail"))
+            val photos = source(server).fetch(city, guide) {}
+            assertEquals(2, photos.photos.size); assertTrue(photos.failed)
+            assertEquals(2, server.requestCount)
+            assertTrue(photos.photos.first().sourceUrl.endsWith("art/1.html"))
+            assertEquals(photos.photos.last().remoteUrl, photos.photos.last().sourceUrl)
+            for (place in listOf("岱庙", "泰山")) {
+                val body = JsonParser.parseString(server.takeRequest().body.readUtf8()).asJsonObject
+                assertTrue(body["query"].asString.contains("$place 景区 实景 图片"))
+            }
+        }
+        MockWebServer().use { server ->
+            val noKey = TavilyGuideSource({ null }, server.url("/search").toString(), OkHttpClient())
+            assertTrue(noKey.fetch(city, guide) {}.photos.isEmpty())
+            assertEquals(0, server.requestCount)
+        }
+    }
+
     @Test fun rootImagesRequireCityAndPlaceAndKeepHonestAttribution() {
         val images=(1..7).map { mapOf("url" to "https://tsgw.taian.gov.cn/picture/p$it.jpg","description" to "泰安岱庙庭院建筑实景图片") }+
             listOf(mapOf("url" to "https://tsgw.taian.gov.cn/picture/wrong.jpg","description" to "北京故宫实景图片"),

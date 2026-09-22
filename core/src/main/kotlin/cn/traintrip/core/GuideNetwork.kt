@@ -20,8 +20,8 @@ class GuideNetwork(private val client: OkHttpClient = OkHttpClient.Builder()
         var url = initial
         repeat(4) {
             if (!SimplifiedGuidePolicy.urlAllowed(url) || !(if (photo) isPhotoUrl(url) else isPageUrl(url))) throw IOException("资料链接不受支持")
-            val request = Request.Builder().url(url).header("User-Agent", "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 Chrome/130.0.0.0 Mobile Safari/537.36").build()
-            val result = client.newCall(request).boundedResponse(5 * 1024 * 1024)
+            val request = Request.Builder().url(url).header("User-Agent", if (photo) "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 Chrome/130.0.0.0 Mobile Safari/537.36" else "Mozilla/5.0").build()
+            val result = client.newCall(request).boundedResponse((if (photo) 10 else 5) * 1024 * 1024)
             if (result.code in 300..399) {
                 url = url.toHttpUrlOrNull()?.resolve(result.location.orEmpty())?.toString() ?: throw IOException("资料链接重定向失败")
                 if (url.toHttpUrlOrNull()?.host == "verify.ctrip.com") throw IOException("携程暂时要求网页验证，无法自动读取。请稍后重试；本次未进入内容整理。")

@@ -1,0 +1,625 @@
+{
+  "version": "2.18",
+  "children": [
+    {
+      "type": "frame",
+      "id": "BTo68",
+      "x": 0,
+      "y": 0,
+      "name": "13 · 目的地独立补图 / 操作状态",
+      "width": 1140,
+      "height": 420,
+      "fill": "#F4F8FB",
+      "layout": "vertical",
+      "gap": 20,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "iX0oB",
+          "name": "补图设计标题",
+          "fill": "$palette-c1-ink",
+          "content": "目的地图片 · 保留文字，独立更新",
+          "fontFamily": "$cn-font",
+          "fontSize": 24,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "I1LxvR",
+          "name": "交互说明",
+          "fill": "$palette-c1-muted",
+          "content": "沿用 B4 和四分页；操作紧接相册，无图时显示简短提示。以下为状态示例。",
+          "fontFamily": "$cn-font",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "oWiE9",
+          "name": "图片操作的三个状态",
+          "width": "fill_container",
+          "height": 240,
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "DOz40",
+              "name": "未保存图片",
+              "width": "fill_container",
+              "height": 240,
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "l7DEA",
+                  "name": "未保存图片标题",
+                  "fill": "$palette-c1-ink",
+                  "content": "未保存图片",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "aO9K7",
+                  "name": "未保存图片提示",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "还没有保存图片",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "kXe1M",
+                  "name": "补充图片 · 48dp",
+                  "width": "fill_container",
+                  "height": 48,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "i6oWp9",
+                      "name": "补充图片标签",
+                      "fill": "$palette-c1-primary",
+                      "content": "补充图片",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "JtCEd",
+                  "name": "未保存图片说明",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "保留文字介绍；备用搜索会使用 Tavily 额度。",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "PZnAV",
+              "name": "正在补图",
+              "width": "fill_container",
+              "height": 240,
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "OaK51",
+                  "name": "正在补图标题",
+                  "fill": "$palette-c1-ink",
+                  "content": "正在补图",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "XpIju",
+                  "name": "正在补图提示",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "正在读取直隶总督署的图片…",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "I8Uvli",
+                  "name": "取消补图 · 48dp",
+                  "width": "fill_container",
+                  "height": 48,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "HDStM",
+                      "name": "取消补图标签",
+                      "fill": "$palette-c1-primary",
+                      "content": "取消补图",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "DECii",
+                  "name": "正在补图说明",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "已保存图片保留，正文继续可浏览。",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "q7wqV",
+              "name": "图片下载失败",
+              "width": "fill_container",
+              "height": 240,
+              "fill": "#FFFFFF",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qMWIA",
+                  "name": "图片下载失败标题",
+                  "fill": "$palette-c1-ink",
+                  "content": "图片下载失败",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "zswf8",
+                  "name": "图片下载失败提示",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "图片下载失败，已保留原图片，可重试。",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "gHKnN",
+                  "name": "只更新图片 · 48dp",
+                  "width": "fill_container",
+                  "height": 48,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "B8rDP",
+                      "name": "只更新图片标签",
+                      "fill": "$palette-c1-primary",
+                      "content": "只更新图片",
+                      "fontFamily": "$cn-font",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "Q9Cjh",
+                  "name": "图片下载失败说明",
+                  "fill": "$palette-c1-muted",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "保留文字介绍；备用搜索会使用 Tavily 额度。",
+                  "fontFamily": "$cn-font",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "tt-bg": {
+      "type": "color",
+      "value": "#F5F3EE"
+    },
+    "tt-surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "tt-ink": {
+      "type": "color",
+      "value": "#20392C"
+    },
+    "tt-muted": {
+      "type": "color",
+      "value": "#617065"
+    },
+    "tt-primary": {
+      "type": "color",
+      "value": "#2D5E3A"
+    },
+    "tt-tint": {
+      "type": "color",
+      "value": "#E6EFDF"
+    },
+    "tt-line": {
+      "type": "color",
+      "value": "#D8DED3"
+    },
+    "tt-warning": {
+      "type": "color",
+      "value": "#87531F"
+    },
+    "tt-warning-bg": {
+      "type": "color",
+      "value": "#FBF0DE"
+    },
+    "tt-font": {
+      "type": "string",
+      "value": "Noto Sans SC"
+    },
+    "cn-bg": {
+      "type": "color",
+      "value": "#F5F7FA"
+    },
+    "cn-surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "cn-text": {
+      "type": "color",
+      "value": "#17233D"
+    },
+    "cn-secondary": {
+      "type": "color",
+      "value": "#596579"
+    },
+    "cn-muted": {
+      "type": "color",
+      "value": "#687589"
+    },
+    "cn-primary": {
+      "type": "color",
+      "value": "#1769E8"
+    },
+    "cn-tint": {
+      "type": "color",
+      "value": "#EBF3FF"
+    },
+    "cn-line": {
+      "type": "color",
+      "value": "#E6EAF0"
+    },
+    "cn-green": {
+      "type": "color",
+      "value": "#12845B"
+    },
+    "cn-green-bg": {
+      "type": "color",
+      "value": "#EAF7F0"
+    },
+    "cn-orange": {
+      "type": "color",
+      "value": "#A8500C"
+    },
+    "cn-orange-bg": {
+      "type": "color",
+      "value": "#FFF4E5"
+    },
+    "cn-font": {
+      "type": "string",
+      "value": "Noto Sans SC"
+    },
+    "contrast-page-a": {
+      "type": "color",
+      "value": "#EBF0F7"
+    },
+    "contrast-card-a": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "contrast-border-a": {
+      "type": "color",
+      "value": "#CFD9E7"
+    },
+    "contrast-page-b": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "contrast-card-b": {
+      "type": "color",
+      "value": "#EDF2F8"
+    },
+    "contrast-border-b": {
+      "type": "color",
+      "value": "#DCE5EF"
+    },
+    "palette-b1-card": {
+      "type": "color",
+      "value": "#F4ECDF"
+    },
+    "palette-b1-border": {
+      "type": "color",
+      "value": "#E7DCCB"
+    },
+    "palette-b1-primary": {
+      "type": "color",
+      "value": "#AD452D"
+    },
+    "palette-b1-tint": {
+      "type": "color",
+      "value": "#FAE5D9"
+    },
+    "palette-b1-ink": {
+      "type": "color",
+      "value": "#302B27"
+    },
+    "palette-b1-muted": {
+      "type": "color",
+      "value": "#6F6256"
+    },
+    "palette-b1-line": {
+      "type": "color",
+      "value": "#E3D8C9"
+    },
+    "palette-b1-control": {
+      "type": "color",
+      "value": "#FFFCF7"
+    },
+    "palette-b1-positive": {
+      "type": "color",
+      "value": "#726536"
+    },
+    "palette-b1-accentBorder": {
+      "type": "color",
+      "value": "#DAB29F"
+    },
+    "palette-b2-card": {
+      "type": "color",
+      "value": "#F1EDF8"
+    },
+    "palette-b2-border": {
+      "type": "color",
+      "value": "#E1D8ED"
+    },
+    "palette-b2-primary": {
+      "type": "color",
+      "value": "#7150B5"
+    },
+    "palette-b2-tint": {
+      "type": "color",
+      "value": "#E8DFF7"
+    },
+    "palette-b2-ink": {
+      "type": "color",
+      "value": "#2E2938"
+    },
+    "palette-b2-muted": {
+      "type": "color",
+      "value": "#6D6579"
+    },
+    "palette-b2-line": {
+      "type": "color",
+      "value": "#E0D8EB"
+    },
+    "palette-b2-control": {
+      "type": "color",
+      "value": "#FCFAFF"
+    },
+    "palette-b2-positive": {
+      "type": "color",
+      "value": "#5F6679"
+    },
+    "palette-b2-accentBorder": {
+      "type": "color",
+      "value": "#C8B5E4"
+    },
+    "palette-b3-card": {
+      "type": "color",
+      "value": "#F2EEE6"
+    },
+    "palette-b3-border": {
+      "type": "color",
+      "value": "#E1DBCF"
+    },
+    "palette-b3-primary": {
+      "type": "color",
+      "value": "#226B69"
+    },
+    "palette-b3-tint": {
+      "type": "color",
+      "value": "#E0EFEB"
+    },
+    "palette-b3-ink": {
+      "type": "color",
+      "value": "#263332"
+    },
+    "palette-b3-muted": {
+      "type": "color",
+      "value": "#5B6B67"
+    },
+    "palette-b3-line": {
+      "type": "color",
+      "value": "#DFDAD0"
+    },
+    "palette-b3-control": {
+      "type": "color",
+      "value": "#FFFDF9"
+    },
+    "palette-b3-positive": {
+      "type": "color",
+      "value": "#576A56"
+    },
+    "palette-b3-accentBorder": {
+      "type": "color",
+      "value": "#AACDC3"
+    },
+    "palette-c1-card": {
+      "type": "color",
+      "value": "#EAF5FC"
+    },
+    "palette-c1-border": {
+      "type": "color",
+      "value": "#D5EAF6"
+    },
+    "palette-c1-primary": {
+      "type": "color",
+      "value": "#0073AA"
+    },
+    "palette-c1-tint": {
+      "type": "color",
+      "value": "#DDF2FF"
+    },
+    "palette-c1-ink": {
+      "type": "color",
+      "value": "#1E3443"
+    },
+    "palette-c1-muted": {
+      "type": "color",
+      "value": "#516774"
+    },
+    "palette-c1-line": {
+      "type": "color",
+      "value": "#D5E5EE"
+    },
+    "palette-c1-control": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "palette-c1-positive": {
+      "type": "color",
+      "value": "#446874"
+    },
+    "palette-c1-accentBorder": {
+      "type": "color",
+      "value": "#93CFE9"
+    },
+    "palette-c2-card": {
+      "type": "color",
+      "value": "#FFF1E3"
+    },
+    "palette-c2-border": {
+      "type": "color",
+      "value": "#F0DFCC"
+    },
+    "palette-c2-primary": {
+      "type": "color",
+      "value": "#BE401D"
+    },
+    "palette-c2-tint": {
+      "type": "color",
+      "value": "#FFECDD"
+    },
+    "palette-c2-ink": {
+      "type": "color",
+      "value": "#382C24"
+    },
+    "palette-c2-muted": {
+      "type": "color",
+      "value": "#78614F"
+    },
+    "palette-c2-line": {
+      "type": "color",
+      "value": "#ECDCCC"
+    },
+    "palette-c2-control": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "palette-c2-positive": {
+      "type": "color",
+      "value": "#78613C"
+    },
+    "palette-c2-accentBorder": {
+      "type": "color",
+      "value": "#EFBC9C"
+    },
+    "palette-c3-card": {
+      "type": "color",
+      "value": "#F6F0F5"
+    },
+    "palette-c3-border": {
+      "type": "color",
+      "value": "#E9DEE6"
+    },
+    "palette-c3-primary": {
+      "type": "color",
+      "value": "#C22A50"
+    },
+    "palette-c3-tint": {
+      "type": "color",
+      "value": "#FFE6ED"
+    },
+    "palette-c3-ink": {
+      "type": "color",
+      "value": "#302930"
+    },
+    "palette-c3-muted": {
+      "type": "color",
+      "value": "#75616B"
+    },
+    "palette-c3-line": {
+      "type": "color",
+      "value": "#E8DEE4"
+    },
+    "palette-c3-control": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "palette-c3-positive": {
+      "type": "color",
+      "value": "#736176"
+    },
+    "palette-c3-accentBorder": {
+      "type": "color",
+      "value": "#E9AEC1"
+    },
+    "b4-header-top": {
+      "type": "color",
+      "value": "#DDF2FF"
+    },
+    "b4-header-control": {
+      "type": "color",
+      "value": "#FFFFFFCC"
+    },
+    "b4-header-line": {
+      "type": "color",
+      "value": "#BFDFEE"
+    }
+  },
+  "fileToken": "3a1510c4-bd28-4cd2-8696-5a71026c63f7"
+}

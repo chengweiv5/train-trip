@@ -15,7 +15,7 @@ data class SourceDocument(val id: String, val title: String, val url: String, va
     val kind: String, val images: List<SourceImage> = emptyList())
 
 class TavilyGuideSource internal constructor(private val key: () -> String?, private val endpoint: String,
-    client: OkHttpClient) : GuideMaterialSource {
+    client: OkHttpClient) : GuideMaterialSource, GuidePhotoSource {
     private val client = client.newBuilder().followRedirects(false).followSslRedirects(false)
         .retryOnConnectionFailure(false).build()
     constructor(key: () -> String?) : this(key,"https://api.tavily.com/search",OkHttpClient.Builder()
@@ -36,6 +36,27 @@ class TavilyGuideSource internal constructor(private val key: () -> String?, pri
         return GuideMaterial(city.id,city.name,city.province.name,emptyList(),emptyList(),
             docs.distinctBy { it.url }.map { GuideSource(it.title,it.url,checked) },docs)
     }
+    override suspend fun fetch(city: City, guide: DestinationGuide, stage: (String) -> Unit): PhotoCandidates {
+        val apiKey = key()?.takeIf { it.startsWith("tvly-") && it.none(Char::isWhitespace) }
+            ?: return PhotoCandidates(emptyList())
+        require(city.id == guide.cityId && city.name == guide.name)
+        val photos = mutableListOf<DestinationPhoto>()
+        var failed = false
+        for (place in guide.experiences.take(2)) {
+            stage("正在搜索${place.name}的图片…")
+            val documents = optional { search(city, "places", "${place.name} 景区 实景 图片", apiKey) }
+            if (documents == null) { failed = true; continue }
+            for (doc in documents) for (image in doc.images) {
+                if (!image.description.contains(place.name) || (image.fromSearch && !image.description.contains(city.name.removeSuffix("市")))) continue
+                photos += sourcedPhoto(image.url, "${city.name} · ${place.name}",
+                    if (image.fromSearch) image.url else doc.url,
+                    if (image.fromSearch) "Tavily 检索图片；未提供摄影者署名" else "原文页面刊载；未提供摄影者署名")
+            }
+            if (photos.distinctBy { it.remoteUrl }.size >= 5) break
+        }
+        return PhotoCandidates(photos.distinctBy { it.remoteUrl }.take(12), failed)
+    }
+
     private suspend fun search(city: City, kind: String, terms: String, apiKey: String): List<SourceDocument> {
         val payload = mapOf("query" to "${city.province.name} ${city.name} $terms 简体中文 -inurl:BIG5 -inurl:zh-hant -inurl:zh-tw", "topic" to "general",
             "search_depth" to "basic", "max_results" to 6, "include_answer" to false,
