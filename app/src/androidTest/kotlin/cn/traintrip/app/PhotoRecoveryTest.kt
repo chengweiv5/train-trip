@@ -73,33 +73,66 @@ class PhotoRecoveryTest {
         assertTrue(result.guide.gallery.any { it.remoteUrl==photo(9).remoteUrl })
     }
     private class Credentials:GuideCredentials {
-        override fun read():String?=null
+        override fun read()="test-only"
         override fun save(value:String) {}
         override fun remove() {}
     }
+    private fun updated()=guide().copy(tagline="新的目的地正文",generatedAt="2026-09-22T01:00:00Z")
     private fun vm(store:AndroidGuideStore,photos:GuidePhotoSource)=DestinationViewModel(compose.activity.application,
-        Credentials(),store,source=object:GuideMaterialSource { override suspend fun fetch(city:City,stage:(String)->Unit):GuideMaterial=error("text search must not run") },
-        generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide=error("model must not run") },
+        Credentials(),store,source=object:GuideMaterialSource { override suspend fun fetch(city:City,stage:(String)->Unit)=
+            GuideMaterial(city.id,city.name,city.province.name,emptyList(),emptyList(),emptyList()) },
+        generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String)=updated() },
         searchCredentials=Credentials(),photoSource=photos)
-    @Test fun photoOnlyNeedsNoModelKeyAndKeepsTextAcrossNewViewModel() {
-        val store=AndroidGuideStore(context) { image() };val old=guide();store.save(old);var calls=0
-        val model=vm(store,GuidePhotoSource { _,_,_ -> calls++;PhotoCandidates(listOf(photo(1))) })
-        compose.runOnIdle { model.open(city) };compose.waitUntil(5000) { !model.state.value.loading && model.state.value.guide!=null }
-        compose.runOnIdle { model.refreshPhotos() };compose.waitUntil(5000) { !model.state.value.photoLoading && model.state.value.photoMessage!=null }
+    private fun open(model:DestinationViewModel) {
+        compose.runOnIdle { model.open(city) }
+        compose.waitUntil(5000) { !model.state.value.loading && model.state.value.guide!=null }
+    }
+    @Test fun fullUpdateWithoutPicturesSavesTextThenAddsPhotosAndReopenDoesNotFetch() {
+        val store=AndroidGuideStore(context) { image() };store.save(guide());var calls=0
+        val model=vm(store,GuidePhotoSource { _,draft,_ ->
+            calls++;assertEquals(updated(),draft);assertEquals(updated(),store.read(city.id))
+            PhotoCandidates(listOf(photo(1)))
+        })
+        open(model)
+        compose.runOnIdle { model.retry() };compose.waitUntil(5000) { !model.state.value.loading && model.state.value.contentMessage!=null }
         assertEquals(1,calls);assertEquals(1,model.state.value.guide!!.gallery.size)
-        assertEquals(old,model.state.value.guide!!.withPhotos(emptyList()));assertTrue(model.state.value.photoMessage!!.contains("1 张"))
+        assertEquals(updated(),model.state.value.guide!!.withPhotos(emptyList()))
         val restarted=vm(AndroidGuideStore(context),GuidePhotoSource { _,_,_ -> error("must use cache") })
-        compose.runOnIdle { restarted.open(city) };compose.waitUntil(5000) { !restarted.state.value.loading && restarted.state.value.guide!=null }
-        assertEquals(1,restarted.state.value.guide!!.gallery.size)
+        open(restarted);assertEquals(1,restarted.state.value.guide!!.gallery.size)
+    }
+    @Test fun fullUpdateWithExistingPicturesKeepsBytesAndSkipsPhotoSource() {
+        var downloads=0
+        var searches=0
+        val store=AndroidGuideStore(context) { downloads++;image() };val old=addOld(store)
+        val file=File(folder,"destination-guides/${photo(9).assetName}");val bytes=file.readBytes()
+        val model=vm(store,GuidePhotoSource { _,_,_ -> searches++;PhotoCandidates(emptyList()) })
+        open(model);compose.runOnIdle { model.retry() }
+        compose.waitUntil(5000) { !model.state.value.loading && model.state.value.guide?.tagline==updated().tagline }
+        assertEquals(updated().withPhotos(old.gallery),store.read(city.id));assertEquals(0,downloads);assertEquals(0,searches)
+        assertArrayEquals(bytes,file.readBytes());assertNull(model.state.value.error)
+    }
+    @Test fun fullUpdateWithOnlyMissingImageFetchesReplacement() {
+        val store=AndroidGuideStore(context) { image() };store.save(guide().withPhotos(listOf(photo(9))));var calls=0
+        val model=vm(store,GuidePhotoSource { _,_,_ -> calls++;PhotoCandidates(listOf(photo(1))) })
+        open(model);compose.runOnIdle { model.retry() }
+        compose.waitUntil(5000) { !model.state.value.loading && model.state.value.contentMessage!=null }
+        assertEquals(1,calls);assertEquals(photo(1).remoteUrl,store.read(city.id)!!.gallery.single().remoteUrl)
+    }
+    @Test fun photoFailureStillKeepsUpdatedText() {
+        val store=AndroidGuideStore(context) { throw IOException() };store.save(guide())
+        val model=vm(store,GuidePhotoSource { _,_,_ -> PhotoCandidates(listOf(photo(1))) })
+        open(model);compose.runOnIdle { model.retry() }
+        compose.waitUntil(5000) { !model.state.value.loading && model.state.value.contentMessage!=null }
+        assertEquals(updated(),store.read(city.id));assertNull(model.state.value.error)
     }
     @Test fun leavingCityDiscardsLateUncooperativeSource() {
         val gate=CompletableDeferred<Unit>();val entered=CompletableDeferred<Unit>();val done=CompletableDeferred<Unit>()
         val store=AndroidGuideStore(context) { image() };store.save(guide())
         val model=vm(store,GuidePhotoSource { _,_,_ -> entered.complete(Unit);withContext(NonCancellable) { gate.await() };done.complete(Unit);PhotoCandidates(listOf(photo(1))) })
         compose.runOnIdle { model.open(city) };compose.waitUntil(5000) { !model.state.value.loading && model.state.value.guide!=null }
-        compose.runOnIdle { model.refreshPhotos() };compose.waitUntil(5000) { entered.isCompleted }
+        compose.runOnIdle { model.retry() };compose.waitUntil(5000) { entered.isCompleted }
         compose.runOnIdle { model.leave();gate.complete(Unit) };compose.waitUntil(5000) { done.isCompleted }
-        assertTrue(store.read(city.id)!!.gallery.isEmpty());assertFalse(model.state.value.photoLoading)
+        assertTrue(store.read(city.id)!!.gallery.isEmpty());assertFalse(model.state.value.loading)
     }
     @Test fun brokenPrimaryDownloadsUseFallbackAndSuccessfulPrimarySkipsIt() {
         for (broken in listOf(true, false)) {
@@ -114,11 +147,11 @@ class PhotoRecoveryTest {
             val model = vm(store, photos)
             compose.runOnIdle { model.open(city) }
             compose.waitUntil(5000) { !model.state.value.loading && model.state.value.guide!=null }
-            compose.runOnIdle { model.refreshPhotos() }
-            compose.waitUntil(5000) { !model.state.value.photoLoading && model.state.value.photoMessage!=null }
+            compose.runOnIdle { model.retry() }
+            compose.waitUntil(5000) { !model.state.value.loading && model.state.value.contentMessage!=null }
             assertEquals(if (broken) 1 else 0, fallbackCalls)
             assertEquals(if (broken) 1 else 5, store.read(city.id)!!.gallery.size)
-            assertEquals(guide(), store.read(city.id)!!.withPhotos(emptyList()))
+            assertEquals(updated(), store.read(city.id)!!.withPhotos(emptyList()))
             compose.runOnIdle { model.leave() }
         }
     }
@@ -134,34 +167,40 @@ class PhotoRecoveryTest {
         assertEquals(photo(9), store.read(other.id)!!.gallery.single())
     }
 
-    @Test fun successfulAlbumShowsPhotoAndUpdateAction() {
-        val withPhoto = DestinationGuides.all.first().copy(generatedAt="2026-09-22T00:00:00Z",model="ui-fixture")
-        var clicks = 0
-        compose.setContent { TrainTripTheme {
-            DestinationGuideScreen(withPhoto.name,withPhoto,{}, {}, {},runtime=DestinationState(photoMessage="已保存 1 张新图片，共 1 张。"),onPhotos={clicks++})
-        } }
-        compose.onNodeWithTag("refresh-photos").performScrollTo().assertIsDisplayed().performClick()
-        assertEquals(1, clicks)
-        compose.onNodeWithText("只更新图片").assertIsDisplayed()
-        compose.onNodeWithTag("photo-message").assertIsDisplayed()
-        val bmp=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()
-        File(compose.activity.getExternalFilesDir(null),"photo-recovery-success.png").outputStream().use { bmp.compress(Bitmap.CompressFormat.PNG,100,it) }
+    @Test fun existingAlbumHasOnlyFullUpdateAction() {
+        val preview=DestinationGuides.all.first().copy(generatedAt="2026-09-22T00:00:00Z",model="ui-fixture")
+        var clicks=0
+        compose.setContent { TrainTripTheme { Box(Modifier.fillMaxSize().safeDrawingPadding()) {
+            DestinationGuideScreen(preview.name,preview,{}, {}, {},
+                runtime=DestinationState(configured=true,tavilyConfigured=true),onRefresh={clicks++})
+        } } }
+        compose.onNodeWithTag("guide-page-places").performScrollToNode(hasTestTag("refresh-guide"))
+        compose.onNodeWithTag("refresh-guide").assertIsDisplayed().performClick()
+        assertEquals(1,clicks)
+        compose.onNodeWithText("更新目的地介绍").assertIsDisplayed()
+        compose.onNodeWithTag("refresh-photos").assertDoesNotExist()
+        compose.onNodeWithText("只更新图片").assertDoesNotExist()
+        capture("full-update-existing")
     }
-
-    @Test fun compactPhotoActionsRemainUsableWithLargeFont() {
-        var current by mutableStateOf(DestinationState());var clicks=0
-        val preview = DestinationGuides.all.first().copy(generatedAt="2026-09-22T00:00:00Z",model="ui-fixture").withPhotos(emptyList())
+    @Test fun fullUpdateActionRemainsUsableWithLargeFontAndNoPhotoControls() {
+        val preview=DestinationGuides.all.first().copy(generatedAt="2026-09-22T00:00:00Z",model="ui-fixture").withPhotos(emptyList())
+        var clicks=0
         compose.setContent { CompositionLocalProvider(LocalDensity provides Density(LocalDensity.current.density,1.3f)) {
             TrainTripTheme { Box(Modifier.width(320.dp).fillMaxHeight().safeDrawingPadding()) {
-                DestinationGuideScreen(preview.name,preview,{}, {}, {},runtime=current,onPhotos={clicks++},onCancelPhotos={current=current.copy(photoLoading=false)})
+                DestinationGuideScreen(preview.name,preview,{}, {}, {},
+                    runtime=DestinationState(configured=true,tavilyConfigured=true),onRefresh={clicks++})
             } }
         } }
-        compose.onNodeWithTag("refresh-photos").performScrollTo().assertIsDisplayed().performClick();assertEquals(1,clicks)
-        compose.runOnIdle { current=current.copy(photoLoading=true,photoStage="正在读取古文化街的图片…") }
-        compose.onNodeWithTag("cancel-photos").performScrollTo().assertIsDisplayed().performClick()
-        compose.runOnIdle { current=current.copy(photoMessage="图片下载失败，已保留原图片，可重试。") }
-        compose.onNodeWithTag("photo-message").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("guide-page-places").performScrollToNode(hasTestTag("refresh-guide"))
+        compose.onNodeWithTag("refresh-guide").assertIsDisplayed().performClick()
+        assertEquals(1,clicks)
+        compose.onNodeWithTag("refresh-photos").assertDoesNotExist()
+        compose.onNodeWithTag("cancel-photos").assertDoesNotExist()
+        compose.onNodeWithText("补充图片").assertDoesNotExist()
+        capture("full-update-large")
+    }
+    private fun capture(name:String) {
         val bmp=androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()
-        File(compose.activity.getExternalFilesDir(null),"photo-recovery-large.png").outputStream().use { bmp.compress(Bitmap.CompressFormat.PNG,100,it) }
+        File(compose.activity.getExternalFilesDir(null),"$name.png").outputStream().use { bmp.compress(Bitmap.CompressFormat.PNG,100,it) }
     }
 }

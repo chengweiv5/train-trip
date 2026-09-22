@@ -6,7 +6,7 @@
       "id": "BTo68",
       "x": 0,
       "y": 0,
-      "name": "13 · 目的地独立补图 / 操作状态",
+      "name": "13 · 全量更新与自动补图",
       "width": 1140,
       "height": 420,
       "fill": "#F4F8FB",
@@ -19,7 +19,7 @@
           "id": "iX0oB",
           "name": "补图设计标题",
           "fill": "$palette-c1-ink",
-          "content": "目的地图片 · 保留文字，独立更新",
+          "content": "目的地介绍 · 统一更新，缺图时自动补充",
           "fontFamily": "$cn-font",
           "fontSize": 24,
           "fontWeight": "700"
@@ -29,7 +29,7 @@
           "id": "I1LxvR",
           "name": "交互说明",
           "fill": "$palette-c1-muted",
-          "content": "沿用 B4 和四分页；操作紧接相册，无图时显示简短提示。以下为状态示例。",
+          "content": "沿用 B4 和四分页，仅保留更新目的地介绍入口；已有图片保留，无图时自动补充。",
           "fontFamily": "$cn-font",
           "fontSize": 14,
           "fontWeight": "normal"
@@ -45,7 +45,7 @@
             {
               "type": "frame",
               "id": "DOz40",
-              "name": "未保存图片",
+              "name": "没有图片时全量更新",
               "width": "fill_container",
               "height": 240,
               "fill": "#FFFFFF",
@@ -59,7 +59,7 @@
                   "id": "l7DEA",
                   "name": "未保存图片标题",
                   "fill": "$palette-c1-ink",
-                  "content": "未保存图片",
+                  "content": "没有图片",
                   "fontFamily": "$cn-font",
                   "fontSize": 16,
                   "fontWeight": "600"
@@ -71,7 +71,7 @@
                   "fill": "$palette-c1-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "还没有保存图片",
+                  "content": "更新文字后自动查找和保存图片。",
                   "fontFamily": "$cn-font",
                   "fontSize": 13,
                   "fontWeight": "normal"
@@ -79,7 +79,7 @@
                 {
                   "type": "frame",
                   "id": "kXe1M",
-                  "name": "补充图片 · 48dp",
+                  "name": "更新目的地介绍 · 48dp",
                   "width": "fill_container",
                   "height": 48,
                   "alignItems": "center",
@@ -89,7 +89,7 @@
                       "id": "i6oWp9",
                       "name": "补充图片标签",
                       "fill": "$palette-c1-primary",
-                      "content": "补充图片",
+                      "content": "更新目的地介绍",
                       "fontFamily": "$cn-font",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -103,7 +103,7 @@
                   "fill": "$palette-c1-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "保留文字介绍；备用搜索会使用 Tavily 额度。",
+                  "content": "图片暂未取得，也保留已更新的文字。",
                   "fontFamily": "$cn-font",
                   "fontSize": 12,
                   "fontWeight": "normal"
@@ -113,7 +113,7 @@
             {
               "type": "frame",
               "id": "PZnAV",
-              "name": "正在补图",
+              "name": "全量更新中的自动补图",
               "width": "fill_container",
               "height": 240,
               "fill": "#FFFFFF",
@@ -127,7 +127,7 @@
                   "id": "OaK51",
                   "name": "正在补图标题",
                   "fill": "$palette-c1-ink",
-                  "content": "正在补图",
+                  "content": "正在更新",
                   "fontFamily": "$cn-font",
                   "fontSize": 16,
                   "fontWeight": "600"
@@ -139,7 +139,7 @@
                   "fill": "$palette-c1-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "正在读取直隶总督署的图片…",
+                  "content": "正在补充目的地图片…",
                   "fontFamily": "$cn-font",
                   "fontSize": 13,
                   "fontWeight": "normal"
@@ -147,7 +147,7 @@
                 {
                   "type": "frame",
                   "id": "I8Uvli",
-                  "name": "取消补图 · 48dp",
+                  "name": "统一更新进度",
                   "width": "fill_container",
                   "height": 48,
                   "alignItems": "center",
@@ -156,8 +156,8 @@
                       "type": "text",
                       "id": "HDStM",
                       "name": "取消补图标签",
-                      "fill": "$palette-c1-primary",
-                      "content": "取消补图",
+                      "fill": "#526775",
+                      "content": "文字已保存",
                       "fontFamily": "$cn-font",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -171,7 +171,7 @@
                   "fill": "$palette-c1-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "已保存图片保留，正文继续可浏览。",
+                  "content": "不增加单独补图或更新图片按钮。",
                   "fontFamily": "$cn-font",
                   "fontSize": 12,
                   "fontWeight": "normal"
@@ -181,7 +181,7 @@
             {
               "type": "frame",
               "id": "q7wqV",
-              "name": "图片下载失败",
+              "name": "已有图片时全量更新",
               "width": "fill_container",
               "height": 240,
               "fill": "#FFFFFF",
@@ -195,7 +195,7 @@
                   "id": "qMWIA",
                   "name": "图片下载失败标题",
                   "fill": "$palette-c1-ink",
-                  "content": "图片下载失败",
+                  "content": "已有图片",
                   "fontFamily": "$cn-font",
                   "fontSize": 16,
                   "fontWeight": "600"
@@ -207,7 +207,7 @@
                   "fill": "$palette-c1-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "图片下载失败，已保留原图片，可重试。",
+                  "content": "更新文字，保留已保存的相册。",
                   "fontFamily": "$cn-font",
                   "fontSize": 13,
                   "fontWeight": "normal"
@@ -215,7 +215,7 @@
                 {
                   "type": "frame",
                   "id": "gHKnN",
-                  "name": "只更新图片 · 48dp",
+                  "name": "更新目的地介绍 · 48dp",
                   "width": "fill_container",
                   "height": 48,
                   "alignItems": "center",
@@ -225,7 +225,7 @@
                       "id": "B8rDP",
                       "name": "只更新图片标签",
                       "fill": "$palette-c1-primary",
-                      "content": "只更新图片",
+                      "content": "更新目的地介绍",
                       "fontFamily": "$cn-font",
                       "fontSize": 14,
                       "fontWeight": "600"
@@ -239,7 +239,7 @@
                   "fill": "$palette-c1-muted",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "保留文字介绍；备用搜索会使用 Tavily 额度。",
+                  "content": "跳过图片检索与下载。",
                   "fontFamily": "$cn-font",
                   "fontSize": 12,
                   "fontWeight": "normal"

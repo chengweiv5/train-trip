@@ -12,7 +12,6 @@ import kotlinx.coroutines.sync.withLock
 data class DestinationState(
     val cityId: String? = null, val guide: DestinationGuide? = null, val loading: Boolean = false,
     val stage: String = "", val error: String? = null, val configured: Boolean = false,
-    val photoLoading:Boolean=false,val photoStage:String="",val photoMessage:String?=null,
     val settingsError: String? = null, val modelName: String = DeepSeekGuideGenerator.MODEL,
     val settingsBusy: Boolean = false, val settingsMessage: String? = null, val tavilyConfigured: Boolean = false,
     val offline:List<OfflineEntry> = emptyList(),val offlineLoading:Boolean=false,val offlineError:String?=null,
@@ -75,7 +74,7 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
         if (active?.id == city.id && mutable.value.cityId == city.id) return
         cancel()
         active = city
-        mutable.update { it.copy(cityId = city.id, guide = it.guides[city.id], error = null, contentMessage=null, photoMessage=null, stage = "", loading = true) }
+        mutable.update { it.copy(cityId = city.id, guide = it.guides[city.id], error = null, contentMessage=null, stage = "", loading = true) }
         val id = ++requestId
         job = viewModelScope.launch {
             try {
@@ -91,9 +90,9 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
     }
     fun retry() { active?.let(::generate) }
     private fun generate(city: City) {
-        if (mutable.value.loading || mutable.value.photoLoading || mutable.value.deleting!=null || active?.id != city.id) return
+        if (mutable.value.loading || mutable.value.deleting!=null || active?.id != city.id) return
         val id = ++requestId
-        mutable.update { it.copy(loading = true, error = null, contentMessage=null, photoMessage=null, stage = "准备获取资料…") }
+        mutable.update { it.copy(loading = true, error = null, contentMessage=null, stage = "准备获取资料…") }
         job = viewModelScope.launch {
             var committed=false
             try {
@@ -105,13 +104,13 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
                     try { repository.generate(city, key, { stage -> if (requestId == id) mutable.update { it.copy(stage = stage) } }) { draft ->
                         val disk=store as? AndroidGuideStore
                         if(disk==null)draft else {
-                            val text=disk.prepareUpdate(draft.withPhotos(emptyList())) { committed=true;refreshSnapshot() }
-                            updatePhotos(city,text,id,draft.gallery).guide
+                            val text=disk.saveTextKeepingPhotos(draft,repository.cached(city.id)) { committed=true;refreshSnapshot() }
+                            if(text.gallery.isNotEmpty())text else updatePhotos(city,text,id,draft.gallery).guide
                         }
                     } } finally { (store as? AndroidGuideStore)?.let { runCatching { it.cleanupUnreferencedImages(city.id) } } }
                 } }
                 contentLock.withLock { withContext(Dispatchers.IO) { refreshSnapshot() } }
-                if (requestId == id) mutable.update { it.copy(loading = false, guide = guide, error = null, photoLoading=false,contentMessage=null, stage = "", guides = it.guides + (city.id to guide)) }
+                if (requestId == id) mutable.update { it.copy(loading = false, guide = guide, error = null, stage = "", guides = it.guides + (city.id to guide)) }
             } catch (e: CancellationException) {
                 withContext(NonCancellable) {
                     withContext(Dispatchers.IO) { contentLock.withLock { runCatching { refreshSnapshot() } } }
@@ -120,61 +119,37 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
                 throw e
             } catch (e: Exception) {
                 contentLock.withLock { withContext(Dispatchers.IO) { runCatching { refreshSnapshot() } } }
-                if (requestId == id) mutable.update { it.copy(loading = false, photoLoading=false, stage = "",contentMessage=if(committed)"介绍已保存，已完成的图片已保留" else null,
+                if (requestId == id) mutable.update { it.copy(loading = false, stage = "",contentMessage=if(committed)"介绍已保存，已完成的图片已保留" else null,
                     error=if(committed)null else "整理未完成，请检查配置后重试") }
             }
         }
     }
-    fun refreshPhotos() {
-        val city=active ?: return
-        val state=mutable.value
-        val guide=state.guide?.takeIf { it.cityId==city.id && it.generatedAt!=null } ?: return
-        if(state.loading || state.photoLoading || state.deleting!=null || state.settingsBusy)return
-        val id=++requestId
-        mutable.update { it.copy(photoLoading=true,photoStage="准备补充图片…",photoMessage=null) }
-        job=viewModelScope.launch {
-            try {
-                contentLock.withLock { withContext(Dispatchers.IO) {
-                    try { updatePhotos(city,guide,id) }
-                    finally { (store as? AndroidGuideStore)?.cleanupUnreferencedImages(city.id) }
-                } }
-            } catch(e:CancellationException) {
-                throw e
-            } catch(_:Exception) {
-                if(requestId==id)mutable.update { it.copy(photoMessage="图片更新未完成，原介绍与已保存图片已保留，可重试。") }
-            } finally {
-                withContext(NonCancellable+Dispatchers.IO) { contentLock.withLock { runCatching { refreshSnapshot() } } }
-                if(requestId==id)mutable.update { it.copy(photoLoading=false,photoStage="") }
-            }
-        }
-    }
-
     private suspend fun updatePhotos(city:City,guide:DestinationGuide,id:Long,initial:List<DestinationPhoto> = emptyList()):PhotoSaveResult {
         val disk=store as? AndroidGuideStore ?: return PhotoSaveResult(guide,0,0)
-        if(requestId==id)mutable.update { it.copy(photoLoading=true,photoStage="正在查找图片…") }
-        val found=optionalPhotos(city,guide) { stage -> if(requestId==id)mutable.update { it.copy(photoStage=stage) } }
+        if(requestId==id)mutable.update { it.copy(stage="正在补充目的地图片…") }
+        val found=optionalPhotos(city,guide) { stage -> if(requestId==id)mutable.update { it.copy(stage=stage) } }
         currentCoroutineContext().ensureActive()
         val candidates=(found.photos+initial).distinctBy { it.remoteUrl }.take(12)
-        if(requestId==id)mutable.update { it.copy(photoStage="正在保存图片…") }
+        if(requestId==id)mutable.update { it.copy(stage="正在保存图片…") }
         var result=disk.refreshPhotos(guide,candidates) { refreshSnapshot() }
         if(result.saved==0 && result.failed>0 && found.fallbackAvailable) {
             val fallback=try { photoSource.fetchFallback(city,guide) { stage ->
-                if(requestId==id)mutable.update { it.copy(photoStage=stage) }
+                if(requestId==id)mutable.update { it.copy(stage=stage) }
             } } catch(e:CancellationException) { throw e } catch(_:Exception) { PhotoCandidates(emptyList(),true) }
             currentCoroutineContext().ensureActive()
             val attempted=candidates.mapNotNull { it.remoteUrl }.toSet()
-            if(requestId==id)mutable.update { it.copy(photoStage="正在保存备用来源图片…") }
+            if(requestId==id)mutable.update { it.copy(stage="正在保存备用来源图片…") }
             val recovered=disk.refreshPhotos(guide,fallback.photos.filter { it.remoteUrl !in attempted }) { refreshSnapshot() }
             result=recovered.copy(failed=result.failed+recovered.failed)
         }
         val message=when {
-            result.saved>0 -> "已保存 ${result.saved} 张新图片，共 ${result.guide.gallery.size} 张" + if(result.failed>0)"；部分图片未能下载，可重试。" else "。"
-            result.failed>0 -> "图片下载失败，已保留原图片，可重试。"
-            candidates.isNotEmpty() -> "已有图片均已保存，未发现新图片。"
-            found.failed -> "图片来源暂时无法读取，已保留原图片，可重试。"
-            else -> "暂未找到可确认归属的图片，可稍后重试。"
+            result.saved>0 -> "介绍已更新，已保存 ${result.guide.gallery.size} 张图片" + if(result.failed>0)"；部分图片未能下载，可重试。" else "。"
+            result.failed>0 -> "介绍已更新，图片暂未取得，可稍后更新重试。"
+            candidates.isNotEmpty() -> "介绍已更新。"
+            found.failed -> "介绍已更新，图片来源暂时无法读取。"
+            else -> "介绍已更新，暂未找到合适图片。"
         }
-        if(requestId==id)mutable.update { it.copy(photoMessage=message) }
+        if(requestId==id)mutable.update { it.copy(contentMessage=message) }
         return result
     }
 
@@ -187,8 +162,7 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
         requestId++
         job?.cancel()
         job = null
-        mutable.update { it.copy(loading = false, photoLoading=false, photoStage="",
-            photoMessage=if(it.photoLoading)"补图已暂停，已保存的图片已保留。" else it.photoMessage, stage = "", error = if (it.loading) "整理已暂停，可点重试。" else it.error) }
+        mutable.update { it.copy(loading = false, stage = "", error = if (it.loading) "整理已暂停，可点重试。" else it.error) }
     }
     fun leave() {
         cancel()

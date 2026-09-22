@@ -78,17 +78,16 @@ import kotlinx.coroutines.withContext
     cityName: String, guide: DestinationGuide?, onBack: () -> Unit,
     onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String = "",
     runtime: DestinationState? = null, onRefresh: () -> Unit = {}, onSettings: () -> Unit = {},
-    city:City?=null,favorite:Boolean=false,onFavorite:()->Unit={},queryAction:Boolean=false,
-    onPhotos:()->Unit={},onCancelPhotos:()->Unit={}
+    city:City?=null,favorite:Boolean=false,onFavorite:()->Unit={},queryAction:Boolean=false
 ) = key(cityName) {
-    DestinationGuidePage(cityName, guide, onBack, onTrains, onSource, provinceLabel,runtime,onRefresh,onSettings,city,favorite,onFavorite,queryAction,onPhotos,onCancelPhotos)
+    DestinationGuidePage(cityName, guide, onBack, onTrains, onSource, provinceLabel,runtime,onRefresh,onSettings,city,favorite,onFavorite,queryAction)
 }
 
 @Composable private fun DestinationGuidePage(
     cityName: String, guide: DestinationGuide?, onBack: () -> Unit,
     onTrains: () -> Unit, onSource: (String) -> Unit, provinceLabel: String,
     runtime: DestinationState?, onRefresh: () -> Unit, onSettings: () -> Unit,
-    city:City?,favorite:Boolean,onFavorite:()->Unit,queryAction:Boolean,onPhotos:()->Unit,onCancelPhotos:()->Unit
+    city:City?,favorite:Boolean,onFavorite:()->Unit,queryAction:Boolean
 ) {
     var days by rememberSaveable { mutableIntStateOf(1) }
     var sourcesOpen by rememberSaveable { mutableStateOf(false) }
@@ -138,9 +137,6 @@ import kotlinx.coroutines.withContext
                                 item("overview") { GuideOverview(cityName, provinceLabel, guide, Modifier.padding(bottom = 8.dp)) }
                             }
                             if(guide.gallery.isNotEmpty())item("gallery") { DestinationGallery(guide.gallery,onSource) }
-                            if(runtime!=null && guide.generatedAt!=null)item("photo-actions") {
-                                GuidePhotoActions(guide,runtime,onPhotos,onCancelPhotos)
-                            }
                             guideSectionContent(section, guide, days, onSource) { days = it }
                             if(runtime!=null) item("runtime") { GuideRuntimeStatus(guide,runtime,onRefresh,onSettings) }
                             item("sources") {
@@ -229,7 +225,7 @@ import kotlinx.coroutines.withContext
         state.error?.let { Hint(it,true) }
         state.contentMessage?.let { Hint(it) }
         guide?.generatedAt?.let { Text("DeepSeek 整理 · ${it.take(10)} · 已保存到本机",style=MaterialTheme.typography.bodySmall,color=Muted) }
-        if(!state.loading && !state.photoLoading) {
+        if(!state.loading) {
             if(!state.configured || !state.tavilyConfigured) {
                 if(guide==null) Text("配置 Tavily 和 DeepSeek 后，可按需整理新城市。",style=MaterialTheme.typography.bodyMedium)
                 TextButton(onSettings) { Text("配置内容服务") }
@@ -239,21 +235,5 @@ import kotlinx.coroutines.withContext
             }
             Text("手动整理会使用 Tavily 搜索和 DeepSeek 模型额度。",style=MaterialTheme.typography.bodySmall,color=Muted)
         }
-    }
-}
-
-@Composable internal fun GuidePhotoActions(guide:DestinationGuide,state:DestinationState,onPhotos:()->Unit,onCancel:()->Unit) {
-    Column(Modifier.fillMaxWidth().testTag("guide-photo-actions"),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-        if(guide.gallery.isEmpty())Text("还没有保存图片",style=MaterialTheme.typography.bodySmall,color=Muted)
-        if(state.photoLoading) {
-            LinearProgressIndicator(Modifier.fillMaxWidth())
-            Text(state.photoStage,style=MaterialTheme.typography.bodySmall,color=Muted)
-            TextButton(onCancel,Modifier.heightIn(min=48.dp).testTag("cancel-photos")) { Text("取消补图") }
-        } else {
-            TextButton(onPhotos,Modifier.heightIn(min=48.dp).testTag("refresh-photos"),enabled=!state.loading && !state.settingsBusy && state.deleting==null,
-                contentPadding=PaddingValues(vertical=8.dp)) { Text(if(guide.gallery.isEmpty())"补充图片" else "只更新图片") }
-            Text("保留文字介绍；备用搜索会使用 Tavily 额度。",style=MaterialTheme.typography.bodySmall,color=Muted)
-        }
-        state.photoMessage?.let { Text(it,Modifier.testTag("photo-message"),style=MaterialTheme.typography.bodySmall,color=Muted) }
     }
 }

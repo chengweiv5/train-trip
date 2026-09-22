@@ -1,8 +1,8 @@
 # Train Trip V1 UI 设计
 
-## 目的地独立补图（2026-09-22）
+## 目的地全量更新按需补图（2026-09-22）
 
-[可编辑补充源文件](train-trip-photo-recovery.pen) 的 `BTo68` 画板记录无图片、补图中、下载失败三种状态；沿用 B4 和现有四分页。已另存、独立副本重新打开、核对 22 个可编辑节点与 48dp 按钮，结构无裁剪，JPEG/OCR 与 Android 普通/大字体布局复核通过。见 [验收记录](../docs/verification/2026-09-22-destination-photo-recovery.md)。
+[可编辑补充源文件](train-trip-photo-recovery.pen) 的 `BTo68` 画板记录全量更新的无图、处理中、有图三种状态。仅保留“更新目的地介绍”：有图保留相册、无图自动补图，沿用 B4 和四分页。设计与普通/大字体运行检查见 [验收记录](../docs/verification/2026-09-22-destination-photo-recovery.md)。
 
 ## v0.6.0 B4 冰蓝湖蓝
 

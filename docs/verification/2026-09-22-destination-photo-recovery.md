@@ -1,12 +1,16 @@
-# 目的地独立补图验收
+# 目的地全量更新按需补图验收
 
-日期：2026-09-22。基线：已刷新并同步 origin/main 的 `8817acd`（v0.7.0 / versionCode 12）；开发分支 `codex/destination-photo-recovery`。修改前检查 GitHub 待合并 PR，无候选修复。本轮不改版本号，不推送、不发布、不安装用户手机。
+日期：2026-09-22。基线：已刷新并同步 `origin/main` 的 `8817acd`（v0.7.0 / versionCode 12）；开发分支 `codex/destination-photo-recovery`。修改前检查 GitHub 待合并 PR，无候选修复。本轮不改版本号、不推送、不发布、不安装用户手机。
 
-## 结果与原因
+## 最终行为
 
-原图片链路依赖普通文本搜索附带的图片及说明匹配，未给旧介绍提供独立补图入口。实际请求还发现携程目录对旧移动端 UA 返回验证页、部分原图超过 5 MiB 下载上限。新链路读取公开城市与景点的结构化归属，核验省份、城市、景点 ID、名称和区域；适配公开桌面页 UA，照片上限调整为 10 MiB，HTML 仍限制 5 MiB。验证页不绕过，图片仍限制受支持的 HTTPS 来源且不携带服务密钥。
+按用户最新要求只保留原有“更新目的地介绍”入口。全量更新文字后，已有可用图片就保留相册并跳过图片检索/下载；没有图片才自动补图。本地文件缺失或为空时按无图处理。独立补图/只更新图片/取消补图按钮、回调和独立页面状态已移除。更新进度与结果使用原整理状态区。
 
-旧介绍新增“补充图片 / 只更新图片”，不要求 DeepSeek Key，不调用正文生成或改动正文/生成时间/收藏/查票条件。图片逐张原子保存，成功新图置前、旧图补足最多 5 张；全部失败或无候选不改 JSON，取消保留已成功图片。无法读取主图源或候选不足时用最多两次 Tavily 定向检索；主源候选足够但全下载失败时也可尝试尚未调用的备用检索。每批最多 12 个候选，备用补救最多另试 12 个。已有有效缓存图不重复下载，缺失文件可重下。新介绍先保存文字，再独立补图。
+正文先保存，再下载图片；即使所有图片失败，也保留新正文。取消或离开后保留已提交的文字和图片，重新进入仅读缓存，不自动联网。收藏、查票筛选、四分页与原入口布局保持现状。
+
+原缺图链路依赖普通文本搜索附带图片与说明匹配。实际请求另发现旧移动端 UA 触发携程目录验证、部分原图超过旧 5 MiB 上限。现在读取公开城市与景点的结构化归属，核验省份/城市/景点 ID/名称/区域；兼容公开桌面页 UA，照片下载上限为 10 MiB，HTML 保持 5 MiB。继续限制受支持 HTTPS 来源、重定向、装饰/繁体资源和解码尺寸；验证页不绕过，第三方图片请求不携带服务密钥。
+
+主源候选不足时或候选全下载失败时使用尚未调用过的 Tavily 备用流程；每次全量更新最多两次定向查询。每批最多 12 个候选，失败备用补救最多再试 12 个，保存最多 5 张。图片来源和作者缺失情况如实标注。
 
 ## 真实来源验证
 
@@ -26,22 +30,22 @@
 
 命令：`./gradlew :core:test :app:assembleDebug :app:assembleDebugAndroidTest :app:lintDebug --offline --console=plain`。
 
-- 核心 97 项测试全部通过，无失败/错误/跳过。覆盖结构化归属、异地/错误 ID、地址及别名、城市封面、失效备用/取消、Tavily 两次查询与来源标注、6 MiB 图片/10 MiB 上限/5 MiB HTML、验证及不可信重定向。
-- Debug 与 instrumentation APK 构建成功；lint 0 errors / 16 warnings。警告均落在原有依赖版本、Modifier 参数位置、Android 备份规则和 KTX 建议代码，本轮未新增对应问题。
-- 首轮模拟器运行 PhotoRecoveryTest、V061Test、DeepSeekDestinationTest、OfflineManagementTest，共 36 项通过。
-- 最终生产代码 APK 再运行 PhotoRecoveryTest（10 项）与 DeepSeekDestinationTest（10 项），共 20 项通过。覆盖正文不变、全部失败 JSON 字节不变、取消保留部分成功、缺失缓存恢复、共享文件保护、无模型 Key、离开后忽略过期结果、下载失败启用备用和成功主源不调用备用。
-- UI 夹具统一为天津内置内容后，仅重建测试包并重跑普通成功/320dp 与 1.3 倍字体两个用例，2 项通过，lint 仍为 0 errors / 16 warnings。
+- 核心 97 项测试通过，无失败/错误/跳过；最终全量更新调整未修改核心实现，构建中复用已通过结果。
+- 最终生产 APK 与测试 APK 构建成功；lint 0 errors / 16 warnings，均为原有依赖版本、Modifier 位置、Android 备份规则和 KTX 建议。
+- Android 相关 33 项分批通过：全量更新回归 31 项首次通过；2 项界面测试最初未先滚动延迟加载列表，修正测试定位后通过。强化“已有图时图片来源调用 0 次”的断言后另行通过。生产代码不因测试定位调整而改动。
+- 覆盖有图时文字更新、相册字节不变且来源/下载 0 次；无图时先存新正文再补图；缺失缓存恢复；图片失败保留新正文；取消/离开/重启；备用来源、共享文件与原有正文/离线管理。
+- 普通与 320dp / 1.3 倍字体界面，统一“更新目的地介绍”按钮可见可点，独立补图按钮不存在。
 
-使用专属 `emulator-5582`：现有 API36 AVD 的只读无窗口实例，无快照写回。未操作用户真机。APK SHA-256：`36d9de55f238b6a4b1ea80724805fcc6fd5654148b9d39ab257edb5f70309009`。
+使用专属 `emulator-5582`：现有 API36 AVD 的只读无窗口实例，无快照写回，未操作用户真机。最终生产 APK SHA-256：`b4f2380422634293ce29ce9955e4e151f4053b394302ab8dfb3a2170288b741e`。
 
-日志：`build-final.log`、`ui-tests.log`、`ui-final.log`、`build-ui-fixture.log`、`ui-visual.log`，均在 `.verification-private/photo-recovery/`。真实来源下载/解码在宿主机完成；Android 落盘及界面为可重复夹具验证，不等同于用户手机网络实测。
+日志在 `.verification-private/photo-recovery/`：`build-full-update.log`、`build-full-update-final.log`、`ui-full-update.log`、`ui-full-update-final.log`。真实三城图片下载解码在宿主机完成；Android 保存与界面为隔离夹具验证，不等同于用户手机网络实测。Tavily 备用以夹具验证，未消费真实搜索额度。
 
 ## 设计与界面
 
-`design/train-trip-photo-recovery.pen` 为独立的可编辑补充画板 `BTo68`，22 个节点；原生保存到当前工作区后复制到私有目录并重新打开，MCP 回读结构与文字一致。只包含本次三种状态，无旧设计外部素材依赖。按钮高度 48dp、节点无裁剪，1140×420 JPEG 目视与 OCR 可读。相册成功、无图失败与大字体在 Android 实际渲染，补图/取消/重试均可见、可点击。
+`design/train-trip-photo-recovery.pen` 为独立可编辑画板 `BTo68`（22 个节点），现在表达无图、全量更新中、有图三种状态。原生保存后复制到私有目录重新打开，MCP 回读文字和节点正确；结构无裁剪，1140×420 JPEG 与 OCR 可读。`design/reference/photo-recovery/states.html` 是同版静态参考。
 
-`design/reference/photo-recovery/states.html` 是静态状态参考。私有截图 `photo-recovery-success.png`、`photo-recovery-large.png` 使用天津夹具，不作为三城真实内容截图。`ocr.txt` 保存 OCR 结果。
+普通/大字体运行截图分别为 `full-update-existing.png`、`full-update-large.png`，使用天津内容夹具；它们验证统一更新入口，不作为三城真实内容截图。`full-update-ocr.txt` 保存 OCR 结果。
 
 ## 回滚
 
-重要源文件修改前备份在 `.verification-private/photo-recovery/source-before.tar`；设计 README 另有 `design-readme-before.md`。本次不迁移存储 schema，也不改密钥/版本配置，旧版本可读新的相册字段。需要撤回时，在功能分支对本次实现提交执行 `git revert <实现提交>` 并重新构建；若后续已有其他修改，先检查反向 diff，避免直接覆盖后续代码。补图对用户缓存的更新只能在安装新构建并由用户触发后发生，本轮未修改手机缓存。
+重要源文件原始备份：`.verification-private/photo-recovery/source-before.tar`；调整为全量更新前的提交快照：`before-full-update-only.tar`。不迁移存储 schema，不修改密钥或版本配置。若需撤回本轮全部功能，对最终调整提交及 `5fc23a2` 依次执行 `git revert` 并重新构建；若只撤回最新交互调整，仅反向最后一笔提交。先检查反向 diff，保留后续修改，避免直接覆盖仓库。手机缓存未被本轮修改。

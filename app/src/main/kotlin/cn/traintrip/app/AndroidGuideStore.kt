@@ -125,7 +125,21 @@ class AndroidGuideStore(context: Context, private val removeFile:(File)->Boolean
         }
         return saved
     }
-    /** Keep the original text and album until each replacement image is safely on disk. */
+    /** Full refresh keeps usable saved photos; missing files do not count as an album. */
+    suspend fun saveTextKeepingPhotos(draft:DestinationGuide,previous:DestinationGuide?,onCommitted:()->Unit={}):DestinationGuide {
+        coroutineContext.ensureActive()
+        require(previous==null || previous.cityId==draft.cityId)
+        val photos=previous?.gallery.orEmpty().filter { it.remoteUrl==null ||
+            File(directory,it.assetName).let { file -> file.isFile && file.length()>0 } }
+        val text=draft.withPhotos(photos)
+        rememberImages(draft.cityId)
+        save(text)
+        onCommitted()
+        cleanupUnreferencedImages(draft.cityId)
+        return text
+    }
+
+    /** Save verified candidates after the text has been committed. */
     suspend fun refreshPhotos(guide:DestinationGuide,candidates:List<DestinationPhoto>,onCommitted:()->Unit={}):PhotoSaveResult {
         DestinationGuides.validateGenerated(guide,guide.cityId)
         var saved=guide
