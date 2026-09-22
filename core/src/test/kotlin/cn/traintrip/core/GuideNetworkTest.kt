@@ -21,9 +21,18 @@ class GuideNetworkTest {
         })
         network.html("https://you.ctrip.com/place")
         network.photo("https://dimg04.ctrip.com/a.jpg")
+        network.photo("https://p11-volcsearch-sign.byteimg.com/a.jpeg?x-signature=test")
         assertEquals("Mozilla/5.0", requests[0].header("User-Agent"))
         assertTrue(requests[1].header("User-Agent")!!.contains("Android"))
         assertTrue(requests.all { it.header("Authorization") == null && it.header("Cookie") == null })
+    }
+
+    @Test fun searchImageCdnAllowsOnlyOfficialHttpsHosts() {
+        assertTrue(GuideNetwork.isPhotoUrl("https://p26-volcsearch-sign.byteimg.com/a.jpeg?x-expires=123"))
+        for (url in listOf("http://p11-volcsearch-sign.byteimg.com/a.jpg", "https://p11-volcsearch-sign.byteimg.com.evil.test/a.jpg",
+            "https://evil.byteimg.com/a.jpg", "https://p11-volcsearch-sign.byteimg.com:8443/a.jpg", "https://user:secret@p11-volcsearch-sign.byteimg.com/a.jpg")) {
+            assertFalse(url, GuideNetwork.isPhotoUrl(url))
+        }
     }
 
     @Test fun photosAllowSixMiBButEnforceTenMiBCapAndHtmlKeepsFiveMiB() = runBlocking {

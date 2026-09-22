@@ -227,14 +227,14 @@ import kotlinx.coroutines.withContext
         state.contentMessage?.let { Hint(it) }
         guide?.generatedAt?.let { Text("DeepSeek 整理 · ${it.take(10)} · 已保存到本机",style=MaterialTheme.typography.bodySmall,color=Muted) }
         if(!state.loading) {
-            if(!state.configured || !state.tavilyConfigured) {
-                if(guide==null) Text("配置 Tavily 和 DeepSeek 后，可按需整理新城市。",style=MaterialTheme.typography.bodyMedium)
+            if(!state.configured || !state.searchConfigured) {
+                if(guide==null) Text("配置 豆包搜索 和 DeepSeek 后，可按需整理新城市。",style=MaterialTheme.typography.bodyMedium)
                 TextButton(onSettings) { Text("配置内容服务") }
             } else TextButton(onRefresh,Modifier.heightIn(min = 48.dp).testTag("refresh-guide"),
                 contentPadding = PaddingValues(vertical = 12.dp)) {
                 Text(if(guide!=null) "更新目的地介绍" else if(state.error!=null) "重试整理" else "整理目的地介绍")
             }
-            Text("手动整理会使用 Tavily 搜索和 DeepSeek 模型额度。",style=MaterialTheme.typography.bodySmall,color=Muted)
+            Text("手动整理会使用 豆包搜索 搜索和 DeepSeek 模型额度。",style=MaterialTheme.typography.bodySmall,color=Muted)
         }
     }
 }

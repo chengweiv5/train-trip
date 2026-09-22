@@ -23,9 +23,10 @@ class SettingsMenuTest {
     @Test fun navigationSeparatesServicesDiscardsDraftsAndRestoresSecureFlag() {
         var closed=false;var saved:Pair<String,String>?=null;var searches=0
         compose.setContent { TrainTripTheme {
-            SettingsScreen(DestinationState(configured=true,tavilyConfigured=true),{closed=true},
+            SettingsScreen(DestinationState(configured=true,searchConfigured=true),{closed=true},
                 {m,k,done->saved=m to k;done()},{_,done->searches++;done()},{},{})
         } }
+        compose.onNodeWithText("豆包搜索 · 网页与图片").assertIsDisplayed()
         compose.onNodeWithTag("settings-model").performClick()
         compose.onNodeWithTag("settings-model-name").performTextReplacement("deepseek-test")
         compose.onNodeWithTag("deepseek-key").performTextInput("sk-draft-never-saved")
@@ -39,8 +40,9 @@ class SettingsMenuTest {
         compose.onNodeWithTag("save-settings").performScrollTo().performClick()
         assertEquals("deepseek-other" to "",saved)
         compose.onNodeWithTag("settings-search").performClick()
+        compose.onNodeWithText("豆包搜索").assertIsDisplayed()
         compose.onNodeWithTag("settings-model-name").assertDoesNotExist()
-        compose.onNodeWithTag("tavily-key").performTextInput("tvly-draft")
+        compose.onNodeWithTag("doubao-search-key").performTextInput("doubao-draft")
         back();assertEquals(0,searches)
         back();assertTrue(closed)
     }
@@ -73,7 +75,7 @@ class SettingsMenuTest {
             override fun read()=value
             override fun save(value:String){this.value=value}
         }
-        val model=Model();val deep=Credentials("sk-existing-test-123456");val search=Credentials("tvly-existing-test-123456")
+        val model=Model();val deep=Credentials("sk-existing-test-123456");val search=Credentials("doubao-existing-test-123456")
         var calls=0
         val source=object:GuideMaterialSource {override suspend fun fetch(city:City,stage:(String)->Unit):GuideMaterial {calls++;error("unexpected search")}}
         val vm=DestinationViewModel(compose.activity.application as Application,deep,source=source,searchCredentials=search,modelPreference=model,photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })

@@ -52,7 +52,7 @@ class ItemGalleryTest {
         val data=base.withPhotos(listOf(base.photo!!.copy(subject=PhotoSubject("food",food.name))))
         compose.setContent { CompositionLocalProvider(LocalDensity provides Density(LocalDensity.current.density,1.3f)) {
             TrainTripTheme { Box(Modifier.width(320.dp).fillMaxHeight().safeDrawingPadding()) {
-                DestinationGuideScreen(data.name,data,{}, {}, {},runtime=DestinationState(configured=true,tavilyConfigured=true))
+                DestinationGuideScreen(data.name,data,{}, {}, {},runtime=DestinationState(configured=true,searchConfigured=true))
             } }
         } }
         compose.onNodeWithTag("guide-tab-food").performClick()

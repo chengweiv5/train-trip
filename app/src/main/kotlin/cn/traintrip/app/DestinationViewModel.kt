@@ -13,7 +13,7 @@ data class DestinationState(
     val cityId: String? = null, val guide: DestinationGuide? = null, val loading: Boolean = false,
     val stage: String = "", val error: String? = null, val configured: Boolean = false,
     val settingsError: String? = null, val modelName: String = DeepSeekGuideGenerator.MODEL,
-    val settingsBusy: Boolean = false, val settingsMessage: String? = null, val tavilyConfigured: Boolean = false,
+    val settingsBusy: Boolean = false, val settingsMessage: String? = null, val searchConfigured: Boolean = false,
     val offline:List<OfflineEntry> = emptyList(),val offlineLoading:Boolean=false,val offlineError:String?=null,
     val deleting:String?=null,val offlineMessage:String?=null,val contentMessage:String?=null, val guides: Map<String, DestinationGuide> = DestinationGuides.all.associateBy { it.cityId }
 )
@@ -22,11 +22,11 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
     private val credentials: GuideCredentials = DeepSeekSettings(app),
     private val store: GuideStore = AndroidGuideStore(app),
     source: GuideMaterialSource? = null, generator: GuideGenerator? = null,
-    private val searchCredentials: GuideCredentials = TavilySettings(app),
+    private val searchCredentials: GuideCredentials = DoubaoSearchSettings(app),
     private val modelPreference: GuideModelPreference = DeepSeekModelSettings(app),
-    private val photoSource: GuidePhotoSource = FallbackPhotoSource(CtripPhotoSource(), TavilyGuideSource { searchCredentials.read() })
+    private val photoSource: GuidePhotoSource = FallbackPhotoSource(DoubaoGuideSource { searchCredentials.read() }, CtripPhotoSource())
 ) : AndroidViewModel(app) {
-    private val repository = GuideRepository(source ?: TavilyGuideSource { searchCredentials.read() }, generator ?: DeepSeekGuideGenerator { modelPreference.read() }, store)
+    private val repository = GuideRepository(source ?: DoubaoGuideSource { searchCredentials.read() }, generator ?: DeepSeekGuideGenerator { modelPreference.read() }, store)
     private val mutable = MutableStateFlow(DestinationState())
     val state = mutable.asStateFlow()
     private var active: City? = null
@@ -98,7 +98,7 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
             try {
                 val (key, searchKey) = withContext(Dispatchers.IO) { credentials.read() to searchCredentials.read() }
                 if (requestId != id) return@launch
-                mutable.update { it.copy(configured = key != null, tavilyConfigured = searchKey != null) }
+                mutable.update { it.copy(configured = key != null, searchConfigured = searchKey != null) }
                 if (key == null || searchKey == null) { mutable.update { it.copy(loading = false, stage = "") }; return@launch }
                 val guide = contentLock.withLock { withContext(Dispatchers.IO) {
                     try { repository.generate(city, key, { stage -> if (requestId == id) mutable.update { it.copy(stage = stage) } }) { draft ->
@@ -172,16 +172,16 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
     }
     private fun refreshConfiguration() {
         val deepSeek = runCatching { credentials.read() != null }
-        val tavily = runCatching { searchCredentials.read() != null }
-        mutable.update { it.copy(configured = deepSeek.getOrDefault(false), tavilyConfigured = tavily.getOrDefault(false), modelName = modelPreference.read(),
-            settingsError = if (deepSeek.isFailure || tavily.isFailure) "无法读取已保存的密钥，请重新配置" else it.settingsError) }
+        val doubao = runCatching { searchCredentials.read() != null }
+        mutable.update { it.copy(configured = deepSeek.getOrDefault(false), searchConfigured = doubao.getOrDefault(false), modelName = modelPreference.read(),
+            settingsError = if (deepSeek.isFailure || doubao.isFailure) "无法读取已保存的密钥，请重新配置" else it.settingsError) }
     }
     fun saveKey(value: String, complete: () -> Unit) = saveKeys(value, "", complete)
     fun saveModelSettings(model: String, key: String, complete: () -> Unit) = saveConfiguration(key, "", model, complete)
     fun saveSearchSettings(key: String, complete: () -> Unit) = saveConfiguration("", key, null, complete)
     fun clearSettingsFeedback() { mutable.update { it.copy(settingsError = null, settingsMessage = null) } }
-    fun saveKeys(deepSeek: String, tavily: String, complete: () -> Unit) = saveConfiguration(deepSeek, tavily, null, complete)
-    private fun saveConfiguration(deepSeek: String, tavily: String, model: String?, complete: () -> Unit) {
+    fun saveKeys(deepSeek: String, doubao: String, complete: () -> Unit) = saveConfiguration(deepSeek, doubao, null, complete)
+    private fun saveConfiguration(deepSeek: String, doubao: String, model: String?, complete: () -> Unit) {
         if (mutable.value.settingsBusy) return
         cancel()
         mutable.update { it.copy(settingsBusy = true, settingsError = null, settingsMessage = null) }
@@ -190,9 +190,9 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
                 withContext(Dispatchers.IO) {
                     if (model != null) validateGuideModel(model.trim())
                     if (deepSeek.isNotBlank()) validateGuideKey(deepSeek.trim(), "sk-", "DeepSeek")
-                    if (tavily.isNotBlank()) validateGuideKey(tavily.trim(), "tvly-", "Tavily")
+                    if (doubao.isNotBlank()) validateDoubaoSearchKey(doubao.trim())
                     if (deepSeek.isNotBlank()) credentials.save(deepSeek.trim())
-                    if (tavily.isNotBlank()) searchCredentials.save(tavily.trim())
+                    if (doubao.isNotBlank()) searchCredentials.save(doubao.trim())
                     if (model != null) modelPreference.save(model.trim())
                 }
                 mutable.update { it.copy(settingsError = null) }
@@ -206,7 +206,7 @@ class DestinationViewModel @JvmOverloads constructor(app: Application,
         }
     }
     fun removeKey(complete: () -> Unit) = remove(credentials, complete)
-    fun removeTavilyKey(complete: () -> Unit) = remove(searchCredentials, complete)
+    fun removeSearchKey(complete: () -> Unit) = remove(searchCredentials, complete)
     private fun remove(target: GuideCredentials, complete: () -> Unit) {
         if (mutable.value.settingsBusy) return
         cancel()

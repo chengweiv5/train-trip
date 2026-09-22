@@ -12,6 +12,7 @@ internal object SearchGuideDecoder {
         从 kind=places 文档选 1-${GuideItemPolicy.MAX_PLACES} 个景点，从 kind=food 文档选 0-${GuideItemPolicy.MAX_FOODS} 种具体美食。数量是上限，不要求凑满；资料不足时 foods=[]。
         每项 sourceId 必须对应文档 id，name 必须逐字出现在 quote 中，quote 必须是正文中一段连续原文，不得改写或拼接。
         景点 quote 为 20-260 字，美食 quote 为 10-220 字，选择以句号结束的完整句子，避开截断残句、票价、开放时间、营销口号。
+        先找到满足上述要求的原文完整句，再从句中选名称。跳过只有名称、地址、等级的名录或表格行；不能自行补句号，也不要因为名录列出更多条目而凑满数量。
         优先选城市主要景点，避免把同一景点内的多处古树、文物拆成多个推荐。
         景点 id 用 p1..p${GuideItemPolicy.MAX_PLACES}，name 不超过 30 字；location 只填正文中明确地址的原文，缺少则空字符串。
         游览 duration 是参考建议。简介 tagline 和 tags 仅概括所选内容，不能加入新事实。
@@ -53,7 +54,7 @@ internal object SearchGuideDecoder {
                 else rawQuote.substringBeforeLast('。', "") + if (rawQuote.contains('。')) "。" else ""
             require(name.length in 2..30 && quote.length in (if(kind == "places") 20..260 else 10..220))
             require(quote.contains(name) && normalized(doc.content).contains(normalized(quote)))
-            require(TavilyGuideSource.sourceUrl(doc.url))
+            require(GuideSearchPolicy.sourceUrl(doc.url))
             return doc to quote
         }
         val acceptedPlaces = com.google.gson.JsonArray()
@@ -108,7 +109,7 @@ internal object SearchGuideDecoder {
                         (subject.kind != "food" || !Regex("店面|门店|门头|环境|菜单|招牌|大厅|餐厅外观").containsMatchIn(image.description))
                 }.map { image ->
                     sourcedPhoto(image.url, "${material.name} · ${subject.name}", if (image.fromSearch) image.url else source,
-                        if (image.fromSearch) "Tavily 检索图片；未提供摄影者署名" else "原文页面刊载；检索资料未提供摄影者署名", subject)
+                        if (image.fromSearch) "豆包搜索检索图片；未提供摄影者署名" else "原文页面刊载；检索资料未提供摄影者署名", subject)
                 }
         }
 

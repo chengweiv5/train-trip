@@ -38,7 +38,7 @@ class BlueWhiteUiTest {
         var settings by mutableStateOf(false)
         var filters by mutableStateOf(f)
         compose.setContent { TrainTripTheme { Box(Modifier.fillMaxSize().safeDrawingPadding()) {
-            if(settings) SettingsScreen(DestinationState(configured=true,tavilyConfigured=true),{settings=false},{_,_,done->done()},{_,done->done()},{done->done()},{done->done()})
+            if(settings) SettingsScreen(DestinationState(configured=true,searchConfigured=true),{settings=false},{_,_,done->done()},{_,done->done()},{done->done()},{done->done()})
             else FiltersScreen(UiState(catalog,filters),{filters=it},{},{settings=true})
         } } }
         compose.onNodeWithText("有票再出发").assertIsDisplayed()
@@ -54,7 +54,7 @@ class BlueWhiteUiTest {
         compose.onNodeWithTag("save-settings").performScrollTo().assertIsDisplayed()
         compose.onNodeWithTag("settings-back").performClick()
         compose.onNodeWithTag("settings-search").performClick()
-        compose.onNodeWithTag("tavily-key").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("doubao-search-key").performScrollTo().assertIsDisplayed()
         assertTextFits();capture("search-settings")
     }
 
@@ -95,7 +95,7 @@ class BlueWhiteUiTest {
 
     @Test fun guideTabsAndFootersStayReachable() {
         compose.setContent { TrainTripTheme { Box(Modifier.fillMaxSize().safeDrawingPadding()) {
-            DestinationGuideScreen("天津",guide,{},{},{},"天津市",DestinationState(configured=true,tavilyConfigured=true))
+            DestinationGuideScreen("天津",guide,{},{},{},"天津市",DestinationState(configured=true,searchConfigured=true))
         } } }
         for(section in listOf("places","food","plans","tips")) {
             compose.onNodeWithTag("guide-tab-$section").assertIsDisplayed().performClick().assertIsSelected()

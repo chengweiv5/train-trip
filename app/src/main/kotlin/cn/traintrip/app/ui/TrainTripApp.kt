@@ -77,7 +77,7 @@ import kotlinx.coroutines.delay
                     },provinceLabel=s.catalog.byCity[s.cityId]?.provinceLabel.orEmpty(),runtime=destination.takeIf { destination.cityId==s.cityId },onRefresh=destinationVm::retry,onSettings=::openSettings,
                         city=s.catalog.byCity[s.cityId],favorite=wish.items.any { it.cityId==s.cityId },onFavorite={s.catalog.byCity[s.cityId]?.let(wishlistVm::toggle)},queryAction=!s.guideFromResults)
                     Page.DETAIL->DetailScreen(s,vm::backFromCity,vm::select,{vm.refreshCity()},{vm.refreshCity(retryFailed=true)},vm::clearSelection,::openRailway)
-                    Page.SETTINGS->SettingsScreen(destination,vm::back,destinationVm::saveModelSettings,destinationVm::saveSearchSettings,destinationVm::removeKey,destinationVm::removeTavilyKey,destinationVm::clearSettingsFeedback,
+                    Page.SETTINGS->SettingsScreen(destination,vm::back,destinationVm::saveModelSettings,destinationVm::saveSearchSettings,destinationVm::removeKey,destinationVm::removeSearchKey,destinationVm::clearSettingsFeedback,
                         onOffline={vm.navigate(Page.OFFLINE)},onAbout={vm.navigate(Page.ABOUT)},offlineBytes=destination.offline.sumOf { it.bytes },offlineCount=destination.offline.size,applySafeInsets=false)
                     Page.OFFLINE->OfflineContentScreen(destination,s.catalog,vm::back,vm::showDestination,destinationVm::deleteOffline,destinationVm::refreshOffline)
                     Page.ABOUT->AboutScreen(updates,vm::back,updateVm::check)

@@ -213,7 +213,7 @@ class PhotoRecoveryTest {
         var clicks=0
         compose.setContent { TrainTripTheme { Box(Modifier.fillMaxSize().safeDrawingPadding()) {
             DestinationGuideScreen(preview.name,preview,{}, {}, {},
-                runtime=DestinationState(configured=true,tavilyConfigured=true),onRefresh={clicks++})
+                runtime=DestinationState(configured=true,searchConfigured=true),onRefresh={clicks++})
         } } }
         compose.onNodeWithTag("guide-page-places").performScrollToNode(hasTestTag("refresh-guide"))
         compose.onNodeWithTag("refresh-guide").assertIsDisplayed().performClick()
@@ -229,7 +229,7 @@ class PhotoRecoveryTest {
         compose.setContent { CompositionLocalProvider(LocalDensity provides Density(LocalDensity.current.density,1.3f)) {
             TrainTripTheme { Box(Modifier.width(320.dp).fillMaxHeight().safeDrawingPadding()) {
                 DestinationGuideScreen(preview.name,preview,{}, {}, {},
-                    runtime=DestinationState(configured=true,tavilyConfigured=true),onRefresh={clicks++})
+                    runtime=DestinationState(configured=true,searchConfigured=true),onRefresh={clicks++})
             } }
         } }
         compose.onNodeWithTag("guide-page-places").performScrollToNode(hasTestTag("refresh-guide"))

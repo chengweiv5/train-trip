@@ -3,65 +3,107 @@ package cn.traintrip.core
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.SocketPolicy
+import java.util.concurrent.TimeUnit
 import org.junit.Assert.*
 import org.junit.Test
 
-class TavilyGuideTest {
+class DoubaoGuideTest {
     private val city = StationCatalog.bundled().cities.first { it.name == "泰安" }
     private val quote = "岱庙位于泰安市区，是了解当地历史文化与古代建筑的游览地点，庭院内保存着传统建筑。"
     private fun result(url: String = "https://tsgw.taian.gov.cn/art/1.html", content: String = quote) =
-        mapOf("title" to "泰安岱庙介绍", "url" to url, "content" to content)
-    private fun response(vararg results: Map<String, Any>) = Gson().toJson(mapOf("results" to results.toList()))
-    private fun source(server: MockWebServer) = TavilyGuideSource({ "tvly-test-only" }, server.url("/search").toString(), OkHttpClient())
+        mapOf("Title" to "泰安岱庙介绍", "Url" to url, "Content" to content)
+    private fun response(vararg results: Map<String, Any>) = Gson().toJson(mapOf("ResponseMetadata" to emptyMap<String, Any>(), "Result" to mapOf("WebResults" to results.toList())))
+    private fun source(server: MockWebServer) = DoubaoGuideSource({ "doubao-test-only-123456789" }, server.url("/search").toString(), OkHttpClient())
     private fun material() = GuideMaterial(city.id,city.name,city.province.name,emptyList(),emptyList(),
         listOf(GuideSource("岱庙介绍","https://tsgw.taian.gov.cn/art/1.html","2026-09-19")),
         listOf(SourceDocument("s1","泰安岱庙介绍","https://tsgw.taian.gov.cn/art/1.html",quote,"places")))
     private fun content() = """{"tagline":"漫步历史古建","tags":["古建","文化"],"suggestedDays":"1 天","pace":"慢逛","experiences":[{"id":"p1","sourceId":"s1","name":"岱庙","quote":"$quote","duration":"1–2 小时"}],"foods":[],"plans":[]}"""
 
-    @Test fun photoSearchTargetsEachMissingPlaceAndKeepsAttribution() = runBlocking {
+    private fun image(title: String = "泰安岱庙庭院建筑", url: String = "https://p11-volcsearch-sign.byteimg.com/photo.jpeg?x-signature=test", source: String = "https://you.ctrip.com/sight/taian746/1.html") =
+        mapOf("Title" to title, "Url" to source, "Image" to mapOf("Url" to url, "Width" to 900, "Height" to 600))
+    private fun images(vararg items: Map<String, Any>) = Gson().toJson(mapOf("ResponseMetadata" to emptyMap<String, Any>(),
+        "Result" to mapOf("ImageResults" to items.toList())))
+    @Test fun photoSearchTargetsMissingItemsAndUsesTitleWithoutRequiringDescription() = runBlocking {
         val guide = SearchGuideDecoder.decode(content(), material()).let { original ->
-            original.copy(experiences = listOf("岱庙", "泰山", "天外村").map { original.experiences.single().copy(name = it) })
+            original.copy(experiences = listOf("岱庙", "泰山", "天外村").mapIndexed { index, name ->
+                original.experiences.single().copy(id = "p${index+1}", name = name) })
         }
         MockWebServer().use { server ->
-            val doc = result() + ("images" to listOf(
-                mapOf("url" to "https://tsgw.taian.gov.cn/picture/local.jpg", "description" to "泰安岱庙庭院建筑照片")))
-            server.enqueue(MockResponse().setBody(Gson().toJson(mapOf("results" to listOf(doc), "images" to listOf(
-                mapOf("url" to "https://tsgw.taian.gov.cn/picture/root.jpg", "description" to "泰安岱庙庭院照片"),
-                mapOf("url" to "https://tsgw.taian.gov.cn/picture/wrong.jpg", "description" to "北京岱庙庭院照片"))))))
+            server.enqueue(MockResponse().setBody(images(image(), image(title = "北京岱庙庭院建筑"))))
             server.enqueue(MockResponse().setResponseCode(503).setBody("private upstream detail"))
-            server.enqueue(MockResponse().setBody(response()))
+            server.enqueue(MockResponse().setBody(images()))
             val photos = source(server).fetch(city, guide) {}
-            assertEquals(2, photos.photos.size); assertTrue(photos.failed)
+            assertEquals(1, photos.photos.size); assertTrue(photos.failed)
             assertEquals(3, server.requestCount)
-            assertTrue(photos.photos.first().sourceUrl.endsWith("art/1.html"))
-            assertEquals(photos.photos.last().remoteUrl, photos.photos.last().sourceUrl)
-            for (place in listOf("岱庙", "泰山")) {
-                val body = JsonParser.parseString(server.takeRequest().body.readUtf8()).asJsonObject
-                assertTrue(body["query"].asString.contains("$place 景区 实景 图片"))
+            assertTrue(photos.photos.single().sourceUrl.startsWith("https://you.ctrip.com/"))
+            assertTrue(photos.photos.single().credit.startsWith("豆包搜索"))
+            for (place in listOf("岱庙", "泰山", "天外村")) {
+                val request = server.takeRequest()
+                val body = JsonParser.parseString(request.body.readUtf8()).asJsonObject
+                assertEquals("image", body["SearchType"].asString)
+                assertEquals("泰安$place", body["Query"].asString)
+                assertEquals(5, body["Count"].asInt)
             }
         }
         MockWebServer().use { server ->
-            val noKey = TavilyGuideSource({ null }, server.url("/search").toString(), OkHttpClient())
-            assertTrue(noKey.fetch(city, guide) {}.photos.isEmpty())
+            assertTrue(DoubaoGuideSource({ null }, server.url("/search").toString(), OkHttpClient()).fetch(city, guide) {}.photos.isEmpty())
             assertEquals(0, server.requestCount)
         }
     }
-
-    @Test fun rootImagesRequireCityAndPlaceAndKeepHonestAttribution() {
-        val images=(1..7).map { mapOf("url" to "https://tsgw.taian.gov.cn/picture/p$it.jpg","description" to "泰安岱庙庭院建筑实景图片") }+
-            listOf(mapOf("url" to "https://tsgw.taian.gov.cn/picture/wrong.jpg","description" to "北京故宫实景图片"),
-                mapOf("url" to "https://tsgw.taian.gov.cn/picture/zh.jpg","description" to "泰安岱廟傳統建築"),
-                mapOf("url" to "https://tsgw.taian.gov.cn/logo.jpg","description" to "泰安岱庙图标说明"))
-        val docs=TavilyGuideSource.parse(Gson().toJson(mapOf("results" to listOf(result()),"images" to images)),city,"places")
-            .map { it.copy(id="s1") }
-        val guide=SearchGuideDecoder.decode(content(),material().copy(documents=docs))
-        assertEquals(3,guide.gallery.size)
-        assertEquals(guide.gallery.first(),guide.photo)
-        assertTrue(guide.gallery.all { it.sourceUrl==it.remoteUrl && it.credit.startsWith("Tavily") })
-        assertEquals(3,guide.gallery.map { it.remoteUrl }.distinct().size)
+    @Test fun imageOwnershipAndSourceChecksRejectUnrelatedDecorativeOrFoodEnvironmentImages() {
+        val subject = PhotoSubject("place", "岱庙")
+        val raw = images(image(), image(source = "https://you.ctrip.com.evil.test/a"), image(title = "泰安岱廟傳統建築"),
+            image(url = "https://evil.byteimg.com/a.jpg"), image(title = "泰安岱庙地图"), image(title = "泰安岱庙二维码"),
+            image(title = "北京岱庙建筑"), image(source = ""))
+        assertEquals(1, DoubaoGuideSource.images(DoubaoGuideSource.result(raw), city, subject).size)
+        val food = images(image(title = "泰安煎饼门店环境"), image(title = "泰安煎饼成品实拍"))
+        assertEquals(1, DoubaoGuideSource.images(DoubaoGuideSource.result(food), city, PhotoSubject("food", "煎饼")).size)
+    }
+    @Test fun inlineImagesKeepOriginalAttributionAndPerItemCap() {
+        val inline = (1..5).map { mapOf("ImageUrl" to "https://tsgw.taian.gov.cn/picture/p$it.jpg", "Alt" to "泰安岱庙庭院建筑实景") }
+        val docs = DoubaoGuideSource.parse(response(result() + ("InlineImages" to inline)), city, "places").map { it.copy(id="s1") }
+        val guide = SearchGuideDecoder.decode(content(), material().copy(documents=docs))
+        assertEquals(3, guide.gallery.size)
+        assertTrue(guide.gallery.all { it.sourceUrl == docs.single().url && it.credit.startsWith("原文页面") })
+    }
+    @Test fun businessErrorsAndInvalidKeysNeverLeakDetailsOrMakeExtraRequests() = runBlocking {
+        MockWebServer().use { server ->
+            for (code in listOf("10400", "10401", "10403", "10406", "10408", "10409", "10410", "10412", "10500", "700429")) {
+                server.enqueue(MockResponse().setBody(Gson().toJson(mapOf("ResponseMetadata" to mapOf("Error" to mapOf("Code" to code, "Message" to "secret-response")), "Result" to null))))
+                val failure = runCatching { source(server).fetch(city) {} }.exceptionOrNull()
+                assertNotNull(failure); assertFalse(failure!!.message.orEmpty().contains("secret-response"))
+            }
+            assertEquals(10, server.requestCount)
+            for (key in listOf("tvly-old-key-123456789", "bad key", "中文密钥")) {
+                assertTrue(runCatching { DoubaoGuideSource({ key }, server.url("/search").toString(), OkHttpClient()).fetch(city) {} }.isFailure)
+            }
+            assertEquals(10, server.requestCount)
+        }
+    }
+    @Test fun snippetOrSummaryAloneCannotBecomeOriginalEvidence() {
+        assertTrue(DoubaoGuideSource.parse(response(result(content="") + mapOf("Summary" to quote, "Snippet" to quote)),city,"places").isEmpty())
+    }
+    @Test fun directoryRowsWithoutCompleteSentencesAreExcludedBeforeGeneration() {
+        val rows = "泰安景区名录\n1 岱庙 泰安市区\n2 泰山 国家级风景区 泰安市区\n3 天外村 泰安市区\n"
+        val docs = DoubaoGuideSource.parse(response(result(content=rows),result(url="https://tsgw.taian.gov.cn/detail.html")),city,"places")
+        assertEquals(listOf(quote),docs.map { it.content })
+    }
+    @Test fun cancellationStopsBeforeFoodSearch() = runBlocking {
+        MockWebServer().use { server ->
+            server.enqueue(MockResponse().setSocketPolicy(SocketPolicy.NO_RESPONSE))
+            val job = launch(Dispatchers.Default) { source(server).fetch(city) {} }
+            assertNotNull(server.takeRequest(5, TimeUnit.SECONDS))
+            job.cancelAndJoin()
+            assertTrue(job.isCancelled)
+            assertEquals(1,server.requestCount)
+        }
     }
     @Test fun legacySinglePhotoAndNewGalleryRoundTripAndRejectTraditionalCaptions() {
         val legacy=DestinationGuides.all.first()
@@ -74,7 +116,7 @@ class TavilyGuideTest {
         assertEquals(2,DestinationGuides.validateGenerated(restored,legacy.cityId).gallery.size)
         assertTrue(runCatching { DestinationGuides.validateGenerated(updated.withPhotos(listOf(legacy.photo!!.copy(description="傳統建築"))),legacy.cityId) }.isFailure)
     }
-    @Test fun basicSearchRestrictsDomainsAndSendsKeyOnlyInHeader() = runBlocking {
+    @Test fun webSearchRestrictsDomainsAndSendsKeyOnlyInHeader() = runBlocking {
         MockWebServer().use { server ->
             server.enqueue(MockResponse().setBody(response(result())))
             server.enqueue(MockResponse().setBody(response()))
@@ -82,34 +124,35 @@ class TavilyGuideTest {
             assertEquals(1,material.documents.size)
             repeat(2) {
                 val request = server.takeRequest()
-                assertEquals("Bearer tvly-test-only",request.getHeader("Authorization"))
+                assertEquals("Bearer doubao-test-only-123456789",request.getHeader("Authorization"))
                 val body = request.body.readUtf8()
-                assertFalse(body.contains("tvly-test-only"))
+                assertFalse(body.contains("doubao-test-only-123456789"))
                 val json = JsonParser.parseString(body).asJsonObject
-                assertEquals("basic",json["search_depth"].asString)
-                assertEquals("restrict",json["include_domains_mode"].asString)
-                assertFalse(json["include_answer"].asBoolean)
-                assertFalse(json["auto_parameters"].asBoolean)
-                assertTrue(json["query"].asString.contains(city.name))
+                assertEquals("web",json["SearchType"].asString)
+                assertEquals(5,json["Count"].asInt)
+                assertEquals("text",json["ContentFormats"].asString)
+                assertTrue(json["Filter"].asJsonObject["NeedContent"].asBoolean)
+                assertEquals(GuideSearchPolicy.DOMAINS.joinToString("|"),json["Filter"].asJsonObject["Sites"].asString)
+                assertTrue(json["Query"].asString.contains(city.name))
             }
         }
     }
     @Test fun foreignSpoofedAndWrongCitySourcesAreExcluded() {
         val raw = response(result(),result("https://gov.cn.evil.test/a"),result("https://evilgov.cn/a"),
             result("https://user:pass@taian.gov.cn/a"),result("https://taian.gov.cn:8443/a"),
-            mapOf("title" to "雄安", "url" to "https://www.xiongan.gov.cn/a", "content" to "雄安的旅游资料和当地特色美食介绍"))
-        assertEquals(1,TavilyGuideSource.parse(raw,city,"places").size)
+            mapOf("Title" to "雄安", "Url" to "https://www.xiongan.gov.cn/a", "Content" to "雄安的旅游资料和当地特色美食介绍"))
+        assertEquals(1,DoubaoGuideSource.parse(raw,city,"places").size)
         assertFalse(GuideNetwork.isPhotoUrl("https://dimg.c-ctrip.com.evil.test/a.jpg"))
         assertTrue(GuideNetwork.isPhotoUrl("https://tsgw.taian.gov.cn/picture/a.jpg"))
     }
     @Test fun traditionalVersionTitleBodyAndImageMetadataAreExcluded() {
         val original=result()
-        val image=mapOf("url" to "https://tsgw.taian.gov.cn/picture/a.jpg", "description" to "岱庙傳統建築照片")
+        val image=mapOf("ImageUrl" to "https://tsgw.taian.gov.cn/picture/a.jpg", "Alt" to "岱庙傳統建築照片")
         val raw=response(result("http://he.people.com.cn/BIG5/n2/2021/a.html"),
-            original + ("title" to "泰安遊覽"),original + ("content" to quote+"傳統建築"),
-            original + ("content" to quote.repeat(100)+"傳統建築"),
-            original + ("images" to listOf(image)))
-        val docs=TavilyGuideSource.parse(raw,city,"places")
+            original + ("Title" to "泰安遊覽"),original + ("Content" to quote+"傳統建築"),
+            original + ("Content" to quote.repeat(100)+"傳統建築"),
+            original + ("InlineImages" to listOf(image)))
+        val docs=DoubaoGuideSource.parse(raw,city,"places")
         assertEquals(1,docs.size)
         assertTrue(docs.single().images.isEmpty())
         assertTrue(SimplifiedGuidePolicy.documentAllowed(docs.single()))
@@ -129,7 +172,7 @@ class TavilyGuideTest {
     }
     @Test fun errorsAndEmptyPlacesStopBeforeSecondRequestWithoutLeakingResponse() = runBlocking {
         for (code in listOf(401,402,429,432,503)) MockWebServer().use { server ->
-            server.enqueue(MockResponse().setResponseCode(code).setBody("secret-response tvly-test-only"))
+            server.enqueue(MockResponse().setResponseCode(code).setBody("secret-response doubao-test-only-123456789"))
             val error = runCatching { source(server).fetch(city) {} }.exceptionOrNull()
             assertNotNull(error)
             assertFalse(error!!.message.orEmpty().contains("secret-response"))

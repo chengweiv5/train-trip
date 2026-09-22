@@ -21,7 +21,7 @@ class FallbackPhotoSource(private val primary: GuidePhotoSource, private val fal
 }
 
 internal fun supportedPhoto(url: String): Boolean = GuideNetwork.isPhotoUrl(url) &&
-    SimplifiedGuidePolicy.urlAllowed(url) && !TavilyGuideSource.DECORATION.containsMatchIn(url)
+    SimplifiedGuidePolicy.urlAllowed(url) && !GuideSearchPolicy.DECORATION.containsMatchIn(url)
 
 internal fun sourcedPhoto(url: String, description: String, sourceUrl: String, credit: String, subject: PhotoSubject? = null): DestinationPhoto {
     val hash = MessageDigest.getInstance("SHA-256").digest(url.toByteArray()).joinToString("") { "%02x".format(it) }.take(24)

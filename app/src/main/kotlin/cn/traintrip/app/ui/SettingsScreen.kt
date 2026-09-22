@@ -51,7 +51,7 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
                             onClearFeedback();page=SettingsPage.MODEL
                         }
                         HorizontalDivider(color=Line)
-                        SettingsRow("搜索引擎","Tavily · 基础搜索",state.tavilyConfigured,"settings-search") {
+                        SettingsRow("搜索引擎","豆包搜索 · 网页与图片",state.searchConfigured,"settings-search") {
                             onClearFeedback();page=SettingsPage.SEARCH
                         }
                         }
@@ -73,8 +73,8 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
                         Text("密钥加密保存在本机。已缓存的城市内容可继续离线查看。",style=MaterialTheme.typography.bodySmall,color=Muted)
                     } else {
                         val modelPage=page == SettingsPage.MODEL
-                        val provider=if(modelPage) "DeepSeek" else "Tavily"
-                        val configured=if(modelPage) state.configured else state.tavilyConfigured
+                        val provider=if(modelPage) "DeepSeek" else "豆包搜索"
+                        val configured=if(modelPage) state.configured else state.searchConfigured
                         var model by remember { mutableStateOf(state.modelName) }
                         var key by remember { mutableStateOf("") }
                         Text(provider,style=MaterialTheme.typography.titleLarge)
@@ -85,10 +85,10 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
                                 modifier=Modifier.fillMaxWidth().testTag("settings-model-name"),enabled=!state.settingsBusy,
                                 keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Ascii,autoCorrectEnabled=false))
                             Text("填写 DeepSeek 账户支持的模型 ID，默认 deepseek-flash。",style=MaterialTheme.typography.bodySmall,color=Muted)
-                        } else Text("基础搜索 · 每座新城市通常 2 次",style=MaterialTheme.typography.bodyMedium,color=Muted)
+                        } else Text("每次整理通常 2 次网页搜索，缺图条目另行搜图",style=MaterialTheme.typography.bodyMedium,color=Muted)
                         Text(if(configured) "密钥已配置；留空保留现有密钥" else "尚未配置密钥",style=MaterialTheme.typography.bodySmall,color=Muted)
                         OutlinedTextField(key,{key=it},label={Text("API Key")},singleLine=true,shape=androidx.compose.foundation.shape.RoundedCornerShape(8.dp),
-                            modifier=Modifier.fillMaxWidth().testTag(if(modelPage) "deepseek-key" else "tavily-key"),
+                            modifier=Modifier.fillMaxWidth().testTag(if(modelPage) "deepseek-key" else "doubao-search-key"),
                             enabled=!state.settingsBusy,visualTransformation=PasswordVisualTransformation(),
                             keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Password,autoCorrectEnabled=false))
                         Text(if(modelPage) "保存只更新配置，下次整理使用所填模型。调用按服务商实际用量计费。"

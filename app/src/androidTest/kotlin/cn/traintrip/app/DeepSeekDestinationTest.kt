@@ -37,7 +37,7 @@ class DeepSeekDestinationTest {
     private val source=object:GuideMaterialSource {
         override suspend fun fetch(city:City,stage:(String)->Unit)=GuideMaterial(city.id,city.name,city.province.name,emptyList(),emptyList(),emptyList())
     }
-    private fun vm(credentials:Credentials,store:Store,generator:GuideGenerator)=DestinationViewModel(compose.activity.application as Application,credentials,store,source,generator,Credentials("tvly-test-only-123456789"),photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
+    private fun vm(credentials:Credentials,store:Store,generator:GuideGenerator)=DestinationViewModel(compose.activity.application as Application,credentials,store,source,generator,Credentials("doubao-test-only-123456789"),photoSource=GuidePhotoSource { _,_,_ -> PhotoCandidates(emptyList()) })
     @Test fun newCityWaitsForExplicitActionAndRestartUsesSavedContent() {
         val store=Store();var calls=0
         val generator=object:GuideGenerator { override suspend fun generate(material:GuideMaterial,apiKey:String):DestinationGuide { calls++;return guide() } }
@@ -93,7 +93,7 @@ class DeepSeekDestinationTest {
         compose.waitUntil(5000) { model.state.value.guide!=null }
         assertEquals(1,calls)
     }
-    @Test fun missingTavilyDoesNotSearchOrMarkAttemptAndSavePreservesDeepSeek() {
+    @Test fun missingSearchKeyDoesNotSearchOrMarkAttemptAndSavePreservesDeepSeek() {
         var calls=0;val store=Store();val deep=Credentials("sk-test-existing-123456789");val search=Credentials(null)
         val countingSource=object:GuideMaterialSource {
             override suspend fun fetch(city:City,stage:(String)->Unit):GuideMaterial { calls++;return source.fetch(city,stage) }
@@ -104,16 +104,16 @@ class DeepSeekDestinationTest {
         compose.waitUntil(5000) { model.state.value.cityId!=null && !model.state.value.loading }
         assertEquals(0,calls);assertFalse(store.attempted(city.id))
         var saved=false
-        compose.runOnIdle { model.saveKeys("","tvly-test-new-123456789") { saved=true } }
+        compose.runOnIdle { model.saveKeys("","doubao-test-new-123456789") { saved=true } }
         compose.waitUntil(5000) { saved }
         assertEquals(0,calls)
         compose.runOnIdle { model.retry() }
         compose.waitUntil(5000) { model.state.value.guide!=null }
         assertEquals("sk-test-existing-123456789",deep.read());assertEquals(1,calls)
         var removed=false
-        compose.runOnIdle { model.removeTavilyKey { removed=true } }
+        compose.runOnIdle { model.removeSearchKey { removed=true } }
         compose.waitUntil(5000) { removed }
-        assertTrue(model.state.value.configured);assertFalse(model.state.value.tavilyConfigured)
+        assertTrue(model.state.value.configured);assertFalse(model.state.value.searchConfigured)
         assertNotNull(store.read(city.id));assertEquals("sk-test-existing-123456789",deep.read())
     }
     @Test fun cancellationDoesNotPublishOrSaveLateResult() {
@@ -170,13 +170,16 @@ class DeepSeekDestinationTest {
         val fake="sk-instrumentation-test-only-123456"
         settings.save(fake)
         assertEquals(fake,settings.read())
-        val tavily=TavilySettings(context)
-        val searchFake="tvly-instrumentation-test-only-123456"
-        tavily.save(searchFake)
-        assertEquals(searchFake,tavily.read())
+        val doubao=DoubaoSearchSettings(context)
+        val searchFake="doubao-instrumentation-test-only-123456"
+        doubao.save(searchFake)
+        assertEquals(searchFake,doubao.read())
+        val searchStored=context.getSharedPreferences("destination-doubao-search",0).getString("encryptedKey",null)
+        assertNotNull(searchStored)
+        assertFalse(searchStored.orEmpty().contains(searchFake))
         assertEquals(fake,DeepSeekSettings(context).read())
-        tavily.remove()
-        assertNull(tavily.read())
+        doubao.remove()
+        assertNull(doubao.read())
         assertEquals(fake,settings.read())
         val stored=context.getSharedPreferences("destination-ai",0).getString("encryptedKey",null)
         assertFalse(stored.orEmpty().contains(fake))
@@ -185,6 +188,23 @@ class DeepSeekDestinationTest {
         val store=AndroidGuideStore(context)
         store.save(guide())
         assertEquals(city.id,AndroidGuideStore(context).read(city.id)?.cityId)
+    }
+    @Test fun doubaoSettingsNeverReuseOrOverwriteLegacyTavilyCredentials() {
+        val context=compose.activity
+        val legacy=EncryptedGuideSettings(context,"destination-search","train-trip-tavily","tvly-","Tavily")
+        val oldKey="tvly-legacy-test-only-123456789"
+        val newKey="0123456789abcdef0123456789abcdef"
+        val doubao=DoubaoSearchSettings(context)
+        try {
+            doubao.remove();legacy.save(oldKey)
+            val before=context.getSharedPreferences("destination-search",0).getString("encryptedKey",null)
+            assertNull(doubao.read())
+            assertTrue(runCatching { doubao.save(oldKey) }.isFailure)
+            doubao.save(newKey)
+            assertEquals(newKey,DoubaoSearchSettings(context).read())
+            assertEquals(oldKey,legacy.read())
+            assertEquals(before,context.getSharedPreferences("destination-search",0).getString("encryptedKey",null))
+        } finally { doubao.remove();legacy.remove() }
     }
     @Test fun legacyTraditionalCacheIsHiddenAndGetsOnlyOneAutomaticRetry() {
         val context=compose.activity
@@ -220,8 +240,10 @@ class DeepSeekDestinationTest {
         val bitmap=android.graphics.Bitmap.createBitmap(1800,900,android.graphics.Bitmap.Config.ARGB_8888)
         val bytes=java.io.ByteArrayOutputStream().also { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG,100,it) }.toByteArray()
         bitmap.recycle()
-        val photo=DestinationPhoto("remote_test_photo.jpg","苏州测试配图","测试资料","https://you.ctrip.com/place/suzhou11.html",remoteUrl="https://dimg04.c-ctrip.com/images/test.jpg")
-        val original=guide().copy(photo=photo)
+        val subject=PhotoSubject("place",guide().experiences.first().name)
+        val photo=DestinationPhoto("remote_test_photo.jpg","苏州 · ${subject.name}","测试资料","https://you.ctrip.com/place/suzhou11.html",
+            remoteUrl="https://p11-volcsearch-sign.byteimg.com/test.jpg?x-signature=test",subject=subject)
+        val original=guide().withPhotos(listOf(photo))
         val store=AndroidGuideStore(compose.activity) { bytes }
         val prepared=store.prepareUpdate(original)
         assertNotNull(prepared.photo)
