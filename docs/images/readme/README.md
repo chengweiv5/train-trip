@@ -1,20 +1,43 @@
 # README 截图说明
 
-- 截图版本：v0.6.1 / versionCode 11，应用名称「有票再出发」。其余五图来自源码 `e68e35e`；`wishlist.jpg` 更新于 2026-09-22，对应本次省份双栏实现。
-- 截图日期：其余五图为 2026-09-21，想去页为 2026-09-22；Android 专用模拟器，1080 × 2400、420 dpi、标准字号。想去页在 390dp 容器中捕获。
-- 图片来自现有 Compose 界面测试；只缩小尺寸并压缩为 JPEG，没有替换文案、合成余票或改动界面。文件最长边 1280 px，可从项目首页点击查看。
-- 日期、车次、余票及收藏是离线测试示例，不是实时查询，也不是用户个人数据。本次没有调用真实票源、DeepSeek 或 Tavily。
-- 上述功能随 v0.7.0 正式发布；截图保留实际采集时的 v0.6.1 版本来源。想去页截图为加入「全部」入口前的省份视图，v0.7.0 会在省份上方另有固定「全部」入口。
+## 版本与采集
 
-| 图片 | 对应测试场景 |
+- 10 张图片均于 2026-09-23 重新采集，来自 v0.9.0 / versionCode 14 的实际 Compose 界面；业务源码与公开 v0.9.0 一致，采集基线为 `097d9d9`，使用本地 Debug 构建以运行离线界面用例。
+- 使用独立 Android API 36 模拟器，1080 × 2400、标准字号。城市结果与车次页为 420 dpi，其余页面为 360 dpi，以完整显示主要操作。
+- 只等比例缩小并压缩为 JPEG，最长边 1280 px；没有改写图片中的文字、拼接界面或替换页面元素。可在项目首页点击图片查看大图。
+- 日期、车次、余票和收藏是离线演示数据，不是实时可购车票或用户个人数据。不同页面使用独立演示场景，不代表同一次查询。
+- 邯郸介绍、路线和照片复用 v0.9 验收时保存的真实搜索及整理结果；本次只在模拟器加载已有资料，没有重新调用搜索、模型或票源，没有操作个人手机。
+- 设置页展示未配置状态，不输入或展示个人服务 Key；已保存内容仍可离线查看。
+
+## 页面索引
+
+| 图片 | 展示内容与采集方式 |
 | --- | --- |
-| [home.jpg](home.jpg) | `BlueWhiteUiTest.homeAndSettingsKeepActionsReachable` |
-| [results.jpg](results.jpg) | `BlueWhiteUiTest.resultsAndTrainSelectionHaveClearSeparateActions` |
-| [trains.jpg](trains.jpg) | 同上，未标记意向车次的状态 |
-| [guide.jpg](guide.jpg) | `BlueWhiteUiTest.guideTabsAndFootersStayReachable`，天津内置介绍 |
-| [wishlist.jpg](wishlist.jpg) | `WishlistSidebarTest.onlySavedProvincesShowTheirOwnCitiesInCollectionOrder`；河北选中，11 个城市 / 5 个省级地区，离线演示数据 |
-| [destinations.jpg](destinations.jpg) | `DestinationWishlistTest.pinnedWishesShareSelectionWithProvincesAndKeepRealProvinceCount` |
+| [home.jpg](home.jpg) | 首页：日期范围、多选时段、席别、人数、3 小时车程和查询入口；实际主界面加载演示筛选条件 |
+| [results.jpg](results.jpg) | 按省份分组的有票城市、车次数、最快车程及介绍入口；现有 `BlueWhiteUiTest.resultsAndTrainSelectionHaveClearSeparateActions` 离线用例 |
+| [trains.jpg](trains.jpg) | 北京到天津的演示车次、发到时间、席别余票与打开 12306 入口；同一用例的未标记状态 |
+| [destinations.jpg](destinations.jpg) | 目的地选择器的「想去」分组，勾选 5 座演示收藏城市 |
+| [wishlist.jpg](wishlist.jpg) | 想去清单的固定「全部」入口，5 城 / 3 省级地区，显示已保存、未下载与内置介绍状态 |
+| [guide.jpg](guide.jpg) | 邯郸景点页：博物馆独立相册、图片来源、原文入口和建议停留时长；下方露出丛台公园卡片 |
+| [food.jpg](food.jpg) | 邯郸美食页：南沿村拉面文字及郭八火烧菜品参考图，不为无图条目补造图片 |
+| [plans.jpg](plans.jpg) | 邯郸一日路线，保留一日/两日切换、景点顺序、攻略原文和整理来源 |
+| [settings.jpg](settings.jpg) | DeepSeek、豆包网页与图片搜索、离线内容及关于与更新入口 |
+| [offline.jpg](offline.jpg) | 1 座已保存城市及实际缓存空间，可查看、更新或删除；收藏与配置保留说明 |
 
-初次交付的 5 个测试及文档内 45 处本地链接已检查。此次替换想去截图，双栏场景通过测试，文字边界、OCR 与人工视觉检查通过；其余图片未更新。截图不构成对真机界面、实时车票或内容服务的验收。
+## 图文来源
 
-天津古文化街照片沿用应用内已注明的来源：摄影胡凌云／天津日报，[天津市文化和旅游局刊载页面](https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/t20240419_6605163.html)。图片权利归原作者及相关权利人所有。
+图片权利归原作者及相关权利人所有，以下为应用中保存的来源页面。豆包图片结果未提供摄影者署名的，不推定来源站点为作者；美食图片只作为菜品参考。
+
+| 截图内素材 | 保存的来源 |
+| --- | --- |
+| 邯郸介绍、美食文字与一日/两日路线 | [什么值得买：两天一夜玩转河北被低估的宝藏小城——邯郸](https://post.smzdm.com/p/anvzzq97) |
+| 邯郸市博物馆照片 | [QQ 空间公开相册](http://user.qzone.qq.com/2202371668/photo/73f0c279-02ee-4a0b-a274-02453a5bc45e/M09*OKv.6UAHjL2B4p6ogzly4Gh.OzsAAA!!/) |
+| 丛台公园照片 | [太平洋摄影部落](http://dp.pconline.com.cn/dphoto/list_3581066.html) |
+| 郭八火烧参考图 | [地方特产介绍页](http://guangzhou.techan.dqccc.com/supermarket/Detail-1376.html) |
+| 天津城市卡片中的古文化街照片 | 摄影胡凌云／天津日报，[天津市文化和旅游局刊载页面](https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/t20240419_6605163.html) |
+
+民间来源可能转载或使用 AI 整理；保留原文方便自行判断。截图中的文字、价格和开放信息不代表已独立核实的最新旅游资讯。真实搜索验收范围见[民间攻略检索与邯郸重验](../../verification/2026-09-23-community-search.md)。
+
+## 检查与回滚
+
+采集用到的现有离线界面用例通过，结果页与车次页文字边界检查通过；10 张图片均完成 OCR、人工视觉检查和链接检查，39 处本地引用有效。GitHub GFM 渲染识别全部 10 张图片，1200px 与 390px 预览均加载完整且无页面横向溢出。原始截图、页面 XML、图片摘要及修改前备份保存在本机 `.verification-private/readme-v0.9/`，不随仓库发布。本次仅更新 README 和截图说明，不修改应用业务或已发布 APK。需要回滚时可反向提交本次文档改动，或从该目录的 `before.tar` 恢复原文档及图片。

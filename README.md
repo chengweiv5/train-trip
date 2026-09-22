@@ -29,48 +29,74 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
 ## 界面一览
 
-以下为 v0.7.0 及此前开发过程中采集的实际界面截图；v0.8.0 已将图片改为对应条目的独立相册，以下目的地截图保留旧版样式。日期、车次、余票与收藏使用离线演示数据，不代表实时可购车票；想去页截图为加入「全部」入口前的省份视图。点击图片可查看大图。
+下面 10 张截图来自 v0.9.0 的实际界面，按「设条件 → 选城市 → 看车次 → 了解目的地 → 管理内容」展示主要功能。点击图片可查看大图。
+
+车次、余票、日期和收藏使用离线演示数据；邯郸图文来自本次版本验收中已保存的豆包搜索与 DeepSeek 整理结果。截图用于说明功能，不代表实时余票或每个城市都能找到完整图片、路线。[截图来源与采集说明](docs/images/readme/README.md)
 
 <table>
   <tr>
     <td width="50%" align="center" valign="top">
       <strong>① 设好条件，发现有票城市</strong><br><br>
-      <a href="docs/images/readme/home.jpg"><img src="docs/images/readme/home.jpg" width="320" alt="查票首页：选择出发地、日期、多段出发时段、席别、人数和最长车程"></a><br>
-      时间、距离和出行人数，都按你的计划来。
+      <a href="docs/images/readme/home.jpg"><img src="docs/images/readme/home.jpg" width="320" alt="查票首页：北京出发，选择日期范围、早上和下午、席别、人数、最长车程及查询城市"></a><br>
+      选择出发地、日期范围和可接受的车程；出发时段可多选，一次查询多个目的地。
     </td>
     <td width="50%" align="center" valign="top">
-      <strong>② 看看哪些城市值得出发</strong><br><br>
-      <a href="docs/images/readme/results.jpg"><img src="docs/images/readme/results.jpg" width="320" alt="有票城市结果页：按省份展示城市、可选车次数、最快车程和目的地亮点"></a><br>
-      车程、车次数与城市亮点放在一起比较。
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" align="center" valign="top">
-      <strong>③ 选个合适的车次</strong><br><br>
-      <a href="docs/images/readme/trains.jpg"><img src="docs/images/readme/trains.jpg" width="320" alt="北京到天津的演示车次：发到时刻、席别余票、刷新入口与打开 12306 App 按钮"></a><br>
-      看清发到时间和余票，再前往 12306 App。
-    </td>
-    <td width="50%" align="center" valign="top">
-      <strong>④ 车票之外，也有旅行灵感</strong><br><br>
-      <a href="docs/images/readme/guide.jpg"><img src="docs/images/readme/guide.jpg" width="320" alt="天津目的地介绍：古文化街照片、五大道推荐，以及景点、美食、玩法、贴士分页"></a><br>
-      看景点与当地风味，为一两天的旅行找灵感。
+      <strong>② 比一比，哪些城市适合出发</strong><br><br>
+      <a href="docs/images/readme/results.jpg"><img src="docs/images/readme/results.jpg" width="320" alt="有票城市：按省份分组，展示可选车次、最快车程与目的地亮点"></a><br>
+      结果按省份分组，结合车次数、最快车程和城市亮点比较；可查看介绍或进入车次列表。
     </td>
   </tr>
   <tr>
     <td width="50%" align="center" valign="top">
-      <strong>⑤ 收藏想去的地方</strong><br><br>
-      <a href="docs/images/readme/wishlist.jpg"><img src="docs/images/readme/wishlist.jpg" width="320" alt="想去清单：左侧选择河北，右侧按收藏时间展示承德、保定与秦皇岛"></a><br>
-      清单保存在本机，有空时再出发。
+      <strong>③ 看清车次，再去 12306</strong><br><br>
+      <a href="docs/images/readme/trains.jpg"><img src="docs/images/readme/trains.jpg" width="320" alt="车次详情：发到时刻、乘车时长、席别余票，以及打开 12306 App 入口"></a><br>
+      对比发到时刻、车程和余票，可标记意向车次、手动刷新；打开 12306 App 核验并购票。
     </td>
     <td width="50%" align="center" valign="top">
-      <strong>⑥ 下次查票，直接选「想去」</strong><br><br>
-      <a href="docs/images/readme/destinations.jpg"><img src="docs/images/readme/destinations.jpg" width="320" alt="查询目的地选择器：置顶想去分组，快捷勾选保定和承德"></a><br>
-      收藏与查票衔接，不必在省市列表里重新找。
+      <strong>④ 从「想去」快速选择目的地</strong><br><br>
+      <a href="docs/images/readme/destinations.jpg"><img src="docs/images/readme/destinations.jpg" width="320" alt="查询目的地：想去分组、收藏城市勾选和选择完成入口"></a><br>
+      按省份查找城市，也可直接勾选「想去」清单；当前选择会带回查票条件。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>⑤ 收藏心动城市，下次再出发</strong><br><br>
+      <a href="docs/images/readme/wishlist.jpg"><img src="docs/images/readme/wishlist.jpg" width="320" alt="想去清单：固定全部入口、河北山东天津分组，以及最近收藏的城市"></a><br>
+      通过「全部」浏览所有收藏，或按省份筛选；最近收藏优先，可直接了解目的地或查车票。
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>⑥ 看景点介绍，也看实景图片</strong><br><br>
+      <a href="docs/images/readme/guide.jpg"><img src="docs/images/readme/guide.jpg" width="320" alt="邯郸景点：邯郸市博物馆独立相册、图片来源、介绍和原文入口"></a><br>
+      每个景点有独立介绍与相册，可横滑、查看大图和来源；景点累计最多 10 个，每项最多 3 张图。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>⑦ 看看当地有什么好吃的</strong><br><br>
+      <a href="docs/images/readme/food.jpg"><img src="docs/images/readme/food.jpg" width="320" alt="邯郸美食：郭八火烧菜品图片、文字介绍及来源入口"></a><br>
+      美食按具体菜品介绍，找到匹配照片时展示参考图；累计最多 10 种，没有合适图片时保留文字。
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>⑧ 参考一日、两日玩法</strong><br><br>
+      <a href="docs/images/readme/plans.jpg"><img src="docs/images/readme/plans.jpg" width="320" alt="邯郸玩法：一日与两日切换、游览顺序和查看攻略原文入口"></a><br>
+      查看按天安排的景点顺序，并打开攻略原文核对细节；只收录有来源依据的路线，不保证每城都有。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <strong>⑨ 按需配置内容服务</strong><br><br>
+      <a href="docs/images/readme/settings.jpg"><img src="docs/images/readme/settings.jpg" width="320" alt="设置：DeepSeek 大模型、豆包网页与图片搜索、离线内容和版本更新入口"></a><br>
+      DeepSeek 整理介绍，豆包检索网页和图片；填入自己的 Key 后手动整理，查票与收藏无需配置。
+    </td>
+    <td width="50%" align="center" valign="top">
+      <strong>⑩ 保存到本机，随时再看</strong><br><br>
+      <a href="docs/images/readme/offline.jpg"><img src="docs/images/readme/offline.jpg" width="320" alt="离线内容：已下载城市、占用空间、查看更新介绍与删除入口"></a><br>
+      查看已保存城市和占用空间，按需更新或删除；清理离线资料会保留收藏与服务设置。
     </td>
   </tr>
 </table>
 
-截图中的天津古文化街照片：胡凌云／天津日报，刊载于[天津市文化和旅游局](https://whly.tj.gov.cn/tjswlzxw/wlsj/mtjj/202404/t20240419_6605163.html)。[截图来源与版本说明](docs/images/readme/README.md)
+景点与美食图片均保留来源，图片权利归原作者及相关权利人所有。美食照片为菜品参考图；[查看图文出处](docs/images/readme/README.md#图文来源)。
 
 ## 三步开始一次短途旅行
 
