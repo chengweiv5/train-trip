@@ -18,7 +18,12 @@ data class DestinationExperience(
 )
 data class DestinationFood(val name: String, val description: String, val sourceUrl: String? = null, val evidence: String? = null)
 data class PlanDay(val label: String, val experienceIds: List<String>, val description: String,
-    val sourceUrl: String? = null, val evidence: String? = null)
+    val sourceUrl: String? = null, val evidence: String? = null,
+    // Gson leaves this null in old caches; experienceIds is only a legacy lookup.
+    val stops: List<String>? = null) {
+    fun routeStops(experiences: List<DestinationExperience>): List<String> = stops
+        ?: experienceIds.orEmpty().mapNotNull { id -> experiences.find { it.id == id }?.name }
+}
 data class DayPlan(val days: Int, val title: String, val schedule: List<PlanDay>, val note: String)
 data class DestinationGuide(
     val cityId: String, val name: String, val tagline: String, val tags: List<String>,
@@ -30,6 +35,11 @@ data class DestinationGuide(
 ) {
     // Nullable because Gson reads older JSON without invoking Kotlin defaults.
     val gallery: List<DestinationPhoto> get() = photos ?: listOfNotNull(photo)
+    fun withIndependentPlans() = copy(plans = plans.map { plan ->
+        plan.copy(schedule = plan.schedule.map { day ->
+            day.copy(experienceIds = emptyList(), stops = day.routeStops(experiences))
+        })
+    })
     fun withPhotos(images:List<DestinationPhoto>) = copy(photo=images.firstOrNull(),photos=images)
 }
 
@@ -57,12 +67,12 @@ object DestinationGuides {
                     require(listOf(e.id, e.name, e.reason, e.duration, e.location).all { it.isNotBlank() })
                 }
                 guide.foods.forEach { require(it.name.isNotBlank() && it.description.isNotBlank()) }
-                require(guide.plans.map { it.days }.sorted() == listOf(1, 2))
+                require(guide.plans.map { it.days }.distinct().size == guide.plans.size)
                 guide.plans.forEach { plan ->
-                    require(plan.title.isNotBlank() && plan.note.isNotBlank() && plan.schedule.size == plan.days)
+                    require(plan.days > 0 && plan.title.isNotBlank() && plan.note.isNotBlank() && plan.schedule.size == plan.days)
                     plan.schedule.forEach { day ->
                         require(day.label.isNotBlank() && day.description.isNotBlank())
-                        require(day.experienceIds.isNotEmpty() && day.experienceIds.all { it in ids })
+                        require(day.routeStops(guide.experiences).all { it.isNotBlank() })
                     }
                 }
                 require(guide.sources.isNotEmpty())
@@ -81,7 +91,7 @@ object DestinationGuides {
     }.getOrElse { emptyList() }
 
     fun validateGenerated(guide: DestinationGuide, cityId: String): DestinationGuide {
-        require(guide.sources.size in 1..10)
+        require(guide.sources.isNotEmpty())
         return validateCached(guide, cityId)
     }
 
@@ -92,19 +102,23 @@ object DestinationGuides {
         require(listOf(guide.name, guide.tagline, guide.suggestedDays, guide.pace, guide.season, guide.arrivalAdvice)
             .all { it.isNotBlank() && it.length <= 1800 })
         require(guide.tags.size in 2..3 && guide.tags.all { it.isNotBlank() && it.length <= 20 })
-        require(guide.experiences.size in 1..GuideItemPolicy.MAX_PLACES && guide.foods.size <= GuideItemPolicy.MAX_FOODS)
+        require(guide.experiences.size <= GuideItemPolicy.MAX_PLACES && guide.foods.size <= GuideItemPolicy.MAX_FOODS)
         val ids = guide.experiences.map { it.id }.toSet()
         require(ids.size == guide.experiences.size)
         guide.experiences.forEach { require(listOf(it.id, it.name, it.reason, it.duration, it.location).all { s -> s.isNotBlank() && s.length <= 1800 }) }
         guide.foods.forEach { require(it.name.isNotBlank() && it.description.isNotBlank() && it.description.length <= 1800) }
         require(guide.foods.map { it.name }.distinct().size == guide.foods.size)
-        require(guide.plans.size <= 2 && guide.plans.map { it.days }.distinct().size == guide.plans.size)
+        require(guide.experiences.isNotEmpty() || guide.foods.isNotEmpty() || guide.plans.isNotEmpty())
+        require(guide.plans.size <= GuideItemPolicy.MAX_PLANS && guide.plans.map { it.days }.distinct().size == guide.plans.size)
         guide.plans.forEach { p ->
-            require(p.days in 1..2 && p.schedule.size == p.days && p.title.isNotBlank() && p.note.isNotBlank())
+            require(p.days > 0 && p.schedule.size == p.days && p.title.isNotBlank() && p.note.isNotBlank())
+            val urls = p.schedule.mapNotNull { it.sourceUrl }
+            require(urls.isEmpty() || (urls.size == p.days && urls.distinct().size == 1))
             p.schedule.forEach { d ->
-                require(d.sourceUrl == null || (GuideSearchPolicy.sourceUrl(d.sourceUrl) && !d.evidence.isNullOrBlank()))
-                require(d.evidence == null || (d.evidence.length in 10..1200 && d.sourceUrl != null))
-                require(d.label.isNotBlank() && d.description.isNotBlank() && d.experienceIds.isNotEmpty() && d.experienceIds.all { it in ids }) }
+                require(d.sourceUrl == null || GuideSearchPolicy.sourceUrl(d.sourceUrl))
+                require(d.label.isNotBlank() && d.description.isNotBlank() && d.description.length <= 1800)
+                require(d.routeStops(guide.experiences).all { it.isNotBlank() && it.length <= 180 })
+            }
         }
         require(guide.sources.isNotEmpty())
         guide.sources.forEach { require(it.title.isNotBlank() && isWebUrl(it.url)); LocalDate.parse(it.checkedOn) }

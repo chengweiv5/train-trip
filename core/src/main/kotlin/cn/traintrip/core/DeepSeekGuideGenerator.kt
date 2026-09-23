@@ -31,17 +31,16 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
             if (material.documents.isEmpty()) decode(content, material, selectedModel)
             else SearchGuideDecoder.decode(content, material, selectedModel)
         } catch (e: IOException) { throw e } catch (_: Exception) { throw IOException("生成内容格式不完整，请重试") }
-        // Repair routes against the exact bounded catalog that will be saved, including cached sights.
+        // Preserve complete cached plans and retry only missing durations.
         val guide = GuideRefreshPolicy.merge(previous, fresh)
         val requestedDays = GuideRouteRepair.missingDays(material, guide)
         if (requestedDays.isEmpty()) return guide
-        val documents = GuideRouteRepair.documents(material, guide)
+        val documents = GuideRouteRepair.documents(material)
         if (documents.isEmpty()) return guide
         currentCoroutineContext().ensureActive()
         // A single optional pass cannot discard the already-grounded text or repeatedly spend tokens.
         return try {
-            val input = mapOf("requestedDays" to requestedDays,
-                "places" to guide.experiences.map { mapOf("id" to it.id, "name" to it.name) }, "documents" to documents)
+            val input = mapOf("requestedDays" to requestedDays, "documents" to documents)
             val repaired = complete(GuideRouteRepair.prompt, input, apiKey, selectedModel)
             currentCoroutineContext().ensureActive()
             GuideRouteRepair.apply(repaired, material.copy(documents = documents), guide)
@@ -77,15 +76,15 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
             只收录简体中文资料，全部输出文字必须使用简体中文，不引用或转写繁体资源。
             仅依据所给资料，不联网、不补充训练记忆事实，不输出链接、署名或图片。不得编造营业时间、票价、交通线路、地址。
             只选择给定 places/foods 中的 id，保留 1-${GuideItemPolicy.MAX_PLACES} 个景点，0-${GuideItemPolicy.MAX_FOODS} 种美食；数量是上限，不要求凑满；没有美食资料则 foods=[]。
-            游览时长和一日/两日玩法是参考建议；缺少足够路线依据时 plans=[]。建议里不声称实时情况。
+            游览时长和玩法是参考建议。此输入只有景点/美食资料，没有完整攻略正文，因此 plans=[]，不要拼接目录生成玩法。
             season 缺依据时写“出发前查询当地天气，按实际天气安排户外游览。”；arrivalAdvice 缺依据时写“确认到达车站后，通过地图规划到首个景点的路线，预留交通时间。”
             输出 JSON 对象且所有键齐全：
             {"tagline":"一句城市亮点","tags":["短标签","短标签"],"suggestedDays":"1–2 天","pace":"参考节奏",
              "season":"季节建议","arrivalAdvice":"到站建议",
              "experiences":[{"id":"资料景点id","reason":"40-80字介绍","duration":"1–2 小时"}],
              "foods":[{"id":"资料美食id"}],
-             "plans":[{"days":1,"title":"路线标题","schedule":[{"label":"当天","experienceIds":["资料景点id"],"description":"简短安排"}],"note":"参考建议，请结合实际交通与预约安排。"}]}
-            标签 2-3 个，每个不超过 8 个字。文本短且具体，避免营销口号。plan days 仅 1 或 2，schedule 长度等于 days，路线只能引用你已选择的景点。
+             "plans":[{"days":1,"title":"路线标题","schedule":[{"label":"当天","stops":["地点名称"],"description":"简短安排"}],"note":"参考建议，请结合实际交通与预约安排。"}]}
+            标签 2-3 个，每个不超过 8 个字。文本短且具体，避免营销口号。plans 最多 ${GuideItemPolicy.MAX_PLANS} 种，每种天数一条，优先较短天数；plan days 为正整数，schedule 每项代表一天，条数等于 days。玩法地点独立于已选择景点。
         """.trimIndent()
         internal fun decode(content: String, material: GuideMaterial, model: String = MODEL): DestinationGuide {
             SimplifiedGuidePolicy.requireMaterial(material)
@@ -106,9 +105,12 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
                 require(p["schedule"]?.isJsonArray == true && p["schedule"].asJsonArray.all { it.isJsonObject })
                 DayPlan(p.text("days").toInt(), p.text("title"),
                     p.objects("schedule").map { d ->
-                        require(d["experienceIds"]?.isJsonArray == true && d["experienceIds"].asJsonArray.all { it.isJsonPrimitive && it.asJsonPrimitive.isString })
-                        PlanDay(d.text("label"), d.strings("experienceIds"), d.text("description"),
-                            d.text("sourceUrl").takeIf { it.isNotBlank() },d.text("evidence").takeIf { it.isNotBlank() })
+                        val stops = if (d.has("stops")) {
+                            require(d["stops"].isJsonArray && d["stops"].asJsonArray.all { it.isJsonPrimitive && it.asJsonPrimitive.isString })
+                            d.strings("stops")
+                        } else d.strings("experienceIds").mapNotNull { id -> material.places.find { it.id == id }?.name }
+                        PlanDay(d.text("label"), emptyList(), d.text("description"),
+                            d.text("sourceUrl").takeIf { it.isNotBlank() }, d.text("evidence").takeIf { it.isNotBlank() }, stops)
                     }, p.text("note"))
             }
             val photos = material.places.filter { p -> chosen.any { it.id == p.id } && p.imageUrl != null }.distinctBy { it.imageUrl }.map { p ->

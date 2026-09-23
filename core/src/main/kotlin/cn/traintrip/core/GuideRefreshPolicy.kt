@@ -4,7 +4,7 @@ package cn.traintrip.core
 object GuideRefreshPolicy {
     fun merge(previous: DestinationGuide?, fresh: DestinationGuide): DestinationGuide {
         DestinationGuides.validateGenerated(fresh, fresh.cityId)
-        if (previous == null) return fresh
+        if (previous == null) return GuideItemPolicy.limit(fresh)
         require(previous.cityId == fresh.cityId && previous.name == fresh.name)
         val places = previous.experiences.toMutableList()
         val placeMatches = GuideItemIdentity.matches(places.map { it.name }, fresh.experiences.map { it.name })
@@ -39,16 +39,9 @@ object GuideRefreshPolicy {
         fresh.sources.forEach { sources[it.url] = it }
         val bounded = GuideItemPolicy.limit(fresh.copy(experiences = places, foods = foods,
             plans = emptyList(), sources = sources.values.toList()))
-        val retainedIds = bounded.experiences.map { it.id }.toSet()
-        fun retained(plan: DayPlan) = plan.schedule.all { day -> day.experienceIds.all { it in retainedIds } }
-        val plans = previous.plans.filter(::retained).associateBy { it.days }.toMutableMap()
-        fresh.plans.forEach { plan ->
-            val mapped = plan.copy(schedule = plan.schedule.map { day ->
-                day.copy(experienceIds = day.experienceIds.map { requireNotNull(idMapping[it]) })
-            })
-            if (retained(mapped)) plans[plan.days] = mapped
-        }
-        val merged = bounded.copy(plans = plans.values.sortedBy { it.days })
+        val plans = previous.withIndependentPlans().plans.associateBy { it.days }.toMutableMap()
+        fresh.withIndependentPlans().plans.forEach { plans[it.days] = it }
+        val merged = bounded.copy(plans = plans.values.sortedBy { it.days }.take(GuideItemPolicy.MAX_PLANS))
         // Storage retains usable old images separately; carry only candidates from this generation here.
         val photos = fresh.gallery.mapNotNull { photo ->
             val subject = GuidePhotoPolicy.subject(fresh, photo) ?: return@mapNotNull null

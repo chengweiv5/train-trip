@@ -134,11 +134,11 @@ class DoubaoGuideTest {
     @Test fun webSearchUsesCommunityArticlesAndSeparateRouteQueries() = runTest {
         MockWebServer().use { server ->
             server.enqueue(MockResponse().setBody(response(result(),result("https://www.mafengwo.cn/i/1.html"),result("https://post.smzdm.com/p/1/"))))
-            repeat(4) { server.enqueue(MockResponse().setBody(response())) }
+            repeat(5) { server.enqueue(MockResponse().setBody(response())) }
             val material = source(server).fetch(city) {}
             assertEquals(3,material.documents.size)
             assertTrue(material.documents.all { GuideSearchPolicy.community(it.url) })
-            val queries = (1..5).map {
+            val queries = (1..6).map {
                 val request = server.takeRequest()
                 assertEquals("Bearer doubao-test-only-123456789",request.getHeader("Authorization"))
                 val body = request.body.readUtf8()
@@ -151,6 +151,7 @@ class DoubaoGuideTest {
             assertTrue(queries.first()["Filter"].asJsonObject["Sites"].asString.contains("you.ctrip.com"))
             assertTrue(queries[3]["Query"].asString.contains("一日游"))
             assertTrue(queries[4]["Query"].asString.contains("两天一夜"))
+            assertTrue(queries[5]["Query"].asString.contains("多日游"))
         }
     }
     @Test fun rateLimitedImageSearchRetriesBusinessErrorThenAcceptsResult() = runTest {
@@ -192,15 +193,15 @@ class DoubaoGuideTest {
         assertTrue(runCatching { SearchGuideDecoder.decode(content().replace("漫步历史古建","漫步歷史古建"),material()) }.isFailure)
         assertTrue(runCatching { SearchGuideDecoder.decode(content(),material().copy(sources=material().sources.map { it.copy(title="泰安旅遊") })) }.isFailure)
     }
-    @Test fun onlyTraditionalResultsStopBeforeMoreSearchesOrModelCalls() = runTest {
+    @Test fun onlyTraditionalResultsNeverReachModelAfterCheckingAllCategories() = runTest {
         MockWebServer().use { server ->
-            repeat(2) { server.enqueue(MockResponse().setBody(response(result("https://he.people.com.cn/BIG5/a")))) }
+            repeat(7) { server.enqueue(MockResponse().setBody(response(result("https://he.people.com.cn/BIG5/a")))) }
             val error=runCatching { source(server).fetch(city) {} }.exceptionOrNull()
             assertTrue(error!!.message.orEmpty().contains("简体中文"))
-            assertEquals(2,server.requestCount)
+            assertEquals(7,server.requestCount)
         }
     }
-    @Test fun errorsAndEmptyPlacesStopBeforeSecondRequestWithoutLeakingResponse() = runTest {
+    @Test fun searchFailuresAndEmptyResultsDoNotLeakResponse() = runTest {
         for (code in listOf(401,402,432,503)) MockWebServer().use { server ->
             server.enqueue(MockResponse().setResponseCode(code).setBody("secret-response doubao-test-only-123456789"))
             val error = runCatching { source(server).fetch(city) {} }.exceptionOrNull()
@@ -209,9 +210,9 @@ class DoubaoGuideTest {
             assertEquals(1,server.requestCount)
         }
         MockWebServer().use { server ->
-            repeat(2) { server.enqueue(MockResponse().setBody(response())) }
+            repeat(7) { server.enqueue(MockResponse().setBody(response())) }
             assertTrue(runCatching { source(server).fetch(city) {} }.isFailure)
-            assertEquals(2,server.requestCount)
+            assertEquals(7,server.requestCount)
         }
     }
     @Test fun redirectsNeverReceiveCredential() = runTest {

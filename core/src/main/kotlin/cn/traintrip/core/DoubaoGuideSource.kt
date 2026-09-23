@@ -31,20 +31,20 @@ class DoubaoGuideSource internal constructor(private val key: () -> String?, pri
         stage("豆包正在搜索${city.name}旅行游记…")
         val places = search(city, "places", "旅游 游记 景点", apiKey,true)
         val placeDocs = if (places.size >= 3) places else places + optional { search(city,"places","旅游攻略 必去景点 游记",apiKey) }.orEmpty()
-        if (placeDocs.isEmpty()) throw IOException("暂未检索到${city.name}可用的简体中文旅行游记，请稍后重试")
         stage("豆包正在搜索${city.name}美食体验…")
         val foodDocs = optional {
             val first = search(city, "food", "美食 小吃 体验", apiKey,true)
             if (first.size >= 3) first else first + optional { search(city,"food","特色美食 小吃 攻略",apiKey) }.orEmpty()
         }.orEmpty()
-        val routeGroups = listOf("一日游 攻略", "两天一夜 自由行 游记").map { terms ->
+        val routeGroups = listOf("一日游 攻略", "两天一夜 自由行 游记", "多日游 行程安排 游记").map { terms ->
             stage("豆包正在搜索${city.name}${terms.substringBefore(' ')}攻略…")
             optional { search(city,"routes",terms,apiKey,true) }.orEmpty().let { selectDocuments(it) }
         }
-        // Reserve room for both day lengths instead of letting the first query consume every slot.
+        // Interleave durations so one query cannot consume all route slots.
         val routeDocs = (0 until 6).flatMap { index -> routeGroups.mapNotNull { it.getOrNull(index) } }
         val documents = (selectDocuments(placeDocs) + selectDocuments(foodDocs) + selectDocuments(routeDocs,sort = false))
             .mapIndexed { index, doc -> doc.copy(id = "s${index + 1}") }
+        if (documents.isEmpty()) throw IOException("暂未检索到${city.name}可用的简体中文旅行游记，请稍后重试")
         val checked = LocalDate.now(BEIJING_ZONE).toString()
         return GuideMaterial(city.id, city.name, city.province.name, emptyList(), emptyList(),
             documents.distinctBy { it.url }.map { GuideSource(it.title, it.url, checked) }, documents)

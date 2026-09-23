@@ -37,7 +37,7 @@ class DeepSeekGuideTest {
         }
     }
     @Test fun inventedPlaceAndInvalidPlanAreRejected() {
-        listOf(content.replace("p1", "unknown"),content.replace("\"plans\":[]", "\"plans\":[{\"days\":1,\"title\":\"路线\",\"schedule\":[{\"label\":\"当天\",\"experienceIds\":[\"missing\"],\"description\":\"走走\"}],\"note\":\"建议\"}]"),content.replace("\"foods\":[]", "\"foods\":null")).forEach { raw ->
+        listOf(content.replace("p1", "unknown"),content.replace("\"foods\":[]", "\"foods\":null")).forEach { raw ->
             assertTrue(runCatching { DeepSeekGuideGenerator.decode(raw, material) }.isFailure)
         }
     }
@@ -86,7 +86,7 @@ class DeepSeekGuideTest {
             assertEquals(foodQuotes.take(10), guide.foods.map { it.evidence })
             val request = JsonParser.parseString(server.takeRequest().body.readUtf8()).asJsonObject
             val prompt = request["messages"].asJsonArray[0].asJsonObject["content"].asString
-            assertTrue(prompt.contains("1-10 个景点")); assertTrue(prompt.contains("0-10 种具体美食"))
+            assertTrue(prompt.contains("0-10 个景点")); assertTrue(prompt.contains("0-10 种具体美食"))
             assertTrue(prompt.contains("p1..p10"))
         }
     }

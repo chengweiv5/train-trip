@@ -42,13 +42,17 @@ object LiveRouteRepairSmoke {
             val guide = DeepSeekGuideGenerator("https://api.deepseek.com/chat/completions", client).refresh(material, key, previous)
             File(directory, "guide.json").writeText(gson.toJson(guide))
             require(guide.plans.isNotEmpty()) { "No grounded routes generated" }
-            guide.plans.forEach { p -> p.schedule.forEach { day ->
-                val doc = material.documents.first { it.url == day.sourceUrl }
-                require(doc.content.replace(Regex("\\s+"), "").contains(requireNotNull(day.evidence).replace(Regex("\\s+"), "")))
-                require(day.experienceIds.all { id -> guide.experiences.any { it.id == id } })
-            } }
+            guide.plans.forEach { p ->
+                require(p.days > 0 && p.schedule.size == p.days)
+                require(p.schedule.map { it.sourceUrl }.distinct().size == 1)
+                p.schedule.forEach { day ->
+                    require(material.documents.any { it.url == day.sourceUrl } || previous?.sources?.any { it.url == day.sourceUrl } == true)
+                    require(day.description.isNotBlank())
+                }
+            }
             val summary = mapOf("mode" to args[0], "places" to guide.experiences.size, "foods" to guide.foods.size,
-                "plans" to guide.plans.size, "modelCalls" to modelCalls, "evidenceVerified" to true)
+                "plans" to guide.plans.size, "modelCalls" to modelCalls, "sourceAttributionVerified" to true,
+                "days" to guide.plans.map { it.days }, "independentStops" to guide.plans.flatMap { it.schedule }.flatMap { it.routeStops(guide.experiences) }.filter { stop -> guide.experiences.none { it.name == stop } }.distinct())
             File(directory, "summary.json").writeText(gson.toJson(summary))
             println(gson.toJson(summary))
         } finally { client.dispatcher.executorService.shutdown(); client.connectionPool.evictAll() }

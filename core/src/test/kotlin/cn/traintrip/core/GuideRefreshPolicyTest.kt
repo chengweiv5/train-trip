@@ -20,7 +20,7 @@ class GuideRefreshPolicyTest {
         val merged = GuideRefreshPolicy.merge(old, fresh)
         assertEquals(listOf("广府古城", "邯郸市博物馆", "丛台公园"), merged.experiences.map { it.name })
         assertEquals("新介绍", merged.experiences[1].reason)
-        assertEquals("p2", merged.plans.single().schedule.single().experienceIds.single())
+        assertEquals("邯郸市博物馆", merged.plans.single().schedule.single().stops!!.single())
         assertEquals(3, merged.experiences.map { it.id }.distinct().size)
         assertEquals(listOf("拽面", "酥鱼"), merged.foods.map { it.name })
         assertEquals(merged, GuideRefreshPolicy.merge(merged, fresh))
@@ -36,7 +36,7 @@ class GuideRefreshPolicyTest {
         assertEquals(old.foods.map { it.name }, merged.foods.map { it.name })
         assertEquals("新介绍", merged.experiences.last().reason)
         assertEquals("新美食介绍", merged.foods.last().description)
-        assertEquals(old.plans, merged.plans)
+        assertEquals(listOf("新增景点"), merged.plans.single().schedule.single().stops)
         assertEquals(11, merged.sources.size)
         assertEquals(merged, DestinationGuides.validateCached(merged, city.id))
         assertEquals(merged, GuideRefreshPolicy.merge(merged, fresh))
@@ -63,7 +63,7 @@ class GuideRefreshPolicyTest {
             assertTrue(runCatching { validate(ten.copy(foods = ten.foods + food("额外美食")), city.id) }.isFailure)
         }
     }
-    @Test fun oldUnlimitedCacheKeepsFirstTenAndDropsPlansAndPhotosForDiscardedItems() {
+    @Test fun oldUnlimitedCacheKeepsFirstTenAndPreservesRouteNamesForDiscardedSights() {
         val legacy = guide((1..12).map { place("p$it", "旧景点$it") }, (1..12).map { food("旧美食$it") })
             .copy(plans = listOf(plan("p11")))
             .withPhotos(listOf(1, 11).map { index -> DestinationPhoto("old_$index.jpg", "邯郸 · 旧景点$index", "来源", source(1).url,
@@ -71,7 +71,7 @@ class GuideRefreshPolicyTest {
         val bounded = GuideItemPolicy.limit(legacy)
         assertEquals(legacy.experiences.take(10), bounded.experiences)
         assertEquals(legacy.foods.take(10), bounded.foods)
-        assertTrue(bounded.plans.isEmpty())
+        assertEquals(listOf("旧景点11"), bounded.plans.single().schedule.single().stops)
         assertEquals(listOf(legacy.gallery.first()), bounded.gallery)
         assertEquals(bounded, DestinationGuides.validateCached(bounded, city.id))
         assertEquals(bounded, GuideItemPolicy.limit(bounded))
@@ -79,7 +79,7 @@ class GuideRefreshPolicyTest {
         val merged = GuideRefreshPolicy.merge(legacy, fresh)
         assertEquals(bounded.experiences, merged.experiences)
         assertEquals(bounded.foods, merged.foods)
-        assertTrue(merged.plans.isEmpty())
+        assertEquals(bounded.plans, merged.plans)
     }
     @Test fun exactNameWinsOverSharedAliasAndOldPhotoOwnershipIsUnambiguous() {
         val old = guide(listOf(place("p1", "甲馆（老馆）")))
@@ -120,7 +120,7 @@ class GuideRefreshPolicyTest {
         val fresh = guide(listOf(place("p1", "永年广府").copy(reason = "新介绍")))
         val merged = GuideRefreshPolicy.merge(old, fresh)
         assertEquals(previous.copy(reason = "新介绍"), merged.experiences.single())
-        assertEquals(old.plans, merged.plans)
+        assertEquals(old.withIndependentPlans().plans, merged.plans)
     }
     @Test fun crossCityInputRejectedAndFreshSourceDateWins() {
         val old = guide(listOf(place("p1", "广府古城")))

@@ -50,7 +50,8 @@ internal fun LazyListScope.guideSectionContent(
         }
     }
     when (section) {
-        GuideSection.PLACES -> itemsIndexed(guide.experiences, key = { _, e -> e.id }) { index, experience ->
+        GuideSection.PLACES -> { if (guide.experiences.isEmpty()) item { Hint("暂未取得可靠的景点资料。") }
+            itemsIndexed(guide.experiences, key = { _, e -> e.id }) { index, experience ->
             GuideContentCard(experience.name, Modifier.testTag("guide-experience-${experience.id}"), index + 1) {
                 key(guide.cityId, "place", experience.name) { DestinationGallery(GuidePhotoPolicy.forItem(guide,"place",experience.name),onSource) }
                 Text(experience.reason, style = MaterialTheme.typography.bodyMedium)
@@ -61,6 +62,7 @@ internal fun LazyListScope.guideSectionContent(
                     Text(experience.location, style = MaterialTheme.typography.bodySmall, color = Muted)
                 }
             }
+        }
         }
         GuideSection.FOOD -> { if(guide.foods.isEmpty()) item { Hint("暂未取得可靠的美食资料。") }
             itemsIndexed(guide.foods, key = { _, food -> food.name }) { index, food ->
@@ -105,7 +107,7 @@ internal fun LazyListScope.guideSectionContent(
                         if(index<plan.schedule.lastIndex) Box(Modifier.width(1.dp).height(80.dp).background(Line))
                     }
                     GuideContentCard(day.label,Modifier.weight(1f)) {
-                        Text(day.experienceIds.joinToString(" → ") { id -> guide.experiences.first { it.id == id }.name },
+                        if (day.routeStops(guide.experiences).isNotEmpty()) Text(day.routeStops(guide.experiences).joinToString(" → "),
                             style=MaterialTheme.typography.titleMedium,color=Primary)
                         Text(day.description,style=MaterialTheme.typography.bodyMedium)
                         day.sourceUrl?.let { url -> TextButton({ onSource(url) },contentPadding=PaddingValues(0.dp)) { Text("查看攻略原文",style=MaterialTheme.typography.bodySmall) } }
