@@ -18,24 +18,30 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
         .followRedirects(false).followSslRedirects(false).retryOnConnectionFailure(false)
         .connectTimeout(15, TimeUnit.SECONDS).readTimeout(90, TimeUnit.SECONDS).callTimeout(120, TimeUnit.SECONDS).build(), model)
 
-    override suspend fun generate(material: GuideMaterial, apiKey: String): DestinationGuide {
+    override suspend fun generate(material: GuideMaterial, apiKey: String): DestinationGuide = refresh(material, apiKey, null)
+
+    override suspend fun refresh(material: GuideMaterial, apiKey: String, previous: DestinationGuide?): DestinationGuide {
         SimplifiedGuidePolicy.requireMaterial(material)
         if (apiKey.isBlank() || apiKey.any { it.isWhitespace() }) throw IOException("请先配置有效的 DeepSeek API Key")
         val selectedModel = model().also(::validateGuideModel)
         val content = complete(if (material.documents.isEmpty()) PROMPT else SearchGuideDecoder.prompt,
             material.copy(places = material.places.map { it.copy(imageUrl = null) }, documents = material.documents.map { it.copy(images = emptyList()) }),
             apiKey, selectedModel)
-        val guide = try {
+        val fresh = try {
             if (material.documents.isEmpty()) decode(content, material, selectedModel)
             else SearchGuideDecoder.decode(content, material, selectedModel)
         } catch (e: IOException) { throw e } catch (_: Exception) { throw IOException("生成内容格式不完整，请重试") }
-        if (guide.plans.isNotEmpty()) return guide
+        // Repair routes against the exact bounded catalog that will be saved, including cached sights.
+        val guide = GuideRefreshPolicy.merge(previous, fresh)
+        val requestedDays = GuideRouteRepair.missingDays(material, guide)
+        if (requestedDays.isEmpty()) return guide
         val documents = GuideRouteRepair.documents(material, guide)
         if (documents.isEmpty()) return guide
         currentCoroutineContext().ensureActive()
         // A single optional pass cannot discard the already-grounded text or repeatedly spend tokens.
         return try {
-            val input = mapOf("places" to guide.experiences.map { mapOf("id" to it.id, "name" to it.name) }, "documents" to documents)
+            val input = mapOf("requestedDays" to requestedDays,
+                "places" to guide.experiences.map { mapOf("id" to it.id, "name" to it.name) }, "documents" to documents)
             val repaired = complete(GuideRouteRepair.prompt, input, apiKey, selectedModel)
             currentCoroutineContext().ensureActive()
             GuideRouteRepair.apply(repaired, material.copy(documents = documents), guide)

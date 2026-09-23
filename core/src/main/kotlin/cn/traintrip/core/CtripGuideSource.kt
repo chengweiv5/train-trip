@@ -15,7 +15,11 @@ data class GuideMaterial(val cityId: String, val name: String, val province: Str
     val places: List<SourcePlace>, val foods: List<SourceFood>, val sources: List<GuideSource>,
     val documents: List<SourceDocument> = emptyList())
 interface GuideMaterialSource { suspend fun fetch(city: City, stage: (String) -> Unit): GuideMaterial }
-interface GuideGenerator { suspend fun generate(material: GuideMaterial, apiKey: String): DestinationGuide }
+interface GuideGenerator {
+    suspend fun generate(material: GuideMaterial, apiKey: String): DestinationGuide
+    suspend fun refresh(material: GuideMaterial, apiKey: String, previous: DestinationGuide?): DestinationGuide =
+        GuideRefreshPolicy.merge(previous, generate(material, apiKey))
+}
 
 class CtripGuideSource(private val load: suspend (String) -> String = GuideNetwork()::html) : GuideMaterialSource {
     private var directory: String? = null

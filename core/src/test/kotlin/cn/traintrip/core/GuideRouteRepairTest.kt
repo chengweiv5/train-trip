@@ -17,6 +17,86 @@ class GuideRouteRepairTest {
         mapOf("finish_reason" to "stop", "message" to mapOf("content" to content))))))
     private fun generator(server: MockWebServer) = DeepSeekGuideGenerator(server.url("/chat/completions").toString(), OkHttpClient())
 
+    @Test fun refreshRepairsAgainstFinalTenRetainedSightsBeforeSaving() = runBlocking {
+        val input = gson.fromJson(fixture("two-day-material"), GuideMaterial::class.java)
+        val previous = gson.fromJson(fixture("two-day-previous"), DestinationGuide::class.java)
+        val city = StationCatalog.bundled().cities.single { it.id == previous.cityId }
+        // Fresh extraction omitted day two's sight, which still exists in the full local cache.
+        val initial = JsonParser.parseString(fixture("two-day-partial")).asJsonObject.apply {
+            add("experiences", gson.toJsonTree(getAsJsonArray("experiences").filter { it.asJsonObject["id"].asString != "p5" }))
+        }.toString()
+        var saved = previous
+        val store = object : GuideStore {
+            override fun read(cityId: String) = saved
+            override fun attempted(cityId: String) = true
+            override fun markAttempted(cityId: String) {}
+            override fun save(guide: DestinationGuide) { saved = guide }
+        }
+        MockWebServer().use { server ->
+            server.enqueue(response(initial))
+            server.enqueue(response(fixture("two-day-retained")))
+            val repository = GuideRepository(object : GuideMaterialSource {
+                override suspend fun fetch(city: City, stage: (String) -> Unit) = input
+            }, generator(server), store)
+            val guide = repository.generate(city, "test-key", {})
+            assertEquals(listOf(1, 2), guide.plans.map { it.days }.sorted())
+            assertEquals(previous.experiences.map { it.id to it.name }, guide.experiences.map { it.id to it.name })
+            assertEquals(listOf("p4"), guide.plans.single { it.days == 2 }.schedule[1].experienceIds)
+            assertEquals(guide, saved)
+            server.takeRequest()
+            val request = JsonParser.parseString(server.takeRequest().body.readUtf8()).asJsonObject
+            val repairInput = JsonParser.parseString(request["messages"].asJsonArray[1].asJsonObject["content"].asString).asJsonObject
+            assertEquals(previous.experiences.map { it.id }, repairInput["places"].asJsonArray.map { it.asJsonObject["id"].asString })
+        }
+    }
+
+    @Test fun secondDaySightIsKeptWhenItsDescriptionWasFoundByRouteSearch() {
+        val input = gson.fromJson(fixture("two-day-material"), GuideMaterial::class.java)
+        val guide = SearchGuideDecoder.decode(fixture("two-day-initial"), input)
+        assertEquals(listOf("p1", "p2", "p3", "p5"), guide.experiences.map { it.id })
+        val sight = guide.experiences.single { it.id == "p5" }
+        assertEquals("响堂山石窟", sight.name)
+        assertTrue(input.documents.single { it.id == "s16" }.content.contains(requireNotNull(sight.evidence)))
+    }
+
+    @Test fun missingTwoDayPlanIsRepairedWithoutReplacingValidOneDayPlan() = runBlocking {
+        val input = gson.fromJson(fixture("two-day-material"), GuideMaterial::class.java)
+        val initial = SearchGuideDecoder.decode(fixture("two-day-partial"), input)
+        assertEquals(listOf(1), initial.plans.map { it.days })
+        MockWebServer().use { server ->
+            server.enqueue(response(fixture("two-day-partial")))
+            server.enqueue(response(fixture("two-day-corrected")))
+            val guide = generator(server).generate(input, "test-key")
+            assertEquals(listOf(1, 2), guide.plans.map { it.days }.sorted())
+            assertEquals(initial.plans.single(), guide.plans.single { it.days == 1 })
+            val two = guide.plans.single { it.days == 2 }
+            assertEquals(listOf("p5"), two.schedule[1].experienceIds)
+            assertEquals(1, two.schedule.map { it.sourceUrl }.distinct().size)
+            assertEquals(2, server.requestCount)
+            server.takeRequest()
+            val request = JsonParser.parseString(server.takeRequest().body.readUtf8()).asJsonObject
+            val repairInput = JsonParser.parseString(request["messages"].asJsonArray[1].asJsonObject["content"].asString).asJsonObject
+            assertEquals(listOf(2), repairInput["requestedDays"].asJsonArray.map { it.asInt })
+            assertTrue(repairInput["places"].asJsonArray.any { it.asJsonObject["name"].asString == "响堂山石窟" })
+        }
+    }
+
+    @Test fun failedSecondDayRepairKeepsExistingPlanAndDoesNotRepeat() = runBlocking {
+        val input = gson.fromJson(fixture("two-day-material"), GuideMaterial::class.java)
+        val initial = SearchGuideDecoder.decode(fixture("two-day-partial"), input)
+        for (repair in listOf(response("{\"plans\":[]}"), response(fixture("phone-repaired")),
+            MockResponse().setResponseCode(503))) {
+            MockWebServer().use { server ->
+                server.enqueue(response(fixture("two-day-partial")))
+                server.enqueue(repair)
+                val guide = generator(server).generate(input, "test-key")
+                assertEquals(initial.plans, guide.plans)
+                assertEquals(initial.experiences, guide.experiences)
+                assertEquals(2, server.requestCount)
+            }
+        }
+    }
+
     @Test fun incompleteHandanQuoteIsRepairedAgainstAcceptedPlacesAndOriginalArticle() = runBlocking {
         assertTrue(SearchGuideDecoder.decode(fixture("initial"), material).plans.isEmpty())
         MockWebServer().use { server ->
@@ -63,13 +143,14 @@ class GuideRouteRepairTest {
         }
     }
 
-    @Test fun validPlanAndMaterialWithoutItineraryDoNotTriggerRepair() = runBlocking {
+    @Test fun completeAvailablePlansAndMaterialWithoutItineraryDoNotTriggerRepair() = runBlocking {
         val root = JsonParser.parseString(fixture("initial")).asJsonObject.apply {
             add("plans", JsonParser.parseString(fixture("repaired")).asJsonObject["plans"])
         }
         val noItinerary = material.copy(documents = material.documents.map { it.copy(title = "邯郸景点介绍",
             content = it.content.substringBefore("15:20")) })
-        for ((input, content) in listOf(material to root.toString(), noItinerary to fixture("initial"))) {
+        val oneDayOnly = noItinerary.copy(documents = noItinerary.documents.map { it.copy(title = "邯郸一日游攻略") })
+        for ((input, content) in listOf(oneDayOnly to root.toString(), noItinerary to fixture("initial"))) {
             MockWebServer().use { server ->
                 server.enqueue(response(content))
                 generator(server).generate(input, "test-key")

@@ -21,7 +21,7 @@ object LiveRouteRepairSmoke {
                 val request = chain.request()
                 if (request.url.host == "api.deepseek.com") {
                     modelCalls++
-                    val response = if (args[0] == "replay" && modelCalls == 1) {
+                    val response = if (args[0].startsWith("replay") && modelCalls == 1) {
                         Response.Builder().request(request).protocol(Protocol.HTTP_1_1).code(200).message("Recorded response")
                             .body(File(args[2]).readText().toResponseBody("application/json".toMediaType())).build()
                     } else chain.proceed(request)
@@ -30,14 +30,16 @@ object LiveRouteRepairSmoke {
                 } else chain.proceed(request)
             }.build()
         try {
-            val material = if (args[0] == "replay") gson.fromJson(File(args[1]).readText(), GuideMaterial::class.java)
+            val material = if (args[0].startsWith("replay")) gson.fromJson(File(args[1]).readText(), GuideMaterial::class.java)
             else {
                 val searchKey = requireNotNull(readlnOrNull()).trim()
                 val city = StationCatalog.bundled().cities.first { it.name == args[1] }
                 DoubaoGuideSource({ searchKey }, DoubaoGuideSource.ENDPOINT, client).fetch(city) { println(it) }
             }
             File(directory, "material.json").writeText(gson.toJson(material))
-            val guide = DeepSeekGuideGenerator("https://api.deepseek.com/chat/completions", client).generate(material, key)
+            val previous = if (args[0].endsWith("-refresh"))
+                gson.fromJson(File(args[args.size - 2]).readText(), DestinationGuide::class.java) else null
+            val guide = DeepSeekGuideGenerator("https://api.deepseek.com/chat/completions", client).refresh(material, key, previous)
             File(directory, "guide.json").writeText(gson.toJson(guide))
             require(guide.plans.isNotEmpty()) { "No grounded routes generated" }
             guide.plans.forEach { p -> p.schedule.forEach { day ->
