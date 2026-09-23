@@ -13,13 +13,11 @@
 >
 > **少一点“没票就算了”的遗憾，多一次发现小众冷门城市的旅行。先看有票，再选目的地～**
 
-**[⬇ 下载 Android 正式版 v0.9.0](https://github.com/chengweiv5/train-trip/releases/download/v0.9.0/train-trip-v0.9.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
+**[⬇ 下载 Android 正式版 v1.0.0](https://github.com/chengweiv5/train-trip/releases/download/v1.0.0/train-trip-v1.0.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
 
 Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
-> 当前正式版为 **v0.9.0**。豆包负责网页与图片搜索，优先整理民间游记、美食体验和原文路线；景点与美食单次及累计各最多 10 项，每项最多 3 张图。
->
-> 当前源码已完成 **v1.0 四套主题配色与切换**，尚未发布，以上正式版下载暂不包含该功能。
+> 当前正式版为 **v1.0.0**：晴空蓝、松林绿、暖阳橙、暮山紫四套主题随心切换；目的地支持独立的多日玩法，每城市最多保留三种天数。[查看更新说明](docs/releases/v1.0.0.md)
 
 ## 给一次临时起意的旅行，找个目的地
 
@@ -28,7 +26,7 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 - **先了解，再决定**：在景点、美食、玩法、贴士之间切换，看看这座城市适合怎样玩。
 - **把心动留到下次**：批量收藏城市，按省份查看或通过「全部」浏览；最近收藏排在前面，查票时可直接从「想去」分组选取。
 - **准备好，再去购票**：对比发到时刻、车程和席别余票，打开 12306 App 完成后续查询与购票。
-- **换一种喜欢的颜色**：晴空蓝、松林绿、暖阳橙、暮山紫四套浅色主题，点选即切换，下次打开仍会保留（v1.0，尚未发布）。
+- **换一种喜欢的颜色**：晴空蓝、松林绿、暖阳橙、暮山紫四套浅色主题，点选即切换，下次打开仍会保留。
 
 ## v1.0：选一种喜欢的配色
 
@@ -40,7 +38,7 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
 [查看四套主题的首页效果](docs/images/v1.0-themes/home-comparison.jpg) · [可编辑设计稿](design/train-trip-v1.0.0-themes.pen)
 
-以上为尚未发布的 v1.0 功能在专用 Android 模拟器中的实际界面。预览中的城市、日期与余票为演示数据；功能与验证范围见[主题验收记录](docs/verification/2026-09-23-v1.0-themes.md)。
+以上为 v1.0 主题功能在专用 Android 模拟器中的实际界面。预览中的城市、日期与余票为演示数据；功能与验证范围见[主题验收记录](docs/verification/2026-09-23-v1.0-themes.md)。
 
 ## 界面一览
 
@@ -123,9 +121,9 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
 | 下载入口 | 说明 |
 | --- | --- |
-| **[下载 v0.9.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.9.0/train-trip-v0.9.0-release.apk)** | 生产签名 Release 包 |
+| **[下载 v1.0.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v1.0.0/train-trip-v1.0.0-release.apk)** | 生产签名 Release 包 |
 | [查看最新正式发布](https://github.com/chengweiv5/train-trip/releases/latest) | 更新说明与安装附件 |
-| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v0.9.0/train-trip-v0.9.0-release.apk.sha256) | 用于核对安装包完整性 |
+| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v1.0.0/train-trip-v1.0.0-release.apk.sha256) | 用于核对安装包完整性 |
 
 在 Android 手机上下载 APK 后打开，按系统提示允许当前浏览器或文件管理器安装应用，再完成安装。打开应用即可查票，不必先配置大模型或搜索服务。
 
@@ -143,7 +141,7 @@ Android 8.0 及以上 · 无需注册应用账号 · 查票无需配置 API Key
 
 想为其他城市整理介绍时，再到「设置」填写自己的 DeepSeek 与豆包搜索 Custom 版 API Key。只有手动发起整理或更新，才会调用这些服务并消耗相应额度；打开新城市不会自动生成。资料优先采用国内简体中文来源，保存后可离线查看，也可在「离线内容」中管理。分发的 APK 不包含个人 Key，无需自建服务器。网页搜索和缺图条目的图片搜索使用豆包，DeepSeek 负责整理；每城市最多保留 10 个景点和 10 种美食。升级后需单独填写豆包搜索 Key，旧 Tavily Key 不会自动迁移。
 
-当前源码的玩法规则：支持 1 天、2 天及 N 天参考安排，每种天数保留一条，单次及累计最多 3 种，按天数从短到长优先保留。不同玩法可以参考不同文章，同一条多日玩法来自同一篇攻略。玩法地点独立于景点列表，不受景点累计 10 项限制；无需逐字摘录或与景点、顺序作一致性校验。仍保留来源链接和按天完整的日程，实际可用天数取决于检索资料。这是 v0.9.0 发布后的修复，公开发布附件尚未更新。
+v1.0 的玩法规则：支持 1 天、2 天及 N 天参考安排，每种天数保留一条，单次及累计最多 3 种，按天数从短到长优先保留。不同玩法可以参考不同文章，同一条多日玩法来自同一篇攻略。玩法地点独立于景点列表，不受景点累计 10 项限制；无需逐字摘录或与景点、顺序作一致性校验。仍保留来源链接和按天完整的日程，实际可用天数取决于检索资料。
 
 ### 可以查任意城市、所有车站吗？
 
@@ -173,6 +171,8 @@ Release 默认生成未签名包，分发前需使用仓库外的私有签名配
 - [开发历史与验收索引](docs/development-history.md)
 - [已确认的 UI 设计](design/README.md)
 - [v1.0 主题设计与切换验收](docs/verification/2026-09-23-v1.0-themes.md)
+- [v1.0.0 更新说明](docs/releases/v1.0.0.md)
+- [v1.0.0 发布验证](docs/verification/2026-09-23-v1.0.0-release.md)
 - [v0.9.0 更新说明](docs/releases/v0.9.0.md)
 - [v0.9.0 发布验证](docs/verification/2026-09-23-v0.9.0-release.md)
 - [v0.6.1 开发实现与验证](docs/verification/2026-09-21-v0.6.1.md)

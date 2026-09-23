@@ -8,6 +8,8 @@
 
 ## 版本进展（截至 2026-09-23）
 
+v1.0.0（versionCode `15`）新增晴空蓝、松林绿、暖阳橙、暮山紫四套浅色主题，支持全局即时切换、本机保留、失败恢复和小屏大字适配。合入独立玩法修复：支持多日安排，每城市最多保留三种天数，旧资料与照片继续保留。见 [更新说明](releases/v1.0.0.md)、[发布验证](verification/2026-09-23-v1.0.0-release.md) 和 [主题验收](verification/2026-09-23-v1.0-themes.md)。
+
 v0.9.0（versionCode `14`）将网页和图片搜索替换为豆包 Custom API，DeepSeek 负责整理。优先检索民间游记、美食体验及一日/两日原文路线，保留携程、马蜂窝，增加分类型检索、限流重试、缺图条目补查和路线证据核验。景点、美食单次及累计各最多 10 项；每项最多 3 图，兼容旧缓存并保留可用旧图。升级后需单独配置豆包搜索 Key，打开城市不会自动生成。见 [更新说明](releases/v0.9.0.md)、[发布验证](verification/2026-09-23-v0.9.0-release.md) 和 [真实搜索验收](verification/2026-09-23-community-search.md)。
 
 v0.8.0（versionCode `13`）将图片改为景点、美食各自的相册，每条目最多 3 张、每城市最多 100 张。全量更新保留可用旧图，只给零图条目补图；保留全部旧景点和美食，同项更新，新增追加，累计允许超过单次生成上限。修复检索遗漏导致广府古城等缓存条目消失、编号重用和别名造成的关联问题。见 [更新说明](releases/v0.8.0.md) 与 [发布验证](verification/2026-09-22-v0.8.0-release.md)。
@@ -58,7 +60,8 @@ v0.5.0 已实现用户确认的 A 方案：底部「查票 / 想去」双栏目�
 
 ## 正式版本下载
 
-- **[v0.9.0 最新版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.9.0)** · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.9.0/train-trip-v0.9.0-release.apk)
+- **[v1.0.0 最新版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v1.0.0)** · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v1.0.0/train-trip-v1.0.0-release.apk)
+- [v0.9.0 历史版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.9.0) · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.9.0/train-trip-v0.9.0-release.apk)
 - [v0.8.0 历史版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.8.0) · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.8.0/train-trip-v0.8.0-release.apk)
 - [v0.7.0 历史版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.7.0) · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.7.0/train-trip-v0.7.0-release.apk)
 - [v0.6.0 历史版与更新说明](https://github.com/chengweiv5/train-trip/releases/tag/v0.6.0) · [下载 APK](https://github.com/chengweiv5/train-trip/releases/download/v0.6.0/train-trip-v0.6.0-release.apk)
