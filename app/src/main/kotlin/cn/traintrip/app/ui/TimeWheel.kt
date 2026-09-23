@@ -17,6 +17,7 @@ import androidx.compose.ui.viewinterop.AndroidView
     val scroll by rememberUpdatedState(onScroll)
     DisposableEffect(Unit) { onDispose { scroll(false) } }
     val fontScale=LocalDensity.current.fontScale
+    val textColor=Primary.toArgb()
     AndroidView(modifier=Modifier.fillMaxWidth().height((144*fontScale.coerceAtLeast(1f)).dp),factory={context->
         object:NumberPicker(context) {
             override fun dispatchTouchEvent(event:MotionEvent):Boolean {
@@ -42,7 +43,7 @@ import androidx.compose.ui.viewinterop.AndroidView
         picker.alpha=if(enabled) 1f else .45f
         if(picker.value!=value) picker.value=value
         if(Build.VERSION.SDK_INT>=29) {
-            picker.textColor=Primary.toArgb()
+            picker.textColor=textColor
             picker.textSize=22f*picker.resources.displayMetrics.density*fontScale
         }
     })

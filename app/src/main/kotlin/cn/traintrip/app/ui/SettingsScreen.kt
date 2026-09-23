@@ -21,14 +21,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import cn.traintrip.app.DestinationState
+import cn.traintrip.app.ThemeChoice
+import cn.traintrip.app.ThemeUiState
 
-private enum class SettingsPage { MENU, MODEL, SEARCH }
+private enum class SettingsPage { MENU, MODEL, SEARCH, THEME }
 
 @Composable fun SettingsScreen(state: DestinationState, onClose: () -> Unit,
     onSaveModel: (String, String, () -> Unit) -> Unit,
     onSaveSearch: (String, () -> Unit) -> Unit,
     onRemoveModelKey: (() -> Unit) -> Unit, onRemoveSearchKey: (() -> Unit) -> Unit,
-    onClearFeedback: () -> Unit = {},onOffline:()->Unit={},onAbout:()->Unit={},offlineBytes:Long=0,offlineCount:Int=0,applySafeInsets:Boolean=true) {
+    onClearFeedback: () -> Unit = {},onOffline:()->Unit={},onAbout:()->Unit={},offlineBytes:Long=0,offlineCount:Int=0,applySafeInsets:Boolean=true,
+    themeState:ThemeUiState=ThemeUiState(),onThemeSelect:(ThemeChoice)->Unit={},onThemeRetry:()->Unit={},onThemeDismiss:(Long)->Unit={}) {
     var page by rememberSaveable { mutableStateOf(SettingsPage.MENU) }
     fun back() {
         if (state.settingsBusy) return
@@ -36,15 +39,19 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
         if (page == SettingsPage.MENU) onClose() else page = SettingsPage.MENU
     }
     BackHandler { back() }
-    SecureSettingsWindow(page != SettingsPage.MENU)
+    SecureSettingsWindow(page == SettingsPage.MODEL || page == SettingsPage.SEARCH)
     Surface(Modifier.fillMaxSize().testTag("settings-screen"), color = PageBackground) {
         Column(Modifier.fillMaxSize().then(if(applySafeInsets)Modifier.safeDrawingPadding() else Modifier).imePadding()) {
-            AppTopBar(when(page) {SettingsPage.MENU->"设置";SettingsPage.MODEL->"大模型设置";SettingsPage.SEARCH->"搜索引擎设置"},
+            AppTopBar(when(page) {SettingsPage.MENU->"设置";SettingsPage.MODEL->"大模型设置";SettingsPage.SEARCH->"搜索引擎设置";SettingsPage.THEME->"主题配色"},
                 onBack={back()},enabled=!state.settingsBusy,backTag="settings-back")
             key(page) {
+              if(page==SettingsPage.THEME) ThemeSelectionScreen(themeState,onThemeSelect,onThemeRetry,onThemeDismiss)
+              else {
                 Column(Modifier.fillMaxWidth().weight(1f).verticalScroll(rememberScrollState())
                     .padding(horizontal=16.dp,vertical=16.dp),verticalArrangement=Arrangement.spacedBy(16.dp)) {
                     if (page == SettingsPage.MENU) {
+                        Text("外观",style=MaterialTheme.typography.bodySmall,color=Muted)
+                        ThemeSettingsRow(themeState.choice) { page=SettingsPage.THEME }
                         Text("管理目的地内容服务",style=MaterialTheme.typography.bodyMedium,color=Muted)
                         ContentCard(Modifier.fillMaxWidth()) {
                         SettingsRow("大模型","DeepSeek · ${state.modelName}",state.configured,"settings-model") {
@@ -107,6 +114,7 @@ private enum class SettingsPage { MENU, MODEL, SEARCH }
                         }
                     }
                 }
+              }
             }
         }
     }

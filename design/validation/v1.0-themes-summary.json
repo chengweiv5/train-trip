@@ -1,0 +1,12 @@
+{
+  "screens": 13,
+  "nodes": 864,
+  "texts": 304,
+  "clipping": [],
+  "overlaps": [],
+  "minimumTextContrast": 4.52,
+  "lowTextContrast": [],
+  "ocrPages": 13,
+  "ocrSegments": 336,
+  "ocrErrors": []
+}

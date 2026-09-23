@@ -108,7 +108,7 @@ class UiPolishTest {
             val pixels=compose.onNodeWithTag("query-progress").captureToImage().toPixelMap()
             val y=pixels.height/2
             for(x in 2 until pixels.width-2) {
-                val expected=if(x<pixels.width*value-1) Primary else if(x>pixels.width*value+1) Line else continue
+                val expected=if(x<pixels.width*value-1) ThemeChoice.BLUE.palette.primary else if(x>pixels.width*value+1) ThemeChoice.BLUE.palette.line else continue
                 val actual=pixels[x,y]
                 assertEquals("progress=$value x=$x",expected.red,actual.red,.015f)
                 assertEquals("progress=$value x=$x",expected.green,actual.green,.015f)

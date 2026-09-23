@@ -1,0 +1,21 @@
+{
+  "source": "design/train-trip-v1.0.0-themes.pen",
+  "independentDiskCopy": "/private/tmp/train-trip-theme-check/final-readback-1015.pen",
+  "sha256": "7f12331a9c51c6dd7cf6b1a00cec49652dca930a25bafb8fe6873a6097d488bd",
+  "pages": 13,
+  "roundtripExact": false,
+  "roundtripSemanticallyEquivalent": true,
+  "differences": "41 resolved layout floating-point differences, all below 0.000001 px; text, colors, themes, node IDs and hierarchy identical",
+  "themes": {
+    "配色": [
+      "晴空蓝",
+      "松林绿",
+      "暖阳橙",
+      "暮山紫"
+    ]
+  },
+  "success": {
+    "type": "color",
+    "value": "#0F7952"
+  }
+}

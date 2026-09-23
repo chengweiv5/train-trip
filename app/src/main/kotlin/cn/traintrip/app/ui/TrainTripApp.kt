@@ -22,7 +22,8 @@ import cn.traintrip.app.*
 import kotlinx.coroutines.delay
 
 @Composable fun TrainTripApp(vm:AppViewModel,destinationVm:DestinationViewModel = viewModel(),
-    wishlistVm:WishlistViewModel=viewModel(),updateVm:UpdateViewModel=viewModel(factory=UpdateViewModel.factory(LocalContext.current)),launcher:((Context)->AppLaunchResult)?=null) {
+    wishlistVm:WishlistViewModel=viewModel(),updateVm:UpdateViewModel=viewModel(factory=UpdateViewModel.factory(LocalContext.current)),launcher:((Context)->AppLaunchResult)?=null,
+    themeState:ThemeUiState=ThemeUiState(),onThemeSelect:(ThemeChoice)->Unit={},onThemeRetry:()->Unit={},onThemeDismiss:(Long)->Unit={}) {
     val s by vm.state.collectAsStateWithLifecycle()
     val destination by destinationVm.state.collectAsStateWithLifecycle()
     val wish by wishlistVm.state.collectAsStateWithLifecycle()
@@ -78,7 +79,8 @@ import kotlinx.coroutines.delay
                         city=s.catalog.byCity[s.cityId],favorite=wish.items.any { it.cityId==s.cityId },onFavorite={s.catalog.byCity[s.cityId]?.let(wishlistVm::toggle)},queryAction=!s.guideFromResults)
                     Page.DETAIL->DetailScreen(s,vm::backFromCity,vm::select,{vm.refreshCity()},{vm.refreshCity(retryFailed=true)},vm::clearSelection,::openRailway)
                     Page.SETTINGS->SettingsScreen(destination,vm::back,destinationVm::saveModelSettings,destinationVm::saveSearchSettings,destinationVm::removeKey,destinationVm::removeSearchKey,destinationVm::clearSettingsFeedback,
-                        onOffline={vm.navigate(Page.OFFLINE)},onAbout={vm.navigate(Page.ABOUT)},offlineBytes=destination.offline.sumOf { it.bytes },offlineCount=destination.offline.size,applySafeInsets=false)
+                        onOffline={vm.navigate(Page.OFFLINE)},onAbout={vm.navigate(Page.ABOUT)},offlineBytes=destination.offline.sumOf { it.bytes },offlineCount=destination.offline.size,applySafeInsets=false,
+                        themeState=themeState,onThemeSelect=onThemeSelect,onThemeRetry=onThemeRetry,onThemeDismiss=onThemeDismiss)
                     Page.OFFLINE->OfflineContentScreen(destination,s.catalog,vm::back,vm::showDestination,destinationVm::deleteOffline,destinationVm::refreshOffline)
                     Page.ABOUT->AboutScreen(updates,vm::back,updateVm::check)
                 } }
