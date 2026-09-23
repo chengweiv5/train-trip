@@ -3,6 +3,9 @@ package cn.traintrip.core
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -19,10 +22,31 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
         SimplifiedGuidePolicy.requireMaterial(material)
         if (apiKey.isBlank() || apiKey.any { it.isWhitespace() }) throw IOException("请先配置有效的 DeepSeek API Key")
         val selectedModel = model().also(::validateGuideModel)
+        val content = complete(if (material.documents.isEmpty()) PROMPT else SearchGuideDecoder.prompt,
+            material.copy(places = material.places.map { it.copy(imageUrl = null) }, documents = material.documents.map { it.copy(images = emptyList()) }),
+            apiKey, selectedModel)
+        val guide = try {
+            if (material.documents.isEmpty()) decode(content, material, selectedModel)
+            else SearchGuideDecoder.decode(content, material, selectedModel)
+        } catch (e: IOException) { throw e } catch (_: Exception) { throw IOException("生成内容格式不完整，请重试") }
+        if (guide.plans.isNotEmpty()) return guide
+        val documents = GuideRouteRepair.documents(material, guide)
+        if (documents.isEmpty()) return guide
+        currentCoroutineContext().ensureActive()
+        // A single optional pass cannot discard the already-grounded text or repeatedly spend tokens.
+        return try {
+            val input = mapOf("places" to guide.experiences.map { mapOf("id" to it.id, "name" to it.name) }, "documents" to documents)
+            val repaired = complete(GuideRouteRepair.prompt, input, apiKey, selectedModel)
+            currentCoroutineContext().ensureActive()
+            GuideRouteRepair.apply(repaired, material.copy(documents = documents), guide)
+        } catch (e: CancellationException) { throw e } catch (_: Exception) { guide }
+    }
+
+    private suspend fun complete(prompt: String, input: Any, apiKey: String, selectedModel: String): String {
         val payload = mapOf("model" to selectedModel, "thinking" to mapOf("type" to "disabled"), "max_tokens" to 8192,
             "response_format" to mapOf("type" to "json_object"), "messages" to listOf(
-                mapOf("role" to "system", "content" to if (material.documents.isEmpty()) PROMPT else SearchGuideDecoder.prompt),
-                mapOf("role" to "user", "content" to Gson().toJson(material.copy(places = material.places.map { it.copy(imageUrl = null) }, documents = material.documents.map { it.copy(images = emptyList()) })))) )
+                mapOf("role" to "system", "content" to prompt),
+                mapOf("role" to "user", "content" to Gson().toJson(input))))
         val request = Request.Builder().url(endpoint).header("Authorization", "Bearer $apiKey")
             .post(Gson().toJson(payload).toRequestBody("application/json".toMediaType())).build()
         val response = client.newCall(request).boundedResponse(512 * 1024)
@@ -36,8 +60,7 @@ class DeepSeekGuideGenerator internal constructor(private val endpoint: String, 
             val root = JsonParser.parseString(String(response.bytes, Charsets.UTF_8)).asJsonObject
             val choice = root.objects("choices").firstOrNull() ?: throw IOException("DeepSeek 未返回内容")
             if (choice.text("finish_reason") != "stop") throw IOException("生成内容未完成，请重试")
-            if (material.documents.isEmpty()) decode(choice.obj("message").text("content"), material, selectedModel)
-            else SearchGuideDecoder.decode(choice.obj("message").text("content"), material, selectedModel)
+            choice.obj("message").text("content")
         } catch (e: IOException) { throw e } catch (_: Exception) { throw IOException("生成内容格式不完整，请重试") }
     }
 
