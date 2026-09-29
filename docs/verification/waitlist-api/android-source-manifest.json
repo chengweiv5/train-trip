@@ -1,0 +1,60 @@
+{
+  "inspectedAt": "2026-09-29T21:08:18.235778+08:00",
+  "source": "https://dynamic.12306.cn/otn/appdownload/12306v5.9.4.5.apk",
+  "downloadPage": "https://mobile.12306.cn/otsmobile/h5/otsbussiness/downloadapp/downloadapp.html",
+  "discovery": "Official homepage QR and dynamic download endpoint both lead to download page. appDown response points at 5.9.4.5 APK.",
+  "artifactScope": "APK built-in assets only; running app may use hot-updated H5 packages. User app version not known.",
+  "apkExpectedBytes": 150377492,
+  "retrieval": "Initial download timed out; selected entries extracted from downloaded prefix and validated against central-directory CRC32. No claim of full APK signature verification.",
+  "records": [
+    {
+      "pathInApk": "assets/60000001_5.9.0.75.amr",
+      "bytes": 1465334,
+      "sha256": "b838ffb9bf7179e5ed69cd5afaa42c3599e5c64f0710167602ec110a11ab6161",
+      "zipCrc32Matches": true
+    },
+    {
+      "pathInApk": "assets/60000016_5.9.0.11.amr",
+      "bytes": 2032982,
+      "sha256": "3e54f6bbf18aefcb5c4e4baab3f975cdd5c4aedf6ac56da313dd470365567790",
+      "zipCrc32Matches": true
+    },
+    {
+      "extractedScript": "60000001_5.9.0.75__www_js_list.a58ec60.js",
+      "bytes": 625663,
+      "sha256": "c8a8953a63281ae4693eeb196015a16a2f3992670d59e39690d390542ea79a50"
+    },
+    {
+      "extractedScript": "60000016_5.9.0.11__www_js_robbingTicketOrder.c3445a4.js",
+      "bytes": 483290,
+      "sha256": "4dd2845852fbefbebc89a5cde30a3f889f51acb4ce063f6dcdf6484e138dffd5"
+    },
+    {
+      "extractedScript": "60000001_5.9.0.75__www_js_passenger.a58ec60.js",
+      "bytes": 67875,
+      "sha256": "cbb8002ddf6849ff21d5d00ef4ac5395dbfbe8cdb946d954f3ea69084db1a588"
+    }
+  ],
+  "observedOperations": {
+    "afterNate.checkTrain": "secretList; before adding train/seat to waitlist cart; no passenger count in explicit data",
+    "afterNate.checkOrder": "secretList and verification context, needLogin=true; no passenger count in explicit data",
+    "afterNate.queryOrderSuccessRate": "enc_data, realize_limit_time_diff, accept_tmp_train, passenger_num; successRate output",
+    "afterNate.confirmOrder": "passengerInfo built using real selected passenger enc_no; alternateTicketNo from passengers.length; needLogin=true",
+    "afterNate.queryWaitingOrder": "called after asynchronous submission; may return reserveListNew including reserve_no and prepay_amount"
+  },
+  "orderRequestSent": false,
+  "userPassengerDataAccessed": false,
+  "conclusion": "No count-only dry-run submission eligibility operation found in inspected built-in waitlist flow; actual order submission consumes selected passenger identities and may create an unpaid order. Exact user error response not captured.",
+  "passengerIdentitySource": {
+    "operation": "queryPassenger",
+    "needLogin": true,
+    "explicitData": {
+      "queryVersion": "1"
+    },
+    "responseList": "passengerResult",
+    "opaqueIdentityField": "enc_no",
+    "localEncryptionObservedInWaitlistPath": false,
+    "bindingAndExpiryVerified": false,
+    "manuallyImportedIdentifierVerified": false
+  }
+}

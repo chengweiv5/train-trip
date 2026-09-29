@@ -1,0 +1,803 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>有票再出发 · v2.0 候补探测设计提案</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans CJK SC','Noto Sans SC',sans-serif;background:#EEF3F6;color:#1E3443}header{max-width:1800px;margin:auto;padding:52px 44px 32px}.eyebrow{font-size:13px;letter-spacing:2px;color:#0073AA;font-weight:700}h1{font-size:40px;margin:12px 0;font-weight:700;letter-spacing:-1px}.lead{max-width:1050px;color:#516774;font-size:17px;line-height:1.8}.notice{margin-top:20px;padding:12px 16px;border-left:3px solid #0073AA;background:#DDF2FF;font-size:13px;line-height:1.8;max-width:1050px}.grid{display:grid;grid-template-columns:repeat(4,390px);gap:44px 30px;align-items:start;padding:8px 44px 52px;max-width:1800px;margin:auto}.sheet{width:390px;break-inside:avoid}.caption{display:flex;align-items:center;gap:12px;min-height:82px}.caption>span{width:34px;height:34px;border-radius:10px;background:#0073AA;color:white;display:grid;place-items:center;font-size:13px;font-weight:700}.caption h2{font-size:17px;margin:0}.caption p{font-size:12px;color:#516774;margin:5px 0}.phone{border:1px solid #CBDDE7;border-radius:18px;background:#FFF;box-shadow:0 8px 28px #173C4D0B;overflow:hidden}.screen-foot{font-size:11px;color:#516774;text-align:center;margin:12px 0 0}.rule{max-width:1660px;margin:0 auto 48px;border-top:1px solid #CADBE5;padding:28px 0;display:flex;gap:36px}.rule div{flex:1}.rule h3{font-size:15px;margin:0 0 8px}.rule p{font-size:13px;color:#516774;line-height:1.8;margin:0}.node{flex-shrink:0}.text{overflow-wrap:anywhere}@media(max-width:1750px){.grid{grid-template-columns:repeat(3,390px)}}@media(max-width:1350px){.grid{grid-template-columns:repeat(2,390px)}}@media(max-width:890px){.grid{grid-template-columns:390px;justify-content:center;padding:8px 16px 40px}header{padding:32px 20px}h1{font-size:30px}.rule{display:block;padding:24px}.rule div{margin:20px 0}}@media print{header{padding:24px}.grid{display:block;padding:0}.sheet{page-break-after:always;margin:auto}.caption{padding:12px 0}.notice,.rule{display:none}.phone{box-shadow:none}}
+</style></head><body><header><div class="eyebrow">有票再出发 / VERSION 2.0 / DESIGN PROPOSAL</div><h1>先登录，选好同行的人。</h1><div class="lead">登录 12306 后勾选真实乘车人，人数由名单自动计算。后半段给出正式提交的可评审方案，是否接受创建待支付订单仍待确认。</div><div class="notice">修订提案 · 登录与选人方向已确定；真实提交方案尚待确认。所有账号、乘客与结果都是演示数据。静态浏览器预览，并非 Pencil 导出；登录接入和无副作用探测尚未实现。</div></header><main class="grid"><section class="sheet" id="screen-1"><div class="caption"><span>01</span><div><h2>登录入口</h2><p>接入方向提案 · 认证方式待验证</p></div></div><div class="phone"><div class="node frame" data-node="preview-1" data-name="01 登录入口" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-2" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-3" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-4" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-5" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-6" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-7" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-8" data-name="品牌图标" style="width:30px;flex-shrink:0;height:30px;background:#0073AA;border-radius:9px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-9" data-name="train-front" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-train-front"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" />
+  <path d="m9 15-1-1" />
+  <path d="m15 15 1-1" />
+  <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" />
+  <path d="m8 19-2 3" />
+  <path d="m16 19 2 3" />
+</svg>
+</div></div><div class="node text" data-node="preview-10" data-name="有票再出发" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">有票再出发</div><div class="node frame" data-node="preview-11" data-name="settings 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-12" data-name="settings" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-settings"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+  <circle cx="12" cy="12" r="3" />
+</svg>
+</div></div></div><div class="node text" data-node="preview-13" data-name="先选乘车人" style="width:100%;color:#0073AA;font-size:25px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">先选乘车人</div><div class="node text" data-node="preview-14" data-name="登录后选择本次一起候补的乘车人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">登录后选择本次一起候补的乘车人</div></div><div class="node frame" data-node="preview-15" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-16" data-name="12306账号" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-17" data-name="shield-check" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-shield-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-18" data-name="账号状态" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-19" data-name="登录 12306" style="width:100%;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">登录 12306</div><div class="node text" data-node="preview-20" data-name="同步账号下可用的乘车人" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">同步账号下可用的乘车人</div></div></div><div class="node frame" data-node="preview-21" data-name="连接账号说明" style="width:100%;padding:16px 0px;display:flex;flex-direction:column;gap:18px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-22" data-name="一次选择，保留同行名单" style="width:100%;color:#1E3443;font-size:20px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">一次选择，保留同行名单</div><div class="node text" data-node="preview-23" data-name="读取 12306 账号中的乘车人，选择这次同行的人。人数随勾选自动计算。" style="width:100%;color:#516774;font-size:15px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">读取 12306 账号中的乘车人，选择这次同行的人。人数随勾选自动计算。</div><div class="node frame" data-node="preview-24" data-name="使用步骤" style="width:100%;display:flex;flex-direction:column;gap:18px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-25" data-name="完成 12306 登录" style="width:100%;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-26" data-name="步骤 1" style="width:32px;flex-shrink:0;height:32px;background:#DDF2FF;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-27" data-name="1" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">1</div></div><div class="node text" data-node="preview-28" data-name="完成 12306 登录" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:15px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">完成 12306 登录</div></div><div class="node frame" data-node="preview-29" data-name="同步并勾选乘车人" style="width:100%;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-30" data-name="步骤 2" style="width:32px;flex-shrink:0;height:32px;background:#DDF2FF;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-31" data-name="2" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">2</div></div><div class="node text" data-node="preview-32" data-name="同步并勾选乘车人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:15px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">同步并勾选乘车人</div></div><div class="node frame" data-node="preview-33" data-name="选择车次与席别" style="width:100%;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-34" data-name="步骤 3" style="width:32px;flex-shrink:0;height:32px;background:#DDF2FF;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-35" data-name="3" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">3</div></div><div class="node text" data-node="preview-36" data-name="选择车次与席别" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:15px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">选择车次与席别</div></div></div></div><div class="node frame" data-node="preview-37" data-name="登录 12306" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-38" data-name="external-link" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-external-link"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 3h6v6" />
+  <path d="M10 14 21 3" />
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+</svg>
+</div><div class="node text" data-node="preview-39" data-name="登录 12306" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">登录 12306</div></div><div class="node text" data-node="preview-40" data-name="完成登录后返回，继续选择乘车人。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">完成登录后返回，继续选择乘车人。</div></div><div class="node frame" data-node="preview-41" data-name="底部导航" style="width:100%;background:#FFFFFF;padding:10px 16px 16px 16px;border-top:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-42" data-name="查票" style="flex:1 1 0;min-width:0;height:58px;background:#FFFFFF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-43" data-name="train-front" style="width:20px;flex-shrink:0;height:20px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-train-front"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" />
+  <path d="m9 15-1-1" />
+  <path d="m15 15 1-1" />
+  <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" />
+  <path d="m8 19-2 3" />
+  <path d="m16 19 2 3" />
+</svg>
+</div><div class="node text" data-node="preview-44" data-name="查票" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">查票</div></div><div class="node frame" data-node="preview-45" data-name="候补" style="flex:1 1 0;min-width:0;height:58px;background:#DDF2FF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-46" data-name="scan-line" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-scan-line"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+  <path d="M7 12h10" />
+</svg>
+</div><div class="node text" data-node="preview-47" data-name="候补" style="width:100%;color:#0073AA;font-size:12px;font-weight:600;line-height:1.5;text-align:center;white-space:pre-wrap">候补</div></div><div class="node frame" data-node="preview-48" data-name="想去" style="flex:1 1 0;min-width:0;height:58px;background:#FFFFFF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-49" data-name="star" style="width:20px;flex-shrink:0;height:20px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-star"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+</svg>
+</div><div class="node text" data-node="preview-50" data-name="想去" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">想去</div></div></div><div class="node frame" data-node="preview-51" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-52" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非真实账号或订单</p></section><section class="sheet" id="screen-2"><div class="caption"><span>02</span><div><h2>勾选乘车人</h2><p>真实名单确定人数，无需手填加密串</p></div></div><div class="phone"><div class="node frame" data-node="preview-53" data-name="02 勾选5位乘车人" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-54" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-55" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-56" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-57" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-58" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-59" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-60" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-61" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-62" data-name="选择乘车人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">选择乘车人</div></div><div class="node text" data-node="preview-63" data-name="人数由实际勾选计算" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">人数由实际勾选计算</div></div><div class="node frame" data-node="preview-64" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-65" data-name="12306账号" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-66" data-name="shield-check" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-shield-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-67" data-name="账号状态" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-68" data-name="12306 已登录" style="width:100%;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">12306 已登录</div><div class="node text" data-node="preview-69" data-name="账号尾号 2086" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">账号尾号 2086</div></div><div class="node text" data-node="preview-70" data-name="切换" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:13px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">切换</div></div><div class="node frame" data-node="preview-71" data-name="同步状态" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-72" data-name="刚刚同步 · 共 6 位" style="flex:1 1 0;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">刚刚同步 · 共 6 位</div><div class="node text" data-node="preview-73" data-name="刷新" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:13px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">刷新</div></div><div class="node frame" data-node="preview-74" data-name="账号乘车人列表" style="width:100%;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-75" data-name="陈*乘车人" style="width:100%;padding:12px 0px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-76" data-name="circle-check" style="width:22px;flex-shrink:0;height:22px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-77" data-name="乘客资料" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-78" data-name="姓名与票种" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-79" data-name="陈*" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">陈*</div><div class="node text" data-node="preview-80" data-name="成人票" style="flex:0 0 auto;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">成人票</div></div><div class="node text" data-node="preview-81" data-name="居民身份证 · 尾号 1028" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">居民身份证 · 尾号 1028</div><div class="node text" data-node="preview-82" data-name="已核验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">已核验</div></div></div><div class="node rectangle" data-node="preview-83" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-84" data-name="李*乘车人" style="width:100%;padding:12px 0px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-85" data-name="circle-check" style="width:22px;flex-shrink:0;height:22px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-86" data-name="乘客资料" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-87" data-name="姓名与票种" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-88" data-name="李*" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">李*</div><div class="node text" data-node="preview-89" data-name="成人票" style="flex:0 0 auto;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">成人票</div></div><div class="node text" data-node="preview-90" data-name="居民身份证 · 尾号 2046" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">居民身份证 · 尾号 2046</div><div class="node text" data-node="preview-91" data-name="已核验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">已核验</div></div></div><div class="node rectangle" data-node="preview-92" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-93" data-name="王*乘车人" style="width:100%;padding:12px 0px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-94" data-name="circle-check" style="width:22px;flex-shrink:0;height:22px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-95" data-name="乘客资料" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-96" data-name="姓名与票种" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-97" data-name="王*" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">王*</div><div class="node text" data-node="preview-98" data-name="成人票" style="flex:0 0 auto;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">成人票</div></div><div class="node text" data-node="preview-99" data-name="居民身份证 · 尾号 3185" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">居民身份证 · 尾号 3185</div><div class="node text" data-node="preview-100" data-name="已核验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">已核验</div></div></div><div class="node rectangle" data-node="preview-101" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-102" data-name="赵*乘车人" style="width:100%;padding:12px 0px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-103" data-name="circle-check" style="width:22px;flex-shrink:0;height:22px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-104" data-name="乘客资料" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-105" data-name="姓名与票种" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-106" data-name="赵*" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">赵*</div><div class="node text" data-node="preview-107" data-name="成人票" style="flex:0 0 auto;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">成人票</div></div><div class="node text" data-node="preview-108" data-name="居民身份证 · 尾号 4067" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">居民身份证 · 尾号 4067</div><div class="node text" data-node="preview-109" data-name="已核验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">已核验</div></div></div><div class="node rectangle" data-node="preview-110" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-111" data-name="周*乘车人" style="width:100%;padding:12px 0px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-112" data-name="circle-check" style="width:22px;flex-shrink:0;height:22px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-113" data-name="乘客资料" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-114" data-name="姓名与票种" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-115" data-name="周*" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">周*</div><div class="node text" data-node="preview-116" data-name="成人票" style="flex:0 0 auto;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">成人票</div></div><div class="node text" data-node="preview-117" data-name="居民身份证 · 尾号 5290" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">居民身份证 · 尾号 5290</div><div class="node text" data-node="preview-118" data-name="已核验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">已核验</div></div></div><div class="node rectangle" data-node="preview-119" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-120" data-name="林*乘车人" style="width:100%;padding:12px 0px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-121" data-name="clock" style="width:22px;flex-shrink:0;height:22px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-clock"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg>
+</div><div class="node frame" data-node="preview-122" data-name="乘客资料" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-123" data-name="姓名与票种" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-124" data-name="林*" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">林*</div><div class="node text" data-node="preview-125" data-name="成人票" style="flex:0 0 auto;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">成人票</div></div><div class="node text" data-node="preview-126" data-name="居民身份证 · 尾号 6301" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">居民身份证 · 尾号 6301</div><div class="node text" data-node="preview-127" data-name="待核验，暂不可选" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">待核验，暂不可选</div></div></div></div><div class="node frame" data-node="preview-128" data-name="已选择 5 位乘车人" style="width:100%;background:#F0F3F5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-129" data-name="users" style="width:18px;flex-shrink:0;height:18px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-users"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <circle cx="9" cy="7" r="4" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+</svg>
+</div><div class="node frame" data-node="preview-130" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-131" data-name="已选择 5 位乘车人" style="width:100%;color:#516774;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">已选择 5 位乘车人</div><div class="node text" data-node="preview-132" data-name="名单变更后，需要按新的同行人员重新核对。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">名单变更后，需要按新的同行人员重新核对。</div></div></div><div class="node frame" data-node="preview-133" data-name="使用这 5 位乘车人" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-134" data-name="使用这 5 位乘车人" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">使用这 5 位乘车人</div></div></div><div class="node frame" data-node="preview-135" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-136" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非真实账号或订单</p></section><section class="sheet" id="screen-3"><div class="caption"><span>03</span><div><h2>条件就绪</h2><p>候补入口可用不等于订单已获接受</p></div></div><div class="phone"><div class="node frame" data-node="preview-137" data-name="03 候补条件就绪" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-138" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-139" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-140" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-141" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-142" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-143" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-144" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-145" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-146" data-name="准备候补" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">准备候补</div></div><div class="node text" data-node="preview-147" data-name="已选择 5 位乘车人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">已选择 5 位乘车人</div></div><div class="node frame" data-node="preview-148" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-149" data-name="候补行程" style="width:100%;background:#EAF5FC;padding:16px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-150" data-name="车次与日期" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-151" data-name="G374" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:22px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G374</div><div class="node text" data-node="preview-152" data-name="10月7日 周三" style="flex:1 1 0;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">10月7日 周三</div></div><div class="node frame" data-node="preview-153" data-name="出发到达" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-154" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-155" data-name="08:20" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">08:20</div><div class="node text" data-node="preview-156" data-name="洛阳龙门" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">洛阳龙门</div></div><div class="node frame" data-node="preview-157" data-name="行程时间" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-158" data-name="3小时10分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">3小时10分</div><div class="node rectangle" data-node="preview-159" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div></div><div class="node frame" data-node="preview-160" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-161" data-name="11:30" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">11:30</div><div class="node text" data-node="preview-162" data-name="北京西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">北京西</div></div></div><div class="node rectangle" data-node="preview-163" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-164" data-name="二等座 · 5 位乘车人" style="width:100%;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">二等座 · 5 位乘车人</div></div><div class="node frame" data-node="preview-165" data-name="同行名单" style="width:100%;background:#F0F3F5;padding:14px;border-radius:12px;display:flex;flex-direction:column;gap:8px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-166" data-name="名单标题" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-167" data-name="同行乘车人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">同行乘车人</div><div class="node text" data-node="preview-168" data-name="修改" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:13px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">修改</div></div><div class="node text" data-node="preview-169" data-name="陈*、李*、王*、赵*、周*" style="width:100%;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">陈*、李*、王*、赵*、周*</div></div><div class="node frame" data-node="preview-170" data-name="截止兑现时间" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-171" data-name="截止兑现时间" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">截止兑现时间</div><div class="node text" data-node="preview-172" data-name="开车前 2 小时" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">开车前 2 小时</div><div class="node icon" data-node="preview-173" data-name="chevron-right" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node frame" data-node="preview-174" data-name="本席别可加入候补列表" style="width:100%;background:#F0F3F5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-175" data-name="info" style="width:18px;flex-shrink:0;height:18px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-info"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</div><div class="node frame" data-node="preview-176" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-177" data-name="本席别可加入候补列表" style="width:100%;color:#516774;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">本席别可加入候补列表</div><div class="node text" data-node="preview-178" data-name="是否接受这 5 位乘车人的订单，以提交时的结果为准。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">是否接受这 5 位乘车人的订单，以提交时的结果为准。</div></div></div><div class="node text" data-node="preview-179" data-name="接下来会发生什么" style="width:100%;color:#1E3443;font-size:18px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">接下来会发生什么</div><div class="node text" data-node="preview-180" data-name="继续后先查看提交说明，确认后才发送候补请求。" style="width:100%;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">继续后先查看提交说明，确认后才发送候补请求。</div><div class="node frame" data-node="preview-181" data-name="查看提交说明" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-182" data-name="查看提交说明" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">查看提交说明</div></div><div class="node frame" data-node="preview-183" data-name="返回选择其他车次" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-184" data-name="返回选择其他车次" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">返回选择其他车次</div></div></div><div class="node frame" data-node="preview-185" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-186" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非真实账号或订单</p></section><section class="sheet" id="screen-4"><div class="caption"><span>04</span><div><h2>提交前确认</h2><p>后续提议：成功可能生成真实订单</p></div></div><div class="phone"><div class="node frame" data-node="preview-187" data-name="04 正式提交前确认" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-188" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-189" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-190" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-191" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-192" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-193" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-194" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-195" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-196" data-name="确认候补请求" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">确认候补请求</div></div><div class="node text" data-node="preview-197" data-name="请核对本次行程和乘车人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">请核对本次行程和乘车人</div></div><div class="node frame" data-node="preview-198" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-199" data-name="候补行程" style="width:100%;background:#EAF5FC;padding:16px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-200" data-name="车次与日期" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-201" data-name="G374" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:22px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G374</div><div class="node text" data-node="preview-202" data-name="10月7日 周三" style="flex:1 1 0;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">10月7日 周三</div></div><div class="node frame" data-node="preview-203" data-name="出发到达" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-204" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-205" data-name="08:20" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">08:20</div><div class="node text" data-node="preview-206" data-name="洛阳龙门" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">洛阳龙门</div></div><div class="node frame" data-node="preview-207" data-name="行程时间" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-208" data-name="3小时10分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">3小时10分</div><div class="node rectangle" data-node="preview-209" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div></div><div class="node frame" data-node="preview-210" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-211" data-name="11:30" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">11:30</div><div class="node text" data-node="preview-212" data-name="北京西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">北京西</div></div></div><div class="node rectangle" data-node="preview-213" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-214" data-name="二等座 · 5 位乘车人" style="width:100%;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">二等座 · 5 位乘车人</div></div><div class="node text" data-node="preview-215" data-name="乘车人：陈*、李*、王*、赵*、周*" style="width:100%;color:#1E3443;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">乘车人：陈*、李*、王*、赵*、周*</div><div class="node text" data-node="preview-216" data-name="截止兑现：开车前 2 小时" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">截止兑现：开车前 2 小时</div><div class="node frame" data-node="preview-217" data-name="成功时会生成待支付订单" style="width:100%;background:#FFF4E5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-218" data-name="info" style="width:18px;flex-shrink:0;height:18px;background:none;color:#A8500C;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-info"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</div><div class="node frame" data-node="preview-219" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-220" data-name="成功时会生成待支付订单" style="width:100%;color:#A8500C;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">成功时会生成待支付订单</div><div class="node text" data-node="preview-221" data-name="本操作会向 12306 提交真实候补请求，不是仅查询名额。" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">本操作会向 12306 提交真实候补请求，不是仅查询名额。</div></div></div><div class="node frame" data-node="preview-222" data-name="操作说明" style="width:100%;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-223" data-name="本次只提交所选车次、席别及 5 位乘车人的请求。" style="width:100%;color:#1E3443;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">本次只提交所选车次、席别及 5 位乘车人的请求。</div><div class="node text" data-node="preview-224" data-name="生成订单后显示待支付信息，由你决定后续处理。" style="width:100%;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">生成订单后显示待支付信息，由你决定后续处理。</div><div class="node text" data-node="preview-225" data-name="本次操作不自动付款，也不自动取消订单。" style="width:100%;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">本次操作不自动付款，也不自动取消订单。</div></div><div class="node frame" data-node="preview-226" data-name="尝试提交候补订单" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-227" data-name="尝试提交候补订单" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">尝试提交候补订单</div></div><div class="node frame" data-node="preview-228" data-name="暂不提交" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-229" data-name="暂不提交" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">暂不提交</div></div></div><div class="node frame" data-node="preview-230" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-231" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非真实账号或订单</p></section><section class="sheet" id="screen-5"><div class="caption"><span>05</span><div><h2>已创建订单</h2><p>后续提议：展示待支付结果</p></div></div><div class="phone"><div class="node frame" data-node="preview-232" data-name="05 已创建待支付订单" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-233" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-234" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-235" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-236" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-237" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-238" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-239" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-240" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-241" data-name="候补订单已创建" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">候补订单已创建</div></div><div class="node text" data-node="preview-242" data-name="请在 12306 核对并处理订单" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">请在 12306 核对并处理订单</div></div><div class="node frame" data-node="preview-243" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-244" data-name="订单已创建 · 待支付" style="width:100%;background:#EAF7F0;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-245" data-name="circle-check" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0F7952;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-246" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-247" data-name="订单已创建 · 待支付" style="width:100%;color:#0F7952;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">订单已创建 · 待支付</div><div class="node text" data-node="preview-248" data-name="这是提交结果，还没有完成支付。" style="width:100%;color:#0F7952;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">这是提交结果，还没有完成支付。</div></div></div><div class="node frame" data-node="preview-249" data-name="候补行程" style="width:100%;background:#EAF5FC;padding:16px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-250" data-name="车次与日期" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-251" data-name="G374" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:22px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G374</div><div class="node text" data-node="preview-252" data-name="10月7日 周三" style="flex:1 1 0;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">10月7日 周三</div></div><div class="node frame" data-node="preview-253" data-name="出发到达" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-254" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-255" data-name="08:20" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">08:20</div><div class="node text" data-node="preview-256" data-name="洛阳龙门" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">洛阳龙门</div></div><div class="node frame" data-node="preview-257" data-name="行程时间" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-258" data-name="3小时10分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">3小时10分</div><div class="node rectangle" data-node="preview-259" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div></div><div class="node frame" data-node="preview-260" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-261" data-name="11:30" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">11:30</div><div class="node text" data-node="preview-262" data-name="北京西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">北京西</div></div></div><div class="node rectangle" data-node="preview-263" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-264" data-name="二等座 · 5 位乘车人" style="width:100%;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">二等座 · 5 位乘车人</div></div><div class="node frame" data-node="preview-265" data-name="订单信息" style="width:100%;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-266" data-name="订单号" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-267" data-name="订单号" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">订单号</div><div class="node text" data-node="preview-268" data-name="以返回结果为准" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">以返回结果为准</div><div class="node icon" data-node="preview-269" data-name="info" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-info"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</div></div><div class="node rectangle" data-node="preview-270" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-271" data-name="预付款" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-272" data-name="预付款" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">预付款</div><div class="node text" data-node="preview-273" data-name="以返回金额为准" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">以返回金额为准</div><div class="node icon" data-node="preview-274" data-name="info" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-info"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</div></div><div class="node rectangle" data-node="preview-275" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-276" data-name="支付时限" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-277" data-name="支付时限" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">支付时限</div><div class="node text" data-node="preview-278" data-name="以返回时间为准" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">以返回时间为准</div><div class="node icon" data-node="preview-279" data-name="clock" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-clock"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg>
+</div></div></div><div class="node text" data-node="preview-280" data-name="后续候补兑现情况以 12306 为准。" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">后续候补兑现情况以 12306 为准。</div><div class="node frame" data-node="preview-281" data-name="打开 12306 处理订单" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-282" data-name="external-link" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-external-link"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 3h6v6" />
+  <path d="M10 14 21 3" />
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+</svg>
+</div><div class="node text" data-node="preview-283" data-name="打开 12306 处理订单" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">打开 12306 处理订单</div></div><div class="node frame" data-node="preview-284" data-name="返回候补" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-285" data-name="返回候补" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">返回候补</div></div></div><div class="node frame" data-node="preview-286" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-287" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非真实账号或订单</p></section><section class="sheet" id="screen-6"><div class="caption"><span>06</span><div><h2>结果未知</h2><p>后续提议：先查单，避免重复提交</p></div></div><div class="phone"><div class="node frame" data-node="preview-288" data-name="06 提交超时结果未知" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-289" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-290" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-291" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-292" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-293" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-294" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-295" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-296" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-297" data-name="正在核对订单" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">正在核对订单</div></div><div class="node text" data-node="preview-298" data-name="网络超时，提交结果尚未确认" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">网络超时，提交结果尚未确认</div></div><div class="node frame" data-node="preview-299" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-300" data-name="候补行程" style="width:100%;background:#EAF5FC;padding:16px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-301" data-name="车次与日期" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-302" data-name="G374" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:22px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G374</div><div class="node text" data-node="preview-303" data-name="10月7日 周三" style="flex:1 1 0;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">10月7日 周三</div></div><div class="node frame" data-node="preview-304" data-name="出发到达" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-305" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-306" data-name="08:20" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">08:20</div><div class="node text" data-node="preview-307" data-name="洛阳龙门" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">洛阳龙门</div></div><div class="node frame" data-node="preview-308" data-name="行程时间" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-309" data-name="3小时10分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">3小时10分</div><div class="node rectangle" data-node="preview-310" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div></div><div class="node frame" data-node="preview-311" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-312" data-name="11:30" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">11:30</div><div class="node text" data-node="preview-313" data-name="北京西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">北京西</div></div></div><div class="node rectangle" data-node="preview-314" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-315" data-name="二等座 · 5 位乘车人" style="width:100%;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">二等座 · 5 位乘车人</div></div><div class="node frame" data-node="preview-316" data-name="请求可能已经被受理" style="width:100%;background:#FFF4E5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-317" data-name="clock" style="width:18px;flex-shrink:0;height:18px;background:none;color:#A8500C;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-clock"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg>
+</div><div class="node frame" data-node="preview-318" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-319" data-name="请求可能已经被受理" style="width:100%;color:#A8500C;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">请求可能已经被受理</div><div class="node text" data-node="preview-320" data-name="先查询订单状态，确认是否生成订单。" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">先查询订单状态，确认是否生成订单。</div></div></div><div class="node frame" data-node="preview-321" data-name="状态处理" style="width:100%;padding:20px 0px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-322" data-name="先核对，再决定下一步" style="width:100%;color:#1E3443;font-size:20px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">先核对，再决定下一步</div><div class="node text" data-node="preview-323" data-name="网络超时不代表候补失败。订单状态明确前，保留本次行程和乘车人选择。" style="width:100%;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">网络超时不代表候补失败。订单状态明确前，保留本次行程和乘车人选择。</div></div><div class="node frame" data-node="preview-324" data-name="重新查询订单状态" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-325" data-name="rotate-cw" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-rotate-cw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+</svg>
+</div><div class="node text" data-node="preview-326" data-name="重新查询订单状态" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">重新查询订单状态</div></div><div class="node frame" data-node="preview-327" data-name="打开 12306 查看订单" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-328" data-name="external-link" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-external-link"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 3h6v6" />
+  <path d="M10 14 21 3" />
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+</svg>
+</div><div class="node text" data-node="preview-329" data-name="打开 12306 查看订单" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">打开 12306 查看订单</div></div></div><div class="node frame" data-node="preview-330" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-331" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非真实账号或订单</p></section><section class="sheet" id="screen-7"><div class="caption"><span>07</span><div><h2>明确拒绝</h2><p>后续提议：保留名单，另选车次</p></div></div><div class="phone"><div class="node frame" data-node="preview-332" data-name="07 明确拒绝的提交结果" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-333" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-334" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-335" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-336" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-337" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-338" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-339" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-340" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-341" data-name="本次提交被拒绝" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">本次提交被拒绝</div></div><div class="node text" data-node="preview-342" data-name="12306 返回的业务提示" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">12306 返回的业务提示</div></div><div class="node frame" data-node="preview-343" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-344" data-name="所选车次候补人数过多" style="width:100%;background:#FFF4E5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-345" data-name="circle-x" style="width:18px;flex-shrink:0;height:18px;background:none;color:#A8500C;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-x"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m15 9-6 6" />
+  <path d="m9 9 6 6" />
+</svg>
+</div><div class="node frame" data-node="preview-346" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-347" data-name="所选车次候补人数过多" style="width:100%;color:#A8500C;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">所选车次候补人数过多</div><div class="node text" data-node="preview-348" data-name="本次提交未获接受，请查看其他车次或席别。" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">本次提交未获接受，请查看其他车次或席别。</div></div></div><div class="node frame" data-node="preview-349" data-name="候补行程" style="width:100%;background:#EAF5FC;padding:16px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-350" data-name="车次与日期" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-351" data-name="G374" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:22px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G374</div><div class="node text" data-node="preview-352" data-name="10月7日 周三" style="flex:1 1 0;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">10月7日 周三</div></div><div class="node frame" data-node="preview-353" data-name="出发到达" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-354" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-355" data-name="08:20" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">08:20</div><div class="node text" data-node="preview-356" data-name="洛阳龙门" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">洛阳龙门</div></div><div class="node frame" data-node="preview-357" data-name="行程时间" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-358" data-name="3小时10分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">3小时10分</div><div class="node rectangle" data-node="preview-359" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div></div><div class="node frame" data-node="preview-360" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-361" data-name="11:30" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">11:30</div><div class="node text" data-node="preview-362" data-name="北京西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">北京西</div></div></div><div class="node rectangle" data-node="preview-363" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-364" data-name="二等座 · 5 位乘车人" style="width:100%;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">二等座 · 5 位乘车人</div></div><div class="node text" data-node="preview-365" data-name="保留这 5 位乘车人" style="width:100%;color:#1E3443;font-size:18px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">保留这 5 位乘车人</div><div class="node text" data-node="preview-366" data-name="更换车次时沿用同行名单。每次正式提交前都会展示完整条件，由你确认。" style="width:100%;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">更换车次时沿用同行名单。每次正式提交前都会展示完整条件，由你确认。</div><div class="node frame" data-node="preview-367" data-name="选择其他车次" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-368" data-name="选择其他车次" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">选择其他车次</div></div><div class="node frame" data-node="preview-369" data-name="修改同行乘车人" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-370" data-name="修改同行乘车人" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">修改同行乘车人</div></div></div><div class="node frame" data-node="preview-371" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-372" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非真实账号或订单</p></section></main><footer class="rule"><div><h3>人数来自同行名单</h3><p>登录后读取乘车人，勾选 5 位。相同人数换一组人，也需要重新核对。</p></div><div><h3>明确区分探测与提交</h3><p>已有接口成功时可能创建待支付订单。该方案需要用户决定是否接受。</p></div><div><h3>结果未知先查订单</h3><p>网络超时可能发生在请求受理之后，不把超时当作失败直接重发。</p></div></footer></body></html>

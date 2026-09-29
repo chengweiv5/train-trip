@@ -1,0 +1,71 @@
+{
+  "type": "Browser approximate preview, not Pencil validation",
+  "issues": [],
+  "fonts": "loaded",
+  "screens": [
+    {
+      "id": "screen-1",
+      "width": 390,
+      "height": 1107
+    },
+    {
+      "id": "screen-2",
+      "width": 390,
+      "height": 1081
+    },
+    {
+      "id": "screen-3",
+      "width": 390,
+      "height": 1509
+    },
+    {
+      "id": "screen-4",
+      "width": 390,
+      "height": 1116
+    },
+    {
+      "id": "screen-5",
+      "width": 390,
+      "height": 1023
+    },
+    {
+      "id": "screen-6",
+      "width": 390,
+      "height": 929
+    },
+    {
+      "id": "screen-7",
+      "width": 390,
+      "height": 1015
+    },
+    {
+      "id": "screen-8",
+      "width": 390,
+      "height": 993
+    }
+  ],
+  "contrast": [
+    {
+      "pair": "主色正文",
+      "ratio": 5.21
+    },
+    {
+      "pair": "主按钮",
+      "ratio": 5.21
+    },
+    {
+      "pair": "卡片辅助文字",
+      "ratio": 5.35
+    },
+    {
+      "pair": "成功状态",
+      "ratio": 4.92
+    },
+    {
+      "pair": "拒绝状态",
+      "ratio": 5.06
+    }
+  ],
+  "scope": "浏览器近似预览：静态边界与文本溢出检查、人工视觉检查、关键色对对比度；不代表 Pencil 或 Android 渲染验证。",
+  "pencilStatus": "BLOCKED: CLI 0.3.9 requires login; no .pen file generated or verified."
+}

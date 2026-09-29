@@ -1,0 +1,66 @@
+{
+  "queriedAt": "2026-09-29T20:57:35.234146+08:00",
+  "requestedDate": "2026-10-07",
+  "dateAssumption": "截图未显示年份，按当前年份2026查询；不是截图时刻的响应",
+  "route": "leftTicket/queryG",
+  "httpStatus": 200,
+  "status": true,
+  "rowCount": 29,
+  "matchedRows": [
+    {
+      "train": "Z180",
+      "from": "洛阳",
+      "fromCode": "LYF",
+      "to": "北京西",
+      "toCode": "BXP",
+      "departure": "05:28",
+      "arrival": "13:33",
+      "second": "",
+      "softSleeper": "无",
+      "waitlistFlag": "1",
+      "waitlistSeatLimit": "4"
+    },
+    {
+      "train": "K4238",
+      "from": "洛阳",
+      "fromCode": "LYF",
+      "to": "北京丰台",
+      "toCode": "FTP",
+      "departure": "05:50",
+      "arrival": "17:00",
+      "second": "",
+      "softSleeper": "无",
+      "waitlistFlag": "1",
+      "waitlistSeatLimit": "4"
+    },
+    {
+      "train": "D30",
+      "from": "洛阳",
+      "fromCode": "LYF",
+      "to": "北京西",
+      "toCode": "BXP",
+      "departure": "06:54",
+      "arrival": "14:37",
+      "second": "无",
+      "softSleeper": "无",
+      "waitlistFlag": "1",
+      "waitlistSeatLimit": "O"
+    },
+    {
+      "train": "G374",
+      "from": "洛阳龙门",
+      "fromCode": "LLF",
+      "to": "北京西",
+      "toCode": "BXP",
+      "departure": "08:20",
+      "arrival": "11:30",
+      "second": "无",
+      "softSleeper": "",
+      "waitlistFlag": "1",
+      "waitlistSeatLimit": ""
+    }
+  ],
+  "authenticated": false,
+  "passengerDataSent": false,
+  "orderAPIsCalled": false
+}

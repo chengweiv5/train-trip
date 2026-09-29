@@ -1,0 +1,1383 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>有票再出发 · v2.0 候补探测设计提案</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans CJK SC','Noto Sans SC',sans-serif;background:#EEF3F6;color:#1E3443}header{max-width:1800px;margin:auto;padding:52px 44px 32px}.eyebrow{font-size:13px;letter-spacing:2px;color:#0073AA;font-weight:700}h1{font-size:40px;margin:12px 0;font-weight:700;letter-spacing:-1px}.lead{max-width:1050px;color:#516774;font-size:17px;line-height:1.8}.notice{margin-top:20px;padding:12px 16px;border-left:3px solid #0073AA;background:#DDF2FF;font-size:13px;line-height:1.8;max-width:1050px}.grid{display:grid;grid-template-columns:repeat(4,390px);gap:44px 30px;align-items:start;padding:8px 44px 52px;max-width:1800px;margin:auto}.sheet{width:390px;break-inside:avoid}.caption{display:flex;align-items:center;gap:12px;min-height:82px}.caption>span{width:34px;height:34px;border-radius:10px;background:#0073AA;color:white;display:grid;place-items:center;font-size:13px;font-weight:700}.caption h2{font-size:17px;margin:0}.caption p{font-size:12px;color:#516774;margin:5px 0}.phone{border:1px solid #CBDDE7;border-radius:18px;background:#FFF;box-shadow:0 8px 28px #173C4D0B;overflow:hidden}.screen-foot{font-size:11px;color:#516774;text-align:center;margin:12px 0 0}.rule{max-width:1660px;margin:0 auto 48px;border-top:1px solid #CADBE5;padding:28px 0;display:flex;gap:36px}.rule div{flex:1}.rule h3{font-size:15px;margin:0 0 8px}.rule p{font-size:13px;color:#516774;line-height:1.8;margin:0}.node{flex-shrink:0}.text{overflow-wrap:anywhere}@media(max-width:1750px){.grid{grid-template-columns:repeat(3,390px)}}@media(max-width:1350px){.grid{grid-template-columns:repeat(2,390px)}}@media(max-width:890px){.grid{grid-template-columns:390px;justify-content:center;padding:8px 16px 40px}header{padding:32px 20px}h1{font-size:30px}.rule{display:block;padding:24px}.rule div{margin:20px 0}}@media print{header{padding:24px}.grid{display:block;padding:0}.sheet{page-break-after:always;margin:auto}.caption{padding:12px 0}.notice,.rule{display:none}.phone{box-shadow:none}}
+</style></head><body><header><div class="eyebrow">有票再出发 / VERSION 2.0 / DESIGN PROPOSAL</div><h1>先探测，再去候补。</h1><div class="lead">填写一起候补的人数，提前查看当前能否提交。让“支持候补”与“本次条件校验通过”清楚地分开。</div><div class="notice">预览提案 · 沿用 v1.0 晴空蓝主题。本预览为浏览器近似渲染，并非 Pencil 导出；Pencil CLI 已安装，原生可编辑稿等待登录后生成。所有结果均为设计示例，真实人数校验能力仍需验证。</div></header><main class="grid"><section class="sheet" id="screen-1"><div class="caption"><span>01</span><div><h2>填写条件</h2><p>人数是主输入，席别分别校验</p></div></div><div class="phone"><div class="node frame" data-node="preview-1" data-name="01 填写候补条件" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-2" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-3" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-4" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-5" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-6" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-7" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-8" data-name="品牌图标" style="width:30px;flex-shrink:0;height:30px;background:#0073AA;border-radius:9px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-9" data-name="train-front" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-train-front"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" />
+  <path d="m9 15-1-1" />
+  <path d="m15 15 1-1" />
+  <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" />
+  <path d="m8 19-2 3" />
+  <path d="m16 19 2 3" />
+</svg>
+</div></div><div class="node text" data-node="preview-10" data-name="有票再出发" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">有票再出发</div><div class="node frame" data-node="preview-11" data-name="settings 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-12" data-name="settings" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-settings"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+  <circle cx="12" cy="12" r="3" />
+</svg>
+</div></div></div><div class="node text" data-node="preview-13" data-name="先探测，再去候补" style="width:100%;color:#0073AA;font-size:25px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">先探测，再去候补</div><div class="node text" data-node="preview-14" data-name="按人数查看，哪些车次当前可以提交" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">按人数查看，哪些车次当前可以提交</div></div><div class="node frame" data-node="preview-15" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-16" data-name="行程条件" style="width:100%;background:#EAF5FC;padding:16px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:10px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-17" data-name="出发与到达" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-18" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:3px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-19" data-name="出发地" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">出发地</div><div class="node text" data-node="preview-20" data-name="北京" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">北京</div><div class="node text" data-node="preview-21" data-name="同城各站" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">同城各站</div></div><div class="node icon" data-node="preview-22" data-name="arrow-right" style="width:22px;flex-shrink:0;height:22px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-arrow-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M5 12h14" />
+  <path d="m12 5 7 7-7 7" />
+</svg>
+</div><div class="node frame" data-node="preview-23" data-name="目的地" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:3px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-24" data-name="目的地" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">目的地</div><div class="node text" data-node="preview-25" data-name="济南" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">济南</div><div class="node text" data-node="preview-26" data-name="同城各站" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">同城各站</div></div></div><div class="node rectangle" data-node="preview-27" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-28" data-name="出发日期" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-29" data-name="出发日期" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">出发日期</div><div class="node text" data-node="preview-30" data-name="10月1日  星期四" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">10月1日  星期四</div><div class="node icon" data-node="preview-31" data-name="chevron-right" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node rectangle" data-node="preview-32" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-33" data-name="出发时段" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-34" data-name="出发时段" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">出发时段</div><div class="node text" data-node="preview-35" data-name="全天" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">全天</div><div class="node icon" data-node="preview-36" data-name="chevron-right" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div></div><div class="node frame" data-node="preview-37" data-name="人数与席别" style="width:100%;background:#EAF5FC;padding:16px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-38" data-name="候补人数设置" style="width:100%;display:flex;flex-direction:column;gap:10px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-39" data-name="候补人数标题" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-40" data-name="候补人数" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">候补人数</div><div class="node text" data-node="preview-41" data-name="按同一席别校验" style="flex:1 1 0;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">按同一席别校验</div></div><div class="node frame" data-node="preview-42" data-name="人数输入" style="width:100%;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-43" data-name="减少人数" style="width:52px;flex-shrink:0;height:52px;background:#FFFFFF;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-44" data-name="−" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:24px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">−</div></div><div class="node frame" data-node="preview-45" data-name="输入人数" style="flex:1 1 0;min-width:0;height:52px;background:#FFFFFF;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-46" data-name="2" style="flex:0 0 auto;min-width:0;color:#1E3443;font-size:24px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">2</div></div><div class="node frame" data-node="preview-47" data-name="增加人数" style="width:52px;flex-shrink:0;height:52px;background:#FFFFFF;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-48" data-name="+" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:24px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">+</div></div></div><div class="node text" data-node="preview-49" data-name="填写本次一起候补的人数" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">填写本次一起候补的人数</div></div><div class="node rectangle" data-node="preview-50" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-51" data-name="候补席别" style="width:100%;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">候补席别</div><div class="node frame" data-node="preview-52" data-name="席别选择" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-53" data-name="二等座" style="width:max-content;flex-shrink:0;height:48px;background:#DDF2FF;padding:10px 12px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-54" data-name="二等座" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:13px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">二等座</div></div><div class="node frame" data-node="preview-55" data-name="一等座" style="width:max-content;flex-shrink:0;height:48px;background:#FFFFFF;padding:10px 12px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-56" data-name="一等座" style="flex:0 0 auto;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">一等座</div></div><div class="node frame" data-node="preview-57" data-name="更多席别" style="width:max-content;flex-shrink:0;height:48px;background:#FFFFFF;padding:10px 12px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-58" data-name="更多席别" style="flex:0 0 auto;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">更多席别</div></div></div><div class="node text" data-node="preview-59" data-name="多个席别分别探测，人数不跨席别合计" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">多个席别分别探测，人数不跨席别合计</div></div><div class="node frame" data-node="preview-60" data-name="开始探测" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-61" data-name="scan-line" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-scan-line"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+  <path d="M7 12h10" />
+</svg>
+</div><div class="node text" data-node="preview-62" data-name="开始探测" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">开始探测</div></div><div class="node text" data-node="preview-63" data-name="仅检查提交条件；正式候补在 12306 App 完成。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">仅检查提交条件；正式候补在 12306 App 完成。</div></div><div class="node frame" data-node="preview-64" data-name="底部导航" style="width:100%;background:#FFFFFF;padding:10px 16px 16px 16px;border-top:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-65" data-name="查票" style="flex:1 1 0;min-width:0;height:58px;background:#FFFFFF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-66" data-name="train-front" style="width:20px;flex-shrink:0;height:20px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-train-front"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" />
+  <path d="m9 15-1-1" />
+  <path d="m15 15 1-1" />
+  <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" />
+  <path d="m8 19-2 3" />
+  <path d="m16 19 2 3" />
+</svg>
+</div><div class="node text" data-node="preview-67" data-name="查票" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">查票</div></div><div class="node frame" data-node="preview-68" data-name="候补" style="flex:1 1 0;min-width:0;height:58px;background:#DDF2FF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-69" data-name="scan-line" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-scan-line"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+  <path d="M7 12h10" />
+</svg>
+</div><div class="node text" data-node="preview-70" data-name="候补" style="width:100%;color:#0073AA;font-size:12px;font-weight:600;line-height:1.5;text-align:center;white-space:pre-wrap">候补</div></div><div class="node frame" data-node="preview-71" data-name="想去" style="flex:1 1 0;min-width:0;height:58px;background:#FFFFFF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-72" data-name="star" style="width:20px;flex-shrink:0;height:20px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-star"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+</svg>
+</div><div class="node text" data-node="preview-73" data-name="想去" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">想去</div></div></div><div class="node frame" data-node="preview-74" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-75" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非实时 12306 探测结果</p></section><section class="sheet" id="screen-2"><div class="caption"><span>02</span><div><h2>正在探测</h2><p>过程可停止，完成结果保留</p></div></div><div class="phone"><div class="node frame" data-node="preview-76" data-name="02 正在探测" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-77" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-78" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-79" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-80" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-81" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-82" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-83" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-84" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-85" data-name="正在探测候补" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">正在探测候补</div></div><div class="node text" data-node="preview-86" data-name="人数和席别已固定，可随时停止" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">人数和席别已固定，可随时停止</div></div><div class="node frame" data-node="preview-87" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-88" data-name="查询条件摘要" style="width:100%;background:#EAF5FC;padding:12px 14px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-89" data-name="条件" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-90" data-name="北京南 → 济南西" style="width:100%;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">北京南 → 济南西</div><div class="node text" data-node="preview-91" data-name="10月1日 · 二等座 · 2 人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div></div><div class="node frame" data-node="preview-92" data-name="sliders-horizontal 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-93" data-name="sliders-horizontal" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-sliders-horizontal"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="21" x2="14" y1="4" y2="4" />
+  <line x1="10" x2="3" y1="4" y2="4" />
+  <line x1="21" x2="12" y1="12" y2="12" />
+  <line x1="8" x2="3" y1="12" y2="12" />
+  <line x1="21" x2="16" y1="20" y2="20" />
+  <line x1="12" x2="3" y1="20" y2="20" />
+  <line x1="14" x2="14" y1="2" y2="6" />
+  <line x1="8" x2="8" y1="10" y2="14" />
+  <line x1="16" x2="16" y1="18" y2="22" />
+</svg>
+</div></div></div><div class="node frame" data-node="preview-94" data-name="探测进度" style="width:100%;background:#EAF5FC;padding:18px;border-radius:12px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-95" data-name="进度标题" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-96" data-name="正在校验提交条件" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:17px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">正在校验提交条件</div><div class="node text" data-node="preview-97" data-name="2 / 3 项" style="flex:1 1 0;min-width:0;color:#0073AA;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">2 / 3 项</div></div><div class="node frame" data-node="preview-98" data-name="进度条" style="width:100%;height:6px;background:#D5EAF6;border-radius:3px;position:relative"><div class="node rectangle" data-node="preview-99" data-name="已完成2/3" style="width:204px;flex-shrink:0;height:6px;background:#0073AA;border-radius:3px;position:absolute;left:0px;top:0px"></div></div><div class="node text" data-node="preview-100" data-name="正在校验 G105 · 二等座 · 2 人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">正在校验 G105 · 二等座 · 2 人</div><div class="node text" data-node="preview-101" data-name="每个车次和席别单独计为 1 项" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">每个车次和席别单独计为 1 项</div></div><div class="node frame" data-node="preview-102" data-name="结果概览" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-103" data-name="校验通过" style="flex:1 1 0;min-width:0;background:#EAF7F0;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-104" data-name="1" style="width:100%;color:#0F7952;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">1</div><div class="node text" data-node="preview-105" data-name="校验通过" style="width:100%;color:#0F7952;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">校验通过</div></div><div class="node frame" data-node="preview-106" data-name="不可提交" style="flex:1 1 0;min-width:0;background:#FFF4E5;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-107" data-name="1" style="width:100%;color:#A8500C;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">1</div><div class="node text" data-node="preview-108" data-name="不可提交" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">不可提交</div></div><div class="node frame" data-node="preview-109" data-name="未确认" style="flex:1 1 0;min-width:0;background:#F0F3F5;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-110" data-name="0" style="width:100%;color:#516774;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">0</div><div class="node text" data-node="preview-111" data-name="未确认" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">未确认</div></div></div><div class="node text" data-node="preview-112" data-name="已完成的结果" style="width:100%;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">已完成的结果</div><div class="node frame" data-node="preview-113" data-name="G101 二等座 2人 本次校验通过" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-114" data-name="车次与状态" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-115" data-name="G101" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G101</div><div class="node frame" data-node="preview-116" data-name="本次校验通过" style="width:max-content;flex-shrink:0;background:#EAF7F0;padding:4px 8px;border-radius:6px;display:flex;flex-direction:row;gap:5px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-117" data-name="circle-check" style="width:14px;flex-shrink:0;height:14px;background:none;color:#0F7952;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node text" data-node="preview-118" data-name="本次校验通过" style="flex:0 0 auto;min-width:0;color:#0F7952;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">本次校验通过</div></div></div><div class="node frame" data-node="preview-119" data-name="行程时刻" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:space-between"><div class="node frame" data-node="preview-120" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-121" data-name="07:00" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">07:00</div><div class="node text" data-node="preview-122" data-name="北京南" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">北京南</div></div><div class="node frame" data-node="preview-123" data-name="车程" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-124" data-name="1小时38分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">1小时38分</div><div class="node rectangle" data-node="preview-125" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-126" data-name="当日到达" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">当日到达</div></div><div class="node frame" data-node="preview-127" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-128" data-name="08:38" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">08:38</div><div class="node text" data-node="preview-129" data-name="济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">济南西</div></div></div><div class="node rectangle" data-node="preview-130" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-131" data-name="席别与人数" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-132" data-name="10月1日 · 二等座 · 2 人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div><div class="node icon" data-node="preview-133" data-name="chevron-right" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-134" data-name="本次 2 人提交条件校验通过" style="width:100%;color:#0F7952;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">本次 2 人提交条件校验通过</div><div class="node text" data-node="preview-135" data-name="09:41:08 校验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">09:41:08 校验</div></div><div class="node frame" data-node="preview-136" data-name="剩余 1 项尚未完成" style="width:100%;background:#F0F3F5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-137" data-name="clock" style="width:18px;flex-shrink:0;height:18px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-clock"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg>
+</div><div class="node frame" data-node="preview-138" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-139" data-name="剩余 1 项尚未完成" style="width:100%;color:#516774;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">剩余 1 项尚未完成</div><div class="node text" data-node="preview-140" data-name="停止后保留已完成结果，可继续剩余项目。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">停止后保留已完成结果，可继续剩余项目。</div></div></div><div class="node frame" data-node="preview-141" data-name="停止探测" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-142" data-name="停止探测" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">停止探测</div></div></div><div class="node frame" data-node="preview-143" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-144" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非实时 12306 探测结果</p></section><section class="sheet" id="screen-3"><div class="caption"><span>03</span><div><h2>结果列表</h2><p>通过、拒绝、未确认分开显示</p></div></div><div class="phone"><div class="node frame" data-node="preview-145" data-name="03 探测结果" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-146" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-147" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-148" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-149" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-150" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-151" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-152" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-153" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-154" data-name="候补探测结果" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">候补探测结果</div></div><div class="node text" data-node="preview-155" data-name="按本次人数查看结果，再选择车次" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">按本次人数查看结果，再选择车次</div></div><div class="node frame" data-node="preview-156" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-157" data-name="查询条件摘要" style="width:100%;background:#EAF5FC;padding:12px 14px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-158" data-name="条件" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-159" data-name="北京南 → 济南西" style="width:100%;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">北京南 → 济南西</div><div class="node text" data-node="preview-160" data-name="10月1日 · 二等座 · 2 人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div></div><div class="node frame" data-node="preview-161" data-name="sliders-horizontal 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-162" data-name="sliders-horizontal" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-sliders-horizontal"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="21" x2="14" y1="4" y2="4" />
+  <line x1="10" x2="3" y1="4" y2="4" />
+  <line x1="21" x2="12" y1="12" y2="12" />
+  <line x1="8" x2="3" y1="12" y2="12" />
+  <line x1="21" x2="16" y1="20" y2="20" />
+  <line x1="12" x2="3" y1="20" y2="20" />
+  <line x1="14" x2="14" y1="2" y2="6" />
+  <line x1="8" x2="8" y1="10" y2="14" />
+  <line x1="16" x2="16" y1="18" y2="22" />
+</svg>
+</div></div></div><div class="node frame" data-node="preview-163" data-name="结果概览" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-164" data-name="校验通过" style="flex:1 1 0;min-width:0;background:#EAF7F0;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-165" data-name="1" style="width:100%;color:#0F7952;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">1</div><div class="node text" data-node="preview-166" data-name="校验通过" style="width:100%;color:#0F7952;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">校验通过</div></div><div class="node frame" data-node="preview-167" data-name="不可提交" style="flex:1 1 0;min-width:0;background:#FFF4E5;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-168" data-name="1" style="width:100%;color:#A8500C;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">1</div><div class="node text" data-node="preview-169" data-name="不可提交" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">不可提交</div></div><div class="node frame" data-node="preview-170" data-name="未确认" style="flex:1 1 0;min-width:0;background:#F0F3F5;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-171" data-name="1" style="width:100%;color:#516774;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">1</div><div class="node text" data-node="preview-172" data-name="未确认" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">未确认</div></div></div><div class="node frame" data-node="preview-173" data-name="结果筛选" style="width:100%;display:flex;flex-direction:row;gap:6px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-174" data-name="全部" style="width:max-content;flex-shrink:0;height:48px;background:#DDF2FF;padding:10px 12px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-175" data-name="全部" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:13px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">全部</div></div><div class="node frame" data-node="preview-176" data-name="通过" style="width:max-content;flex-shrink:0;height:48px;background:#FFFFFF;padding:10px 12px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-177" data-name="通过" style="flex:0 0 auto;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">通过</div></div><div class="node frame" data-node="preview-178" data-name="不可提交" style="width:max-content;flex-shrink:0;height:48px;background:#FFFFFF;padding:10px 12px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-179" data-name="不可提交" style="flex:0 0 auto;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">不可提交</div></div><div class="node frame" data-node="preview-180" data-name="未确认" style="width:max-content;flex-shrink:0;height:48px;background:#FFFFFF;padding:10px 12px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-181" data-name="未确认" style="flex:0 0 auto;min-width:0;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre;width:max-content">未确认</div></div></div><div class="node text" data-node="preview-182" data-name="共 3 项 · 09:41 更新 · 通过优先" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">共 3 项 · 09:41 更新 · 通过优先</div><div class="node frame" data-node="preview-183" data-name="G101 二等座 2人 本次校验通过" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;border:2px solid #0073AA;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-184" data-name="车次与状态" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-185" data-name="G101" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G101</div><div class="node frame" data-node="preview-186" data-name="本次校验通过" style="width:max-content;flex-shrink:0;background:#EAF7F0;padding:4px 8px;border-radius:6px;display:flex;flex-direction:row;gap:5px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-187" data-name="circle-check" style="width:14px;flex-shrink:0;height:14px;background:none;color:#0F7952;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node text" data-node="preview-188" data-name="本次校验通过" style="flex:0 0 auto;min-width:0;color:#0F7952;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">本次校验通过</div></div></div><div class="node frame" data-node="preview-189" data-name="行程时刻" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:space-between"><div class="node frame" data-node="preview-190" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-191" data-name="07:00" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">07:00</div><div class="node text" data-node="preview-192" data-name="北京南" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">北京南</div></div><div class="node frame" data-node="preview-193" data-name="车程" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-194" data-name="1小时38分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">1小时38分</div><div class="node rectangle" data-node="preview-195" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-196" data-name="当日到达" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">当日到达</div></div><div class="node frame" data-node="preview-197" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-198" data-name="08:38" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">08:38</div><div class="node text" data-node="preview-199" data-name="济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">济南西</div></div></div><div class="node rectangle" data-node="preview-200" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-201" data-name="席别与人数" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-202" data-name="10月1日 · 二等座 · 2 人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div><div class="node icon" data-node="preview-203" data-name="chevron-right" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-204" data-name="本次 2 人提交条件校验通过" style="width:100%;color:#0F7952;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">本次 2 人提交条件校验通过</div><div class="node text" data-node="preview-205" data-name="09:41:08 校验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">09:41:08 校验</div></div><div class="node frame" data-node="preview-206" data-name="G103 二等座 2人 当前不可提交" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-207" data-name="车次与状态" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-208" data-name="G103" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G103</div><div class="node frame" data-node="preview-209" data-name="当前不可提交" style="width:max-content;flex-shrink:0;background:#FFF4E5;padding:4px 8px;border-radius:6px;display:flex;flex-direction:row;gap:5px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-210" data-name="circle-x" style="width:14px;flex-shrink:0;height:14px;background:none;color:#A8500C;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-x"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m15 9-6 6" />
+  <path d="m9 9 6 6" />
+</svg>
+</div><div class="node text" data-node="preview-211" data-name="当前不可提交" style="flex:0 0 auto;min-width:0;color:#A8500C;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">当前不可提交</div></div></div><div class="node frame" data-node="preview-212" data-name="行程时刻" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:space-between"><div class="node frame" data-node="preview-213" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-214" data-name="07:20" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">07:20</div><div class="node text" data-node="preview-215" data-name="北京南" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">北京南</div></div><div class="node frame" data-node="preview-216" data-name="车程" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-217" data-name="1小时38分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">1小时38分</div><div class="node rectangle" data-node="preview-218" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-219" data-name="当日到达" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">当日到达</div></div><div class="node frame" data-node="preview-220" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-221" data-name="08:58" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">08:58</div><div class="node text" data-node="preview-222" data-name="济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">济南西</div></div></div><div class="node rectangle" data-node="preview-223" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-224" data-name="席别与人数" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-225" data-name="10月1日 · 二等座 · 2 人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div><div class="node icon" data-node="preview-226" data-name="chevron-right" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-227" data-name="所选车次候补人数过多" style="width:100%;color:#A8500C;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">所选车次候补人数过多</div><div class="node text" data-node="preview-228" data-name="09:41:12 校验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">09:41:12 校验</div></div><div class="node frame" data-node="preview-229" data-name="G105 二等座 2人 暂时无法确认" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-230" data-name="车次与状态" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-231" data-name="G105" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G105</div><div class="node frame" data-node="preview-232" data-name="暂时无法确认" style="width:max-content;flex-shrink:0;background:#F0F3F5;padding:4px 8px;border-radius:6px;display:flex;flex-direction:row;gap:5px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-233" data-name="circle-help" style="width:14px;flex-shrink:0;height:14px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-help"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+  <path d="M12 17h.01" />
+</svg>
+</div><div class="node text" data-node="preview-234" data-name="暂时无法确认" style="flex:0 0 auto;min-width:0;color:#516774;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">暂时无法确认</div></div></div><div class="node frame" data-node="preview-235" data-name="行程时刻" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:space-between"><div class="node frame" data-node="preview-236" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-237" data-name="07:40" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">07:40</div><div class="node text" data-node="preview-238" data-name="北京南" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">北京南</div></div><div class="node frame" data-node="preview-239" data-name="车程" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-240" data-name="1小时38分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">1小时38分</div><div class="node rectangle" data-node="preview-241" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-242" data-name="当日到达" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">当日到达</div></div><div class="node frame" data-node="preview-243" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-244" data-name="09:18" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">09:18</div><div class="node text" data-node="preview-245" data-name="济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">济南西</div></div></div><div class="node rectangle" data-node="preview-246" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-247" data-name="席别与人数" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-248" data-name="10月1日 · 二等座 · 2 人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div><div class="node icon" data-node="preview-249" data-name="chevron-right" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-250" data-name="请求超时，可单独重试" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">请求超时，可单独重试</div><div class="node text" data-node="preview-251" data-name="09:41:15 校验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">09:41:15 校验</div></div><div class="node frame" data-node="preview-252" data-name="重试未确认的 1 项" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-253" data-name="rotate-cw" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-rotate-cw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+</svg>
+</div><div class="node text" data-node="preview-254" data-name="重试未确认的 1 项" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">重试未确认的 1 项</div></div><div class="node text" data-node="preview-255" data-name="结果随时变化；校验通过不代表候补兑现。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">结果随时变化；校验通过不代表候补兑现。</div></div><div class="node frame" data-node="preview-256" data-name="底部导航" style="width:100%;background:#FFFFFF;padding:10px 16px 16px 16px;border-top:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-257" data-name="查票" style="flex:1 1 0;min-width:0;height:58px;background:#FFFFFF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-258" data-name="train-front" style="width:20px;flex-shrink:0;height:20px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-train-front"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" />
+  <path d="m9 15-1-1" />
+  <path d="m15 15 1-1" />
+  <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" />
+  <path d="m8 19-2 3" />
+  <path d="m16 19 2 3" />
+</svg>
+</div><div class="node text" data-node="preview-259" data-name="查票" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">查票</div></div><div class="node frame" data-node="preview-260" data-name="候补" style="flex:1 1 0;min-width:0;height:58px;background:#DDF2FF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-261" data-name="scan-line" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-scan-line"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+  <path d="M7 12h10" />
+</svg>
+</div><div class="node text" data-node="preview-262" data-name="候补" style="width:100%;color:#0073AA;font-size:12px;font-weight:600;line-height:1.5;text-align:center;white-space:pre-wrap">候补</div></div><div class="node frame" data-node="preview-263" data-name="想去" style="flex:1 1 0;min-width:0;height:58px;background:#FFFFFF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-264" data-name="star" style="width:20px;flex-shrink:0;height:20px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-star"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+</svg>
+</div><div class="node text" data-node="preview-265" data-name="想去" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">想去</div></div></div><div class="node frame" data-node="preview-266" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-267" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非实时 12306 探测结果</p></section><section class="sheet" id="screen-4"><div class="caption"><span>04</span><div><h2>通过详情</h2><p>复核条件，再去 12306 提交</p></div></div><div class="phone"><div class="node frame" data-node="preview-268" data-name="04 通过详情" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-269" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-270" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-271" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-272" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-273" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-274" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-275" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-276" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-277" data-name="候补校验详情" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">候补校验详情</div></div><div class="node text" data-node="preview-278" data-name="G101 · 北京南 → 济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">G101 · 北京南 → 济南西</div></div><div class="node frame" data-node="preview-279" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-280" data-name="本次校验通过" style="width:100%;background:#EAF7F0;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-281" data-name="circle-check" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0F7952;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-282" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-283" data-name="本次校验通过" style="width:100%;color:#0F7952;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">本次校验通过</div><div class="node text" data-node="preview-284" data-name="按 2 人、二等座校验，当前提交条件通过。" style="width:100%;color:#0F7952;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">按 2 人、二等座校验，当前提交条件通过。</div></div></div><div class="node frame" data-node="preview-285" data-name="G101 二等座 2人 2 人通过" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-286" data-name="车次与状态" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-287" data-name="G101" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G101</div><div class="node frame" data-node="preview-288" data-name="2 人通过" style="width:max-content;flex-shrink:0;background:#EAF7F0;padding:4px 8px;border-radius:6px;display:flex;flex-direction:row;gap:5px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-289" data-name="circle-check" style="width:14px;flex-shrink:0;height:14px;background:none;color:#0F7952;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node text" data-node="preview-290" data-name="2 人通过" style="flex:0 0 auto;min-width:0;color:#0F7952;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">2 人通过</div></div></div><div class="node frame" data-node="preview-291" data-name="行程时刻" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:space-between"><div class="node frame" data-node="preview-292" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-293" data-name="07:00" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">07:00</div><div class="node text" data-node="preview-294" data-name="北京南" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">北京南</div></div><div class="node frame" data-node="preview-295" data-name="车程" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-296" data-name="1小时38分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">1小时38分</div><div class="node rectangle" data-node="preview-297" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-298" data-name="当日到达" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">当日到达</div></div><div class="node frame" data-node="preview-299" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-300" data-name="08:38" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">08:38</div><div class="node text" data-node="preview-301" data-name="济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">济南西</div></div></div><div class="node rectangle" data-node="preview-302" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-303" data-name="席别与人数" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-304" data-name="10月1日 · 二等座 · 2 人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div><div class="node icon" data-node="preview-305" data-name="chevron-right" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-306" data-name="此结果只适用于下方条件" style="width:100%;color:#0F7952;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">此结果只适用于下方条件</div><div class="node text" data-node="preview-307" data-name="09:41:08 校验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">09:41:08 校验</div></div><div class="node frame" data-node="preview-308" data-name="本次校验条件" style="width:100%;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-309" data-name="出发日期" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-310" data-name="出发日期" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">出发日期</div><div class="node text" data-node="preview-311" data-name="2026年10月1日" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">2026年10月1日</div><div class="node icon" data-node="preview-312" data-name="calendar-days" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-calendar-days"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 2v4" />
+  <path d="M16 2v4" />
+  <rect width="18" height="18" x="3" y="4" rx="2" />
+  <path d="M3 10h18" />
+  <path d="M8 14h.01" />
+  <path d="M12 14h.01" />
+  <path d="M16 14h.01" />
+  <path d="M8 18h.01" />
+  <path d="M12 18h.01" />
+  <path d="M16 18h.01" />
+</svg>
+</div></div><div class="node rectangle" data-node="preview-313" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-314" data-name="候补人数" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-315" data-name="候补人数" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">候补人数</div><div class="node text" data-node="preview-316" data-name="2 人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">2 人</div><div class="node icon" data-node="preview-317" data-name="users" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-users"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <circle cx="9" cy="7" r="4" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+</svg>
+</div></div><div class="node rectangle" data-node="preview-318" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-319" data-name="候补席别" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-320" data-name="候补席别" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">候补席别</div><div class="node text" data-node="preview-321" data-name="二等座" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">二等座</div><div class="node icon" data-node="preview-322" data-name="armchair" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-armchair"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3" />
+  <path d="M3 16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-4 0v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V11a2 2 0 0 0-4 0z" />
+  <path d="M5 18v2" />
+  <path d="M19 18v2" />
+</svg>
+</div></div><div class="node rectangle" data-node="preview-323" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-324" data-name="校验时间" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-325" data-name="校验时间" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">校验时间</div><div class="node text" data-node="preview-326" data-name="今天 09:41:08" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">今天 09:41:08</div><div class="node icon" data-node="preview-327" data-name="clock" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-clock"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg>
+</div></div></div><div class="node frame" data-node="preview-328" data-name="接下来，在 12306 完成候补" style="width:100%;background:#F0F3F5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-329" data-name="info" style="width:18px;flex-shrink:0;height:18px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-info"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</div><div class="node frame" data-node="preview-330" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-331" data-name="接下来，在 12306 完成候补" style="width:100%;color:#516774;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">接下来，在 12306 完成候补</div><div class="node text" data-node="preview-332" data-name="仍需选择乘客并提交订单。校验通过不代表已创建订单，也不代表能够兑现。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">仍需选择乘客并提交订单。校验通过不代表已创建订单，也不代表能够兑现。</div></div></div><div class="node frame" data-node="preview-333" data-name="打开 12306 App" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-334" data-name="external-link" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-external-link"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M15 3h6v6" />
+  <path d="M10 14 21 3" />
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+</svg>
+</div><div class="node text" data-node="preview-335" data-name="打开 12306 App" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">打开 12306 App</div></div><div class="node text" data-node="preview-336" data-name="打开前重新校验；状态变化时先更新结果。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">打开前重新校验；状态变化时先更新结果。</div><div class="node frame" data-node="preview-337" data-name="返回查看其他车次" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-338" data-name="返回查看其他车次" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">返回查看其他车次</div></div></div><div class="node frame" data-node="preview-339" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-340" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非实时 12306 探测结果</p></section><section class="sheet" id="screen-5"><div class="caption"><span>05</span><div><h2>拒绝原因</h2><p>明确拒绝才标记不可提交</p></div></div><div class="phone"><div class="node frame" data-node="preview-341" data-name="05 不可提交详情" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-342" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-343" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-344" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-345" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-346" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-347" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-348" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-349" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-350" data-name="当前不可提交" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">当前不可提交</div></div><div class="node text" data-node="preview-351" data-name="G103 · 北京南 → 济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">G103 · 北京南 → 济南西</div></div><div class="node frame" data-node="preview-352" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-353" data-name="所选车次候补人数过多" style="width:100%;background:#FFF4E5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-354" data-name="circle-x" style="width:18px;flex-shrink:0;height:18px;background:none;color:#A8500C;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-x"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m15 9-6 6" />
+  <path d="m9 9 6 6" />
+</svg>
+</div><div class="node frame" data-node="preview-355" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-356" data-name="所选车次候补人数过多" style="width:100%;color:#A8500C;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">所选车次候补人数过多</div><div class="node text" data-node="preview-357" data-name="本次按 2 人、二等座校验，12306 返回了明确拒绝。" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">本次按 2 人、二等座校验，12306 返回了明确拒绝。</div></div></div><div class="node frame" data-node="preview-358" data-name="G103 二等座 2人 当前不可提交" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-359" data-name="车次与状态" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-360" data-name="G103" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G103</div><div class="node frame" data-node="preview-361" data-name="当前不可提交" style="width:max-content;flex-shrink:0;background:#FFF4E5;padding:4px 8px;border-radius:6px;display:flex;flex-direction:row;gap:5px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-362" data-name="circle-x" style="width:14px;flex-shrink:0;height:14px;background:none;color:#A8500C;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-x"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="m15 9-6 6" />
+  <path d="m9 9 6 6" />
+</svg>
+</div><div class="node text" data-node="preview-363" data-name="当前不可提交" style="flex:0 0 auto;min-width:0;color:#A8500C;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">当前不可提交</div></div></div><div class="node frame" data-node="preview-364" data-name="行程时刻" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:space-between"><div class="node frame" data-node="preview-365" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-366" data-name="07:20" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">07:20</div><div class="node text" data-node="preview-367" data-name="北京南" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">北京南</div></div><div class="node frame" data-node="preview-368" data-name="车程" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-369" data-name="1小时38分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">1小时38分</div><div class="node rectangle" data-node="preview-370" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-371" data-name="当日到达" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">当日到达</div></div><div class="node frame" data-node="preview-372" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-373" data-name="08:58" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">08:58</div><div class="node text" data-node="preview-374" data-name="济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">济南西</div></div></div><div class="node rectangle" data-node="preview-375" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-376" data-name="席别与人数" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-377" data-name="10月1日 · 二等座 · 2 人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div><div class="node icon" data-node="preview-378" data-name="chevron-right" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-379" data-name="所选车次候补人数过多" style="width:100%;color:#A8500C;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">所选车次候补人数过多</div><div class="node text" data-node="preview-380" data-name="09:41:12 校验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">09:41:12 校验</div></div><div class="node text" data-node="preview-381" data-name="可以这样继续" style="width:100%;color:#1E3443;font-size:18px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">可以这样继续</div><div class="node frame" data-node="preview-382" data-name="后续操作" style="width:100%;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-383" data-name="查看同区间其他车次" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-384" data-name="查看同区间其他车次" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">查看同区间其他车次</div><div class="node text" data-node="preview-385" data-name="选择车次" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">选择车次</div><div class="node icon" data-node="preview-386" data-name="chevron-right" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node rectangle" data-node="preview-387" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-388" data-name="尝试其他席别" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-389" data-name="尝试其他席别" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">尝试其他席别</div><div class="node text" data-node="preview-390" data-name="修改席别" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">修改席别</div><div class="node icon" data-node="preview-391" data-name="chevron-right" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div></div><div class="node frame" data-node="preview-392" data-name="候补状态可能变化" style="width:100%;background:#F0F3F5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-393" data-name="info" style="width:18px;flex-shrink:0;height:18px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-info"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" />
+</svg>
+</div><div class="node frame" data-node="preview-394" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-395" data-name="候补状态可能变化" style="width:100%;color:#516774;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">候补状态可能变化</div><div class="node text" data-node="preview-396" data-name="页面显示支持候补，不等于按当前人数能够提交。需要时可以重新探测。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">页面显示支持候补，不等于按当前人数能够提交。需要时可以重新探测。</div></div></div><div class="node frame" data-node="preview-397" data-name="查看校验通过的车次" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-398" data-name="查看校验通过的车次" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">查看校验通过的车次</div></div><div class="node frame" data-node="preview-399" data-name="重新探测此车次" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-400" data-name="rotate-cw" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-rotate-cw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+</svg>
+</div><div class="node text" data-node="preview-401" data-name="重新探测此车次" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">重新探测此车次</div></div></div><div class="node frame" data-node="preview-402" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-403" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非实时 12306 探测结果</p></section><section class="sheet" id="screen-6"><div class="caption"><span>06</span><div><h2>验证分支</h2><p>仅服务明确要求验证时使用</p></div></div><div class="phone"><div class="node frame" data-node="preview-404" data-name="06 未确认与暂停" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-405" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-406" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-407" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-408" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-409" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-410" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-411" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-412" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-413" data-name="探测已暂停" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">探测已暂停</div></div><div class="node text" data-node="preview-414" data-name="已完成的结果已保留" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">已完成的结果已保留</div></div><div class="node frame" data-node="preview-415" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-416" data-name="查询条件摘要" style="width:100%;background:#EAF5FC;padding:12px 14px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-417" data-name="条件" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-418" data-name="北京南 → 济南西" style="width:100%;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">北京南 → 济南西</div><div class="node text" data-node="preview-419" data-name="10月1日 · 二等座 · 2 人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div></div><div class="node frame" data-node="preview-420" data-name="sliders-horizontal 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-421" data-name="sliders-horizontal" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-sliders-horizontal"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="21" x2="14" y1="4" y2="4" />
+  <line x1="10" x2="3" y1="4" y2="4" />
+  <line x1="21" x2="12" y1="12" y2="12" />
+  <line x1="8" x2="3" y1="12" y2="12" />
+  <line x1="21" x2="16" y1="20" y2="20" />
+  <line x1="12" x2="3" y1="20" y2="20" />
+  <line x1="14" x2="14" y1="2" y2="6" />
+  <line x1="8" x2="8" y1="10" y2="14" />
+  <line x1="16" x2="16" y1="18" y2="22" />
+</svg>
+</div></div></div><div class="node frame" data-node="preview-422" data-name="需要完成 12306 验证" style="width:100%;background:#FFF4E5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-423" data-name="shield-check" style="width:18px;flex-shrink:0;height:18px;background:none;color:#A8500C;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-shield-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node frame" data-node="preview-424" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-425" data-name="需要完成 12306 验证" style="width:100%;color:#A8500C;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">需要完成 12306 验证</div><div class="node text" data-node="preview-426" data-name="服务要求验证后才能继续；尚未完成的项目暂时无法确认。" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">服务要求验证后才能继续；尚未完成的项目暂时无法确认。</div></div></div><div class="node frame" data-node="preview-427" data-name="结果概览" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-428" data-name="校验通过" style="flex:1 1 0;min-width:0;background:#EAF7F0;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-429" data-name="1" style="width:100%;color:#0F7952;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">1</div><div class="node text" data-node="preview-430" data-name="校验通过" style="width:100%;color:#0F7952;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">校验通过</div></div><div class="node frame" data-node="preview-431" data-name="不可提交" style="flex:1 1 0;min-width:0;background:#FFF4E5;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-432" data-name="0" style="width:100%;color:#A8500C;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">0</div><div class="node text" data-node="preview-433" data-name="不可提交" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">不可提交</div></div><div class="node frame" data-node="preview-434" data-name="未确认" style="flex:1 1 0;min-width:0;background:#F0F3F5;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-435" data-name="2" style="width:100%;color:#516774;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">2</div><div class="node text" data-node="preview-436" data-name="未确认" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">未确认</div></div></div><div class="node frame" data-node="preview-437" data-name="未确认项目" style="width:100%;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-438" data-name="G105 · 二等座" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-439" data-name="G105 · 二等座" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">G105 · 二等座</div><div class="node text" data-node="preview-440" data-name="需要验证" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">需要验证</div><div class="node icon" data-node="preview-441" data-name="shield-check" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-shield-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div></div><div class="node rectangle" data-node="preview-442" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-443" data-name="G109 · 二等座" style="width:100%;height:50px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-444" data-name="G109 · 二等座" style="flex:1 1 0;min-width:0;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">G109 · 二等座</div><div class="node text" data-node="preview-445" data-name="尚未完成" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:14px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">尚未完成</div><div class="node icon" data-node="preview-446" data-name="clock" style="width:17px;flex-shrink:0;height:17px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-clock"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16 14" />
+</svg>
+</div></div></div><div class="node text" data-node="preview-447" data-name="未确认不代表候补已满" style="width:100%;color:#1E3443;font-size:17px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">未确认不代表候补已满</div><div class="node text" data-node="preview-448" data-name="完成验证后，只重试未完成的项目。已有通过结果仍需检查是否过期。" style="width:100%;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">完成验证后，只重试未完成的项目。已有通过结果仍需检查是否过期。</div><div class="node frame" data-node="preview-449" data-name="前往完成验证" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-450" data-name="shield-check" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-shield-check"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" />
+</svg>
+</div><div class="node text" data-node="preview-451" data-name="前往完成验证" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">前往完成验证</div></div><div class="node frame" data-node="preview-452" data-name="先查看已有结果" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-453" data-name="先查看已有结果" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">先查看已有结果</div></div></div><div class="node frame" data-node="preview-454" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-455" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非实时 12306 探测结果</p></section><section class="sheet" id="screen-7"><div class="caption"><span>07</span><div><h2>人数变更</h2><p>旧人数的结果立即失效</p></div></div><div class="phone"><div class="node frame" data-node="preview-456" data-name="07 人数变化与结果失效" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-457" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-458" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-459" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-460" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-461" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-462" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-463" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-464" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-465" data-name="人数已变更" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">人数已变更</div></div><div class="node text" data-node="preview-466" data-name="请按新人数重新探测" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">请按新人数重新探测</div></div><div class="node frame" data-node="preview-467" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-468" data-name="查询条件摘要" style="width:100%;background:#EAF5FC;padding:12px 14px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-469" data-name="条件" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-470" data-name="北京南 → 济南西" style="width:100%;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">北京南 → 济南西</div><div class="node text" data-node="preview-471" data-name="10月1日 · 二等座 · 3 人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 3 人</div></div><div class="node frame" data-node="preview-472" data-name="sliders-horizontal 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-473" data-name="sliders-horizontal" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-sliders-horizontal"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="21" x2="14" y1="4" y2="4" />
+  <line x1="10" x2="3" y1="4" y2="4" />
+  <line x1="21" x2="12" y1="12" y2="12" />
+  <line x1="8" x2="3" y1="12" y2="12" />
+  <line x1="21" x2="16" y1="20" y2="20" />
+  <line x1="12" x2="3" y1="20" y2="20" />
+  <line x1="14" x2="14" y1="2" y2="6" />
+  <line x1="8" x2="8" y1="10" y2="14" />
+  <line x1="16" x2="16" y1="18" y2="22" />
+</svg>
+</div></div></div><div class="node frame" data-node="preview-474" data-name="原结果按 2 人校验" style="width:100%;background:#F0F3F5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-475" data-name="refresh-cw" style="width:18px;flex-shrink:0;height:18px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-refresh-cw"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+  <path d="M8 16H3v5" />
+</svg>
+</div><div class="node frame" data-node="preview-476" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-477" data-name="原结果按 2 人校验" style="width:100%;color:#516774;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">原结果按 2 人校验</div><div class="node text" data-node="preview-478" data-name="现在选择了 3 人，旧结果已失效，不能用于本次判断。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">现在选择了 3 人，旧结果已失效，不能用于本次判断。</div></div></div><div class="node frame" data-node="preview-479" data-name="新候补人数" style="width:100%;background:#EAF5FC;padding:16px;border-radius:12px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-480" data-name="候补人数设置" style="width:100%;display:flex;flex-direction:column;gap:10px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-481" data-name="候补人数标题" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-482" data-name="候补人数" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">候补人数</div><div class="node text" data-node="preview-483" data-name="按同一席别校验" style="flex:1 1 0;min-width:0;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">按同一席别校验</div></div><div class="node frame" data-node="preview-484" data-name="人数输入" style="width:100%;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-485" data-name="减少人数" style="width:52px;flex-shrink:0;height:52px;background:#FFFFFF;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-486" data-name="−" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:24px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">−</div></div><div class="node frame" data-node="preview-487" data-name="输入人数" style="flex:1 1 0;min-width:0;height:52px;background:#FFFFFF;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-488" data-name="3" style="flex:0 0 auto;min-width:0;color:#1E3443;font-size:24px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">3</div></div><div class="node frame" data-node="preview-489" data-name="增加人数" style="width:52px;flex-shrink:0;height:52px;background:#FFFFFF;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-490" data-name="+" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:24px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">+</div></div></div><div class="node text" data-node="preview-491" data-name="填写本次一起候补的人数" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">填写本次一起候补的人数</div></div></div><div class="node text" data-node="preview-492" data-name="上次记录 · 仅供参考" style="width:100%;color:#516774;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">上次记录 · 仅供参考</div><div class="node frame" data-node="preview-493" data-name="G101 二等座 2人 需要重新探测" style="width:100%;background:#EAF5FC;padding:14px;border-radius:12px;border:1px solid #D5EAF6;display:flex;flex-direction:column;gap:12px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-494" data-name="车次与状态" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-495" data-name="G101" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">G101</div><div class="node frame" data-node="preview-496" data-name="需要重新探测" style="width:max-content;flex-shrink:0;background:#F0F3F5;padding:4px 8px;border-radius:6px;display:flex;flex-direction:row;gap:5px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-497" data-name="circle-help" style="width:14px;flex-shrink:0;height:14px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-circle-help"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+  <path d="M12 17h.01" />
+</svg>
+</div><div class="node text" data-node="preview-498" data-name="需要重新探测" style="flex:0 0 auto;min-width:0;color:#516774;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">需要重新探测</div></div></div><div class="node frame" data-node="preview-499" data-name="行程时刻" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:space-between"><div class="node frame" data-node="preview-500" data-name="出发" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-501" data-name="07:00" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">07:00</div><div class="node text" data-node="preview-502" data-name="北京南" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">北京南</div></div><div class="node frame" data-node="preview-503" data-name="车程" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-504" data-name="1小时38分" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">1小时38分</div><div class="node rectangle" data-node="preview-505" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node text" data-node="preview-506" data-name="当日到达" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">当日到达</div></div><div class="node frame" data-node="preview-507" data-name="到达" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-508" data-name="08:38" style="width:100%;color:#1E3443;font-size:26px;font-weight:600;line-height:1.5;text-align:right;white-space:pre-wrap">08:38</div><div class="node text" data-node="preview-509" data-name="济南西" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:right;white-space:pre-wrap">济南西</div></div></div><div class="node rectangle" data-node="preview-510" data-name="分隔线" style="width:100%;height:1px;background:#D5E5EE"></div><div class="node frame" data-node="preview-511" data-name="席别与人数" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-512" data-name="10月1日 · 二等座 · 2 人" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div><div class="node icon" data-node="preview-513" data-name="chevron-right" style="width:18px;flex-shrink:0;height:18px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-514" data-name="旧记录：2 人 · 09:41 校验，不适用于 3 人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">旧记录：2 人 · 09:41 校验，不适用于 3 人</div><div class="node text" data-node="preview-515" data-name="09:41:08 校验" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">09:41:08 校验</div></div><div class="node frame" data-node="preview-516" data-name="按 3 人重新探测" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-517" data-name="scan-line" style="width:20px;flex-shrink:0;height:20px;background:none;color:#FFFFFF;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-scan-line"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+  <path d="M7 12h10" />
+</svg>
+</div><div class="node text" data-node="preview-518" data-name="按 3 人重新探测" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">按 3 人重新探测</div></div><div class="node text" data-node="preview-519" data-name="更改日期、区间或席别后，同样需要重新探测。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">更改日期、区间或席别后，同样需要重新探测。</div></div><div class="node frame" data-node="preview-520" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-521" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非实时 12306 探测结果</p></section><section class="sheet" id="screen-8"><div class="caption"><span>08</span><div><h2>零通过</h2><p>全部被拒绝与请求失败不同</p></div></div><div class="phone"><div class="node frame" data-node="preview-522" data-name="08 空结果与异常边界" style="width:390px;flex-shrink:0;background:#FFFFFF;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;gap:0px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-523" data-name="页头" style="width:100%;background:linear-gradient(180deg,#DDF2FF 0%,#FFFFFF 100%);padding:12px 16px 18px 16px;display:flex;flex-direction:column;gap:14px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-524" data-name="系统状态栏" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-525" data-name="9:41" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:12px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">9:41</div><div class="node icon" data-node="preview-526" data-name="wifi" style="width:15px;flex-shrink:0;height:15px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-wifi"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20h.01" />
+  <path d="M2 8.82a15 15 0 0 1 20 0" />
+  <path d="M5 12.859a10 10 0 0 1 14 0" />
+  <path d="M8.5 16.429a5 5 0 0 1 7 0" />
+</svg>
+</div><div class="node icon" data-node="preview-527" data-name="battery-full" style="width:18px;flex-shrink:0;height:18px;background:none;color:#1E3443;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-battery-full"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+  <line x1="22" x2="22" y1="11" y2="13" />
+  <line x1="6" x2="6" y1="11" y2="13" />
+  <line x1="10" x2="10" y1="11" y2="13" />
+  <line x1="14" x2="14" y1="11" y2="13" />
+</svg>
+</div></div><div class="node frame" data-node="preview-528" data-name="品牌与标题" style="width:100%;height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-529" data-name="chevron-left 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-530" data-name="chevron-left" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+</div></div><div class="node text" data-node="preview-531" data-name="没有可提交的结果" style="flex:1 1 0;min-width:0;color:#1E3443;font-size:18px;font-weight:bold;line-height:1.5;text-align:left;white-space:pre-wrap">没有可提交的结果</div></div><div class="node text" data-node="preview-532" data-name="已完成本次全部候选项目的校验" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">已完成本次全部候选项目的校验</div></div><div class="node frame" data-node="preview-533" data-name="页面内容" style="width:100%;padding:0px 16px 20px 16px;display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start"><div class="node frame" data-node="preview-534" data-name="查询条件摘要" style="width:100%;background:#EAF5FC;padding:12px 14px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-535" data-name="条件" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-536" data-name="北京南 → 济南西" style="width:100%;color:#1E3443;font-size:16px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">北京南 → 济南西</div><div class="node text" data-node="preview-537" data-name="10月1日 · 二等座 · 2 人" style="width:100%;color:#516774;font-size:13px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">10月1日 · 二等座 · 2 人</div></div><div class="node frame" data-node="preview-538" data-name="sliders-horizontal 操作" style="width:48px;flex-shrink:0;height:48px;border-radius:10px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node icon" data-node="preview-539" data-name="sliders-horizontal" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-sliders-horizontal"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <line x1="21" x2="14" y1="4" y2="4" />
+  <line x1="10" x2="3" y1="4" y2="4" />
+  <line x1="21" x2="12" y1="12" y2="12" />
+  <line x1="8" x2="3" y1="12" y2="12" />
+  <line x1="21" x2="16" y1="20" y2="20" />
+  <line x1="12" x2="3" y1="20" y2="20" />
+  <line x1="14" x2="14" y1="2" y2="6" />
+  <line x1="8" x2="8" y1="10" y2="14" />
+  <line x1="16" x2="16" y1="18" y2="22" />
+</svg>
+</div></div></div><div class="node frame" data-node="preview-540" data-name="结果概览" style="width:100%;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-541" data-name="校验通过" style="flex:1 1 0;min-width:0;background:#EAF7F0;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-542" data-name="0" style="width:100%;color:#0F7952;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">0</div><div class="node text" data-node="preview-543" data-name="校验通过" style="width:100%;color:#0F7952;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">校验通过</div></div><div class="node frame" data-node="preview-544" data-name="不可提交" style="flex:1 1 0;min-width:0;background:#FFF4E5;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-545" data-name="3" style="width:100%;color:#A8500C;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">3</div><div class="node text" data-node="preview-546" data-name="不可提交" style="width:100%;color:#A8500C;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">不可提交</div></div><div class="node frame" data-node="preview-547" data-name="未确认" style="flex:1 1 0;min-width:0;background:#F0F3F5;padding:12px 8px;border-radius:10px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start"><div class="node text" data-node="preview-548" data-name="0" style="width:100%;color:#516774;font-size:25px;font-weight:bold;line-height:1.5;text-align:center;white-space:pre-wrap">0</div><div class="node text" data-node="preview-549" data-name="未确认" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">未确认</div></div></div><div class="node frame" data-node="preview-550" data-name="零通过状态" style="width:100%;padding:28px 12px;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-551" data-name="calendar-search" style="width:44px;flex-shrink:0;height:44px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-calendar-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M16 2v4" />
+  <path d="M21 11.75V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7.25" />
+  <path d="m22 22-1.875-1.875" />
+  <path d="M3 10h18" />
+  <path d="M8 2v4" />
+  <circle cx="18" cy="18" r="3" />
+</svg>
+</div><div class="node text" data-node="preview-552" data-name="试试其他日期或席别" style="width:100%;color:#1E3443;font-size:21px;font-weight:600;line-height:1.5;text-align:center;white-space:pre-wrap">试试其他日期或席别</div><div class="node text" data-node="preview-553" data-name="本次 3 项均收到明确拒绝。 / 可以调整条件，再找合适的车次。" style="width:100%;color:#516774;font-size:14px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">本次 3 项均收到明确拒绝。
+可以调整条件，再找合适的车次。</div></div><div class="node frame" data-node="preview-554" data-name="调整条件重新探测" style="width:100%;height:50px;background:#0073AA;padding:10px 16px;border-radius:10px;border:1px solid #0073AA;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-555" data-name="调整条件重新探测" style="flex:0 0 auto;min-width:0;color:#FFFFFF;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">调整条件重新探测</div></div><div class="node frame" data-node="preview-556" data-name="查看 3 项拒绝原因" style="width:100%;height:50px;background:#FFFFFF;padding:10px 16px;border-radius:10px;border:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node text" data-node="preview-557" data-name="查看 3 项拒绝原因" style="flex:0 0 auto;min-width:0;color:#0073AA;font-size:15px;font-weight:600;line-height:1.5;text-align:left;white-space:pre;width:max-content">查看 3 项拒绝原因</div></div><div class="node frame" data-node="preview-558" data-name="想先看看现票？" style="width:100%;background:#F0F3F5;padding:14px;border-radius:10px;display:flex;flex-direction:row;gap:10px;align-items:start;justify-content:flex-start"><div class="node icon" data-node="preview-559" data-name="train-front" style="width:18px;flex-shrink:0;height:18px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-train-front"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" />
+  <path d="m9 15-1-1" />
+  <path d="m15 15 1-1" />
+  <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" />
+  <path d="m8 19-2 3" />
+  <path d="m16 19 2 3" />
+</svg>
+</div><div class="node frame" data-node="preview-560" data-name="提示内容" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:flex-start"><div class="node text" data-node="preview-561" data-name="想先看看现票？" style="width:100%;color:#516774;font-size:14px;font-weight:600;line-height:1.5;text-align:left;white-space:pre-wrap">想先看看现票？</div><div class="node text" data-node="preview-562" data-name="回到查票，看看其他城市有没有余票。" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:left;white-space:pre-wrap">回到查票，看看其他城市有没有余票。</div></div></div></div><div class="node frame" data-node="preview-563" data-name="底部导航" style="width:100%;background:#FFFFFF;padding:10px 16px 16px 16px;border-top:1px solid #D5E5EE;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:flex-start"><div class="node frame" data-node="preview-564" data-name="查票" style="flex:1 1 0;min-width:0;height:58px;background:#FFFFFF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-565" data-name="train-front" style="width:20px;flex-shrink:0;height:20px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-train-front"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M8 3.1V7a4 4 0 0 0 8 0V3.1" />
+  <path d="m9 15-1-1" />
+  <path d="m15 15 1-1" />
+  <path d="M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z" />
+  <path d="m8 19-2 3" />
+  <path d="m16 19 2 3" />
+</svg>
+</div><div class="node text" data-node="preview-566" data-name="查票" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">查票</div></div><div class="node frame" data-node="preview-567" data-name="候补" style="flex:1 1 0;min-width:0;height:58px;background:#DDF2FF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-568" data-name="scan-line" style="width:20px;flex-shrink:0;height:20px;background:none;color:#0073AA;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-scan-line"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+  <path d="M7 12h10" />
+</svg>
+</div><div class="node text" data-node="preview-569" data-name="候补" style="width:100%;color:#0073AA;font-size:12px;font-weight:600;line-height:1.5;text-align:center;white-space:pre-wrap">候补</div></div><div class="node frame" data-node="preview-570" data-name="想去" style="flex:1 1 0;min-width:0;height:58px;background:#FFFFFF;padding:6px;border-radius:10px;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:flex-start"><div class="node icon" data-node="preview-571" data-name="star" style="width:20px;flex-shrink:0;height:20px;background:none;color:#516774;display:flex"><!-- @license lucide-static v0.468.0 - ISC -->
+<svg
+  class="lucide lucide-star"
+  xmlns="http://www.w3.org/2000/svg"
+  width="100%"
+  height="100%"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+</svg>
+</div><div class="node text" data-node="preview-572" data-name="想去" style="width:100%;color:#516774;font-size:12px;font-weight:normal;line-height:1.5;text-align:center;white-space:pre-wrap">想去</div></div></div><div class="node frame" data-node="preview-573" data-name="系统手势区" style="width:100%;height:24px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center"><div class="node rectangle" data-node="preview-574" data-name="手势条" style="width:108px;flex-shrink:0;height:4px;background:#1E3443;border-radius:4px"></div></div></div></div><p class="screen-foot">设计示例 · 非实时 12306 探测结果</p></section></main><footer class="rule"><div><h3>每个结果，绑定本次条件</h3><p>日期、实际区间、车次、席别、人数都一致，结果才适用。修改人数后必须重新探测。</p></div><div><h3>未确认，不等于候补已满</h3><p>超时、验证、服务限制单独表达。保留已完成结果，只重试未确认项。</p></div><div><h3>通过之后，再去正式提交</h3><p>打开 12306 前复核。校验通过不代表订单已创建，也不代表候补可以兑现。</p></div></footer></body></html>

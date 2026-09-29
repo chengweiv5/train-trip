@@ -1,0 +1,77 @@
+{
+  "method": "GET official public HTML/JS; one anonymous availability query. No confirmHB/submitOrderRequest calls, no user credentials/passenger data.",
+  "sources": [
+    {
+      "url": "https://kyfw.12306.cn/otn/leftTicket/init",
+      "bytes": 102040,
+      "sha256": "03fe6dc0a1bb19a7a90fa4ee5b64b55a30bd94438602637bdcfbb091ec290acd",
+      "downloadedAt": "2026-09-29T20:23:39.615379+08:00"
+    },
+    {
+      "url": "https://kyfw.12306.cn/otn/resources/merged/queryLeftTicket_end_js.js?scriptVersion=1.95053",
+      "bytes": 279254,
+      "sha256": "eafbfcb66fa75541b7bc85d0af20b224b403bdea6c2c35d3b6cbffba7cdd3052",
+      "downloadedAt": "2026-09-29T20:23:51.208437+08:00"
+    },
+    {
+      "url": "https://kyfw.12306.cn/otn/view/lineUp_toPay.html",
+      "bytes": 97878,
+      "sha256": "a92638ed6ef346647920d5d683323266c4c54dd88909a51965a4edf53bf65216",
+      "downloadedAt": "2026-09-29T20:24:11.547540+08:00"
+    },
+    {
+      "url": "https://kyfw.12306.cn/otn/personalJS/dist/lineUp_toPay/main_v90003.js",
+      "bytes": 1161091,
+      "sha256": "ccb53d8e98c40375da12323139bd1c7ba8de2abd5e3e08645f1ee6a696e8e638",
+      "downloadedAt": "2026-09-29T20:24:25.092608+08:00"
+    }
+  ],
+  "liveQuery": {
+    "route": "leftTicket/queryG",
+    "httpStatus": 200,
+    "contentType": "application/json;charset=UTF-8",
+    "bytes": 105726,
+    "authenticated": false,
+    "passengerDataSent": false,
+    "status": true,
+    "messages": "",
+    "rowCount": 145
+  },
+  "exactStationRows": 108,
+  "exactSecondLimitedRows": 16,
+  "exampleRows": [
+    {
+      "train": "G547",
+      "from": "VNP",
+      "to": "JGK",
+      "second": "无",
+      "waitlistFlag": "1",
+      "waitlistSeatLimit": ""
+    },
+    {
+      "train": "G37",
+      "from": "VNP",
+      "to": "JGK",
+      "second": "无",
+      "waitlistFlag": "1",
+      "waitlistSeatLimit": "9MO"
+    },
+    {
+      "train": "G39",
+      "from": "VNP",
+      "to": "JGK",
+      "second": "无",
+      "waitlistFlag": "1",
+      "waitlistSeatLimit": "9MOD"
+    },
+    {
+      "train": "G981",
+      "from": "VNP",
+      "to": "JGK",
+      "second": "无",
+      "waitlistFlag": "1",
+      "waitlistSeatLimit": "M"
+    }
+  ],
+  "interpretation": "Seat limit flags are not person-count-specific submission proof."
+}

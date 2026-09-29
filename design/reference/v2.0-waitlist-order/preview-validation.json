@@ -1,0 +1,109 @@
+{
+  "type": "Browser approximate preview, not Pencil validation",
+  "issues": [],
+  "fonts": "loaded",
+  "screens": [
+    {
+      "id": "screen-1",
+      "width": 390,
+      "height": 1353
+    },
+    {
+      "id": "screen-2",
+      "width": 390,
+      "height": 1380
+    },
+    {
+      "id": "screen-3",
+      "width": 390,
+      "height": 822
+    },
+    {
+      "id": "screen-4",
+      "width": 390,
+      "height": 1135
+    },
+    {
+      "id": "screen-5",
+      "width": 390,
+      "height": 1241
+    },
+    {
+      "id": "screen-6",
+      "width": 390,
+      "height": 1003
+    },
+    {
+      "id": "screen-7",
+      "width": 390,
+      "height": 1026
+    },
+    {
+      "id": "screen-8",
+      "width": 390,
+      "height": 1022
+    },
+    {
+      "id": "screen-9",
+      "width": 390,
+      "height": 799
+    },
+    {
+      "id": "screen-10",
+      "width": 390,
+      "height": 810
+    },
+    {
+      "id": "screen-11",
+      "width": 390,
+      "height": 718
+    },
+    {
+      "id": "screen-12",
+      "width": 390,
+      "height": 741
+    },
+    {
+      "id": "screen-13",
+      "width": 390,
+      "height": 1143
+    },
+    {
+      "id": "screen-14",
+      "width": 390,
+      "height": 879
+    },
+    {
+      "id": "screen-15",
+      "width": 390,
+      "height": 716
+    },
+    {
+      "id": "screen-16",
+      "width": 390,
+      "height": 928
+    },
+    {
+      "id": "screen-17",
+      "width": 390,
+      "height": 718
+    }
+  ],
+  "nodes": 887,
+  "texts": 380,
+  "roots": 17,
+  "scope": "Static browser approximation only, not Pencil or Android runtime validation.",
+  "pencilNativeVerified": false,
+  "automaticResubmissionImplemented": false,
+  "rejectionIdentificationVerified": false,
+  "filterNavigation": "All filters on page 1. Each location row opens a combined city-and-station selector. No separate station rows or More Conditions container; page 2 returns to page 1 with existing input.",
+  "reference": "Existing FiltersScreen.kt, FilterSheets.kt origin selector and docs/images/readme/home.jpg",
+  "submissionSemantics": "Every round submits all remaining requirements together; no automatic splitting.",
+  "contentChecks": {
+    "singleOriginCityStationEntry": true,
+    "singleDestinationCityStationEntry": true,
+    "noDuplicateStationRows": true,
+    "noRedundantMoreConditionsContainer": true,
+    "selectedStationCapabilityRetainedInSpec": true
+  }
+}
