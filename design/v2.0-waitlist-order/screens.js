@@ -1,4 +1,4 @@
-function link(p,label,ic){const r=row(p,label,{width:'fit_content',height:48,padding:[8,0]});if(ic)icon(r,ic);text(r,label,13,C.primary,'600',{textGrowth:'auto'});return r;}
+function link(p,label,ic){const r=row(p,label,{width:'fit_content',height:48,padding:[8,12]});if(ic)icon(r,ic);text(r,label,13,C.primary,'600',{textGrowth:'auto'});return r;}
 function card(p,name,o={}){return frame(p,name,{padding:16,gap:12,cornerRadius:12,fill:C.card,stroke:C.border,strokeWidth:1,...o});}
 function headerRow(p,title,action){const r=row(p,title,{height:48});text(r,title,16,C.ink,'600');if(action)link(r,action);return r;}
 function locationRow(p,label,city,stations){const r=row(p,label+'城市与车站入口',{height:76,gap:12});const left=frame(r,label,{gap:3});text(left,label,12,C.muted);text(left,city,26,C.ink,'600');text(r,stations,13,C.muted);icon(r,'chevron-right',C.muted,18);return r;}

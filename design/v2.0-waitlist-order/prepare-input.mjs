@@ -18,4 +18,4 @@ writeFileSync(resolve(target), [
   'exit()',
   '',
 ].join('\n'));
-console.log(`Prepared ${resolve(target)}; Pencil authentication and native validation are still required.`);
+console.log(`Prepared ${resolve(target)} for an EMPTY document only; do not rerun on the delivered 17-screen canvas. Native rendering, save, and reopen validation are required. Desktop MCP does not depend on Pencil CLI authentication.`);

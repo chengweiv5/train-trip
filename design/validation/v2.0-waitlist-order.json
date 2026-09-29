@@ -1,0 +1,399 @@
+{
+  "status": "DONE",
+  "verified_at": "2026-09-30T00:07:52+08:00",
+  "timezone": "Asia/Shanghai",
+  "source": "Pencil Desktop native MCP",
+  "source_file": "design/train-trip-v2.0-waitlist-order.pen",
+  "source_bytes": 396672,
+  "source_sha256": "975e04483d574796269bd3644e31e43929ff1090a8aad5e6ad452de62442e318",
+  "layout": {
+    "root_count": 17,
+    "node_count": 887,
+    "counts": {
+      "frame": 355,
+      "text": 380,
+      "icon": 108,
+      "rectangle": 44
+    },
+    "roots": [
+      {
+        "id": "h8UUu",
+        "name": "01 全部查询与筛选条件",
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 1237
+        }
+      },
+      {
+        "id": "Bxg5g",
+        "name": "02 车次结果与多选",
+        "bounds": {
+          "x": 454,
+          "y": 0,
+          "width": 390,
+          "height": 1262
+        }
+      },
+      {
+        "id": "E6nlX",
+        "name": "03 登录并保留需求",
+        "bounds": {
+          "x": 908,
+          "y": 0,
+          "width": 390,
+          "height": 709
+        }
+      },
+      {
+        "id": "pJ6bt",
+        "name": "04 选择乘车人",
+        "bounds": {
+          "x": 1362,
+          "y": 0,
+          "width": 390,
+          "height": 1021
+        }
+      },
+      {
+        "id": "klx1o",
+        "name": "05 一次确认自动提交",
+        "bounds": {
+          "x": 0,
+          "y": 1382,
+          "width": 390,
+          "height": 1126
+        }
+      },
+      {
+        "id": "guL06",
+        "name": "06 全部剩余需求一起提交",
+        "bounds": {
+          "x": 454,
+          "y": 1382,
+          "width": 390,
+          "height": 892
+        }
+      },
+      {
+        "id": "OE3Dx",
+        "name": "07 自动处理后创建订单",
+        "bounds": {
+          "x": 908,
+          "y": 1382,
+          "width": 390,
+          "height": 911
+        }
+      },
+      {
+        "id": "QwiJP",
+        "name": "08 所有候选均被拒绝",
+        "bounds": {
+          "x": 1362,
+          "y": 1382,
+          "width": 390,
+          "height": 912
+        }
+      },
+      {
+        "id": "KhDLP",
+        "name": "09 超时暂停并核对订单",
+        "bounds": {
+          "x": 0,
+          "y": 2628,
+          "width": 390,
+          "height": 684
+        }
+      },
+      {
+        "id": "a5LCR",
+        "name": "10 没有匹配结果",
+        "bounds": {
+          "x": 454,
+          "y": 2628,
+          "width": 390,
+          "height": 697
+        }
+      },
+      {
+        "id": "nlsq6",
+        "name": "11 登录失效后续处理",
+        "bounds": {
+          "x": 908,
+          "y": 2628,
+          "width": 390,
+          "height": 605
+        }
+      },
+      {
+        "id": "UAZYO",
+        "name": "12 我的候补与自动处理",
+        "bounds": {
+          "x": 1362,
+          "y": 2628,
+          "width": 390,
+          "height": 628
+        }
+      },
+      {
+        "id": "gqjgr",
+        "name": "13 全部已选需求",
+        "bounds": {
+          "x": 0,
+          "y": 3445,
+          "width": 390,
+          "height": 1028
+        }
+      },
+      {
+        "id": "CvIgz",
+        "name": "14 自动处理记录",
+        "bounds": {
+          "x": 454,
+          "y": 3445,
+          "width": 390,
+          "height": 771
+        }
+      },
+      {
+        "id": "raSVD",
+        "name": "15 无法定位受限需求时暂停",
+        "bounds": {
+          "x": 908,
+          "y": 3445,
+          "width": 390,
+          "height": 603
+        }
+      },
+      {
+        "id": "eAY5y",
+        "name": "16 每轮一起提交的示例",
+        "bounds": {
+          "x": 1362,
+          "y": 3445,
+          "width": 390,
+          "height": 812
+        }
+      },
+      {
+        "id": "MlgjC",
+        "name": "17 停止后核对在途请求",
+        "bounds": {
+          "x": 0,
+          "y": 4593,
+          "width": 390,
+          "height": 605
+        }
+      }
+    ],
+    "clip_issues": [],
+    "nonpositive_bounds": [],
+    "overlaps": [],
+    "empty_names": [],
+    "empty_text": [],
+    "unfinished_placeholders": [],
+    "small_fonts": [],
+    "touch_targets_checked": 94,
+    "touch_targets_below_48": [],
+    "tolerance": 0.5
+  },
+  "independent_reopen": {
+    "matched_nodes": 887,
+    "matched_screens": 17,
+    "text_nodes": 380,
+    "semantic_differences": [],
+    "layout_problems": [],
+    "sha256": "975e04483d574796269bd3644e31e43929ff1090a8aad5e6ad452de62442e318",
+    "bytes": 396672
+  },
+  "editability": {
+    "verified": true,
+    "method": "Native Layers selected heading, Return entered settable text editor, Escape exited without changing content",
+    "text": "选好车次，自动继续",
+    "font_family": "Noto Sans SC",
+    "font_size": 25
+  },
+  "visual": {
+    "screens_reviewed": 17,
+    "native_jpeg_export_count": 17,
+    "native_pdf_pages": 17,
+    "pdf_render_reviewed": true,
+    "ocr_images": 17,
+    "ocr_observations": 395,
+    "ocr_note": "OCR contains occasional icon and punctuation substitutions; reviewed against native text and rendered pages, not claimed character-perfect."
+  },
+  "contrast_pairs": [
+    {
+      "pair": "正文/白",
+      "fg": "#1E3443",
+      "bg": "#FFFFFF",
+      "ratio": 12.9
+    },
+    {
+      "pair": "辅助/蓝卡片",
+      "fg": "#516774",
+      "bg": "#EAF5FC",
+      "ratio": 5.35
+    },
+    {
+      "pair": "蓝字/浅蓝",
+      "fg": "#0073AA",
+      "bg": "#DDF2FF",
+      "ratio": 4.52
+    },
+    {
+      "pair": "按钮白字/主色",
+      "fg": "#FFFFFF",
+      "bg": "#0073AA",
+      "ratio": 5.21
+    },
+    {
+      "pair": "成功/浅绿",
+      "fg": "#0F7952",
+      "bg": "#EAF7F0",
+      "ratio": 4.92
+    },
+    {
+      "pair": "警示/浅橙",
+      "fg": "#A8500C",
+      "bg": "#FFF4E5",
+      "ratio": 5.06
+    }
+  ],
+  "original_pen_files_unchanged": 10,
+  "screens": [
+    {
+      "name": "01 全部查询与筛选条件",
+      "id": "h8UUu",
+      "path": "design/reference/v2.0-waitlist-order/pencil/h8UUu.jpeg",
+      "bytes": 198730,
+      "sha256": "4074c6a37de53a7f36da76ae1c6af60871e98ac10cd22c79bb5111a271284412"
+    },
+    {
+      "name": "02 车次结果与多选",
+      "id": "Bxg5g",
+      "path": "design/reference/v2.0-waitlist-order/pencil/Bxg5g.jpeg",
+      "bytes": 250126,
+      "sha256": "d9b96cd181e7b440ed0a743c43c9a6cc092b65612a311c02ada5fb3293c95f8c"
+    },
+    {
+      "name": "03 登录并保留需求",
+      "id": "E6nlX",
+      "path": "design/reference/v2.0-waitlist-order/pencil/E6nlX.jpeg",
+      "bytes": 131794,
+      "sha256": "36ef2366608d34734fa078107e7ec25f6248768f8603d4e769dea78642d510de"
+    },
+    {
+      "name": "04 选择乘车人",
+      "id": "pJ6bt",
+      "path": "design/reference/v2.0-waitlist-order/pencil/pJ6bt.jpeg",
+      "bytes": 169068,
+      "sha256": "0dc6bea0f84dcd9473e49c00f0de7a6d1b6ff2c9a75bf0cde1e22e551e56afc1"
+    },
+    {
+      "name": "05 一次确认自动提交",
+      "id": "klx1o",
+      "path": "design/reference/v2.0-waitlist-order/pencil/klx1o.jpeg",
+      "bytes": 208576,
+      "sha256": "8dbac94664ccd9e7cb4bbe7696f4db05cdac42d9710d0db9e4e33fa42e1cedcc"
+    },
+    {
+      "name": "06 全部剩余需求一起提交",
+      "id": "guL06",
+      "path": "design/reference/v2.0-waitlist-order/pencil/guL06.jpeg",
+      "bytes": 173873,
+      "sha256": "be709119933c55eb0c8277d4e91bff935ba2f3330776b7e708ad1827fd96ac21"
+    },
+    {
+      "name": "07 自动处理后创建订单",
+      "id": "OE3Dx",
+      "path": "design/reference/v2.0-waitlist-order/pencil/OE3Dx.jpeg",
+      "bytes": 163979,
+      "sha256": "3017c0f9635d069985579e644d407241cf6cbcc7e3fa981ab323ff16667ac11e"
+    },
+    {
+      "name": "08 所有候选均被拒绝",
+      "id": "QwiJP",
+      "path": "design/reference/v2.0-waitlist-order/pencil/QwiJP.jpeg",
+      "bytes": 196106,
+      "sha256": "bafa2fcb68c164e121ec063fed9bc83e1cb3ceef1b6ea5c095f6a88ed1ebd4b1"
+    },
+    {
+      "name": "09 超时暂停并核对订单",
+      "id": "KhDLP",
+      "path": "design/reference/v2.0-waitlist-order/pencil/KhDLP.jpeg",
+      "bytes": 132824,
+      "sha256": "abf55353de9b44f45c467945c9856e23d120ffa8a4513b0c5213645fc0366c5e"
+    },
+    {
+      "name": "10 没有匹配结果",
+      "id": "a5LCR",
+      "path": "design/reference/v2.0-waitlist-order/pencil/a5LCR.jpeg",
+      "bytes": 105640,
+      "sha256": "5b4b5475c2bd600bca36883bf1e69e90abfd2787dc19af79cfb80c07b5c1ab19"
+    },
+    {
+      "name": "11 登录失效后续处理",
+      "id": "nlsq6",
+      "path": "design/reference/v2.0-waitlist-order/pencil/nlsq6.jpeg",
+      "bytes": 125195,
+      "sha256": "825f73cfcdfb24aaf80e9098f744b67c3626db9f7a4b417085f78e5156dd3f96"
+    },
+    {
+      "name": "12 我的候补与自动处理",
+      "id": "UAZYO",
+      "path": "design/reference/v2.0-waitlist-order/pencil/UAZYO.jpeg",
+      "bytes": 118416,
+      "sha256": "cb2d93efcd7ff397cd67eec32c87fa50f887388cd9f0ac7fc665088380a015a5"
+    },
+    {
+      "name": "13 全部已选需求",
+      "id": "gqjgr",
+      "path": "design/reference/v2.0-waitlist-order/pencil/gqjgr.jpeg",
+      "bytes": 174760,
+      "sha256": "e7b916a649edfc727a94d20d63eb04df954beded89880b1517ad48786e8010f5"
+    },
+    {
+      "name": "14 自动处理记录",
+      "id": "CvIgz",
+      "path": "design/reference/v2.0-waitlist-order/pencil/CvIgz.jpeg",
+      "bytes": 173395,
+      "sha256": "9d4178488f7a3056906f2150d1680b1e2ccf1a692de699851523e5edefec1a76"
+    },
+    {
+      "name": "15 无法定位受限需求时暂停",
+      "id": "raSVD",
+      "path": "design/reference/v2.0-waitlist-order/pencil/raSVD.jpeg",
+      "bytes": 121774,
+      "sha256": "ee6225c120a6460b6216f4448168711e58ac721ca0ef2f1154f1b5bcf3ce5694"
+    },
+    {
+      "name": "16 每轮一起提交的示例",
+      "id": "eAY5y",
+      "path": "design/reference/v2.0-waitlist-order/pencil/eAY5y.jpeg",
+      "bytes": 162121,
+      "sha256": "6878f46daff41034155b391c323518d68ac1030433c993c7269d0bdac21e1bd0"
+    },
+    {
+      "name": "17 停止后核对在途请求",
+      "id": "MlgjC",
+      "path": "design/reference/v2.0-waitlist-order/pencil/MlgjC.jpeg",
+      "bytes": 120888,
+      "sha256": "a6e072a11cb610ffa2170727719c22338f88af3ac01869f1b2a3b1fcaac031be"
+    }
+  ],
+  "not_verified": [
+    "Android small-screen and large-font runtime adaptation",
+    "Real ticketing authentication, orders, payment, background lifecycle",
+    "Interactive navigation or executable prototype"
+  ],
+  "code_implementation_changed": false,
+  "committed": false,
+  "pushed": false,
+  "completion_notification": {
+    "identity": "punk-12 bot",
+    "message_id": "om_x100b648a668884a4c2f57527967d83e",
+    "read_back": true
+  }
+}

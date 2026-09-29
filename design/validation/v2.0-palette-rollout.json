@@ -1,0 +1,30 @@
+{
+  "status": "DESIGN_APPLIED_SAVED; full visual export/reopen pending mac unlock; user waived blocking development",
+  "saved_bytes": 660457,
+  "saved_sha256": "b3a1ca58db1e155a1ef78a330d02d78fbed15ec8a31380c1f07d8b53193b8f34",
+  "screen_count": 17,
+  "node_count": 887,
+  "same_original_ids": true,
+  "unexpected_non_color_changes": [],
+  "bounds_changed": [],
+  "comparison_screens_unchanged": true,
+  "hardcoded_colors": [],
+  "missing_variables": [],
+  "clipping": [],
+  "overlaps": [],
+  "min_text_contrast_by_theme": {
+    "blue": 4.518,
+    "green": 4.94,
+    "orange": 4.854,
+    "purple": 4.909
+  },
+  "text_contrast_below_4_5": {
+    "blue": [],
+    "green": [],
+    "orange": [],
+    "purple": []
+  },
+  "full_visual_review_complete": false,
+  "native_save_verified": true,
+  "independent_native_reopen_complete": false
+}

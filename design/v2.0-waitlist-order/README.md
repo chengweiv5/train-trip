@@ -1,17 +1,41 @@
-# v2.0 候补下单设计源输入
+# v2.0 候补下单 UI 设计
+
+## 当前：配色已应用，进入代码开发
+
+用户已确认四主题对照，已将相同规则应用到原 17 屏；默认蓝色，17 屏全部绑定可切换的四主题变量，文案、ID 和尺寸均不变，12 屏对照仍保留。文件已原生保存，当前 660,457 bytes，SHA-256 `b3a1ca58db1e155a1ef78a330d02d78fbed15ec8a31380c1f07d8b53193b8f34`。
+
+锁屏前保存与结构回读通过；全 17 屏新截图/OCR、本次独立重新打开尚待补齐，用户明确不让锁屏阻塞代码开发。[本轮验证与代码进展](../../docs/verification/2026-09-30-v2.0-core-foundation.md) · [当前结构/颜色验证](../validation/v2.0-palette-rollout.json)。
+
+下面是上一阶段的历史交付记录，旧大小与 SHA-256 不代表当前文件。`helpers.js` / `screens.js` 仍是最初生成输入，不是当前颜色的权威来源；后续以 `.pen` 和 `palette-tokens.json` 为准，避免重复全量生成。
+
+## 当前配色对照（2026-09-30）
+
+**已新增 12 屏四主题对照，等待视觉确认；原 17 屏未改色。** [对照索引](../reference/v2.0-waitlist-order/palette-review/README.md) · [配色说明与验证](../../docs/verification/2026-09-30-v2.0-palette-review.md) · [主题变量](palette-tokens.json)
+
+Pencil 原稿右侧新增“提交中 / 订单创建 / 异常暂停”三行，按晴空蓝、松林绿、暖阳橙、暮山紫分列。每屏的页头、卡片、统计、支付信息与按钮使用同一主题，成功绿和警告橙收敛为小图标或短标签。四主题都保留，确认后才将规则应用到原有全部页面。
+
+当前复合文件包含 30 个根画板、1,455 个原生节点，657,650 bytes；SHA-256 为 `f03a957baeddba262843a3bff37d4027cc5542e1c6d12067e0455ab64b0d86e3`。原 17 屏子树逐项与备份相同；12 屏已完成原生保存、独立重新打开、编辑态检查、结构/配色/对比度和 OCR 复核。下方大小、节点数和原始导出描述均指首次 17 屏交付版本。
+
+## 首次 17 屏交付记录
+
+**17 屏原生 Pencil 设计已保存并验证。** [打开可编辑源文件](../train-trip-v2.0-waitlist-order.pen) · [原生导出索引](../reference/v2.0-waitlist-order/pencil/README.md) · [17 页 PDF](../reference/v2.0-waitlist-order/pencil/export.pdf) · [验收记录](../../docs/verification/2026-09-30-v2.0-pencil-ui-design.md)
 
 当前产品范围：筛选车次、选择候补需求、登录及勾选乘车人、一次发起自动提交。每次遇到可准确归因的候补过多拒绝时，排除该需求并自动继续，直至订单创建或全部候选被排除。用户已明确授权这一产品行为，无需对每轮续提重新询问。
 
 `helpers.js` 与 `screens.js` 组成 17 页 Pencil 原生 execute 输入。全部筛选集中第 1 页，结果页通过“修改条件”返回并回填原输入；原第 3 页独立筛选页已移除，后续页码顺次前移。所有文本、图标和容器为独立节点，没有把整张预览图作为画布背景。覆盖整批提交、逐项排除后整批续提、处理记录、全失败、无法归因和停止后核对。没有自动分组功能；所选组合须满足官方单次订单限制。
 
-当前 **Pencil CLI 0.3.9 未登录，未执行原生建图或保存**。这些文件是待运行输入，不是已完成的 `.pen`。目标为 `design/train-trip-v2.0-waitlist-order.pen`。
+本次经 Pencil Desktop MCP 建图，2026-09-29 原生保存，2026-09-30 完成保存副本的独立打开回读。这条路径不依赖 Pencil CLI 登录。源文件为 `design/train-trip-v2.0-waitlist-order.pen`，396,672 bytes。
 
-准备交互命令：
+原生 MCP 回读包含 887 个节点（355 个容器、380 个文字、108 个图标、44 个矩形），没有空名称、空文字或未完成占位；最低字号为 12。已修复自适应文字循环宽度问题，扩大 16 个文字入口的点击区域，并按实际高度整理画板。94 个受检控件及操作行不小于 48×48；裁切、非正尺寸、同级重叠均为 0（重叠容差 0.5）。
 
-```sh
-rtk proxy node design/v2.0-waitlist-order/prepare-input.mjs /tmp/train-trip-v2-order-input.txt
-```
+17 页 JPEG 与 PDF 均为 Pencil 原生导出，已逐页检查。OCR 识别到 395 段文字，结合原生文本复核；不把 OCR 当作逐字无误的证明。在 Pencil Layers 中选择标题并进入文字编辑态，确认可编辑后不改文案退出。独立打开与原件同哈希的磁盘副本，887 个节点及 380 个文字内容匹配，布局告警为 0；随后已回到正式源文件。
 
-认证后逐步在 Pencil interactive 中执行、检查警告和截图、修复后保存，再重新打开回读。`execute` 失败时用返回的 `editId` / `edits` 修正；不要忽略错误继续接受保存结果。prepare 脚本不绕过登录、不启动 AI 子代理，也不执行真实票务操作。
+原有 10 个 `.pen` 文件 SHA-256 均未改变。过程快照、修改前备份、独立回读与通知回执保存在 `.verification-private/v2.0-pencil/`；里程碑见 `.codex/TASK_STATE.md`。本轮未修改业务代码、未构建 APK、未 commit/push，也未执行票务操作。
 
-静态预览：`design/reference/v2.0-waitlist-order/`。规格：`docs/superpowers/specs/2026-09-29-v2.0-waitlist-order-design.md`。
+## 后续编辑
+
+优先在现有 `.pen` 的 17 个根画板中修改，保持图层 ID；**不要向当前画布重复执行全部生成输入**。`helpers.js` 与 `screens.js` 作为可复用生成输入留存，`prepare-input.mjs` 仅为重新生成空文档时准备 CLI 命令。
+
+每次修改后检查结构、截图、保存和重新打开回读。`execute` 失败时用返回的 `editId` / `edits` 修正。prepare 脚本不绕过登录、不启动 AI 子代理，也不执行真实票务操作。
+
+历史浏览器近似预览仍在 `design/reference/v2.0-waitlist-order/`，与本次 `pencil/` 原生导出明确区分。规格：`docs/superpowers/specs/2026-09-29-v2.0-waitlist-order-design.md`。这是一套展开高度的静态设计，不代表交互原型、真机适配或候补接口已实现。

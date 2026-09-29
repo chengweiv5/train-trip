@@ -1,0 +1,271 @@
+{
+  "stage": "comparison ready for review; original 17 screens not recolored",
+  "saved_bytes": 657650,
+  "saved_sha256": "f03a957baeddba262843a3bff37d4027cc5542e1c6d12067e0455ab64b0d86e3",
+  "original_roots_exactly_preserved": [
+    "h8UUu",
+    "Bxg5g",
+    "E6nlX",
+    "pJ6bt",
+    "klx1o",
+    "guL06",
+    "OE3Dx",
+    "QwiJP",
+    "KhDLP",
+    "a5LCR",
+    "nlsq6",
+    "UAZYO",
+    "gqjgr",
+    "CvIgz",
+    "raSVD",
+    "eAY5y",
+    "MlgjC"
+  ],
+  "original_root_count": 17,
+  "comparison_screen_count": 12,
+  "comparison_node_count": 548,
+  "guide_node_count": 20,
+  "total_roots": 30,
+  "total_nodes": 1455,
+  "new_node_types": {
+    "frame": 230,
+    "text": 254,
+    "rectangle": 16,
+    "icon": 68
+  },
+  "theme_count": 4,
+  "variable_count": 15,
+  "same_tokens_as_manifest": true,
+  "screen_structure_checks": [
+    {
+      "id": "p1WXZ",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "r0KQil",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "I1TdjK",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "S2OmTx",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "PY4AP",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "fYocO",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "u45IA",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "ioqGG",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "vIkNL",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "SmF7V",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "n2LiBt",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    },
+    {
+      "id": "T5KYHZ",
+      "same_node_count": true,
+      "same_text": true,
+      "same_child_dimensions": true
+    }
+  ],
+  "clipping": [],
+  "nonpositive": [],
+  "overlaps": [],
+  "empty_names": [],
+  "empty_text": [],
+  "unfinished": [],
+  "small_font": [],
+  "foreign_palette_colors": [],
+  "hardcoded_colors_in_comparison": [],
+  "semantic_accents": [
+    {
+      "screen": "p1WXZ",
+      "node": "Fizdf",
+      "name": "circle-x",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "p1WXZ",
+      "node": "ZIY2w",
+      "name": "已排除",
+      "type": "text",
+      "area": 666
+    },
+    {
+      "screen": "r0KQil",
+      "node": "M3fHkJ",
+      "name": "circle-x",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "r0KQil",
+      "node": "LD53n",
+      "name": "已排除",
+      "type": "text",
+      "area": 666
+    },
+    {
+      "screen": "I1TdjK",
+      "node": "WKOFq",
+      "name": "circle-x",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "I1TdjK",
+      "node": "X4FhG",
+      "name": "已排除",
+      "type": "text",
+      "area": 666
+    },
+    {
+      "screen": "S2OmTx",
+      "node": "vXLHW",
+      "name": "circle-x",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "S2OmTx",
+      "node": "v3NXqP",
+      "name": "已排除",
+      "type": "text",
+      "area": 666
+    },
+    {
+      "screen": "PY4AP",
+      "node": "ZIBOo",
+      "name": "circle-check",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "fYocO",
+      "node": "zE0Ur",
+      "name": "circle-check",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "u45IA",
+      "node": "HBbgD",
+      "name": "circle-check",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "ioqGG",
+      "node": "CghVF",
+      "name": "circle-check",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "vIkNL",
+      "node": "WmsYK",
+      "name": "clock",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "SmF7V",
+      "node": "p5dzE",
+      "name": "clock",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "n2LiBt",
+      "node": "l0VjGt",
+      "name": "clock",
+      "type": "icon",
+      "area": 324
+    },
+    {
+      "screen": "T5KYHZ",
+      "node": "NBiAv",
+      "name": "clock",
+      "type": "icon",
+      "area": 324
+    }
+  ],
+  "large_semantic_fills": [],
+  "touch_targets_checked": 52,
+  "touch_targets_below_48": [],
+  "text_contrast_min": 4.518,
+  "text_contrast_below_4_5": [],
+  "independent_readback": {
+    "native_reopen_scene_matches": true,
+    "variables_match": true,
+    "clip_issues_after_reopen": [],
+    "file_sha256": "f03a957baeddba262843a3bff37d4027cc5542e1c6d12067e0455ab64b0d86e3",
+    "copy_sha256": "f03a957baeddba262843a3bff37d4027cc5542e1c6d12067e0455ab64b0d86e3",
+    "ocr_images": 12,
+    "ocr_observations": 262,
+    "native_editability": {
+      "verified": true,
+      "file": "independent-readback-copy.pen",
+      "screen": "T5KYHZ",
+      "text": "正在核对订单",
+      "action": "Layers > title > Return; native editable text area exposed; Escape without text changes",
+      "fill_variable_seen": "tt-ink"
+    }
+  },
+  "older_designs_unchanged": {
+    "design/train-trip-item-photos.pen": true,
+    "design/train-trip-destination-ui.pen": true,
+    "design/train-trip-v0.5.0-navigation-options.pen": true,
+    "design/train-trip-blue-white.pen": true,
+    "design/train-trip-item-photos-v2.pen": true,
+    "design/train-trip-surface-contrast.pen": true,
+    "design/train-trip-v1.0.0-themes.pen": true,
+    "design/train-trip-photo-recovery.pen": true,
+    "design/train-trip-v1.pen": true,
+    "design/train-trip-v0.4.0.pen": true
+  },
+  "visual_review": "All 12 native exports reviewed in 3 four-theme rows; guide structurally checked. OCR supplemented with native source text; not exact OCR guarantee."
+}

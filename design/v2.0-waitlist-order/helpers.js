@@ -2,8 +2,8 @@ const C={primary:'#0073AA',header:'#DDF2FF',card:'#EAF5FC',border:'#D5EAF6',ink:
 const font='Noto Sans SC';
 function frame(p,n,o={}){return Insert(p,{type:'frame',name:n,layout:'vertical',width:'fill_container',height:'fit_content',gap:12,...o});}
 function row(p,n,o={}){return frame(p,n,{layout:'horizontal',alignItems:'center',gap:8,...o});}
-function text(p,s,size=14,color=C.ink,weight='normal',o={}){return Insert(p,{type:'text',name:s.replace(/\n/g,' / ').slice(0,60),content:s,fontFamily:font,fontSize:size,fontWeight:weight,lineHeight:1.5,fill:color,textGrowth:'fixed-width',width:'fill_container',...o});}
-function icon(p,n,color=C.primary,size=20){return Insert(p,{type:'icon',name:n,library:'lucide',icon:n,width:size,height:size,fill:color});}
+function text(p,s,size=14,color=C.ink,weight='normal',o={}){const sizing=o.textGrowth==='auto'?{textGrowth:'auto'}:{textGrowth:'fixed-width',width:'fill_container'};return Insert(p,{type:'text',name:s.replace(/\n/g,' / ').slice(0,60),content:s,fontFamily:font,fontSize:size,fontWeight:weight,lineHeight:1.5,fill:color,...sizing,...o});}
+function icon(p,n,color=C.primary,size=20){const glyph=n==='clock'||n==='circle-help'?'info':n;return Insert(p,{type:'icon',name:n,library:'lucide',icon:glyph,width:size,height:size,fill:color});}
 function actionIcon(p,n){const a=row(p,n+' 操作',{width:48,height:48,justifyContent:'center',cornerRadius:10});icon(a,n);return a;}
 function line(p){return Insert(p,{type:'rectangle',name:'分隔线',width:'fill_container',height:1,fill:C.line});}
 function button(p,s,kind='primary',ico){const b=row(p,s,{height:50,padding:[10,16],justifyContent:'center',cornerRadius:10,fill:kind==='primary'?C.primary:C.white,stroke:kind==='primary'?C.primary:C.line,strokeWidth:1});if(ico)icon(b,ico,kind==='primary'?C.white:C.primary);text(b,s,15,kind==='primary'?C.white:C.primary,'600',{textGrowth:'auto'});return b;}

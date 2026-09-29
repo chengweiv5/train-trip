@@ -1,0 +1,81 @@
+{
+  "status": "APPROVED",
+  "originalScreensUnchanged": false,
+  "guideId": "FYFvB",
+  "screens": [
+    {
+      "id": "p1WXZ",
+      "sourceId": "guL06",
+      "stage": "提交中",
+      "appTheme": "blue"
+    },
+    {
+      "id": "r0KQil",
+      "sourceId": "guL06",
+      "stage": "提交中",
+      "appTheme": "green"
+    },
+    {
+      "id": "I1TdjK",
+      "sourceId": "guL06",
+      "stage": "提交中",
+      "appTheme": "orange"
+    },
+    {
+      "id": "S2OmTx",
+      "sourceId": "guL06",
+      "stage": "提交中",
+      "appTheme": "purple"
+    },
+    {
+      "id": "PY4AP",
+      "sourceId": "OE3Dx",
+      "stage": "订单创建",
+      "appTheme": "blue"
+    },
+    {
+      "id": "fYocO",
+      "sourceId": "OE3Dx",
+      "stage": "订单创建",
+      "appTheme": "green"
+    },
+    {
+      "id": "u45IA",
+      "sourceId": "OE3Dx",
+      "stage": "订单创建",
+      "appTheme": "orange"
+    },
+    {
+      "id": "ioqGG",
+      "sourceId": "OE3Dx",
+      "stage": "订单创建",
+      "appTheme": "purple"
+    },
+    {
+      "id": "vIkNL",
+      "sourceId": "KhDLP",
+      "stage": "异常暂停",
+      "appTheme": "blue"
+    },
+    {
+      "id": "SmF7V",
+      "sourceId": "KhDLP",
+      "stage": "异常暂停",
+      "appTheme": "green"
+    },
+    {
+      "id": "n2LiBt",
+      "sourceId": "KhDLP",
+      "stage": "异常暂停",
+      "appTheme": "orange"
+    },
+    {
+      "id": "T5KYHZ",
+      "sourceId": "KhDLP",
+      "stage": "异常暂停",
+      "appTheme": "purple"
+    }
+  ],
+  "approvedOn": "2026-09-30",
+  "rolloutApplied": true
+}

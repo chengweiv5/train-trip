@@ -1,0 +1,365 @@
+{
+  "source": "app/src/main/kotlin/cn/traintrip/app/ui/Theme.kt",
+  "palettes": {
+    "blue": {
+      "primary": "#0073AA",
+      "tint": "#DDF2FF",
+      "card": "#EAF5FC",
+      "cardBorder": "#D5EAF6",
+      "ink": "#1E3443",
+      "muted": "#516774",
+      "line": "#D5E5EE",
+      "contentReady": "#446874",
+      "actionBorder": "#93CFE9",
+      "headerBorder": "#BFDFEE"
+    },
+    "green": {
+      "primary": "#246B50",
+      "tint": "#DEF2E7",
+      "card": "#EDF7F1",
+      "cardBorder": "#D3E8DC",
+      "ink": "#243C31",
+      "muted": "#536B5F",
+      "line": "#D4E4DB",
+      "contentReady": "#496B59",
+      "actionBorder": "#87B99E",
+      "headerBorder": "#B8DBCA"
+    },
+    "orange": {
+      "primary": "#A64B18",
+      "tint": "#FCE8D8",
+      "card": "#FFF4EB",
+      "cardBorder": "#F0DDCD",
+      "ink": "#433025",
+      "muted": "#756052",
+      "line": "#EBDDCE",
+      "contentReady": "#775F49",
+      "actionBorder": "#D8AA85",
+      "headerBorder": "#EDCDB2"
+    },
+    "purple": {
+      "primary": "#7052A3",
+      "tint": "#EEE5FA",
+      "card": "#F5F0FB",
+      "cardBorder": "#E3D9EF",
+      "ink": "#352C46",
+      "muted": "#695D78",
+      "line": "#DFD5E9",
+      "contentReady": "#69597D",
+      "actionBorder": "#BDA6D9",
+      "headerBorder": "#D7C5EC"
+    }
+  },
+  "variables": {
+    "tt-primary": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#0073AA",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#246B50",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#A64B18",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#7052A3",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-tint": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#DDF2FF",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#DEF2E7",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#FCE8D8",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#EEE5FA",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-card": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#EAF5FC",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#EDF7F1",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#FFF4EB",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#F5F0FB",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-cardBorder": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#D5EAF6",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#D3E8DC",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#F0DDCD",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#E3D9EF",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-ink": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#1E3443",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#243C31",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#433025",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#352C46",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-muted": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#516774",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#536B5F",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#756052",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#695D78",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-line": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#D5E5EE",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#D4E4DB",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#EBDDCE",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#DFD5E9",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-contentReady": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#446874",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#496B59",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#775F49",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#69597D",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-actionBorder": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#93CFE9",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#87B99E",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#D8AA85",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#BDA6D9",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-headerBorder": {
+      "type": "color",
+      "value": [
+        {
+          "value": "#BFDFEE",
+          "theme": {
+            "appTheme": "blue"
+          }
+        },
+        {
+          "value": "#B8DBCA",
+          "theme": {
+            "appTheme": "green"
+          }
+        },
+        {
+          "value": "#EDCDB2",
+          "theme": {
+            "appTheme": "orange"
+          }
+        },
+        {
+          "value": "#D7C5EC",
+          "theme": {
+            "appTheme": "purple"
+          }
+        }
+      ]
+    },
+    "tt-surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "tt-onPrimary": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "tt-headerControl": {
+      "type": "color",
+      "value": "#FFFFFFCC"
+    },
+    "tt-statusSuccess": {
+      "type": "color",
+      "value": "#0F7952"
+    },
+    "tt-statusWarning": {
+      "type": "color",
+      "value": "#A8500C"
+    }
+  }
+}

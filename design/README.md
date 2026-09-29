@@ -1,3 +1,13 @@
+## v2.0 候补下单 UI（2026-09-30）
+
+[当前进展](../docs/verification/2026-09-30-v2.0-core-foundation.md)：四主题对照已确认，配色已应用并保存到原 17 屏。全量新视觉导出待解锁补齐，不阻塞开发；core 状态机及持久化协调器已实现，新增 26 个测试，全量 172 项 core 测试通过。Android 候补页面与真实平台适配未接入。
+
+[新增四主题配色对照](reference/v2.0-waitlist-order/palette-review/README.md)：提交中、订单创建、异常暂停三页 × 四主题，共 12 个可编辑对照屏。原 17 屏保持不变，等待视觉确认后再统一应用；[配色验收](../docs/verification/2026-09-30-v2.0-palette-review.md)。
+
+[可编辑 Pencil 原稿](train-trip-v2.0-waitlist-order.pen) · [设计说明](v2.0-waitlist-order/README.md) · [原生导出索引](reference/v2.0-waitlist-order/pencil/README.md) · [17 页 PDF](reference/v2.0-waitlist-order/pencil/export.pdf) · [验收记录](../docs/verification/2026-09-30-v2.0-pencil-ui-design.md)
+
+已补齐 17 屏，涵盖查询筛选、车次多选、登录、乘车人、一次确认、全部剩余需求自动提交，以及成功、全失败、超时、登录失效、无法归因和停止后的状态。887 个原生图层已保存并独立重新打开验证；仅设计交付，不代表候补业务已实现。原有设计保持不变。
+
 ## 目的地条目相册（2026-09-22）
 
 [已确认设计与规则](train-trip-item-photos.md) · [Pencil 源文件](train-trip-item-photos-v2.pen) · [设计预览](item-photos-v2.html) · [实现验收](../docs/verification/2026-09-22-destination-item-photos.md)。景点和美食各自展示最多 3 张照片，城市合计最多 100 张；多图横滑、点击大图，仅在全量更新时为零图条目补图。已有 1–3 张可用图片的条目保留。
