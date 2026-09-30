@@ -25,6 +25,8 @@ import cn.traintrip.core.waitlist.*
             .testTag("waitlist-filters"), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             Text("选好车次，自动继续", style = MaterialTheme.typography.headlineMedium, color = Primary)
             Text("先查询和选择候补需求，再登录并选择真实乘车人", style = MaterialTheme.typography.bodyMedium, color = Muted)
+            SecondaryButton("12306 登录与乘车人", vm::openAccount,
+                Modifier.testTag("waitlist-account"))
             ContentCard(Modifier.fillMaxWidth()) {
                 WaitlistField("出发地 · ${s.catalog.byCity[f.originCityId]?.name.orEmpty()}",
                     stationSummary(s.catalog, f.originStations), "waitlist-origin") { sheet = "origin" }
@@ -71,7 +73,7 @@ import cn.traintrip.core.waitlist.*
             s.storageError?.let { WaitlistNotice(it); SecondaryButton("重试保存条件", vm::saveDraft) }
             s.operationError?.let { WaitlistNotice(it) }
             PrimaryButton("查询候补车次", vm::search, s.ready, Modifier.testTag("waitlist-search"))
-            Text("匿名查询不下单。可加入候补不代表指定乘客一定能提交；真实认证和自动提交尚未接通。",
+            Text("匿名查询不下单。可加入候补不代表指定乘客一定能提交；真实下单仍需核验全部条件并明确确认。",
                 style = MaterialTheme.typography.bodySmall, color = Muted)
         }
     }

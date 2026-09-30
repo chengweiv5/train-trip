@@ -13,7 +13,15 @@ android {
     buildFeatures { compose = true }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
     kotlinOptions { jvmTarget = "17" }
-    buildTypes { release { isMinifyEnabled = false } }
+    buildTypes {
+        debug {
+            if (providers.gradleProperty("railwayDeviceProbe").orNull == "true") {
+                applicationIdSuffix = ".dev"
+                resValue("string", "app_name", "有票再出发·开发")
+            }
+        }
+        release { isMinifyEnabled = false }
+    }
     packaging { resources.excludes += "/META-INF/{AL2.0,LGPL2.1}" }
 }
 dependencies {

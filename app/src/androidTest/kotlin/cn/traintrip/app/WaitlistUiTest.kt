@@ -49,15 +49,19 @@ class WaitlistUiTest {
         }
     }
     private fun start(source: Source = Source(), narrow: Boolean = false,
-        theme: State<ThemeChoice> = mutableStateOf(ThemeChoice.BLUE)): WaitlistViewModel {
-        val vm = WaitlistViewModel(source, Draft(filters))
+        theme: State<ThemeChoice> = mutableStateOf(ThemeChoice.BLUE),
+        onOpenRailway: () -> Unit = {},
+        authTransport: RailwayTransport? = null): WaitlistViewModel {
+        val vm = WaitlistViewModel(source, Draft(filters),
+            accountService = authTransport?.let { RailwayAccountService(it) { "opaque-test" } },
+            passwordLogin = authTransport?.let { RailwayPasswordLogin(it) })
         compose.setContent {
             val density = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(density.density, if (narrow) 1.6f else 1f)) {
                 TrainTripTheme(theme.value) {
                     Column(Modifier.width(if (narrow) 320.dp else 412.dp).fillMaxHeight().safeDrawingPadding()) {
                         val s by vm.state.collectAsState()
-                        Box(Modifier.weight(1f)) { WaitlistScreen(s, vm, {}, {}) }
+                        Box(Modifier.weight(1f)) { WaitlistScreen(s, vm, {}, onOpenRailway) }
                         RootNavigation(Page.WAITLIST, {})
                     }
                 }
@@ -65,6 +69,68 @@ class WaitlistUiTest {
         }
         compose.waitUntil(5000) { vm.state.value.ready }
         return vm
+    }
+    @Test fun nativePasswordScreenSupportsSinglePhoneSmsAndNeverShowsQrInAllThemes() {
+        val theme = mutableStateOf(ThemeChoice.BLUE)
+        val calls = mutableListOf<String>()
+        val transport = object : RailwayTransport {
+            override suspend fun post(path: String, fields: Map<String, String>): String {
+                calls += path
+                return when (path) {
+                    "/passport/web/checkLoginVerify" -> """{"login_check_code":"3"}"""
+                    "/passport/web/getMessageCode" -> """{"result_code":"0"}"""
+                    else -> error("no authorized account or order calls allowed")
+                }
+            }
+        }
+        val vm = start(narrow = true, theme = theme, authTransport = transport)
+        compose.onNodeWithTag("waitlist-account").performScrollTo().performClick()
+        assertTrue(calls.isEmpty())
+        for (choice in ThemeChoice.entries) {
+            compose.runOnIdle { theme.value = choice }
+            compose.onNodeWithTag("railway-username").performScrollTo().performTextReplacement("synthetic-account")
+            compose.onNodeWithTag("railway-password").performScrollTo().performTextReplacement("synthetic-password")
+            compose.onNodeWithTag("railway-password-submit").performScrollTo().performClick()
+            compose.waitUntil(5000) { vm.state.value.passwordPhase == RailwayPasswordUiPhase.SMS_REQUIRED }
+            compose.onNodeWithTag("railway-password").assertTextContains("12306 密码")
+            compose.onNodeWithTag("railway-identity-last-four").performScrollTo().performTextReplacement("123X")
+            compose.onNodeWithTag("railway-send-sms").performScrollTo().assertIsEnabled()
+            assertTextFits()
+            compose.onNodeWithTag("railway-qr-start").assertDoesNotExist()
+            compose.onNodeWithTag("waitlist-auth-disabled").performScrollTo().assertIsNotEnabled()
+            assertNull(vm.state.value.account)
+        }
+        compose.onNodeWithTag("railway-send-sms").performScrollTo().performClick()
+        compose.waitUntil { vm.state.value.passwordPhase == RailwayPasswordUiPhase.SMS_SENT }
+        compose.onNodeWithTag("railway-send-sms").assertIsNotEnabled()
+        compose.onNodeWithTag("railway-sms-code").performScrollTo().performTextInput("123456")
+        assertTextFits()
+        assertEquals(1, calls.count { it == "/passport/web/getMessageCode" })
+        assertTrue(calls.all { it in setOf("/passport/web/checkLoginVerify", "/passport/web/getMessageCode") })
+    }
+    @Test fun appLoginEntryOpensOfficialAppWithoutClaimingAccountSynchronization() {
+        val theme = mutableStateOf(ThemeChoice.BLUE)
+        var launches = 0
+        lateinit var vm: WaitlistViewModel
+        vm = start(narrow = true, theme = theme, onOpenRailway = {
+            launches++
+            vm.reportRailwayLoginLaunch(AppLaunchResult.OPENED)
+        })
+        for (choice in ThemeChoice.entries) {
+            compose.runOnIdle { theme.value = choice; vm.edit() }
+            compose.onNodeWithTag("waitlist-account").performScrollTo().performClick()
+            assertTextFits()
+            capture("app-login-${choice.id}-top")
+            compose.onNodeWithTag("railway-login").performScrollTo().performClick()
+            compose.onNodeWithText("授权同步尚未接通", substring = true).assertExists()
+            compose.onNodeWithTag("waitlist-auth-disabled").performScrollTo().assertIsNotEnabled()
+            compose.onNodeWithText("前往 12306 官方登录").assertDoesNotExist()
+            assertNull(vm.state.value.account)
+            assertTrue(vm.state.value.passengerSelection.isEmpty())
+            assertTextFits()
+            capture("app-login-${choice.id}-bottom")
+        }
+        assertEquals(ThemeChoice.entries.size, launches)
     }
     @Test fun selectionRespectsSeatRestrictionAndAuthenticationIsExplicitlyUnavailable() {
         val vm = start()

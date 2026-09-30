@@ -73,6 +73,7 @@ import kotlinx.coroutines.delay
                     Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()},::openSettings,wishlist=wish,onReloadWishlist=wishlistVm::reload)
                     Page.WAITLIST->WaitlistScreen(waitlist,waitlistVm,vm::openTicketFromWaitlist,{
                         val result=launcher?.invoke(context) ?: launchRailwayApp(context)
+                        waitlistVm.reportRailwayLoginLaunch(result)
                         if(result!=AppLaunchResult.OPENED) Toast.makeText(context,"无法打开 12306，请确认已安装；候补需求仍保留",Toast.LENGTH_LONG).show()
                     })
                     Page.CITY_QUERY->FiltersScreen(s.copy(filters=s.cityQueryFilters ?: s.filters),vm::updateFilters,{vm.search()},onBack=vm::back,wishlist=wish,onReloadWishlist=wishlistVm::reload)

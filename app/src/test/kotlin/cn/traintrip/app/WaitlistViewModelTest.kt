@@ -36,6 +36,110 @@ class WaitlistViewModelTest {
     @Before fun setup() { Dispatchers.setMain(dispatcher) }
     @After fun teardown() { Dispatchers.resetMain() }
 
+    @Test fun openingOfficialAppDoesNotAuthenticateOrLoseSelectedDemands() = runTest(dispatcher) {
+        val vm = WaitlistViewModel(Source(), Draft(filters))
+        advanceUntilIdle()
+        vm.search(); advanceUntilIdle()
+        vm.toggle(vm.state.value.choices.single())
+        vm.openAccount()
+        vm.reportRailwayLoginLaunch(AppLaunchResult.OPENED)
+        advanceUntilIdle()
+        assertNull(vm.state.value.account)
+        assertFalse(vm.state.value.accountBusy)
+        assertTrue(vm.state.value.passengerSelection.isEmpty())
+        assertEquals(1, vm.state.value.selected.size)
+        assertTrue(vm.state.value.railwayAppNotice!!.contains("授权同步尚未接通"))
+        vm.reviewOrder()
+        assertEquals(WaitlistPage.AUTHENTICATION, vm.state.value.page)
+    }
+
+    @Test fun failedOfficialAppLaunchKeepsUserInAppWithoutWebFallback() = runTest(dispatcher) {
+        val vm = WaitlistViewModel(Source(), Draft(filters))
+        advanceUntilIdle()
+        vm.openAccount()
+        vm.reportRailwayLoginLaunch(AppLaunchResult.NOT_INSTALLED)
+        assertTrue(vm.state.value.railwayAppNotice!!.contains("未找到 12306 App"))
+        vm.reportRailwayLoginLaunch(AppLaunchResult.FAILED)
+        assertTrue(vm.state.value.railwayAppNotice!!.contains("无法打开 12306 App"))
+        assertTrue(vm.state.value.railwayAppNotice!!.contains("不会跳转网页登录"))
+        assertNull(vm.state.value.account)
+        assertEquals(WaitlistPage.AUTHENTICATION, vm.state.value.page)
+    }
+
+    @Test fun nativeQrRequiresApprovalAndVerifiedPassengersBeforeMarkingConnected() = runTest(dispatcher) {
+        var status = "0"
+        val paths = mutableListOf<String>()
+        val transport = object : RailwayTransport {
+            override suspend fun post(path: String, fields: Map<String, String>): String {
+                paths += path
+                return when (path) {
+                    "/passport/web/create-qr64" -> """{"result_code":"0","uuid":"synthetic-id","image":"aW1hZ2U="}"""
+                    "/passport/web/checkqr" -> """{"result_code":"$status"}"""
+                    "/passport/web/auth/uamtk" -> """{"result_code":0,"newapptk":"synthetic-token"}"""
+                    "/otn/uamauthclient" -> """{"result_code":0}"""
+                    "/otn/login/checkUser" -> """{"status":true,"data":{"flag":true}}"""
+                    "/otn/modifyUser/initQueryUserInfoApi" -> """{"status":true,"data":{"userDTO":{"loginUserDTO":{"user_name":"synthetic-account"}}}}"""
+                    "/otn/confirmPassenger/getPassengerDTOs" -> """{"status":true,"data":{"normal_passengers":[]}}"""
+                    else -> error("unexpected endpoint")
+                }
+            }
+        }
+        val vm = WaitlistViewModel(Source(), Draft(filters),
+            accountService = RailwayAccountService(transport) { "opaque" },
+            qrLogin = RailwayQrLogin(transport) { testScheduler.currentTime })
+        runCurrent()
+        vm.openAccount()
+        assertTrue(paths.isEmpty())
+        vm.startQrLogin(); runCurrent()
+        assertNull(vm.state.value.account)
+        assertEquals(RailwayQrUiPhase.WAITING_SCAN, vm.state.value.qrPhase)
+        status = "1"
+        advanceTimeBy(2001); runCurrent()
+        assertNull(vm.state.value.account)
+        assertEquals(RailwayQrUiPhase.WAITING_CONFIRMATION, vm.state.value.qrPhase)
+        assertFalse(paths.any { it.contains("Passenger") })
+        status = "2"
+        advanceTimeBy(2001); runCurrent()
+        assertEquals(RailwayQrUiPhase.CONNECTED, vm.state.value.qrPhase)
+        assertNotNull(vm.state.value.account)
+        assertNull(vm.state.value.qrChallenge)
+        assertTrue(paths.contains("/otn/confirmPassenger/getPassengerDTOs"))
+        assertFalse(paths.any { it.contains("confirmHB") || it.contains("submitOrder") })
+    }
+
+    @Test fun nativePasswordLoginNeedsExplicitInputAndConfirmedAccountBeforeShowingPassengers() = runTest(dispatcher) {
+        val paths = mutableListOf<String>()
+        val transport = object : RailwayTransport {
+            override suspend fun post(path: String, fields: Map<String, String>): String {
+                paths += path
+                return when (path) {
+                    "/passport/web/checkLoginVerify" -> """{"login_check_code":"0"}"""
+                    "/passport/web/login", "/otn/uamauthclient" -> """{"result_code":0}"""
+                    "/passport/web/auth/uamtk" -> """{"result_code":0,"newapptk":"synthetic-token"}"""
+                    "/otn/login/checkUser" -> """{"status":true,"data":{"flag":true}}"""
+                    "/otn/modifyUser/initQueryUserInfoApi" -> """{"status":true,"data":{"userDTO":{"loginUserDTO":{"user_name":"synthetic-account"}}}}"""
+                    "/otn/confirmPassenger/getPassengerDTOs" -> """{"status":true,"data":{"normal_passengers":[]}}"""
+                    else -> error("unexpected endpoint")
+                }
+            }
+        }
+        val vm = WaitlistViewModel(Source(), Draft(filters),
+            accountService = RailwayAccountService(transport) { "opaque" },
+            passwordLogin = RailwayPasswordLogin(transport))
+        runCurrent()
+        vm.openAccount()
+        assertTrue(paths.isEmpty())
+        val secret = "synthetic-password".toCharArray()
+        vm.loginWithPassword("synthetic-account", secret)
+        advanceUntilIdle()
+        assertNotNull(vm.state.value.account)
+        assertTrue(secret.all { it == '\u0000' })
+        assertFalse(vm.state.value.toString().contains("synthetic-password"))
+        assertFalse(vm.state.value.toString().contains("synthetic-account"))
+        assertEquals(RailwayPasswordUiPhase.CONNECTED, vm.state.value.passwordPhase)
+        assertFalse(paths.any { it.contains("qr") || it.contains("confirmHB") || it.contains("submitOrder") })
+    }
+
     @Test fun draftDoesNotRelabelOldResultsAndHiddenSelectionsRemainExplicit() = runTest(dispatcher) {
         val source = Source()
         val vm = WaitlistViewModel(source, Draft(filters))

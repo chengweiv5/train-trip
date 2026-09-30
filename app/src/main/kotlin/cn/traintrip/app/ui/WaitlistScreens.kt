@@ -26,7 +26,9 @@ import cn.traintrip.core.waitlist.*
         WaitlistPage.FILTERS -> WaitlistFiltersScreen(s, vm)
         WaitlistPage.RESULTS -> WaitlistResultsScreen(s, vm, onTicket)
         WaitlistPage.SELECTED -> WaitlistSelectedScreen(s, vm)
-        WaitlistPage.AUTHENTICATION -> WaitlistAuthenticationScreen(s, vm, onOpenRailway)
+        WaitlistPage.AUTHENTICATION -> if (vm.nativePasswordAvailable) RailwayPassengersScreen(s, vm, onOpenRailway)
+            else WaitlistAuthenticationScreen(s, vm, onOpenRailway)
+        WaitlistPage.CONFIRMATION -> RailwayConfirmationScreen(s, vm)
         WaitlistPage.PROGRESS -> WaitlistProgressScreen(s, vm, onOpenRailway)
     } }
 }
@@ -147,13 +149,16 @@ import cn.traintrip.core.waitlist.*
             ContentCard(Modifier.fillMaxWidth()) {
                 Text("已保留 ${s.selected.size} 组候补需求", style = MaterialTheme.typography.titleLarge)
                 Text("真实认证与提交暂未接通", color = Primary, style = MaterialTheme.typography.titleMedium)
-                Text("当前版本已接入匿名查询和选择，尚不能读取你的 12306 登录状态或乘车人，也不会发送候补订单。",
+                Text("请在 12306 App 内登录。本应用不打开网页登录页面。",
                     style = MaterialTheme.typography.bodyMedium, color = Ink)
-                Text("打开外部 12306 App 不等于本应用登录成功。选中的日期、车次和席别不会自动传入；可在 12306 中自行办理。",
+                Text("授权回传尚未接通：返回后不会自动同步账号或乘车人，也不会发送候补订单。",
                     style = MaterialTheme.typography.bodyMedium, color = Muted)
             }
-            PrimaryButton("登录并选择乘车人（待接通）", {}, enabled = false, modifier = Modifier.testTag("waitlist-auth-disabled"))
-            SecondaryButton("打开 12306 自行办理", onOpenRailway)
+            PrimaryButton("打开 12306 App 登录", onOpenRailway, modifier = Modifier.testTag("railway-login"))
+            s.railwayAppNotice?.let { WaitlistNotice(it) }
+            SecondaryButton("同步乘车人（授权待接通）", {}, enabled = false, modifier = Modifier.testTag("waitlist-auth-disabled"))
+            Text("已选日期、车次和席别仍保留在本应用，不会自动传入 12306；可在官方 App 自行办理。",
+                style = MaterialTheme.typography.bodyMedium, color = Muted)
             SecondaryButton("返回检查已选需求", vm::showSelected)
             Text("接通后将按官方组合限制核验全部需求；不会暗中拆单，也不会使用占位乘客或模拟提交。",
                 style = MaterialTheme.typography.bodySmall, color = Muted)

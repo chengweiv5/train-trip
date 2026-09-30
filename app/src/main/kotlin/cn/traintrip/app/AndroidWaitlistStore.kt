@@ -65,7 +65,20 @@ private object UnavailableWaitlistGateway : WaitlistGateway {
 fun waitlistViewModelFactory(context: Context): ViewModelProvider.Factory {
     val app = context.applicationContext
     return viewModelFactory {
-        initializer { WaitlistViewModel(OfficialTicketSource(), AndroidWaitlistDraftStore(app),
-            WaitlistCoordinator(UnavailableWaitlistGateway, AndroidWaitlistStore(app))) }
+        initializer {
+            val session = RailwaySession()
+            val references = RailwayLocalReferences()
+            val debug = app.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0
+            // Clean up the discontinued QR experiment; never export credentials or login images.
+            if (debug) runCatching { File(app.filesDir, "railway-qr-preview.png").delete() }
+            WaitlistViewModel(OfficialTicketSource(), AndroidWaitlistDraftStore(app),
+                WaitlistCoordinator(UnavailableWaitlistGateway, AndroidWaitlistStore(app)),
+                RailwayAccountService(session, references::reference),
+                accountDiagnostic = { status, count ->
+                    if (debug) File(app.filesDir, "railway-diagnostic.txt")
+                        .writeText("status=$status\npassengers=$count\n")
+                },
+                passwordLogin = RailwayPasswordLogin(session) { android.os.SystemClock.elapsedRealtime() })
+        }
     }
 }
