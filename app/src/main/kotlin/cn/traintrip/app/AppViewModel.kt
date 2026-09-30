@@ -7,7 +7,7 @@ import cn.traintrip.core.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-enum class Page { FILTERS, WISHLIST, ADD_CITY, CITY_QUERY, RESULTS, DESTINATION, DETAIL, SETTINGS, OFFLINE, ABOUT }
+enum class Page { FILTERS, WAITLIST, WISHLIST, ADD_CITY, CITY_QUERY, RESULTS, DESTINATION, DETAIL, SETTINGS, OFFLINE, ABOUT }
 data class UiState(
     val catalog:StationCatalog, val filters:SearchFilters, val applied:SearchFilters?=null,
     val sourceInfo:SourceInfo?=null, val loading:Boolean=false, val error:String?=null,
@@ -41,7 +41,7 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
                 guideFromResults=previous.guideFromResults,queryCityId=previous.queryCityId,cityQueryFilters=previous.draft,navigationEntry=previous.entry,selectedTripKey=null) }
     }
     fun selectRoot(page:Page) {
-        require(page==Page.FILTERS || page==Page.WISHLIST)
+        require(page==Page.FILTERS || page==Page.WAITLIST || page==Page.WISHLIST)
         if(mutable.value.page==page)return
         history.clear();mutable.update { it.copy(page=page,queryCityId=null,cityQueryFilters=null,error=null) }
     }
@@ -51,6 +51,13 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
         val end=current.filters.endDate.takeIf { current.filters.startDate>=today() && it>=date } ?: date
         navigate(Page.CITY_QUERY,id)
         mutable.update { it.copy(queryCityId=id,cityQueryFilters=current.filters.copy(startDate=date,endDate=end,destinationCityIds=setOf(id)),error=null) }
+    }
+    fun openTicketFromWaitlist(choice:cn.traintrip.core.waitlist.WaitlistChoice) {
+        val trip=choice.trip
+        navigate(Page.CITY_QUERY,trip.to.cityId)
+        mutable.update { it.copy(queryCityId=trip.to.cityId,cityQueryFilters=it.filters.copy(
+            originCityId=trip.from.cityId,originStations=setOf(trip.from.code),startDate=trip.date,endDate=trip.date,
+            seats=setOf(choice.seat),destinationCityIds=setOf(trip.to.cityId)),error=null) }
     }
     fun updateFilters(f:SearchFilters) {
         if(mutable.value.page==Page.CITY_QUERY) mutable.update { it.copy(cityQueryFilters=f.copy(destinationCityIds=setOfNotNull(it.queryCityId)),error=null) }

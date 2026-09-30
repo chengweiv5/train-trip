@@ -41,11 +41,11 @@ import java.time.format.DateTimeFormatter
         Column {
             HorizontalDivider(color=Line)
             Row(Modifier.fillMaxWidth().selectableGroup()) {
-                listOf(Page.FILTERS to "查票",Page.WISHLIST to "想去").forEach { (page,label) ->
+                listOf(Page.FILTERS to "查票",Page.WAITLIST to "候补",Page.WISHLIST to "想去").forEach { (page,label) ->
                     Column(Modifier.weight(1f).heightIn(min=56.dp).testTag("tab-${page.name}")
                         .selectable(selected==page,role=Role.Tab,onClick={onSelect(page)}).padding(vertical=6.dp),
                         horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(3.dp)) {
-                        UiIcon(if(page==Page.FILTERS)"train" else "star",color=if(page==selected)Primary else Muted)
+                        UiIcon(when(page){Page.FILTERS->"train";Page.WAITLIST->"refresh";else->"star"},color=if(page==selected)Primary else Muted)
                         Text(label,style=MaterialTheme.typography.labelMedium,color=if(page==selected)Primary else Muted)
                     }
                 }
@@ -55,7 +55,8 @@ import java.time.format.DateTimeFormatter
 }
 @Composable fun WishlistScreen(state:WishlistState,catalog:StationCatalog,guides:Map<String,DestinationGuide>,offline:List<OfflineEntry>,
     onAdd:()->Unit,onToggle:(City)->Unit,onGuide:(String)->Unit,onQuery:(String)->Unit,onRetry:()->Unit,
-    browser:WishlistBrowserState=rememberSaveable(saver=WishlistBrowserState.Saver) { WishlistBrowserState() }) {
+    browser:WishlistBrowserState=rememberSaveable(saver=WishlistBrowserState.Saver) { WishlistBrowserState() },
+    onWaitlist:((String)->Unit)?=null) {
     val groups=remember(state.items,catalog) { wishlistGroups(state.items,catalog) }
     val group=browser.current(groups)
     val allCities=remember(state.items) { state.items.sortedByDescending { it.addedAt } }
@@ -117,7 +118,7 @@ import java.time.format.DateTimeFormatter
                                 }
                             }
                             items(cities,key={it.cityId}) { wish ->
-                                WishlistCityCard(wish,catalog.byCity[wish.cityId],guides[wish.cityId],offline,!state.busy,browser.showAll,onToggle,onGuide,onQuery)
+                                WishlistCityCard(wish,catalog.byCity[wish.cityId],guides[wish.cityId],offline,!state.busy,browser.showAll,onToggle,onGuide,onQuery,onWaitlist)
                             }
                             item("footer") { Text("想去清单保存在本机",style=MaterialTheme.typography.bodySmall,color=Muted) }
                         }
@@ -129,7 +130,7 @@ import java.time.format.DateTimeFormatter
 }
 
 @Composable private fun WishlistCityCard(wish:WishCity,city:City?,guide:DestinationGuide?,offline:List<OfflineEntry>,
-    enabled:Boolean,showProvince:Boolean,onToggle:(City)->Unit,onGuide:(String)->Unit,onQuery:(String)->Unit) {
+    enabled:Boolean,showProvince:Boolean,onToggle:(City)->Unit,onGuide:(String)->Unit,onQuery:(String)->Unit,onWaitlist:((String)->Unit)?) {
     Surface(onClick={onGuide(wish.cityId)},modifier=Modifier.fillMaxWidth().testTag("wish-${wish.cityId}"),
         color=CardBackground,contentColor=Ink,shape=RoundedCornerShape(14.dp),border=BorderStroke(1.dp,CardBorder)) {
         Column(Modifier.padding(12.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
@@ -152,6 +153,7 @@ import java.time.format.DateTimeFormatter
                     UiIcon("train",color=LocalContentColor.current);Spacer(Modifier.width(6.dp));Text("查车票")
                 }
             }
+            if(onWaitlist!=null && city?.supported==true) TextButton({onWaitlist(wish.cityId)},Modifier.fillMaxWidth().heightIn(min=48.dp).testTag("wish-waitlist-${wish.cityId}")) { Text("查询去${city.name}的候补") }
             if(city?.supported!=true) Text(city?.unavailableReason ?: "当前目录暂未收录此城市",style=MaterialTheme.typography.bodySmall,color=Muted)
         }
     }

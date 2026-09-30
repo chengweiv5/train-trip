@@ -73,7 +73,9 @@ data class Trip(
     val date: LocalDate, val trainId: String, val trainCode: String, val from: Station, val to: Station,
     val departure: LocalTime?, val arrival: LocalTime?, val durationMinutes: Int?,
     val saleState: SaleState, val saleText: String, val seats: Map<SeatType, SeatAvailability>,
-    val queriedAt: Instant, val waitlistTrainFlag: Boolean = false, val stopCheckMinutes: Int = 0
+    val queriedAt: Instant, val waitlistTrainFlag: Boolean = false, val stopCheckMinutes: Int = 0,
+    val waitlistSeatLimit: String = "",
+    val waitlistContextAvailable: Boolean = false,
 ) {
     val key get() = "$date/$trainId/${from.code}/${to.code}"
     val trainKey get() = "$date/$trainId"

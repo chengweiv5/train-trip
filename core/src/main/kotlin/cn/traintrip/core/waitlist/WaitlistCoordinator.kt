@@ -38,6 +38,16 @@ class WaitlistCoordinator(
     val state: StateFlow<WaitlistState?> = mutable.asStateFlow()
     private var persistenceFailed = false
 
+    /** Display saved progress before authentication; never trusts a persisted binding as a login. */
+    suspend fun restore() {
+        stateMutex.withLock {
+            check(!persistenceFailed)
+            if (mutable.value != null) return@withLock
+            val saved = load() ?: return@withLock
+            persist(WaitlistFlow.accept(saved, WaitlistEvent.Pause(WaitlistPause.BACKGROUND), clock.instant()))
+        }
+    }
+
     suspend fun start(request: WaitlistRequest, limits: WaitlistLimits) {
         val effect = stateMutex.withLock {
             check(!persistenceFailed) { "请重新加载已保存进度后核对订单" }

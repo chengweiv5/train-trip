@@ -18,11 +18,14 @@ import java.time.LocalDate
 import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
 
-@Composable fun DateFilterSheet(s:UiState,onDismiss:()->Unit,onApply:(SearchFilters)->Unit) {
+@Composable fun DateFilterSheet(s:UiState,onDismiss:()->Unit,onApply:(SearchFilters)->Unit,
+    allowedRange:ClosedRange<LocalDate>?=null) {
     var range by rememberSaveable { mutableStateOf(s.filters.startDate!=s.filters.endDate) }
     val earliest=remember { today() }
-    val selectable=remember(earliest) { object:SelectableDates {
-        override fun isSelectableDate(utcTimeMillis:Long)=calendarDate(utcTimeMillis)>=earliest
+    val selectable=remember(earliest,allowedRange) { object:SelectableDates {
+        override fun isSelectableDate(utcTimeMillis:Long)=calendarDate(utcTimeMillis).let {
+            it>=earliest && (allowedRange==null || it in allowedRange)
+        }
         override fun isSelectableYear(year:Int)=year>=earliest.year
     } }
     val single=rememberDatePickerState(initialSelectedDateMillis=calendarMillis(s.filters.startDate),selectableDates=selectable)
@@ -34,7 +37,9 @@ import java.time.temporal.ChronoUnit
     val start=(if(range) dates.selectedStartDateMillis else single.selectedDateMillis)?.let(::calendarDate)
     val end=(if(range) dates.selectedEndDateMillis else single.selectedDateMillis)?.let(::calendarDate)
     val candidate=if(start!=null && end!=null) s.filters.copy(startDate=start,endDate=end) else null
-    val error=candidate?.validate()
+    val error=candidate?.let { it.validate() ?: if(allowedRange!=null &&
+        (it.startDate !in allowedRange || it.endDate !in allowedRange))
+        "请选择官方范围 ${dateLabel(allowedRange.start)}—${dateLabel(allowedRange.endInclusive)}" else null }
     val days=if(start!=null && end!=null) ChronoUnit.DAYS.between(start,end)+1 else null
     val calendarColors=DatePickerDefaults.colors(containerColor=PageBackground,dayInSelectionRangeContainerColor=PrimaryTint,dayInSelectionRangeContentColor=Primary)
     FilterPanel("选择出发日期",onDismiss) {

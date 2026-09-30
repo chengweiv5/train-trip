@@ -40,7 +40,9 @@ object TicketParser {
                     else availability(raw)
                 }
                 require(seats.values.none { it.kind==AvailabilityKind.UNKNOWN }) { "出现未识别的席别状态，不能确定余票" }
-                Trip(unit.date,f[2],f[3],from,to,depart,arrive,duration,sale,f[1],seats,at,f[37] == "1",f.getOrNull(48)?.toIntOrNull()?.coerceAtLeast(0) ?: 0)
+                Trip(unit.date,f[2],f[3],from,to,depart,arrive,duration,sale,f[1],seats,at,
+                    f[37] == "1",f.getOrNull(48)?.toIntOrNull()?.coerceAtLeast(0) ?: 0,
+                    f[38], f[0].isNotBlank() && f[0] != "null")
             }
             QueryResult.Success(trips,at)
         } catch(e: Exception) { QueryResult.Failure("余票数据无法解析：${e.message?.take(100) ?: "格式异常"}") }

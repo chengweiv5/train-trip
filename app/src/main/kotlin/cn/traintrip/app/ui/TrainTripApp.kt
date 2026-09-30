@@ -23,19 +23,21 @@ import kotlinx.coroutines.delay
 
 @Composable fun TrainTripApp(vm:AppViewModel,destinationVm:DestinationViewModel = viewModel(),
     wishlistVm:WishlistViewModel=viewModel(),updateVm:UpdateViewModel=viewModel(factory=UpdateViewModel.factory(LocalContext.current)),launcher:((Context)->AppLaunchResult)?=null,
+    waitlistVm:WaitlistViewModel=viewModel(factory=waitlistViewModelFactory(LocalContext.current)),
     themeState:ThemeUiState=ThemeUiState(),onThemeSelect:(ThemeChoice)->Unit={},onThemeRetry:()->Unit={},onThemeDismiss:(Long)->Unit={}) {
     val s by vm.state.collectAsStateWithLifecycle()
     val destination by destinationVm.state.collectAsStateWithLifecycle()
     val wish by wishlistVm.state.collectAsStateWithLifecycle()
     val updates by updateVm.state.collectAsStateWithLifecycle()
+    val waitlist by waitlistVm.state.collectAsStateWithLifecycle()
     val context=LocalContext.current
     val screenState=rememberSaveableStateHolder()
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     val accessibility=LocalAccessibilityManager.current
-    DisposableEffect(lifecycle,vm,destinationVm,wishlistVm,updateVm) {
+    DisposableEffect(lifecycle,vm,destinationVm,wishlistVm,updateVm,waitlistVm) {
         val observer=LifecycleEventObserver { _,event->when(event) {
             Lifecycle.Event.ON_RESUME -> wishlistVm.reload()
-            Lifecycle.Event.ON_STOP -> { vm.pauseForegroundWork();destinationVm.cancel();updateVm.leave() }
+            Lifecycle.Event.ON_STOP -> { vm.pauseForegroundWork();destinationVm.cancel();updateVm.leave();waitlistVm.pauseForegroundWork() }
             else -> Unit
         } }
         lifecycle.addObserver(observer)
@@ -56,7 +58,7 @@ import kotlinx.coroutines.delay
     }
     fun openSettings() { destinationVm.cancel();destinationVm.clearSettingsFeedback();vm.navigate(Page.SETTINGS) }
     fun openRailway() { vm.reportAppLaunch(launcher?.invoke(context) ?: launchRailwayApp(context)) }
-    BackHandler(s.page!=Page.SETTINGS && s.page!=Page.FILTERS && s.page!=Page.WISHLIST) { vm.back() }
+    BackHandler(s.page!=Page.SETTINGS && s.page!=Page.FILTERS && s.page!=Page.WISHLIST && s.page!=Page.WAITLIST) { vm.back() }
     Surface(Modifier.fillMaxSize(),color=androidx.compose.ui.graphics.Color.White) {
       Box(Modifier.fillMaxSize()) {
         Box(Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.safeDrawing).background(HeaderTop))
@@ -69,8 +71,13 @@ import kotlinx.coroutines.delay
                 }
                 screenState.SaveableStateProvider(stateKey) { when(s.page) {
                     Page.FILTERS->FiltersScreen(s,vm::updateFilters,{vm.search()},::openSettings,wishlist=wish,onReloadWishlist=wishlistVm::reload)
+                    Page.WAITLIST->WaitlistScreen(waitlist,waitlistVm,vm::openTicketFromWaitlist,{
+                        val result=launcher?.invoke(context) ?: launchRailwayApp(context)
+                        if(result!=AppLaunchResult.OPENED) Toast.makeText(context,"无法打开 12306，请确认已安装；候补需求仍保留",Toast.LENGTH_LONG).show()
+                    })
                     Page.CITY_QUERY->FiltersScreen(s.copy(filters=s.cityQueryFilters ?: s.filters),vm::updateFilters,{vm.search()},onBack=vm::back,wishlist=wish,onReloadWishlist=wishlistVm::reload)
-                    Page.WISHLIST->WishlistScreen(wish,s.catalog,destination.guides,destination.offline,{vm.navigate(Page.ADD_CITY)},wishlistVm::toggle,vm::showDestination,vm::openCityQuery,wishlistVm::reload)
+                    Page.WISHLIST->WishlistScreen(wish,s.catalog,destination.guides,destination.offline,{vm.navigate(Page.ADD_CITY)},wishlistVm::toggle,vm::showDestination,vm::openCityQuery,wishlistVm::reload,
+                        onWaitlist={waitlistVm.openDestination(it);vm.selectRoot(Page.WAITLIST)})
                     Page.ADD_CITY->AddCityScreen(s.catalog,wish,vm::back,wishlistVm::add)
                     Page.RESULTS->ResultsScreen(s,vm::showFilters,vm::showCity,{vm.search(refresh=true)},vm::stopSearch,{vm.search(resume=true)},{vm.search(retryFailed=true)},vm::sortCities,vm::showDestination,destination.guides,wish.items.map { it.cityId }.toSet(),wishlistVm::toggle)
                     Page.DESTINATION->DestinationGuideScreen(s.catalog.byCity[s.cityId]?.name.orEmpty(),destination.guide.takeIf { destination.cityId==s.cityId } ?: destination.guides[s.cityId],vm::backFromCity,vm::showDestinationTrains,onSource={url->
@@ -86,7 +93,11 @@ import kotlinx.coroutines.delay
                 } }
             }
             wish.notice?.let { notice -> Snackbar(action={wish.undo?.let { record->TextButton({wishlistVm.undo(record)},enabled=!wish.busy){Text("撤销")} }}) { Text(notice) } }
-            if(s.page==Page.FILTERS || s.page==Page.WISHLIST)RootNavigation(s.page,vm::selectRoot)
+            if(s.page==Page.FILTERS || s.page==Page.WISHLIST || s.page==Page.WAITLIST)RootNavigation(s.page) {
+                if(it!=Page.WAITLIST) waitlistVm.pauseForegroundWork()
+                else vm.pauseForegroundWork()
+                vm.selectRoot(it)
+            }
         }
       }
     }
