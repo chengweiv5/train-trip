@@ -23,7 +23,12 @@ data class WaitlistRequest(
     val binding: WaitlistBinding,
     val demands: List<WaitlistDemand>,
     val fulfilmentDeadline: Instant,
+    val orderContext: WaitlistOrderContext? = null,
 )
+
+/** Non-secret receipt matching data survives process death; never stores platform request tokens. */
+data class WaitlistOrderTrain(val demand: WaitlistDemand, val trainCode: String)
+data class WaitlistOrderContext(val authorizedAt: Instant, val trains: List<WaitlistOrderTrain>)
 
 /** Supplied by a verified platform capability check; there are deliberately no guessed defaults. */
 data class WaitlistLimits(val maxDemands: Int, val maxDates: Int, val maxPassengers: Int)
@@ -34,6 +39,7 @@ data class WaitlistAttempt(
     val binding: WaitlistBinding,
     val demands: List<WaitlistDemand>,
     val fulfilmentDeadline: Instant,
+    val orderContext: WaitlistOrderContext? = null,
 )
 
 data class WaitlistExclusion(val demand: WaitlistDemand, val attemptId: String, val reason: String)
@@ -105,9 +111,15 @@ object WaitlistFlow {
         require(request.demands.map { it.date }.distinct().size <= limits.maxDates)
         require(request.binding.passengers.isNotEmpty() && request.binding.passengers.size <= limits.maxPassengers)
         require(request.fulfilmentDeadline.isAfter(now))
+        request.orderContext?.let {
+            require(!it.authorizedAt.isAfter(now))
+            require(it.trains.map { t -> t.demand }.toSet() == request.demands.toSet())
+            require(it.trains.size == request.demands.size && it.trains.all { t -> t.trainCode.isNotBlank() })
+        }
         val frozen = request.copy(
             demands = request.demands.toList(),
             binding = request.binding.copy(passengers = request.binding.passengers.toList()),
+            orderContext = request.orderContext?.copy(trains = request.orderContext.trains.toList()),
         )
         return submit(WaitlistState(frozen, frozen.demands))
     }
@@ -226,6 +238,7 @@ object WaitlistFlow {
         val attempt = WaitlistAttempt(
             "${state.request.id}/$number", number, state.request.binding,
             state.remaining.toList(), state.request.fulfilmentDeadline,
+            state.request.orderContext,
         )
         return WaitlistTransition(
             state.copy(pending = attempt, attemptCount = number, phase = WaitlistPhase.SUBMITTING),

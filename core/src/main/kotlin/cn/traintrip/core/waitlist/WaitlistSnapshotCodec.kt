@@ -8,11 +8,13 @@ import java.time.LocalDate
 object WaitlistSnapshotCodec {
     fun encode(state: WaitlistState): String = Gson().toJson(mapOf("version" to 1, "state" to mapOf(
         "request" to mapOf("id" to state.request.id, "binding" to binding(state.request.binding),
-            "demands" to state.request.demands.map(::demand), "deadline" to state.request.fulfilmentDeadline.toString()),
+            "demands" to state.request.demands.map(::demand), "deadline" to state.request.fulfilmentDeadline.toString(),
+            "orderContext" to state.request.orderContext?.let(::context)),
         "remaining" to state.remaining.map(::demand),
         "exclusions" to state.exclusions.map { mapOf("demand" to demand(it.demand), "attempt" to it.attemptId, "reason" to it.reason) },
         "pending" to state.pending?.let { mapOf("id" to it.id, "number" to it.number, "binding" to binding(it.binding),
-            "demands" to it.demands.map(::demand), "deadline" to it.fulfilmentDeadline.toString()) },
+            "demands" to it.demands.map(::demand), "deadline" to it.fulfilmentDeadline.toString(),
+            "orderContext" to it.orderContext?.let(::context)) },
         "attemptCount" to state.attemptCount, "phase" to state.phase.name,
         "order" to state.order?.let { mapOf("reference" to it.reference, "demands" to it.demands.map(::demand)) },
         "notice" to state.notice, "autoContinue" to state.autoContinue, "pauseReason" to state.pauseReason?.name,
@@ -24,19 +26,23 @@ object WaitlistSnapshotCodec {
         val s = root.getAsJsonObject("state")
         val r = s.getAsJsonObject("request")
         val request = WaitlistRequest(r.text("id"), readBinding(r.getAsJsonObject("binding")),
-            demands(r, "demands"), Instant.parse(r.text("deadline")))
+            demands(r, "demands"), Instant.parse(r.text("deadline")), readContext(r))
         val state = WaitlistState(request, demands(s, "remaining"),
             s.getAsJsonArray("exclusions").map { item -> item.asJsonObject.let {
                 WaitlistExclusion(readDemand(it.getAsJsonObject("demand")), it.text("attempt"), it.text("reason"))
             } },
             s.optional("pending")?.asJsonObject?.let {
                 WaitlistAttempt(it.text("id"), it.get("number").asInt, readBinding(it.getAsJsonObject("binding")),
-                    demands(it, "demands"), Instant.parse(it.text("deadline")))
+                    demands(it, "demands"), Instant.parse(it.text("deadline")), readContext(it))
             }, s.get("attemptCount").asInt, WaitlistPhase.valueOf(s.text("phase")),
             s.optional("order")?.asJsonObject?.let { WaitlistOrder(it.text("reference"), demands(it, "demands")) },
             s.optional("notice")?.asString, s.get("autoContinue").asBoolean,
             s.optional("pauseReason")?.asString?.let(WaitlistPause::valueOf))
         require(request.demands.isNotEmpty() && request.demands.distinct().size == request.demands.size)
+        request.orderContext?.let {
+            require(it.trains.size == request.demands.size &&
+                it.trains.map { t -> t.demand }.toSet() == request.demands.toSet())
+        }
         require(state.attemptCount >= 0)
         require(state.remaining.distinct().size == state.remaining.size && request.demands.containsAll(state.remaining))
         require(state.exclusions.map { it.demand }.distinct().size == state.exclusions.size)
@@ -45,6 +51,7 @@ object WaitlistSnapshotCodec {
         state.pending?.let {
             require(it.binding.matches(request.binding) && it.demands == state.remaining &&
                 it.fulfilmentDeadline == request.fulfilmentDeadline && it.number == state.attemptCount && it.number > 0)
+            require(it.orderContext == request.orderContext)
         }
         require(state.phase !in setOf(WaitlistPhase.SUBMITTING, WaitlistPhase.CHECKING_ORDER) || state.pending != null)
         require(state.phase != WaitlistPhase.ORDER_CREATED || state.order != null)
@@ -54,6 +61,13 @@ object WaitlistSnapshotCodec {
 
     private fun demand(d: WaitlistDemand) = mapOf("date" to d.date.toString(), "train" to d.trainId,
         "from" to d.fromStation, "to" to d.toStation, "seat" to d.seatCode)
+    private fun context(c: WaitlistOrderContext) = mapOf("authorizedAt" to c.authorizedAt.toString(),
+        "trains" to c.trains.map { mapOf("demand" to demand(it.demand), "code" to it.trainCode) })
+    private fun readContext(j: JsonObject): WaitlistOrderContext? = j.optional("orderContext")?.asJsonObject?.let { c ->
+        WaitlistOrderContext(Instant.parse(c.text("authorizedAt")), c.getAsJsonArray("trains").map { item ->
+            item.asJsonObject.let { WaitlistOrderTrain(readDemand(it.getAsJsonObject("demand")), it.text("code")) }
+        })
+    }
     private fun binding(b: WaitlistBinding) = mapOf("account" to b.accountReference,
         "passengers" to b.passengers.map { mapOf("reference" to it.reference, "ticketType" to it.ticketType) })
     private fun readDemand(j: JsonObject) = WaitlistDemand(LocalDate.parse(j.text("date")),

@@ -43,6 +43,38 @@ class RailwayAccountServiceTest {
         assertFalse(transport.paths.contains("/otn/confirmPassenger/getPassengerDTOs"))
     }
 
+    @Test fun verifiedAdultsCanBeSelectedWithoutAnIsBuyTicketYFlag() = runTest {
+        for (replacement in listOf("\"is_buy_ticket\":\"N\"", "\"unused\":\"\"")) {
+            val transport = Transport().apply {
+                passengerResponse = passengerResponse.replace("\"is_buy_ticket\":\"Y\"", replacement)
+            }
+            val service = RailwayAccountService(transport) { "local-" + it.hashCode() }
+            val account = service.refresh()
+            val person = account.passengers.single()
+            assertTrue("Official waitlist selection does not use this flag as an eligibility gate", person.selectable)
+            service.verifyBinding(WaitlistBinding(account.reference,
+                listOf(WaitlistPassenger(person.reference, person.ticketType))))
+            assertTrue(transport.paths.none { it.contains("submit") || it.contains("confirmHB") })
+        }
+    }
+
+    @Test fun removingTheIncorrectFlagGateDoesNotEnableUnverifiedOrIncompletePassengers() = runTest {
+        for (replacement in listOf(
+            "\"total_times\":\"99\"" to "\"total_times\":\"92\"",
+            "\"passenger_type\":\"1\"" to "\"passenger_type\":\"3\"",
+            "\"allEncStr\":\"secret-do-not-log\"" to "\"allEncStr\":\"\"",
+            "\"passenger_id_no\":\"123456789\"" to "\"passenger_id_no\":\"\"",
+        )) {
+            val transport = Transport().apply {
+                passengerResponse = passengerResponse
+                    .replace("\"is_buy_ticket\":\"Y\"", "\"is_buy_ticket\":\"N\"")
+                    .replace(replacement.first, replacement.second)
+            }
+            val service = RailwayAccountService(transport) { it.hashCode().toString() }
+            assertFalse(service.refresh().passengers.single().selectable)
+        }
+    }
+
     @Test fun unsupportedTicketTypesAreVisibleButNotSelectableAndInvalidSchemaFailsClosed() = runTest {
         val transport = Transport()
         val service = RailwayAccountService(transport) { it.hashCode().toString() }

@@ -56,29 +56,26 @@ class AndroidWaitlistDraftStore(context: Context, name: String = "waitlist-filte
     override suspend fun save(filters: WaitlistFilters) = file.write(WaitlistFiltersCodec.encode(filters))
 }
 
-/** Fail closed until authenticated session continuity and attempt reconciliation are verified. */
-private object UnavailableWaitlistGateway : WaitlistGateway {
-    override suspend fun submit(attempt: WaitlistAttempt) = WaitlistSubmissionResult.AuthenticationRequired
-    override suspend fun queryOrder(attempt: WaitlistAttempt) = WaitlistOrderResult.Unresolved
-}
-
 fun waitlistViewModelFactory(context: Context): ViewModelProvider.Factory {
     val app = context.applicationContext
     return viewModelFactory {
         initializer {
             val session = RailwaySession()
             val references = RailwayLocalReferences()
+            val accounts = RailwayAccountService(session, references::reference)
+            val orders = RailwayWaitlistGateway(session, accounts)
             val debug = app.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0
             // Clean up the discontinued QR experiment; never export credentials or login images.
             if (debug) runCatching { File(app.filesDir, "railway-qr-preview.png").delete() }
             WaitlistViewModel(OfficialTicketSource(), AndroidWaitlistDraftStore(app),
-                WaitlistCoordinator(UnavailableWaitlistGateway, AndroidWaitlistStore(app)),
-                RailwayAccountService(session, references::reference),
+                WaitlistCoordinator(orders, AndroidWaitlistStore(app)),
+                accounts,
                 accountDiagnostic = { status, count ->
                     if (debug) File(app.filesDir, "railway-diagnostic.txt")
                         .writeText("status=$status\npassengers=$count\n")
                 },
-                passwordLogin = RailwayPasswordLogin(session) { android.os.SystemClock.elapsedRealtime() })
+                passwordLogin = RailwayPasswordLogin(session) { android.os.SystemClock.elapsedRealtime() },
+                orders = orders)
         }
     }
 }

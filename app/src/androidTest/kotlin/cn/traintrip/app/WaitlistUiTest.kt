@@ -70,6 +70,43 @@ class WaitlistUiTest {
         compose.waitUntil(5000) { vm.state.value.ready }
         return vm
     }
+    @Test fun verifiedAdultWithBuyFlagNCanBeCheckedAndUncheckedInEveryTheme() {
+        val theme = mutableStateOf(ThemeChoice.BLUE)
+        val calls = mutableListOf<String>()
+        val transport = object : RailwayTransport {
+            override suspend fun post(path: String, fields: Map<String, String>): String {
+                calls += path
+                return when (path) {
+                    "/otn/login/checkUser" -> """{"status":true,"data":{"flag":true}}"""
+                    "/otn/modifyUser/initQueryUserInfoApi" ->
+                        """{"status":true,"data":{"userDTO":{"loginUserDTO":{"user_name":"synthetic-account"}}}}"""
+                    "/otn/confirmPassenger/getPassengerDTOs" ->
+                        """{"status":true,"data":{"normal_passengers":[{"passenger_name":"张测试","passenger_id_no":"synthetic-id","passenger_id_type_code":"1","passenger_type":"1","passenger_type_name":"成人","allEncStr":"synthetic-secret","passenger_uuid":"synthetic-person","total_times":"99","is_buy_ticket":"N"}]}}"""
+                    else -> error("This test must not call authentication or order submission")
+                }
+            }
+        }
+        val vm = start(narrow = true, theme = theme, authTransport = transport)
+        compose.runOnIdle { vm.openAccount(); vm.refreshAccount() }
+        compose.waitUntil(5000) { vm.state.value.account != null }
+        for (choice in ThemeChoice.entries) {
+            compose.runOnIdle { theme.value = choice }
+            compose.onNode(isToggleable()).performScrollTo().assertIsEnabled().assertIsOff()
+            compose.onNode(isToggleable()).performClick().assertIsOn()
+            compose.waitUntil { vm.state.value.passengerSelection.size == 1 }
+            compose.onNode(isToggleable()).performClick().assertIsOff()
+            compose.waitUntil { vm.state.value.passengerSelection.isEmpty() }
+            // Tapping the passenger row must toggle exactly once, not double-toggle with the checkbox.
+            compose.onNodeWithText("张** · 成人").performScrollTo().performTouchInput { click() }
+            compose.onNode(isToggleable()).assertIsOn()
+            compose.onNodeWithText("张** · 成人").performTouchInput { click() }
+            compose.onNode(isToggleable()).assertIsOff()
+            assertTextFits()
+        }
+        assertTrue(calls.all { it in setOf("/otn/login/checkUser", "/otn/modifyUser/initQueryUserInfoApi",
+            "/otn/confirmPassenger/getPassengerDTOs") })
+    }
+
     @Test fun nativePasswordScreenSupportsSinglePhoneSmsAndNeverShowsQrInAllThemes() {
         val theme = mutableStateOf(ThemeChoice.BLUE)
         val calls = mutableListOf<String>()

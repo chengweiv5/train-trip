@@ -192,7 +192,16 @@ import cn.traintrip.core.waitlist.*
                     WaitlistDemandLine(exclusion.demand, s.catalog)
                     Text(exclusion.reason, color = Muted)
                 } }
-                if (flow.pending != null) WaitlistNotice("必须先用同一账号核对未决订单。当前认证和查单未接通，不能再次提交；打开 12306 不会自动改变本页状态。")
+                if (flow.pending != null) {
+                    WaitlistNotice("本轮可能仍在处理中。先用原账号核对订单；列表暂时为空不代表没有下单，不能重复提交。")
+                    SecondaryButton("核对本轮候补订单", vm::checkPendingOrder,
+                        Modifier.testTag("railway-order-check"), !s.orderBusy && s.account != null)
+                    if (s.account == null || s.account.reference != flow.request.binding.accountReference)
+                        SecondaryButton("登录原候补账号", vm::openAccount)
+                }
+                if (flow.pending == null && flow.phase == WaitlistPhase.PAUSED)
+                    WaitlistNotice("本轮没有待核对请求，但该任务已暂停。请保留记录并重新核验，不会自动重新下单。")
+                if (s.orderBusy) LinearProgressIndicator(Modifier.fillMaxWidth())
                 s.operationError?.let { WaitlistNotice(it) }
                 if (flow.autoContinue) SecondaryButton("停止后续提交", { vm.stopOperation() })
                 SecondaryButton("打开 12306 核对", onOpenRailway)

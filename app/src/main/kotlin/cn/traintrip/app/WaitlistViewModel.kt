@@ -43,6 +43,11 @@ data class WaitlistUiState(
     val qrPhase: RailwayQrUiPhase = RailwayQrUiPhase.IDLE,
     val passwordPhase: RailwayPasswordUiPhase = RailwayPasswordUiPhase.IDLE,
     val smsRemainingSeconds: Int = 0,
+    val orderPreview: RailwayOrderPreview? = null,
+    val orderBusy: Boolean = false,
+    val deadlineMinutes: Int? = null,
+    val riskVisible: Boolean = false,
+    val riskVerified: Boolean = false,
 ) {
     val choices get() = applied?.choices(progress?.trips.orEmpty()).orEmpty()
     val hiddenSelected get() = selected.filter { selected -> choices.none { it.demand == selected.demand } }
@@ -60,6 +65,7 @@ class WaitlistViewModel(
     private val qrLogin: RailwayQrLogin? = null,
     private val qrPreview: (String?) -> Unit = {},
     private val passwordLogin: RailwayPasswordLogin? = null,
+    private val orders: RailwayWaitlistGateway? = null,
 ) : ViewModel() {
     private val mutable = MutableStateFlow(WaitlistUiState())
     val state = mutable.asStateFlow()
@@ -71,6 +77,10 @@ class WaitlistViewModel(
     private var qrJob: Job? = null
     private var authGeneration = 0L
     private var smsCountdown: Job? = null
+    private var orderJob: Job? = null
+    private var riskProof: RailwayRiskProof? = null
+    private var riskChallenge: RailwayRiskChallenge? = null
+    private var orderRevision = 0L
 
     init {
         viewModelScope.launch {
@@ -95,6 +105,7 @@ class WaitlistViewModel(
     }
 
     fun updateFilters(filters: WaitlistFilters) {
+        clearOrderPreparation()
         if (!state.value.ready) return
         mutable.update { it.copy(draft = filters, formError = null) }
         saveDraft()
@@ -117,7 +128,7 @@ class WaitlistViewModel(
         }
     }
 
-    fun edit() { mutable.update { it.copy(page = WaitlistPage.FILTERS) } }
+    fun edit() { clearOrderPreparation(); mutable.update { it.copy(page = WaitlistPage.FILTERS) } }
     fun showSelected() { mutable.update { it.copy(page = WaitlistPage.SELECTED) } }
     fun showProgress() { mutable.update { it.copy(page = WaitlistPage.PROGRESS) } }
     fun next() {
@@ -140,6 +151,8 @@ class WaitlistViewModel(
         }) }
     }
     fun openAccount() {
+        if (state.value.orderBusy) return
+        clearOrderPreparation()
         mutable.update { it.copy(page = WaitlistPage.AUTHENTICATION) }
         // Opening a page or another app must not trigger authentication implicitly.
     }
@@ -149,12 +162,16 @@ class WaitlistViewModel(
     private fun preview(image: String?) { runCatching { qrPreview(image) } }
 
     fun resetPasswordForm() {
+        if (state.value.orderBusy) return
+        clearOrderPreparation()
         if (state.value.accountBusy) return
         mutable.update { it.copy(account = null, passengerSelection = emptySet(),
             accountError = null, passwordPhase = RailwayPasswordUiPhase.IDLE) }
     }
 
     fun loginWithPassword(username: String, password: CharArray, smsCode: String = "") {
+        if (state.value.orderBusy) { password.fill('\u0000'); return }
+        clearOrderPreparation()
         val login = passwordLogin
         val service = accountService
         if (login == null || service == null || state.value.accountBusy) {
@@ -319,6 +336,8 @@ class WaitlistViewModel(
             accountBusy = false) }
     }
     fun refreshAccount() {
+        if (state.value.orderBusy) return
+        clearOrderPreparation()
         val service = accountService ?: return
         if (accountJob?.isActive == true || qrJob?.isActive == true) return
         val revision = ++authGeneration
@@ -349,6 +368,8 @@ class WaitlistViewModel(
         }
     }
     fun togglePassenger(reference: String) {
+        if (state.value.orderBusy) return
+        clearOrderPreparation()
         mutable.update { s ->
             if (s.account?.passengers?.any { it.reference == reference && it.selectable } != true) s
             else s.copy(passengerSelection = if (reference in s.passengerSelection)
@@ -359,7 +380,149 @@ class WaitlistViewModel(
         if (state.value.selected.isNotEmpty() && state.value.passengerSelection.isNotEmpty())
             mutable.update { it.copy(page = WaitlistPage.CONFIRMATION) }
     }
+    val nativeOrdersAvailable get() = orders != null && coordinator != null
+    fun currentRiskChallenge(): RailwayRiskChallenge? = riskChallenge
+
+    private fun selectedBinding(): WaitlistBinding? {
+        val s = state.value
+        val account = s.account ?: return null
+        val passengers = account.passengers.filter { it.reference in s.passengerSelection && it.selectable }
+        if (passengers.isEmpty() || passengers.size != s.passengerSelection.size) return null
+        return WaitlistBinding(account.reference, passengers.map { WaitlistPassenger(it.reference, it.ticketType) })
+    }
+
+    fun prepareOrder() {
+        val service = orders ?: return
+        if (orderJob?.isActive == true) return
+        val binding = selectedBinding() ?: return
+        val demands = state.value.selected.mapNotNull { it.demand }
+        if (demands.isEmpty()) return
+        val existing = state.value.operation
+        if (existing != null && existing.phase !in setOf(WaitlistPhase.ORDER_CREATED, WaitlistPhase.EXHAUSTED)) {
+            mutable.update { it.copy(page = WaitlistPage.PROGRESS, operationError = "请先核对已有候补任务，不能另起订单") }
+            return
+        }
+        val revision = ++orderRevision
+        riskProof = null; riskChallenge = null
+        mutable.update { it.copy(orderBusy = true, orderPreview = null, riskVisible = false,
+            riskVerified = false, deadlineMinutes = null, operationError = null) }
+        orderJob = viewModelScope.launch {
+            try {
+                val preview = service.prepare(binding, demands)
+                if (revision != orderRevision || selectedBinding()?.matches(binding) != true ||
+                    state.value.selected.mapNotNull { it.demand } != demands) return@launch
+                mutable.update { it.copy(orderPreview = preview, orderBusy = false) }
+                diagnostic("ORDER_PREPARED", binding.passengers.size)
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) {
+                if (revision == orderRevision) mutable.update { it.copy(orderBusy = false,
+                    operationError = orderError(e)) }
+                diagnostic("ORDER_PREPARE_FAILED")
+            }
+        }
+    }
+
+    fun selectDeadline(minutes: Int) {
+        if (minutes !in state.value.orderPreview?.deadlineMinutes.orEmpty() || state.value.orderBusy) return
+        riskProof = null; riskChallenge = null
+        mutable.update { it.copy(deadlineMinutes = minutes, riskVisible = false, riskVerified = false) }
+    }
+
+    fun beginRiskVerification() {
+        val service = orders ?: return
+        val preview = state.value.orderPreview ?: return
+        if (state.value.deadlineMinutes == null || state.value.orderBusy || orderJob?.isActive == true) return
+        val revision = orderRevision
+        orderJob = viewModelScope.launch {
+            try {
+                riskChallenge = service.riskChallenge(preview.id)
+                if (revision != orderRevision) { riskChallenge = null; return@launch }
+                riskProof = null
+                mutable.update { it.copy(riskVisible = true, riskVerified = false, operationError = null) }
+                diagnostic("ORDER_VERIFYING")
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) { mutable.update { it.copy(operationError = orderError(e)) } }
+        }
+    }
+
+    fun riskVerificationCompleted(proof: RailwayRiskProof) {
+        if (!state.value.riskVisible || proof.previewId != state.value.orderPreview?.id) return
+        riskProof = proof
+        riskChallenge = null
+        mutable.update { it.copy(riskVisible = false, riskVerified = true) }
+        diagnostic("ORDER_VERIFIED")
+    }
+
+    fun riskVerificationFailed() {
+        riskProof = null; riskChallenge = null
+        mutable.update { it.copy(riskVisible = false, riskVerified = false,
+            operationError = "官方安全验证未完成，请重新验证；没有发送订单") }
+        diagnostic("ORDER_VERIFICATION_FAILED")
+    }
+
+    fun confirmOrder() {
+        val service = orders ?: return
+        val flow = coordinator ?: return
+        val s = state.value
+        val preview = s.orderPreview ?: return
+        val minutes = s.deadlineMinutes ?: return
+        val proof = riskProof ?: return
+        if (s.page != WaitlistPage.CONFIRMATION || orderJob?.isActive == true || s.orderBusy ||
+            selectedBinding()?.matches(preview.binding) != true ||
+            s.selected.mapNotNull { it.demand } != preview.trains.map { it.demand }) return
+        mutable.update { it.copy(orderBusy = true, operationError = null) }
+        orderJob = viewModelScope.launch {
+            try {
+                val request = service.request(preview.id, minutes)
+                service.authorize(preview.id, request, minutes, proof)
+                if (state.value.page != WaitlistPage.CONFIRMATION || !state.value.orderBusy) return@launch
+                riskProof = null
+                mutable.update { it.copy(page = WaitlistPage.PROGRESS, riskVerified = false, riskVisible = false) }
+                flow.start(request, preview.limits) // Durable attempt precedes any confirmHB call.
+                diagnostic("ORDER_${flow.state.value?.phase?.name ?: "UNKNOWN"}")
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) { mutable.update { it.copy(operationError = orderError(e)) } }
+            finally { mutable.update { it.copy(orderBusy = false) } }
+        }
+    }
+
+    fun checkPendingOrder() {
+        val flow = coordinator ?: return
+        val account = state.value.account
+        val pending = state.value.operation?.pending ?: return
+        if (orderJob?.isActive == true) return
+        if (account?.reference != pending.binding.accountReference) {
+            mutable.update { it.copy(operationError = "请使用原候补账号重新登录，再核对未决订单") }
+            return
+        }
+        orderJob = viewModelScope.launch {
+            mutable.update { it.copy(orderBusy = true, operationError = null) }
+            try {
+                flow.checkOrder(pending.binding)
+                diagnostic("ORDER_${flow.state.value?.phase?.name ?: "UNKNOWN"}")
+            }
+            catch (e: CancellationException) { throw e }
+            catch (e: Exception) { mutable.update { it.copy(operationError = orderError(e)) } }
+            finally { mutable.update { it.copy(orderBusy = false) } }
+        }
+    }
+
+    private fun orderError(e: Exception) = when (e) {
+        is RailwayOrderException, is RailwayException, is WaitlistPersistenceException ->
+            e.message ?: "候补操作未完成，请核对订单后重试"
+        else -> "候补操作未完成；已发请求可能仍在处理，请先核对订单，不要重复提交"
+    }
+
+    private fun clearOrderPreparation() {
+        orderRevision++
+        riskProof = null; riskChallenge = null
+        // Do not cancel an in-flight submission; its persisted attempt must be reconciled.
+        if (state.value.page != WaitlistPage.PROGRESS) orderJob?.cancel()
+        mutable.update { it.copy(orderPreview = null, riskVisible = false, riskVerified = false,
+            deadlineMinutes = null, orderBusy = if (it.page == WaitlistPage.PROGRESS) it.orderBusy else false) }
+    }
     fun back() {
+        if (state.value.page == WaitlistPage.CONFIRMATION) clearOrderPreparation()
         if (state.value.page == WaitlistPage.AUTHENTICATION) {
             cancelQrLogin()
             accountJob?.cancel()
@@ -375,6 +538,8 @@ class WaitlistViewModel(
     }
 
     fun toggle(choice: WaitlistChoice) {
+        if (state.value.orderBusy) return
+        clearOrderPreparation()
         val demand = choice.demand ?: return
         mutable.update { current ->
             if (current.selected.any { it.demand == demand })
@@ -424,6 +589,7 @@ class WaitlistViewModel(
     }
 
     fun pauseForegroundWork() {
+        clearOrderPreparation()
         if (nativePasswordAvailable && state.value.accountBusy) {
             authGeneration++
             accountJob?.cancel()

@@ -9,6 +9,8 @@ import kotlinx.coroutines.sync.withLock
 /** The Android implementation owns a private in-memory HTTP session. Never log bodies or fields. */
 interface RailwayTransport {
     suspend fun post(path: String, fields: Map<String, String> = emptyMap()): String
+    suspend fun get(path: String, fields: Map<String, String> = emptyMap()): String =
+        throw RailwayException(RailwayFailure.SCHEMA_CHANGED)
 }
 
 enum class RailwayFailure {
@@ -71,10 +73,18 @@ class RailwayAccountService(
             if (key in secrets) throw RailwayException(RailwayFailure.SCHEMA_CHANGED)
             val verified = p.value("total_times") in setOf("93", "95", "97", "99")
             // Ticket-type rules beyond an existing adult record require explicit platform validation.
-            val selectable = verified && p.value("is_buy_ticket") == "Y" && ticket == "1" && encrypted.isNotBlank()
+            // The official waitlist handler also permits verified adults when is_buy_ticket is N
+            // or absent. It is a flow flag, not a universal passenger eligibility switch.
+            val selectable = verified && ticket == "1" && id.isNotBlank() && encrypted.isNotBlank()
+            val status = when {
+                !verified -> "身份尚未通过核验，请在 12306 完成核验后刷新"
+                ticket != "1" -> "本应用暂未支持此票种，请在 12306 办理"
+                id.isBlank() || encrypted.isBlank() -> "乘车人资料不完整，请刷新；仍不可用时到 12306 核对"
+                else -> "已核验 · 成人票"
+            }
             secrets[key] = RailwayPassengerCredential(key, name, idType, id, encrypted, ticket, p.value("isOldThan60"))
             RailwayPassenger(key, maskName(name), maskId(id), ticket, p.value("passenger_type_name").ifBlank { "票种待核验" },
-                selectable, if (selectable) "已核验 · 成人票" else "请在 12306 核验资格或票种")
+                selectable, status)
         }
         // A second identity read detects login changes while the passenger request was in flight.
         if (verifiedAccount() != reference) throw RailwayException(RailwayFailure.IDENTITY_CHANGED)
@@ -90,6 +100,15 @@ class RailwayAccountService(
         if (binding.passengers.isEmpty() || binding.passengers.any {
                 it.reference !in selectableReferences || credentials[it.reference]?.ticketType != it.ticketType
             }) throw RailwayException(RailwayFailure.IDENTITY_CHANGED)
+    }
+
+    /** Re-read actual records, not just their count, immediately before an order operation. */
+    internal suspend fun passengersFor(binding: WaitlistBinding): List<RailwayPassengerCredential> {
+        refresh()
+        verifyBinding(binding)
+        return mutex.withLock {
+            binding.passengers.map { credentials.getValue(it.reference) }
+        }
     }
 
     private suspend fun verifiedAccount(): String {

@@ -26,29 +26,47 @@ class RailwaySession : RailwayTransport {
     private val cookies = CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER)
     private val mutex = Mutex()
 
-    override suspend fun post(path: String, fields: Map<String, String>): String = mutex.withLock {
+    override suspend fun post(path: String, fields: Map<String, String>): String = request("POST", path, fields)
+    override suspend fun get(path: String, fields: Map<String, String>): String = request("GET", path, fields)
+
+    private suspend fun request(method: String, path: String, fields: Map<String, String>): String = mutex.withLock {
       withContext(Dispatchers.IO) {
-        require(path in allowedPaths) { "Unsupported railway operation" }
-        val url = "$ORIGIN$path"
+        require(if (method == "POST") path in allowedPaths else
+            path == "/otn/leftTicket/init" || Regex("/otn/leftTicket/query[A-Za-z]*").matches(path)) {
+            "Unsupported railway operation"
+        }
+        val body = fields.entries.joinToString("&") { "${encode(it.key)}=${encode(it.value)}" }
+        val url = "$ORIGIN$path" + if (method == "GET" && body.isNotEmpty()) "?$body" else ""
         val uri = URI(url)
         currentCoroutineContext().ensureActive()
         val connection = URL(url).openConnection() as HttpURLConnection
         try {
-            connection.requestMethod = "POST"
+            connection.requestMethod = method
             connection.instanceFollowRedirects = false
             connection.connectTimeout = 15_000
             connection.readTimeout = 20_000
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-            connection.setRequestProperty("Referer", "$ORIGIN/otn/resources/login.html")
+            connection.setRequestProperty("Referer", "$ORIGIN" + when {
+                path.contains("afterNateOrder") -> "/otn/view/lineUp_order.html"
+                path.contains("afterNate") -> "/otn/view/lineUp_toPay.html"
+                path.contains("leftTicket") -> "/otn/leftTicket/init"
+                else -> "/otn/resources/login.html"
+            })
             connection.setRequestProperty("Origin", ORIGIN)
             connection.setRequestProperty("User-Agent", USER_AGENT)
             cookies.get(uri, emptyMap()).forEach { (key, values) ->
                 if (key.equals("Cookie", true) || key.equals("Cookie2", true))
                     connection.setRequestProperty(key, values.joinToString("; "))
             }
-            connection.doOutput = true
-            val body = fields.entries.joinToString("&") { "${encode(it.key)}=${encode(it.value)}" }
-            connection.outputStream.use { it.write(body.toByteArray(Charsets.UTF_8)) }
+            if (method == "POST") {
+                val bytes = body.toByteArray(Charsets.UTF_8)
+                connection.doOutput = true
+                // Streaming disables transparent replay of buffered POST bodies after a stale
+                // connection/redirect/authentication challenge. Retry decisions belong to the flow.
+                connection.setFixedLengthStreamingMode(bytes.size)
+                try { connection.outputStream.use { it.write(bytes) } }
+                finally { bytes.fill(0) }
+            }
             currentCoroutineContext().ensureActive()
             if (connection.responseCode != 200) throw RailwayException(
                 if (connection.responseCode in 300..399) RailwayFailure.LOGIN_REQUIRED else RailwayFailure.NETWORK)
@@ -83,6 +101,9 @@ class RailwaySession : RailwayTransport {
             "/passport/web/auth/uamtk", "/otn/uamauthclient",
             "/otn/login/checkUser", "/otn/modifyUser/initQueryUserInfoApi",
             "/otn/confirmPassenger/getPassengerDTOs",
+            "/otn/afterNate/submitOrderRequest", "/otn/afterNate/passengerInitApi",
+            "/otn/afterNate/confirmHB", "/otn/afterNate/queryQueue",
+            "/otn/afterNateOrder/queryQueue", "/otn/afterNateOrder/queryUnHonourHOrder",
         )
     }
 }

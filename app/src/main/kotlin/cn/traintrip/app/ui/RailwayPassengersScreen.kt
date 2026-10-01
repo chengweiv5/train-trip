@@ -1,7 +1,7 @@
 package cn.traintrip.app.ui
 
-import android.app.Activity
 import android.view.WindowManager
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,7 +11,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -20,9 +19,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import cn.traintrip.app.*
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Composable private fun SecureRailwayScreen() {
-    val window = (LocalContext.current as? Activity)?.window
+    val window = LocalActivity.current?.window
     DisposableEffect(window) {
         val alreadySecure = window?.attributes?.flags?.and(WindowManager.LayoutParams.FLAG_SECURE) != 0
         window?.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
@@ -64,7 +65,7 @@ import cn.traintrip.app.*
                 Text("原生账号登录 · 无需扫码或打开网页", color = Primary)
                 Text("凭据仅从本机通过 HTTPS 发往 12306 官方服务，不经开发者服务器。登录后核验账号并读取真实乘车人。",
                     color = Muted)
-                Text("实验接入，尚待真实账号验证。密码不保存；会话仅在本应用进程内。登录不提交订单。",
+                Text("密码不保存；会话仅在本应用进程内。登录和读取乘车人不会提交订单。",
                     style = MaterialTheme.typography.bodySmall, color = Muted)
             }
             if (s.account == null) {
@@ -171,9 +172,49 @@ import cn.traintrip.app.*
                 Text("${choice.trip.date} · ${choice.trip.trainCode} · ${choice.seat.label}")
                 Text("${choice.trip.from.name} → ${choice.trip.to.name}", color = Muted)
             } }
-            WaitlistNotice("下一步需从当前会话重新核验所有车次、组合限制和兑现截止时间。当前页面不会发送订单。")
-            PrimaryButton("确认并提交（接口核验中）", {}, enabled = false)
-            Text("正式提交后每轮包含全部剩余需求；只排除能准确归因的拒绝项。未知结果先核对订单，不盲目重发。",
+            WaitlistNotice("先核验全部需求，再选择截止时间并完成官方验证。只有点击最终确认按钮才会发送真实候补订单。")
+            s.account?.passengers?.filter { it.reference in s.passengerSelection }?.forEach {
+                Text("${it.displayName} · ${it.maskedId} · ${it.ticketLabel}", color = Muted)
+            }
+            if (s.orderBusy) LinearProgressIndicator(Modifier.fillMaxWidth())
+            s.operationError?.let { WaitlistNotice(it) }
+            SecondaryButton("核验全部需求与截止时间", vm::prepareOrder,
+                Modifier.testTag("railway-order-prepare"), vm.nativeOrdersAvailable && !s.orderBusy)
+            s.orderPreview?.let { preview ->
+                Text("截止兑现时间", style = MaterialTheme.typography.titleMedium)
+                Text("请选择开车前多久停止兑现；以全部需求中最早的截止时间作为本应用停止续提时间。",
+                    color = Muted, style = MaterialTheme.typography.bodySmall)
+                preview.deadlineMinutes.forEach { minutes ->
+                    val label = when {
+                        minutes % 1440 == 0 -> "${minutes / 1440} 天"
+                        minutes % 60 == 0 -> "${minutes / 60} 小时"
+                        else -> "$minutes 分钟"
+                    }
+                    Row(Modifier.fillMaxWidth().heightIn(min = 48.dp)
+                        .clickable(enabled = !s.orderBusy) { vm.selectDeadline(minutes) },
+                        verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(s.deadlineMinutes == minutes, { vm.selectDeadline(minutes) }, enabled = !s.orderBusy)
+                        Column {
+                            Text("开车前 $label")
+                            Text(preview.deadline(minutes).atZone(ZoneId.of("Asia/Shanghai"))
+                                .format(DateTimeFormatter.ofPattern("MM-dd HH:mm")), color = Muted)
+                        }
+                    }
+                }
+                if (s.riskVerified) Text("官方验证已完成，请及时确认提交", color = Primary)
+                SecondaryButton(if (s.riskVerified) "重新安全验证" else "完成官方安全验证",
+                    vm::beginRiskVerification, Modifier.testTag("railway-risk-start"),
+                    !s.orderBusy && s.deadlineMinutes != null && !s.riskVisible)
+                if (s.riskVisible) vm.currentRiskChallenge()?.let {
+                    RailwayRiskVerification(it, vm::riskVerificationCompleted, vm::riskVerificationFailed)
+                }
+            }
+            PrimaryButton("确认并提交全部候补需求", vm::confirmOrder,
+                !s.orderBusy && s.riskVerified && s.deadlineMinutes != null,
+                Modifier.testTag("railway-order-confirm"))
+            Text("不接受无座，不自动添加临客，不代付或取消订单。兑现成功的车票按铁路既有退改规则办理。",
+                color = Muted, style = MaterialTheme.typography.bodySmall)
+            Text("提交包含全部选中需求。当前官方拒绝信息尚不能精确归因到单项，遇到拒绝或未知结果会先核对订单并暂停，不猜测删除或重复提交。",
                 color = Muted, style = MaterialTheme.typography.bodySmall)
         }
     }
