@@ -129,6 +129,14 @@ class WaitlistViewModel(
     }
 
     fun edit() { clearOrderPreparation(); mutable.update { it.copy(page = WaitlistPage.FILTERS) } }
+    /** Reopen the applied snapshot explicitly; editing a draft never changes existing results. */
+    fun showLastResults() {
+        mutable.update { s ->
+            if (s.page == WaitlistPage.FILTERS && s.applied != null && !s.orderBusy)
+                s.copy(page = WaitlistPage.RESULTS)
+            else s
+        }
+    }
     fun showSelected() { mutable.update { it.copy(page = WaitlistPage.SELECTED) } }
     fun showProgress() { mutable.update { it.copy(page = WaitlistPage.PROGRESS) } }
     fun next() {
@@ -533,7 +541,7 @@ class WaitlistViewModel(
             WaitlistPage.SELECTED -> WaitlistPage.RESULTS
             WaitlistPage.RESULTS -> WaitlistPage.FILTERS
             WaitlistPage.PROGRESS -> WaitlistPage.FILTERS
-            WaitlistPage.FILTERS -> if (it.applied != null) WaitlistPage.RESULTS else WaitlistPage.FILTERS
+            WaitlistPage.FILTERS -> WaitlistPage.FILTERS
         }) }
     }
 

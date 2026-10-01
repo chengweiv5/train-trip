@@ -39,8 +39,10 @@ class WaitlistUiTest {
     }
     private inner class Source : TicketSource {
         var fail = false
+        var calls = 0
         override suspend fun initialize() = SourceInfo("query", today(), date.plusDays(5), catalog, Instant.now())
         override suspend fun query(unit: QueryUnit): QueryResult {
+            calls++
             if (fail) return QueryResult.Failure("测试网络异常")
             return QueryResult.Success(listOf(Trip(date, "train-37", "G37", from, to,
                 LocalTime.of(8, 0), LocalTime.of(10, 0), 120, SaleState.OPEN, "预订",
@@ -70,6 +72,47 @@ class WaitlistUiTest {
         compose.waitUntil(5000) { vm.state.value.ready }
         return vm
     }
+    @Test fun homeHasNoBackArrowAndLastResultsIsAnExplicitNonQueryActionInEveryTheme() {
+        val theme = mutableStateOf(ThemeChoice.BLUE)
+        val source = Source()
+        val vm = start(source, narrow = true, theme = theme)
+        compose.onNodeWithTag("page-title").assertTextEquals("候补")
+        compose.onNodeWithTag("waitlist-back").assertDoesNotExist()
+        compose.onNodeWithTag("waitlist-last-results").assertDoesNotExist()
+        compose.onNodeWithTag("waitlist-search").performScrollTo().performClick()
+        compose.waitUntil(10000) { vm.state.value.queryComplete }
+        compose.onNodeWithTag("waitlist-choice-$date/train-37/VNP/JGK-FIRST").performScrollTo().performClick()
+        val applied = vm.state.value.applied
+        val results = vm.state.value.progress
+        val selected = vm.state.value.selected
+        val draft = filters.copy(seats = setOf(SeatType.SECOND))
+        for (choice in ThemeChoice.entries) {
+            compose.runOnIdle { theme.value = choice }
+            compose.onNodeWithTag("waitlist-back").performClick()
+            compose.onNodeWithTag("page-title").assertTextEquals("候补")
+            compose.onNodeWithTag("waitlist-back").assertDoesNotExist()
+            compose.runOnIdle { vm.updateFilters(draft) }
+            compose.onNodeWithTag("waitlist-last-results").performScrollTo().assertTextContains("查看上次结果")
+            assertTextFits(); capture("home-navigation-${choice.id}")
+            compose.onNodeWithTag("waitlist-last-results").performClick()
+            compose.onNodeWithTag("page-title").assertTextEquals("候补车次")
+            compose.onNodeWithTag("waitlist-back").assertIsDisplayed()
+            compose.runOnIdle {
+                assertEquals(1, source.calls)
+                assertEquals(draft, vm.state.value.draft)
+                assertEquals(applied, vm.state.value.applied)
+                assertEquals(results, vm.state.value.progress)
+                assertEquals(selected, vm.state.value.selected)
+            }
+            assertTextFits(); capture("results-navigation-${choice.id}")
+            androidx.test.platform.app.InstrumentationRegistry.getInstrumentation()
+                .sendKeyDownUpSync(android.view.KeyEvent.KEYCODE_BACK)
+            compose.onNodeWithTag("page-title").assertTextEquals("候补")
+            compose.onNodeWithTag("waitlist-back").assertDoesNotExist()
+            compose.onNodeWithTag("waitlist-last-results").performScrollTo().performClick()
+        }
+    }
+
     @Test fun verifiedAdultWithBuyFlagNCanBeCheckedAndUncheckedInEveryTheme() {
         val theme = mutableStateOf(ThemeChoice.BLUE)
         val calls = mutableListOf<String>()

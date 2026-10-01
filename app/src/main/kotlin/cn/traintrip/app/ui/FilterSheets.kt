@@ -27,22 +27,19 @@ import cn.traintrip.core.*
         DurationFilterSheet(s.filters,onDismiss,onApply)
         return
     }
+    if(kind=="seats") {
+        SeatFilterSheet(s.filters.seats,onDismiss,{ onApply(s.filters.copy(seats=it)) },
+            supportingText="候补不计入有票结果。")
+        return
+    }
     var draft by remember(kind) { mutableStateOf(s.filters) }
     var search by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
-    val title=mapOf("origin" to "出发城市与车站","dates" to "选择出发日期","time" to "出发时段","seats" to "选择席别","people" to "几个人出发","duration" to "最长车程","scope" to "查询目的地")[kind].orEmpty()
+    val title=mapOf("origin" to "出发城市与车站","people" to "几个人出发")[kind].orEmpty()
     FilterPanel(title,onDismiss) {
         Column(Modifier.fillMaxWidth().weight(1f).padding(16.dp),verticalArrangement=Arrangement.spacedBy(14.dp)) {
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)) {
                 when(kind) {
-                    "seats" -> {
-                        CheckRow("不限（含无座）",draft.seats.size==SeatType.entries.size) { draft=draft.copy(seats=SeatType.entries.toSet()) }
-                        SeatType.entries.forEach { seat->CheckRow(seat.label,draft.seats.size!=SeatType.entries.size && seat in draft.seats) { selected->
-                            val base=if(draft.seats.size==SeatType.entries.size) emptySet() else draft.seats
-                            draft=draft.copy(seats=if(selected || draft.seats.size==SeatType.entries.size) base+seat else base-seat)
-                        } }
-                        Text("候补不计入有票结果。",style=MaterialTheme.typography.bodySmall,color=Muted)
-                    }
                     "people" -> {
                         Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.SpaceBetween) {
                             OutlinedButton({draft=draft.copy(people=(draft.people-1).coerceAtLeast(1))},enabled=draft.people>1) { Text("−") }

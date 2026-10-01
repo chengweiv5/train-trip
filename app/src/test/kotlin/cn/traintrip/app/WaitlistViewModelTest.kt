@@ -36,6 +36,50 @@ class WaitlistViewModelTest {
     @Before fun setup() { Dispatchers.setMain(dispatcher) }
     @After fun teardown() { Dispatchers.resetMain() }
 
+    @Test fun backStopsAtWaitlistHomeWithoutLosingResultsDraftOrSelection() = runTest(dispatcher) {
+        val source = Source()
+        val vm = WaitlistViewModel(source, Draft(filters))
+        advanceUntilIdle()
+        vm.search(); advanceUntilIdle()
+        vm.toggle(vm.state.value.choices.single())
+        val results = vm.state.value.progress
+        val selected = vm.state.value.selected
+        vm.back()
+        assertEquals(WaitlistPage.FILTERS, vm.state.value.page)
+        val draft = filters.copy(seats = setOf(SeatType.FIRST))
+        vm.updateFilters(draft)
+        repeat(3) { vm.back() }
+        assertEquals("Home must not navigate back into its results", WaitlistPage.FILTERS, vm.state.value.page)
+        assertEquals(draft, vm.state.value.draft)
+        assertEquals(filters, vm.state.value.applied)
+        assertEquals(results, vm.state.value.progress)
+        assertEquals(selected, vm.state.value.selected)
+        assertEquals(1, source.calls)
+    }
+
+    @Test fun lastResultsRequiresAnAppliedQueryAndDoesNotApplyDraftOrStartAnotherQuery() = runTest(dispatcher) {
+        val source = Source()
+        val vm = WaitlistViewModel(source, Draft(filters))
+        advanceUntilIdle()
+        vm.showLastResults()
+        assertEquals(WaitlistPage.FILTERS, vm.state.value.page)
+        assertEquals(0, source.calls)
+        vm.search(); advanceUntilIdle()
+        vm.toggle(vm.state.value.choices.single())
+        val results = vm.state.value.progress
+        val selected = vm.state.value.selected
+        vm.edit()
+        val draft = filters.copy(seats = setOf(SeatType.FIRST))
+        vm.updateFilters(draft)
+        vm.showLastResults()
+        assertEquals(WaitlistPage.RESULTS, vm.state.value.page)
+        assertEquals(filters, vm.state.value.applied)
+        assertEquals(draft, vm.state.value.draft)
+        assertEquals(results, vm.state.value.progress)
+        assertEquals(selected, vm.state.value.selected)
+        assertEquals(1, source.calls)
+    }
+
     @Test fun openingOfficialAppDoesNotAuthenticateOrLoseSelectedDemands() = runTest(dispatcher) {
         val vm = WaitlistViewModel(Source(), Draft(filters))
         advanceUntilIdle()
@@ -183,7 +227,7 @@ class WaitlistViewModelTest {
         vm.search(); advanceUntilIdle()
         vm.edit()
         vm.updateFilters(filters.copy(seats = setOf(SeatType.FIRST)))
-        vm.back()
+        vm.showLastResults()
         vm.retryQuery(); advanceUntilIdle()
         assertEquals(filters, vm.state.value.applied)
         assertEquals(setOf(SeatType.FIRST), vm.state.value.draft.seats)

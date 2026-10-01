@@ -20,11 +20,17 @@ import cn.traintrip.core.waitlist.*
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
     val f = s.draft
     Column(Modifier.fillMaxSize()) {
-        AppTopBar("候补", onBack = if (s.applied != null) vm::back else null, backTag = "waitlist-back")
+        AppTopBar("候补")
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(16.dp)
             .testTag("waitlist-filters"), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             Text("选好车次，自动继续", style = MaterialTheme.typography.headlineMedium, color = Primary)
             Text("先查询和选择候补需求，再登录并选择真实乘车人", style = MaterialTheme.typography.bodyMedium, color = Muted)
+            if (s.applied != null) {
+                SecondaryButton("查看上次结果", vm::showLastResults,
+                    Modifier.testTag("waitlist-last-results"), enabled = !s.orderBusy)
+                Text("查看上次查询的条件与车次，不重新查询。",
+                    style = MaterialTheme.typography.bodySmall, color = Muted)
+            }
             SecondaryButton("12306 登录与乘车人", vm::openAccount,
                 Modifier.testTag("waitlist-account"))
             ContentCard(Modifier.fillMaxWidth()) {
@@ -92,7 +98,10 @@ import cn.traintrip.core.waitlist.*
             allowedRange = s.sourceInfo?.let { it.saleStart..it.saleEnd })
         "time" -> TimeFilterSheet(f.controls(), { sheet = null }, { vm.updateFilters(f.withControls(it)); sheet = null })
         "duration" -> DurationFilterSheet(f.controls(), { sheet = null }, { vm.updateFilters(f.withControls(it)); sheet = null })
-        "seats", "kind", "sort" -> WaitlistOptionsSheet(sheet!!, f, { sheet = null }) {
+        "seats" -> SeatFilterSheet(f.seats, { sheet = null }, {
+            vm.updateFilters(f.copy(seats = it)); sheet = null
+        }, supportingText = "未核验候补映射的席别仅展示状态，不开放勾选需求")
+        "kind", "sort" -> WaitlistOptionsSheet(sheet!!, f, { sheet = null }) {
             vm.updateFilters(it); sheet = null
         }
     }
@@ -148,15 +157,10 @@ internal fun stationSummary(catalog: StationCatalog, stations: Set<String>) =
 @Composable private fun WaitlistOptionsSheet(kind: String, filters: WaitlistFilters,
     onDismiss: () -> Unit, onApply: (WaitlistFilters) -> Unit) {
     var draft by remember { mutableStateOf(filters) }
-    FilterPanel(when (kind) { "seats" -> "选择席别"; "kind" -> "选择车种"; else -> "结果排序" }, onDismiss) {
+    FilterPanel(if (kind == "kind") "选择车种" else "结果排序", onDismiss) {
         Column(Modifier.fillMaxWidth().weight(1f).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
                 when (kind) {
-                    "seats" -> SeatType.entries.forEach { seat ->
-                        WaitlistCheck(seat.label, seat in draft.seats) {
-                            draft = draft.copy(seats = if (seat in draft.seats) draft.seats - seat else draft.seats + seat)
-                        }
-                    }
                     "kind" -> WaitlistTrainKind.entries.forEach { option ->
                         WaitlistCheck(option.label, option == draft.trainKind) { draft = draft.copy(trainKind = option) }
                     }
@@ -165,7 +169,6 @@ internal fun stationSummary(catalog: StationCatalog, stations: Set<String>) =
                     }
                 }
             }
-            if (kind == "seats") Text("未核验候补映射的席别仅展示状态，不开放勾选需求", color = Muted, style = MaterialTheme.typography.bodySmall)
             PrimaryButton("完成", { onApply(draft) }, enabled = draft.seats.isNotEmpty())
         }
     }
