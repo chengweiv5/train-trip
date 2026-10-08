@@ -13,11 +13,13 @@
 >
 > **少一点“没票就算了”的遗憾，多一次发现新目的地的机会。**
 
-**[⬇ 下载 Android 正式版 v1.0.0](https://github.com/chengweiv5/train-trip/releases/download/v1.0.0/train-trip-v1.0.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
+**[⬇ 下载 Android 正式版 v1.1.0](https://github.com/chengweiv5/train-trip/releases/download/v1.1.0/train-trip-v1.1.0-release.apk)**　·　[更新说明与历史版本](https://github.com/chengweiv5/train-trip/releases)　·　[安装方法](#下载安装)
 
 Android 8.0 及以上 · 无需注册 · 查票、收藏和主题切换无需 API Key
 
-> **v1.0.0 已发布**：四套浅色主题随心切换；玩法支持一天、两天和更长行程，每城市最多保留三种天数的参考安排。[查看更新说明](docs/releases/v1.0.0.md)
+> **v1.1.0**：选城市时允许暂时同城，点击查票时才提醒；保留选择与重启后的条件，并完善席别选择和候补主页导航。[查看更新说明](docs/releases/v1.1.0.md)
+>
+> 本版本还包含候补试验入口。真实风控、下单和订单回查全链路尚未完成验证，不承诺自动候补成功；正式购票仍建议在 12306 App 中完成。
 
 ## 给一次临时起意的旅行，找个目的地
 
@@ -123,9 +125,9 @@ Android 8.0 及以上 · 无需注册 · 查票、收藏和主题切换无需 AP
 
 | 下载入口 | 说明 |
 | --- | --- |
-| **[下载 v1.0.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v1.0.0/train-trip-v1.0.0-release.apk)** | 生产签名 Release 包 |
+| **[下载 v1.1.0 正式 APK](https://github.com/chengweiv5/train-trip/releases/download/v1.1.0/train-trip-v1.1.0-release.apk)** | 生产签名 Release 包 |
 | [查看最新正式发布](https://github.com/chengweiv5/train-trip/releases/latest) | 更新说明与安装附件 |
-| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v1.0.0/train-trip-v1.0.0-release.apk.sha256) | 用于核对安装包完整性 |
+| [下载 SHA-256 校验文件](https://github.com/chengweiv5/train-trip/releases/download/v1.1.0/train-trip-v1.1.0-release.apk.sha256) | 用于核对安装包完整性 |
 
 在 Android 手机上下载 APK 后打开，按系统提示允许当前浏览器或文件管理器安装应用，再完成安装。打开应用即可查票，不必先配置大模型或搜索服务。
 
@@ -135,7 +137,7 @@ Android 8.0 及以上 · 无需注册 · 查票、收藏和主题切换无需 AP
 
 ### 能直接买票或抢票吗？
 
-应用负责发现目的地与查询余票，不提供购票、抢票或自动下单。「打开 12306 App」会唤起已安装的铁路 12306，仍需在其中手动填写条件。余票随时变化，最终以 12306 App 的查询及下单结果为准。本项目是个人开发的独立工具，与铁路 12306 无隶属关系。
+主要用途是发现目的地与查询余票。「打开 12306 App」会唤起已安装的铁路 12306，仍需在其中手动填写条件。v1.1.0 另包含候补试验入口及账号短信登录、乘车人选择、官方验证和确认提交流程；真实下单、订单回查与风控兼容尚未完成全链路验证，不承诺自动候补或抢票成功，建议在 12306 App 中办理正式购票。余票随时变化，最终以 12306 的查询及下单结果为准。本项目是个人开发的独立工具，与铁路 12306 无隶属关系。
 
 ### 不配置 DeepSeek、豆包搜索也能用吗？
 
@@ -184,6 +186,9 @@ Release 默认生成未签名包，分发前需使用仓库外的私有签名配
 - [已确认的 UI 设计](design/README.md)
 - [v1.0 四套主题可编辑设计稿](design/train-trip-v1.0.0-themes.pen)
 - [v1.0 主题设计与切换验收](docs/verification/2026-09-23-v1.0-themes.md)
+- [v1.1.0 更新说明](docs/releases/v1.1.0.md)
+- [v1.1.0 发布验证](docs/verification/2026-10-08-v1.1.0-release.md)
+- [同城选择交互验收](docs/verification/2026-10-08-city-validation.md)
 - [v1.0.0 更新说明](docs/releases/v1.0.0.md)
 - [v1.0.0 发布验证](docs/verification/2026-09-23-v1.0.0-release.md)
 - [v0.9.0 更新说明](docs/releases/v0.9.0.md)
