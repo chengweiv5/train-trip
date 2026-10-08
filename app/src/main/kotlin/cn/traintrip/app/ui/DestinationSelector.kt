@@ -61,7 +61,7 @@ class DestinationBrowserState(initialProvince: String = "") {
     }
     val selectedCities=catalog.cities.filter { it.id in selected }
     val selectedProvinceCount=selectedCities.map { it.province.id }.distinct().size
-    fun selectable(city: City)=city.supported && city.id!=s.filters.originCityId
+    fun selectable(city: City)=city.supported
     fun toggle(city: City) { selected=if(city.id in selected) selected-city.id else selected+city.id }
     fun toggleProvince(cities: List<City>) {
         val ids=cities.filter(::selectable).map { it.id }
@@ -99,7 +99,7 @@ class DestinationBrowserState(initialProvince: String = "") {
                                           else if(p.matches(search)) toggleProvince(group)
                                           else {browser.provinceId=p.id;search=""} })
                                 }
-                                items(group,key={it.id}) { city -> DestinationCityRow(city,city.id in selected,selectable(city),s.filters.originCityId) { toggle(city) } }
+                                items(group,key={it.id}) { city -> DestinationCityRow(city,city.id in selected,selectable(city)) { toggle(city) } }
                             }
                         }
                     } else {
@@ -123,12 +123,12 @@ class DestinationBrowserState(initialProvince: String = "") {
                                     }
                                 }
                                 key(if(showWishes)WISH_DESTINATION_GROUP else province.id) {
-                                    if(showWishes) DestinationWishList(wishlist,wishes,catalog,selected,s.filters.originCityId,browser.list(WISH_DESTINATION_GROUP),
+                                    if(showWishes) DestinationWishList(wishlist,wishes,catalog,selected,browser.list(WISH_DESTINATION_GROUP),
                                         onReloadWishlist,{toggleProvince(wishes.mapNotNull { catalog.byCity[it.cityId] })},::toggle,
                                         Modifier.weight(1f).fillMaxHeight())
                                     else LazyColumn(Modifier.weight(1f).fillMaxHeight().padding(horizontal=12.dp).testTag("destination-city-list"),state=browser.list(province.id),contentPadding=PaddingValues(bottom=12.dp)) {
                                         item { DestinationProvinceHeader(province,cities.size,provinceAction(cities.filter(::selectable),selected),{toggleProvince(cities)}) }
-                                        items(cities,key={it.id}) { city -> DestinationCityRow(city,city.id in selected,selectable(city),s.filters.originCityId) { toggle(city) } }
+                                        items(cities,key={it.id}) { city -> DestinationCityRow(city,city.id in selected,selectable(city)) { toggle(city) } }
                                     }
                                 }
                             }
@@ -161,13 +161,13 @@ private fun provinceAction(cities: List<City>, selected: List<String>) = if(citi
     }
 }
 
-@Composable internal fun DestinationCityRow(city: City,checked: Boolean,enabled: Boolean,origin: String,showProvince:Boolean=false,interactionEnabled:Boolean=true,onClick: () -> Unit) {
+@Composable internal fun DestinationCityRow(city: City,checked: Boolean,enabled: Boolean,showProvince:Boolean=false,interactionEnabled:Boolean=true,onClick: () -> Unit) {
     Row(Modifier.fillMaxWidth().heightIn(min=54.dp).testTag("destination-${city.id}")
         .toggleable(value=checked,enabled=enabled && interactionEnabled,role=Role.Checkbox,onValueChange={onClick()}).padding(vertical=8.dp),verticalAlignment=Alignment.CenterVertically) {
         Column(Modifier.weight(1f).padding(end=6.dp)) {
             Text(city.name,color=if(enabled) Ink else Muted)
             if(showProvince) Text(city.province.name,style=MaterialTheme.typography.bodySmall,color=Muted)
-            if(!enabled) Text(if(city.id==origin) "当前出发城市" else city.unavailableReason,style=MaterialTheme.typography.bodySmall,color=Muted)
+            if(!enabled) Text(city.unavailableReason,style=MaterialTheme.typography.bodySmall,color=Muted)
             else if(!showProvince && city.province.municipality) Text("直辖市",style=MaterialTheme.typography.bodySmall,color=Muted)
         }
         Checkbox(checked,onCheckedChange=null,enabled=enabled && interactionEnabled)

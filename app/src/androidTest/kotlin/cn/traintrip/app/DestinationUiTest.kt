@@ -58,10 +58,10 @@ class DestinationUiTest {
         compose.onNodeWithText("1 个城市").assertExists()
         compose.onNodeWithTag("destination-500000").performClick()
         compose.onNodeWithTag("destination-search").performTextReplacement("北京")
-        compose.onNodeWithTag("destination-110000").assertIsNotEnabled()
-        compose.onNodeWithText("当前出发城市").assertExists()
+        compose.onNodeWithTag("destination-110000").assertIsEnabled().performClick().assertIsOn()
+        compose.onNodeWithText("当前出发城市").assertDoesNotExist()
         compose.onNodeWithTag("apply-destinations").performClick()
-        compose.runOnIdle { assertTrue("500000" in applied.destinationCityIds);assertFalse("130100" in applied.destinationCityIds) }
+        compose.runOnIdle { assertTrue("500000" in applied.destinationCityIds);assertTrue("110000" in applied.destinationCityIds);assertFalse("130100" in applied.destinationCityIds) }
     }
 
     @Test fun largeFontUsesDropdownAndUnavailableCitiesRemainVisible() {
@@ -188,6 +188,20 @@ class DestinationUiTest {
         assertEquals(setOf("VNP"),migrated.originStations);assertEquals(3,migrated.people);assertEquals(1320,migrated.startMinute)
         Preferences(compose.activity).save(migrated)
         assertEquals(migrated,Preferences(compose.activity).load(catalog))
+    }
+
+    @Test fun mixedDestinationsDoNotShowTheOriginAsAnUnstartedProvince() {
+        val mixed=filters.copy(originStations=setOf("BJP"),destinationCityIds=setOf("110000","120000"))
+        val plan=catalog.plan(mixed)
+        val progress=SearchProgress(plan,plan.associate { it.key to QueryResult.Success(emptyList(),Instant.now()) },running=false)
+        compose.setContent { TrainTripTheme {
+            ResultsScreen(UiState(catalog,mixed,applied=mixed,progress=progress),{},{},{},{},{},{},{})
+        } }
+        compose.onNodeWithText("查询完成").assertExists()
+        compose.onNodeWithText("该省查询尚未开始").assertDoesNotExist()
+        compose.onNodeWithText("北京市").assertDoesNotExist()
+        compose.onNodeWithText("天津市").assertExists()
+        compose.onNodeWithText("重试查询").assertDoesNotExist()
     }
 
     private fun resultState():UiState {

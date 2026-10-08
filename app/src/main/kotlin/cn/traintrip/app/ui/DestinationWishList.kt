@@ -12,9 +12,9 @@ import cn.traintrip.app.WishlistState
 import cn.traintrip.core.*
 
 @Composable internal fun DestinationWishList(state:WishlistState,wishes:List<WishCity>,catalog:StationCatalog,
-    selected:List<String>,origin:String,listState:LazyListState,onRetry:()->Unit,onToggleAll:()->Unit,onToggle:(City)->Unit,modifier:Modifier=Modifier) {
+    selected:List<String>,listState:LazyListState,onRetry:()->Unit,onToggleAll:()->Unit,onToggle:(City)->Unit,modifier:Modifier=Modifier) {
     val ready=!state.loading && state.error==null
-    val available=wishes.mapNotNull { catalog.byCity[it.cityId] }.filter { it.supported && it.id!=origin }
+    val available=wishes.mapNotNull { catalog.byCity[it.cityId] }.filter { it.supported }
     val allSelected=available.isNotEmpty() && available.all { it.id in selected }
     LazyColumn(modifier.padding(horizontal=12.dp).testTag("destination-wishlist-list"),state=listState,contentPadding=PaddingValues(bottom=12.dp)) {
         item("header") {
@@ -43,7 +43,7 @@ import cn.traintrip.core.*
         }
         if(state.error==null) items(wishes,key={it.cityId}) { wish->
             val city=catalog.byCity[wish.cityId]
-            if(city!=null) DestinationCityRow(city,city.id in selected,city.supported && city.id!=origin,origin,
+            if(city!=null) DestinationCityRow(city,city.id in selected,city.supported,
                 showProvince=true,interactionEnabled=ready) { onToggle(city) }
             else {
                 Row(Modifier.fillMaxWidth().heightIn(min=54.dp).padding(vertical=8.dp).testTag("destination-${wish.cityId}"),verticalAlignment=Alignment.CenterVertically) {

@@ -5,7 +5,7 @@ data class ProvinceResult(val province: Province, val cities: List<CityResult>, 
 
 fun groupResults(catalog: StationCatalog, filters: SearchFilters, progress: SearchProgress?, byCount: Boolean = false): List<ProvinceResult> {
     val results=aggregate(progress?.trips.orEmpty(),filters)
-    val selected=catalog.cities.filter { it.id in filters.destinationCityIds }.groupBy { it.province.id }
+    val selected=catalog.cities.filter { it.id in filters.destinationCityIds && it.id!=filters.originCityId }.groupBy { it.province.id }
     return catalog.provinces.mapNotNull { province ->
         val scope=selected[province.id].orEmpty()
         val cities=results.filter { catalog.byCity[it.cityId]?.province?.id == province.id }.sortedWith(

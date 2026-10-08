@@ -51,7 +51,7 @@ import cn.traintrip.core.*
                     "origin" -> {
                         OutlinedTextField(search,{search=it},Modifier.fillMaxWidth(),label={Text("搜索出发城市")},singleLine=true)
                         if(search.isNotBlank()) s.catalog.cities.filter { it.supported && (it.matches(search) || it.province.matches(search)) }.take(30).forEach { city->
-                            TextButton({draft=draft.copy(originCityId=city.id,originStations=emptySet(),destinationCityIds=draft.destinationCityIds-city.id);search=""},Modifier.fillMaxWidth()) { Text(city.name) }
+                            TextButton({draft=draft.copy(originCityId=city.id,originStations=emptySet());search=""},Modifier.fillMaxWidth()) { Text(city.name) }
                         }
                         Text("${s.catalog.byCity[draft.originCityId]?.name} · 出发车站",style=MaterialTheme.typography.titleMedium)
                         CheckRow("全部同城车站",draft.originStations.isEmpty()) {draft=draft.copy(originStations=emptySet())}
@@ -63,7 +63,7 @@ import cn.traintrip.core.*
             error?.let { Text(it,color=Amber) }
             PrimaryButton("完成",{
                 val candidate=draft
-                val validation=candidate.validate() ?: if(candidate.destinationCityIds.isEmpty()) "请至少选择一个目的地城市" else null
+                val validation=candidate.validate()
                 if(validation!=null) error=validation else onApply(candidate)
             })
         }

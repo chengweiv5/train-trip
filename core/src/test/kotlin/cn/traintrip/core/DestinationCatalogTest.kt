@@ -23,11 +23,30 @@ class DestinationCatalogTest {
         val old=SearchFilters(originCityId="0357",originStations=setOf("VNP"),people=3,startMinute=1320,endMinute=360,
             destinationCityIds=setOf("1717","3102","0357","0914","missing"))
         val result=c.normalize(old)
-        assertEquals(old.copy(originCityId="110000",destinationCityIds=setOf("500000","330100")),result)
+        assertEquals(old.copy(originCityId="110000",destinationCityIds=setOf("500000","330100","110000")),result)
         val split=c.normalize(old.copy(originCityId="2409",originStations=setOf("AOR"),destinationCityIds=setOf("2409","2407")))
         assertEquals("659002",split.originCityId)
         assertEquals(setOf("AOR"),split.originStations)
-        assertEquals(setOf("652900","652700","659007"),split.destinationCityIds)
+        assertEquals(setOf("652900","652700","659007","659002"),split.destinationCityIds)
+    }
+    @Test fun normalizationPreservesSameCityDraftButQueryPlanSkipsSameCity() {
+        val sameCity=SearchFilters(originStations=setOf("BJP"),destinationCityIds=setOf("110000"))
+        assertEquals(sameCity,c.normalize(sameCity))
+        val mixed=sameCity.copy(destinationCityIds=setOf("110000","120000"))
+        assertEquals(mixed,c.normalize(mixed))
+        val plan=c.plan(mixed)
+        assertTrue(plan.isNotEmpty())
+        assertTrue(plan.all { it.origin.cityId=="110000" && it.destination.cityId=="120000" })
+        assertThrows(IllegalArgumentException::class.java) { c.plan(sameCity) }
+    }
+    @Test fun resultGroupsExcludeSameCityInsteadOfReportingItAsUnqueried() {
+        val filters=SearchFilters(originStations=setOf("BJP"),destinationCityIds=setOf("110000","120000"))
+        val plan=c.plan(filters)
+        val progress=SearchProgress(plan,plan.associate { it.key to QueryResult.Success(emptyList(),Instant.now()) },running=false)
+        val groups=groupResults(c,filters,progress)
+        assertEquals(listOf("12"),groups.map { it.province.id })
+        assertTrue(groups.none { it.incomplete })
+        assertEquals("该省暂无符合条件的票",groups.single().status)
     }
     @Test fun provinceSearchIncludesEntireDirectoryAndPinyinSearchWorks() {
         val hebei=c.cities.filter { it.province.id=="13" }

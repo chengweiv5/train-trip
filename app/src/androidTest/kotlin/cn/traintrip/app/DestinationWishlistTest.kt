@@ -55,18 +55,19 @@ class DestinationWishlistTest {
         compose.runOnIdle { assertEquals(base,applied) }
     }
 
-    @Test fun selectAllSkipsOriginUnavailableAndUnknownCities() {
+    @Test fun selectAllIncludesOriginButSkipsUnavailableAndUnknownCities() {
         var applied=base
         val entries=listOf(wish("130600",5),wish("110000",4),wish("623000",3),WishCity("999999","旧城市","旧省份",2))
         compose.setContent { TrainTripTheme { DestinationSelector(UiState(catalog,base),{},{applied=it},DestinationBrowserState(WISH_DESTINATION_GROUP),WishlistState(entries,loading=false)) } }
-        compose.onNodeWithTag("destination-110000").assertIsNotEnabled()
+        compose.onNodeWithTag("destination-110000").assertIsEnabled().performClick().assertIsOn()
+        compose.onNodeWithTag("destination-110000").performClick().assertIsOff()
         compose.onNodeWithTag("destination-623000").assertIsNotEnabled()
         compose.onNodeWithTag("destination-wishlist-list").performScrollToNode(hasTestTag("destination-999999"))
         compose.onNodeWithText("当前目录暂未收录此城市").assertIsDisplayed()
         compose.onNodeWithTag("destination-wishlist-list").performScrollToIndex(0)
         compose.onNodeWithTag("wish-select-all").performClick()
         compose.onNodeWithTag("apply-destinations").performClick()
-        compose.runOnIdle { assertEquals(setOf("120000","130600"),applied.destinationCityIds) }
+        compose.runOnIdle { assertEquals(setOf("120000","130600","110000"),applied.destinationCityIds) }
     }
 
     @Test fun loadingErrorRetryEmptyAndLiveUpdatesStayDistinct() {

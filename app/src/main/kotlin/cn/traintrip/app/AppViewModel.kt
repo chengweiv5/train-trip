@@ -99,9 +99,13 @@ class AppViewModel @JvmOverloads constructor(app:Application,private val source:
         val current=mutable.value
         val filters=if(resume || retryFailed || refresh) current.applied ?: current.filters else current.cityQueryFilters ?: current.filters
         filters.validate()?.let { error -> mutable.update { it.copy(error=error) };return }
-        if(current.queryCityId!=null && filters.originCityId==current.queryCityId) {
-            mutable.update { it.copy(error="出发地和目的地不能相同，请修改出发地") };return
+        val destinationError=when {
+            current.queryCityId!=null && filters.originCityId==current.queryCityId -> "出发地和目的地不能相同，请修改出发地"
+            filters.destinationCityIds.isEmpty() -> "请至少选择一个目的地城市"
+            filters.destinationCityIds.all { it==filters.originCityId } -> "出发地和目的地不能相同，请修改出发地或目的地"
+            else -> null
         }
+        destinationError?.let { error -> mutable.update { it.copy(error=error) };return }
         searchJob?.cancel();refreshJob?.cancel()
         if(current.page!=Page.RESULTS)navigate(Page.RESULTS)
         val previous=if(resume || retryFailed) current.progress else null

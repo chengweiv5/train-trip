@@ -21,7 +21,7 @@ class StationCatalog(rawStations: List<Station>) {
         val origin = selectedOrigins.singleOrNull()?.takeIf { it in byCity }
             ?: resolveCityId(filters.originCityId)?.takeIf { byCity[it]?.supported == true } ?: "110000"
         return filters.copy(originCityId=origin,originStations=filters.originStations.filter { byCode[it]?.cityId == origin }.toSet(),
-            destinationCityIds=resolveDestinationIds(filters.destinationCityIds)-origin)
+            destinationCityIds=resolveDestinationIds(filters.destinationCityIds))
     }
     fun initialDestinations(origin: String): Set<String> {
         val names = setOf("天津","石家庄","秦皇岛","承德","保定","济南","青岛","太原","大同","呼和浩特","沈阳","大连","长春","哈尔滨","郑州","西安","南京","上海","杭州","武汉","长沙","合肥","洛阳","泰安")
